@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.camply.user.dao.UserDao">
+	<insert id="emailRegister"  parameterType="com.camply.user.vo.UserVO">
+	<!-- 이메일, 비밀번호, 이름, 닉네임 , 사용자분류-->
+		INSERT INTO USER_INFO (USER_EMAIL, USER_PASSWORD, USER_NAME, USER_NICKNAME, USER_TYPE) VALUES (#{USER_EMAIL}, #{USER_PASSWORD}, #{USER_NAME}, #{USER_NICKNAME}, #{USER_TYPE})
+	</insert>
+	
+	<insert id="managerEmailRegister" parameterType="com.camply.user.vo.UserVO">
+		INSERT INTO USER_INFO (USER_EMAIL, USER_PASSWORD, USER_NAME, USER_BUSINESSNAME, USER_BUSINESSNUMBER, USER_ADDRESS, USER_BUSINESSPHONE, USER_TYPE) VALUES (#{USER_EMAIL}, #{USER_PASSWORD}, #{USER_NAME}, #{USER_BUSINESSNAME}, #{USER_BUSINESSNUMBER}, #{USER_ADDRESS}, #{USER_BUSINESSPHONE}, #{USER_TYPE})
+	</insert>
+	
+	<select id="selectEmail" parameterType="com.camply.user.vo.UserVO">
+		SELECT * FROM USER_INFO WHERE USER_EMAIL = #{USER_EMAIL}
+	</select>
+	
+	<select id="emailLogin" parameterType="com.camply.user.vo.UserVO">
+		SELECT * FROM USER_INFO WHERE USER_EMAIL = #{USER_EMAIL} AND USER_PASSWORD = #{USER_PASSWORD}
+	</select>
+</mapper>
