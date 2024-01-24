@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import './css/CampBoard.css';
+import CampNavBar from '../CampNavbar';
+
 
 function BbsWrite() {
   const navigate = useNavigate();
@@ -53,6 +55,7 @@ function BbsWrite() {
   return (
 
     <section>
+      <CampNavBar />
       <Container fluid className="home-section" id="home">
         <Container className="home-content">
 

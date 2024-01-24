@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
-import { IoMdSunny } from 'react-icons/io';
-import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai';
+import React, { useState } from "react";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import { Link, useLocation } from "react-router-dom";
+import { AiOutlineHome } from "react-icons/ai";
 import { FaClipboardList } from "react-icons/fa";
-import { Modal } from 'react-bootstrap';
-import logo from '../../Assets/logo.png';
-import OpenWeatherMap from './CampMain/Home/openWeatherMap';
+import { Modal } from "react-bootstrap";
+import logo from "../../Assets/logo.png";
+import OpenWeatherMap from "./CampMain/Home/openWeatherMap";
 import { CgChevronDownO } from "react-icons/cg";
 import { CgCloseO } from "react-icons/cg";
 import { FiShoppingCart } from "react-icons/fi";
@@ -23,6 +22,17 @@ function NavBar() {
   const handleWeatherModalClose = () => setShowWeatherModal(false);
   const handleWeatherModalShow = () => setShowWeatherModal(true);
 
+  const location = useLocation();
+
+  const getOppositeLink = () => {
+    if (location.pathname === "/shop") {
+      return "/camp";
+    } else if (location.pathname === "/camp") {
+      return "/shop";
+    }
+    return "/";
+  };
+
   function scrollHandler() {
     if (window.scrollY >= 20) {
       updateNavbar(true);
@@ -31,30 +41,29 @@ function NavBar() {
     }
   }
 
-  window.addEventListener('scroll', scrollHandler);
+  window.addEventListener("scroll", scrollHandler);
 
   return (
     <Navbar
       expanded={expand}
       fixed="top"
       expand="md"
-      className={navColour ? 'sticky' : 'navbar'}
+      className={navColour ? "sticky" : "navbar"}
     >
-
       <Container>
         <Navbar.Brand href="/camp" className="d-flex">
           <img
             src={logo}
             className="logo"
             alt="brand"
-            style={{ width: '250px', height: 'auto' }}
+            style={{ width: "250px", height: "auto" }}
           />
         </Navbar.Brand>
 
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
           onClick={() => {
-            updateExpanded(expand ? false : 'expanded');
+            updateExpanded(expand ? false : "expanded");
           }}
         >
           <span></span>
@@ -65,7 +74,7 @@ function NavBar() {
           <Nav className="ms-auto" defaultActiveKey="#home">
             <Nav.Item>
               <Nav.Link as={Link} to="/" onClick={() => updateExpanded(false)}>
-                <AiOutlineHome style={{ marginBottom: '2px' }} /> 홈페이지
+                <AiOutlineHome style={{ marginBottom: "2px" }} /> 홈페이지
               </Nav.Link>
             </Nav.Item>
 
@@ -75,23 +84,18 @@ function NavBar() {
                 to="/camp/board/all"
                 onClick={() => updateExpanded(false)}
               >
-                <FaClipboardList style={{ marginBottom: '2px' }} /> 전체 상품
+                <FaClipboardList style={{ marginBottom: "2px" }} /> 전체 상품
               </Nav.Link>
             </Nav.Item>
 
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/shop"
+                to={getOppositeLink()}
                 onClick={() => updateExpanded(false)}
               >
-                <FiShoppingCart style={{ marginBottom: '2px' }} /> 쇼핑몰
-              </Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link href="#" onClick={handleWeatherModalShow}>
-                <IoMdSunny style={{ marginBottom: '2px' }} /> 날씨
+                <FiShoppingCart style={{ marginBottom: "2px" }} />
+                {location.pathname === "/shop" ? "캠핑장 예약" : "쇼핑몰"}
               </Nav.Link>
             </Nav.Item>
 
@@ -110,8 +114,16 @@ function NavBar() {
             </Modal>
 
             <Nav.Item>
-              <Nav.Link as={Link} to={isLoggedIn ? "/logout" : "/login"} onClick={() => updateExpanded(false)}>
-                {isLoggedIn ? <CgCloseO style={{ marginBottom: '2px' }} /> : <CgChevronDownO style={{ marginBottom: '2px' }} />}
+              <Nav.Link
+                as={Link}
+                to={isLoggedIn ? "/logout" : "/login"}
+                onClick={() => updateExpanded(false)}
+              >
+                {isLoggedIn ? (
+                  <CgCloseO style={{ marginBottom: "2px" }} />
+                ) : (
+                  <CgChevronDownO style={{ marginBottom: "2px" }} />
+                )}
                 {isLoggedIn ? "로그아웃" : "로그인"}
               </Nav.Link>
             </Nav.Item>

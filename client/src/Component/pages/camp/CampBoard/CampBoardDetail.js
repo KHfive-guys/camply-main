@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import Reply from './Board/Reply';
+import Reply from "./Board/Reply";
+import CampNavBar from "../CampNavbar";
 
 function CampBoardDetail() {
   const [boardData, setBoardData] = useState({});
@@ -106,9 +107,9 @@ function CampBoardDetail() {
     }
   };
 
-
   return (
     <section>
+      <CampNavBar />
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
@@ -165,7 +166,7 @@ function CampBoardDetail() {
       <h1>지도</h1>
       <div id="map" style={{ width: "100%", height: "400px" }}></div>
 
-      <Reply/>
+      <Reply />
     </section>
   );
 }

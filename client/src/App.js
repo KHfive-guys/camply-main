@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ShopDetail from './Component/pages/shop/ShopDetail/ShopDetail';
 import OrderMain from './Component/pages/shop/ShopOrder/OrderMain';
-import SellMain from './Component/pages/shop/ShopSell/SellMain';
 import {
   BrowserRouter as Router,
   Routes,
@@ -109,6 +108,7 @@ function App() {
           path="/register/manager/email"
           element={<ManagerEmailRegister />}
         />
+        
         <Route path="/login" element={<Login />} />
         <Route path="/camp/board/add" element={<CampBoard />} />
         <Route path="/camp/board/all" element={<CampBoardAll />} />
