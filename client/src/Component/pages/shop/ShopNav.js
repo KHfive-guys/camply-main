@@ -7,6 +7,7 @@ function ShopNav( ) {
    
       <div>
         <Nav/>
+        <br/>
         <div className='main-category'>
           <div className='contentsWrap'>
             <ul className='clearfix'>
@@ -23,19 +24,19 @@ function ShopNav( ) {
                 </Link>
               </li>
               <li className='f1'>
-                <Link to="/shop/led">
+                <Link to="/shop/lamp">
                   <img src='https://www.ocamall.com/design/ocamall/2022_renew/img/main_category_icon_04.png' alt="램프 아이콘" />
                   <span>램프</span>
                 </Link>
               </li>
               <li className='f1'>
-                <Link to="/shop/bbq">
+                <Link to="/shop/fireplace">
                   <img src='https://www.ocamall.com/design/ocamall/2022_renew/img/main_category_icon_05.png' alt="화로 아이콘" />
                   <span>화로BBQ</span>
                 </Link>
               </li>
               <li className='f1'>
-                <Link to="/shop/table">
+                <Link to="/shop/chair">
                   <img src='https://www.ocamall.com/design/ocamall/2022_renew/img/main_category_icon_03.png' alt="의자 아이콘" />
                   <span>의자</span>
                 </Link>

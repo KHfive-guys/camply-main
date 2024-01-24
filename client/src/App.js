@@ -10,7 +10,7 @@ import {
   Link,
 } from 'react-router-dom';
 
-import ShopCart from './Component/pages/shop/ShopCart';
+import Cart from './Component/pages/shop/ShopCart/Cart';
 import ShopMain from './Component/pages/shop/ShopMain';
 import ShopMyPage from './Component/pages/shop/ShopMyPage/ShopMyPage';
 import Register from './Component/pages/common/Register';
@@ -122,9 +122,9 @@ function App() {
               <Route path="/main" element={<ShopMain />} />
                 <Route path="/detail/:productId" element={<ShopDetail/>} />
                 <Route path="/order" element={<OrderMain />} />
-                <Route path="/sell" element={<CreateProduct />} />
+                <Route path="/sell" target="_blank"  element={<CreateProduct />} />
                 <Route path="/mypage" element={<ShopMyPage />} />
-                <Route path="/cart" element={<ShopCart/>} />
+                <Route path="/cart" element={<Cart/>} />
                 <Route path="/tent" element={<Tent/>}/>
                 <Route path="/chair" element={<Chair/>}/>
                 <Route path="/sleeping" element={<Sleeping/>}/>

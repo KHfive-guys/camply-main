@@ -78,11 +78,16 @@ function NavBar() {
                 <FaClipboardList style={{ marginBottom: '2px' }} /> 전체 상품
               </Nav.Link>
             </Nav.Item>
+            <Nav.Item>
+              <Nav.Link as={Link} to="/shop/sell" onClick={() => updateExpanded(false)}>
+                <AiOutlineHome style={{ marginBottom: '2px' }} /> 상품등록
+              </Nav.Link>
+            </Nav.Item>
 
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/shop"
+                to="/shop/main"
                 onClick={() => updateExpanded(false)}
               >
                 <FiShoppingCart style={{ marginBottom: '2px' }} /> 쇼핑몰
