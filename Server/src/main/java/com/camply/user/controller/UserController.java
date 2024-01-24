@@ -5,7 +5,10 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,24 +39,24 @@ public class UserController {
 		return ResponseEntity.ok("General email register Success");
 	}
 	
-	 @PostMapping("/login")
+	 @GetMapping("/login")
 	    public ResponseEntity<?> login(@RequestBody UserVO camplyuservo) {
-		
+		 
+				 
 		 HashMap<String, String> user_info = new HashMap<String, String>();
-		
+
 		 UserVO camplyuservo_info= userservice.getMemberByUsername(camplyuservo.getUSER_EMAIL());
+		 
 	        
 	        if (camplyuservo_info != null && camplyuservo_info.getUSER_PASSWORD().equals(camplyuservo.getUSER_PASSWORD())) {
 
 	        	if (camplyuservo_info.getUSER_TYPE().equals("Admin")) {
-		        	user_info.put("result", "SUCCESS");
 		        	user_info.put("USER_ID", camplyuservo_info.getUSER_ID());
 		        	user_info.put("USER_EMAIL", camplyuservo_info.getUSER_EMAIL());
 		        	user_info.put("USER_BUSINESSNAME", camplyuservo_info.getUSER_BUSINESSNAME());
 		        	user_info.put("USER_BUSINESSNUMBER", camplyuservo_info.getUSER_BUSINESSNUMBER());
 		        	user_info.put("USER_TYPE", camplyuservo_info.getUSER_TYPE());
 	        	} else if (camplyuservo_info.getUSER_TYPE().equals("General")){
-		        	user_info.put("result", "SUCCESS");
 		        	user_info.put("USER_ID", camplyuservo_info.getUSER_ID());
 		        	user_info.put("USER_EMAIL", camplyuservo_info.getUSER_EMAIL());
 		        	user_info.put("USER_NAME", camplyuservo_info.getUSER_NAME());

@@ -2,7 +2,9 @@ package com.camply.user.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,37 +18,38 @@ public class camplyUserSecurityConfig {
 
 	@Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-		System.out.println("code check 1");
-		
-        http
+        http     
         .cors(cors -> cors.disable()).csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(authorizeRequests -> 
-                authorizeRequests
-                    .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
-            )
-            .formLogin(formLogin ->
-                formLogin
-                    .loginPage("/login")
-                    .usernameParameter("USER_EMAIL")
-                    .passwordParameter("USER_PASSWORD")
-                    .defaultSuccessUrl("/")
-                    .failureUrl("/user")
-            )
-            .logout(logout ->
-                logout
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .logoutSuccessUrl("/")
-                    .invalidateHttpSession(true)
-            );
+        .authorizeHttpRequests(authorizeRequests -> 
+            authorizeRequests
+                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+        )
+        .formLogin(formLogin ->
+            formLogin
+                .loginPage("/login")
+                .usernameParameter("USER_EMAIL")
+                .passwordParameter("USER_PASSWORD")
+                .defaultSuccessUrl("/")
+                .failureUrl("/login")
+        )
+        .logout(logout ->
+            logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+        );
 
-		System.out.println("code check 2");
-        return http.build();
+    return http.build();
     }
-//	
+	
+	@Bean
+	static AuthenticationManager authenticationManage(AuthenticationConfiguration a) throws Exception {
+		return a.getAuthenticationManager();
+	}
+	
 	@Bean
 	static PasswordEncoder passwordEncoder() {
-		System.out.println("code check 3");
+
 		return new BCryptPasswordEncoder();
 	}
 

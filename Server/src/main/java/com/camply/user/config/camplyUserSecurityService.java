@@ -26,14 +26,12 @@ public class camplyUserSecurityService implements UserDetailsService {
 
 	public UserDetails loadUserByUsername(String USER_EMAIL) throws UsernameNotFoundException {
 
-		System.out.println("code check 1");
 		UserVO uservo = Userdao.selectEmail(USER_EMAIL);
 		
 		if (uservo == null) {
 			throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
 		}
 		
-		System.out.println("code Check 1");
 		
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		if ("Admin".equals(uservo.getUSER_TYPE())) {
