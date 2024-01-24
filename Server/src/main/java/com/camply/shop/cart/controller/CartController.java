@@ -12,7 +12,7 @@ import com.camply.shop.cart.service.CartService;
 import com.camply.shop.cart.vo.CartVO;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/shop/cart")
 @CrossOrigin(origins="http://localhost:3000", 
 allowCredentials="true",
 allowedHeaders="*")

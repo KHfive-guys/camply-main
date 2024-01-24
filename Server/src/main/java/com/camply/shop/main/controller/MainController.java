@@ -14,7 +14,7 @@ import com.camply.shop.common.vo.ProductVO;
 import com.camply.shop.main.service.MainService;
 
 @RestController
-@RequestMapping("/main")
+@RequestMapping("/shop/main")
 @CrossOrigin(origins="http://localhost:3000", 
 allowCredentials="true",
 allowedHeaders="*")

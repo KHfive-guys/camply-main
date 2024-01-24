@@ -12,7 +12,7 @@ import com.camply.shop.common.vo.OrderVO;
 import com.camply.shop.order.service.OrderService;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/shop/order")
 @CrossOrigin(origins="http://localhost:3000", 
 allowCredentials="true",
 allowedHeaders="*")

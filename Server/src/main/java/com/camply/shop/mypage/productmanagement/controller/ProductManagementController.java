@@ -19,7 +19,7 @@ import com.camply.shop.common.vo.ProductVO;
 import com.camply.shop.mypage.productmanagement.service.ProductManagementService;
 
 @RestController
-@RequestMapping("/mypage")
+@RequestMapping("/shop/mypage")
 @CrossOrigin(origins="http://localhost:3000", allowCredentials="true", allowedHeaders="*")
 public class ProductManagementController {
 	@Autowired
