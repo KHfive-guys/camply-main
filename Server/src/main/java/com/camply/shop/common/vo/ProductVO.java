@@ -1,11 +1,33 @@
 package com.camply.shop.common.vo;
 
 import java.sql.Date;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.util.Locale;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+/*
+PRODUCT_ID	NUMBER
+PRODUCT_NAME	VARCHAR2(255 BYTE)
+PRODUCT_DESCRIPTION	VARCHAR2(255 BYTE)
+PRODUCT_PRICE	NUMBER
+PRODUCT_CATEGORY	VARCHAR2(50 BYTE)
+PRODUCT_COLOR	VARCHAR2(255 BYTE)
+PRODUCT_THUMBNAIL	VARCHAR2(255 BYTE)
+PRODUCT_MAIN	VARCHAR2(255 BYTE)
+PRODUCT_MAIN2	VARCHAR2(255 BYTE)
+PRODUCT_MAIN3	VARCHAR2(255 BYTE)
+PRODUCT_CONTENT	VARCHAR2(255 BYTE)
+PRODUCT_CREATE_DATE	TIMESTAMP(6)
+PRODUCT_STOCK	NUMBER
+USER_ID	NUMBER
+PRODUCT_STATUS	VARCHAR2(20 BYTE)
+PRODUCT_CODE	NUMBER
+*/
 
 @Getter
 @Setter
@@ -13,7 +35,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProductVO {
 	
-
 	private int productId;
 	private String productName;
 	private String productDescription;
@@ -25,13 +46,18 @@ public class ProductVO {
 	private String productMain2;
 	private String productMain3;
 	private String productContent;
-	private Date productCreateDate;
 	private int productStock;
+	private LocalDate productCreateDate;
 	private int userId;
+	private String productStatus;
+	private Long productCode;
 	
+	 // 실제 숫자값에 대한 getter
+    public int getProductPrice() {
+        return productPrice;
+    }
 	
-	
-	
-	
-	
+	public String getFormattedProductPrice() {
+        return NumberFormat.getNumberInstance(Locale.KOREA).format(this.productPrice) + "원";
+	}
 }

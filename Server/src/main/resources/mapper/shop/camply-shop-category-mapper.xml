@@ -6,16 +6,19 @@
 			<id property="productCategory" column="PRODUCT_CATEGORY"/>
 			  	<result property="productId" column="PRODUCT_ID"/>
 			  	<result property="productName" column="PRODUCT_NAME"/>
-		        <result property="productDescription" column="PRODUCT_DESCRIPTION"/>
-		        <result property="productPrice" column="PRODUCT_PRICE"/>
-		        <result property="productColor" column="PRODUCT_COLOR"/>
-		        <result property="productThumbnail" column="PRODUCT_THUMBNAIL"/>
-		        <result property="productMain" column="PRODUCT_MAIN"/>
-		        <result property="productMain2" column="PRODUCT_MAIN2"/>
-		        <result property="productMain3" column="PRODUCT_MAIN3"/>
-		        <result property="productContent" column="PRODUCT_CONTENT"/>
-		        <result property="productCreateDate" column="PRODUCT_CREATE_DATE"/>
-		        <result property="productStock" column="PRODUCT_STOCK"/>
+			    <result property="productDescription" column="PRODUCT_DESCRIPTION"/>
+				<result property="productPrice" column="PRODUCT_PRICE"/>
+				<result property="productColor" column="PRODUCT_COLOR"/>
+				<result property="productThumbnail" column="PRODUCT_THUMBNAIL"/>
+				<result property="productMain" column="PRODUCT_MAIN"/>
+				<result property="productMain2" column="PRODUCT_MAIN2"/>
+				<result property="productMain3" column="PRODUCT_MAIN3"/>
+				<result property="productContent" column="PRODUCT_CONTENT"/>
+				<result property="productCreateDate" column="PRODUCT_CREATE_DATE"/>
+				<result property="productStock" column="PRODUCT_STOCK"/>
+				<result property="userId" column="USER_ID"/>
+				<result property="productStatus" column="PRODUCT_STATUS"/>
+				<result property="productCode" column="PRODUCT_CODE"/>
 		</resultMap>
 	
 	<!-- 쇼핑몰 카테고리 페이지 썸네일 노출 쿼리 -->
