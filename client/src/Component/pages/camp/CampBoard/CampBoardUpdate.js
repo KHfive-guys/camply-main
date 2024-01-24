@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Container } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
+import CampNavbar from '../CampNavbar';
+
 
 function UpdateBoard() {
   const { camp_id } = useParams();
@@ -55,6 +57,7 @@ function UpdateBoard() {
 
   return (
     <section>
+      <CampNavbar/>
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
