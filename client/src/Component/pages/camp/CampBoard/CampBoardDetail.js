@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Reply from './Board/Reply';
+import CampNavbar from '../CampNavbar';
 
 function CampBoardDetail() {
   const [boardData, setBoardData] = useState({});
@@ -109,6 +110,7 @@ function CampBoardDetail() {
 
   return (
     <section>
+      <CampNavbar/>
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./css/CampBoardAll.css";
 import { Container } from "react-bootstrap";
+import CampNavbar from '../CampNavbar';
 
 function CampBoardAll() {
   const [boardData, setBoardData] = useState([]);
@@ -24,6 +25,7 @@ function CampBoardAll() {
 
   return (
     <section>
+      <CampNavbar/>
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
