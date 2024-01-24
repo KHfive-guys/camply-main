@@ -15,7 +15,7 @@ import com.camply.shop.common.vo.OrderVO;
 import com.camply.shop.mypage.ordermanagement.service.OrderManagementService;
 
 @RestController
-@RequestMapping("/mypage")
+@RequestMapping("/shop/mypage")
 @CrossOrigin(origins="http://localhost:3000", allowCredentials="true", allowedHeaders="*")
 public class OrderManagementController {
 	@Autowired
