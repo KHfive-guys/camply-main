@@ -5,19 +5,16 @@ import "./css/CampBoardAll.css";
 import { Container } from "react-bootstrap";
 
 function CampBoardAll() {
-
   const [boardData, setBoardData] = useState([]);
 
   const handleRowClick = (camp_id) => {
     window.location.href = `/camp/board/get/${camp_id}`;
   };
-  
-  useEffect(() => {
 
+  useEffect(() => {
     axios
       .get("http://localhost:8080/camp/board/all")
       .then((response) => {
-        
         setBoardData(response.data);
       })
       .catch((error) => {

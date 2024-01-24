@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
     margin: 0;
+    text-decoration: none   ;
 }
 
 
@@ -265,46 +266,6 @@ div {
     border-radius: 3px;
 }
 
-.button-disabled {
-    display: inline-flex;
-    width: 28px;
-    height: 28px;
-    border: none;
-    font-size: 1px;
-    color: transparent;
-    background-size: cover;
-    background-color: transparent;
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhl…iI0RERCIgZmlsbC1ydWxlPSJub256ZXJvIi8+Cjwvc3ZnPgo=);
-    vertical-align: top;
-}
-
-
-.button-div {
-    display: inline-flex;
-    overflow: hidden;
-    white-space: nowrap;
-    -webkit-box-pack: center;
-    justify-content: center;
-    font-size: 14px;
-    color: rgb(51, 51, 51);
-    text-align: center;
-    width: 31px;
-    height: 28px;
-    line-height: 28px;
-}
-
-.buttn-2 {
-    display: inline-flex;
-    width: 28px;
-    height: 28px;
-    border: none;
-    font-size: 1px;
-    color: transparent;
-    background-size: cover;
-    background-color: transparent;
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHZpZXdCb3g9IjAgMCAzMCAzMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxwYXRoIGQ9Ik0xNiAxMHY0aDR2MmgtNHY0aC0ydi00aC00di0yaDR2LTRoMnoiIGZpbGw9IiMzMzMiIGZpbGwtcnVsZT0ibm9uemVybyIvPgo8L3N2Zz4K);
-    vertical-align: top;
-}
 
 .right-section-footer-div2 {
     padding-top: 4px;
@@ -571,6 +532,26 @@ a {
     font-size: 18px;
     line-height: 48px;
     text-align: center;
+}
+
+
+@keyframes movieText {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-60%);
+
+    }
+}
+.moving-text-container {
+    overflow: hidden;
+    width: 150%;
+    
+}
+
+.moving-text {
+    animation: movieText 3s linear infinite;
 }
 
 

@@ -25,7 +25,7 @@ const OrderMain = ()=> {
                                     <p className='item-title'>{order.productName}</p>
                                 </div>
                                 <p>
-                                    수량 :
+                                    {order.cartOrder} :
                                     <sapn>1</sapn>
                                 </p>
                                 <p>
