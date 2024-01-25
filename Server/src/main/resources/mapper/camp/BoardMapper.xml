@@ -15,6 +15,7 @@
         <result column="CAMP_PRICE" property="camp_price"/>
         <result column="CAMP_DESCRIPTION" property="camp_description"/>
         <result column="CAMP_IMAGE" property="camp_image"/>
+        <result column="CAMP_FACILITY" property="camp_facility"/>
     </resultMap>
 
     <insert id="insertBoard" parameterType="com.camply.camp.board.vo.BoardVO">
@@ -29,7 +30,8 @@
             CAMP_CHILD,
             CAMP_PRICE,
             CAMP_IMAGE,
-            CAMP_DESCRIPTION
+            CAMP_DESCRIPTION,
+            CAMP_FACILITY
         )
         VALUES (
                    #{user_id},
@@ -42,7 +44,8 @@
                    #{camp_child},
                    #{camp_price},
                    #{camp_image},
-                   #{camp_description}
+                   #{camp_description},
+                   #{camp_facility}
                )
     </insert>
 
@@ -71,7 +74,8 @@
             CAMP_CHILD = #{camp_child},
             CAMP_PRICE = #{camp_price},
             CAMP_DESCRIPTION = #{camp_description},
-            CAMP_IMAGE = #{camp_image}
+            CAMP_IMAGE = #{camp_image},
+            CAMP_FACILITY = #{camp_facility}
         WHERE CAMP_ID = #{camp_id}
     </update>
 
