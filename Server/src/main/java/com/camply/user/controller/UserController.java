@@ -28,15 +28,16 @@ public class UserController {
 	 */
 	@Autowired
 	private UserService userservice;
-	
-	
+
+
 	@PostMapping("/register")
-	public ResponseEntity emailRegister(@RequestBody UserVO uservo) {
-	
-		userservice.registerUser(uservo);
-		
-		
-		return ResponseEntity.ok("General email register Success");
+	public ResponseEntity<String> emailRegister(@RequestBody UserVO userVO) {
+		try {
+			userservice.registerUser(userVO);
+			return ResponseEntity.ok("General email register Success");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during registration: " + e.getMessage());
+		}
 	}
 	
 	 @GetMapping("/login")
