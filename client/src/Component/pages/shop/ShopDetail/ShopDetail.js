@@ -134,7 +134,7 @@ const ShopDetail = () => {
                             <div className='right-section-footer-div3'>
                                 <div className='right-section-footer-div3-div'>
                                     <div className='right-section-footer-div3-div-div1'>
-                                        <span className='right-section-footer-div3-span'>총 상품금액 : {quantity * (product.productPrice)}원</span>
+                                        <span className='right-section-footer-div3-span'>총 상품금액: {new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(quantity * product.productPrice)}</span>
                                     </div>
                                     <div className='right-section-footer-div3-div2'>
                                         <span className='right-section-footer-div3-div2-span'>적립</span>
@@ -170,8 +170,8 @@ const ShopDetail = () => {
           </main>
           <nav className='nav-first'>
             <ul className='nav-first-ul'>
-            <li className='nav-first-ul-li'>  
-                <Link to='/more'><span className='nav-first-ul-li-a-span'>상세정보</span></Link>
+              <li className='nav-first-ul-li'>  
+                <Link to="/"><span className='nav-first-ul-li-a-span'>상세정보</span></Link>
               </li> 
               <li className='nav-first-ul-li'>
                 <Link to="/review"><span className='nav-first-ul-li-a-span'>후기</span></Link>
@@ -181,13 +181,13 @@ const ShopDetail = () => {
                 <Link to={`/shop/detail/${productId}/inquiry`}><span className='nav-first-ul-li-a-span'>문의</span></Link>
               </li>
             </ul>
+          
             <Routes>
-                <Route path="/" element={<ShopMore/>}>
-                </Route>
-                <Route path="/review" element={<ShopReview/>}/>
-                <Route path="/inquiry" element={<ShopInquiry/>}/>
+                <Route path="/" element={<ShopMore/>} />
+                <Route path="/review" element={<ShopReview />} />
+                <Route path="/inquiry" element={<ShopInquiry />} />
             </Routes>   
-          </nav>
+          </nav>   
             
         </div>
         <div className='Footer'>

@@ -41,7 +41,7 @@ const CreateProduct = () => {
       );
       console.log(response.data);
       alert('상품이 성공적으로 등록되었습니다.');
-      navigate('/productMyPage');
+      navigate('/sell/list');
     } catch (error) {
       console.error('Error registering product:', error);
       alert('상품 등록에 실패했습니다.');

@@ -5,13 +5,13 @@ import { useParams } from 'react-router-dom';
 const ShopMore = () => {
   
   const { productId  } = useParams();
-  const [productContent, setproductContent] = useState(null);
+  const [product, setproduct] = useState(null);
 
   useEffect(() => {
     const fetchProductImage = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/detail/${productId}`);
-        setproductContent(response.data.image);
+        const response = await axios.get(`http://localhost:8080/shop/detail/${productId}`);
+        setproduct(response.data.image);
       } catch (error) {
         console.error('Error fetching product image', error);
        
@@ -23,14 +23,18 @@ const ShopMore = () => {
 
   return (
     <div>
-      <h2>상품 상세정보</h2>
+      <h2>상품 Content</h2>
       
-      {productContent && (
+      {product ? (
+        <>
         <img
-          src={productContent.productContent}
+          src={product.productContent}
           alt="Product Details"
           style={{ width: '100%', height: 'auto' }}
         />
+        </>
+      ):(
+        <p>상품을 찾을 수 없습니다.</p>
       )}
     </div>
   );

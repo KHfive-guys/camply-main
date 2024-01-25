@@ -43,6 +43,8 @@ import BBQ from './Component/pages/shop/Category/BBQ';
 import Chair from './Component/pages/shop/Category/Table';
 import CreateProduct from './Component/pages/shop/ShopOrder/CreateProduct';
 import SellerProduct from './Component/pages/shop/ShopOrder/SellerProduct';
+import UpdateProduct from './Component/pages/shop/ShopOrder/UpdateProduct';
+import ShopMore from './Component/pages/shop/ShopDetail/ShopMore';
 
 
 
@@ -61,7 +63,7 @@ function App() {
     <Router>
       <Routes>
         <Route
-          path="/"
+          path="/home"
           element={
             <div>
               <h1>안녕하세요. 캠플리에 오신걸 환영합니다.</h1>
@@ -71,6 +73,34 @@ function App() {
           }
         />
         <Route
+        path="/seller"
+        element={
+          <div>
+            <h1>상품관리 페이지.</h1>
+            <Link to="/seller/sell">상품등록</Link>
+            <Link to="/seller/list">상품리스트</Link>
+          </div>
+        }
+      />
+      
+      <Route
+    
+          path="/seller/*"
+          element={
+            <>
+              <Preloader load={load} />
+              <div className="App" id={load ? 'no-scroll' : 'scroll'}>
+                <Routes>
+                  <Route path="/sell" element={<CreateProduct />} />
+                  <Route path="/list" element={<SellerProduct />} />
+                  <Route path="/product/edit/:productId" element={<UpdateProduct/>} />
+                </Routes>
+              </div>
+            </>
+          }
+        />
+
+      <Route
           path="/camp/*"
           element={
             <>
@@ -119,9 +149,7 @@ function App() {
               <Routes>
               <Route path="/main" element={<ShopMain />} />
                 <Route path="/detail/:productId" element={<ShopDetail/>} />
-                <Route path="/order" element={<OrderMain />} />
-                <Route path="/sell" target="_blank"  element={<CreateProduct />} />
-                <Route path="/sell/list" element={<SellerProduct/>}/>
+                <Route path="/order" element={<OrderMain/>} />
                 <Route path="/mypage" element={<ShopMyPage />} />
                 <Route path="/cart" element={<Cart/>} />
                 <Route path="/tent" element={<Tent/>}/>
@@ -130,6 +158,7 @@ function App() {
                 <Route path="/kitchen" element={<Kitchen/>}/>S
                 <Route path="/lamp" element={<Lamp/>}/>
                 <Route path="/fireplace" element={<BBQ/>}/>
+                
                 
               </Routes>
             </ShopLayout>
