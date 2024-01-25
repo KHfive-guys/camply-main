@@ -30,7 +30,7 @@ public class UserController {
 	private UserService userservice;
 	
 	
-	@PostMapping("/userRegister")
+	@PostMapping("/register")
 	public ResponseEntity emailRegister(@RequestBody UserVO uservo) {
 	
 		userservice.registerUser(uservo);

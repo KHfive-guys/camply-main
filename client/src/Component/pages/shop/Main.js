@@ -14,7 +14,7 @@ const Main = () => {
       try {
         const productData = await Promise.all(
           productIds.map(async (productId) => {
-            const response = await axios.get(`http://localhost:8080/main/view/${productId}`);
+            const response = await axios.get(`http://localhost:8080/shop/main/view/${productId}`);
             return response.data;
           })
         );
