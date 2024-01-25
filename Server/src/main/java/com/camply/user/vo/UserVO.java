@@ -45,11 +45,3 @@ public class UserVO{
 	private String USER_BUSINESSPHONE;
 	
 }
-
-/**
- * 
- * 	여기는 테스트 하는곳 입니다.
- * 테스트를 하기위해서 뻘짓중이니 어쩔수 엄따
- * 
- */
- */

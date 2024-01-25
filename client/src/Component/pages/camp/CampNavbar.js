@@ -12,7 +12,6 @@ import { CgChevronDownO } from "react-icons/cg";
 import { CgCloseO } from "react-icons/cg";
 import { FiShoppingCart } from "react-icons/fi";
 import logo from '../../Assets/logo.png';
-import OpenWeatherMap from '../camp/CampMain/Home/openWeatherMap';
 
 function NavBar() {
   const location = useLocation();
@@ -83,6 +82,7 @@ function NavBar() {
                     <FaClipboardList style={{ marginBottom: '2px' }} /> 전체 상품
                   </Nav.Link>
                 </Nav.Item>
+                
               </>
             )}
 
@@ -98,16 +98,10 @@ function NavBar() {
                     <FiShoppingCart style={{ marginBottom: '2px' }} /> 쇼핑몰
                   </Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link as={Link} to="/shop/cart" onClick={() => updateExpanded(false)}>
-                    <FiShoppingCart style={{ marginBottom: '2px' }} /> 장바구니
-                  </Nav.Link>
-                </Nav.Item>
-                
+                {/* 추가적인 Shop에 대한 내용 */}
               </>
             )}
-          {isCampPath && (
-            <>
+
             <Nav.Item>
               <Nav.Link href="#" onClick={handleWeatherModalShow}>
                 <IoMdSunny style={{ marginBottom: '2px' }} /> 날씨
@@ -119,7 +113,7 @@ function NavBar() {
                 <Modal.Title>날씨</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <OpenWeatherMap />
+                {/* 날씨 정보 컴포넌트 등 */}
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleWeatherModalClose}>
@@ -127,8 +121,7 @@ function NavBar() {
                 </Button>
               </Modal.Footer>
             </Modal>
-            </>
-            )}
+
             <Nav.Item>
               <Nav.Link as={Link} to={isLoggedIn ? "/logout" : "/login"} onClick={() => updateExpanded(false)}>
                 {isLoggedIn ? <CgCloseO style={{ marginBottom: '2px' }} /> : <CgChevronDownO style={{ marginBottom: '2px' }} />}
