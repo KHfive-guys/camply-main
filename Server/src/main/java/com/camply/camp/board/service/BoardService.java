@@ -24,7 +24,6 @@ public class BoardService {
             throw new RuntimeException("Error inserting camp", e);
         }
     }
-
     public List<BoardVO> getAllBoard() {
         return boardDAO.getAllBoard();
     }

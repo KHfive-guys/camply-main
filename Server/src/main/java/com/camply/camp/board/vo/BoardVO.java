@@ -24,5 +24,6 @@ public class BoardVO {
     private Long camp_price;
     private String camp_image;
     private String camp_description;
+    private String camp_facility;
 
 }
