@@ -5,7 +5,9 @@ import manager from "../../img/manager.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from 'react-bootstrap';
 
-function Register() {
+const Register = () =>  {
+ 
+  
   return (
     <section>
       <Container fluid className="home-section" id="home">

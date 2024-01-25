@@ -24,7 +24,7 @@ const ShopDetail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/detail/${productId}`);
+        const response = await axios.get(`http://localhost:8080/shop/detail/${productId}`);
         setProduct(response.data);
       } catch (error) {
         console.log('Quantity:', quantity);

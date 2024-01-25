@@ -42,7 +42,7 @@ import Lamp from './Component/pages/shop/Category/Lamp';
 import BBQ from './Component/pages/shop/Category/BBQ';
 import Chair from './Component/pages/shop/Category/Table';
 import CreateProduct from './Component/pages/shop/ShopOrder/CreateProduct';
-
+import SellerProduct from './Component/pages/shop/ShopOrder/SellerProduct';
 
 
 
@@ -83,7 +83,13 @@ function App() {
                   <Route path="/reservation" element={<Reservations />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/inquiry" element={<Inquiry />} />
-                  <Route path="/register" element={<Register />} />
+                  
+                </Routes>
+              </div>
+            </>
+          }
+        />
+        <Route path="/register" element={<Register/>}/>
                   <Route
                     path="/register/general"
                     element={<GeneralRegister />}
@@ -100,20 +106,12 @@ function App() {
                     path="/register/manager/email"
                     element={<ManagerEmailRegister />}
                   />
-                </Routes>
-              </div>
-            </>
-          }
-        />
-        <Route
-          path="/register/manager/email"
-          element={<ManagerEmailRegister />}
-        />
         <Route path="/login" element={<Login />} />
         <Route path="/camp/board/add" element={<CampBoard />} />
         <Route path="/camp/board/all" element={<CampBoardAll />} />
         <Route path="/camp/board/get/:camp_id" element={<CampBoardDetail />} />
         <Route path="/camp/board/edit/:camp_id" element={<CampBoardUpdate />} />
+        
         <Route
           path="/shop/*"
           element={
@@ -123,6 +121,7 @@ function App() {
                 <Route path="/detail/:productId" element={<ShopDetail/>} />
                 <Route path="/order" element={<OrderMain />} />
                 <Route path="/sell" target="_blank"  element={<CreateProduct />} />
+                <Route path="/sell/list" element={<SellerProduct/>}/>
                 <Route path="/mypage" element={<ShopMyPage />} />
                 <Route path="/cart" element={<Cart/>} />
                 <Route path="/tent" element={<Tent/>}/>
