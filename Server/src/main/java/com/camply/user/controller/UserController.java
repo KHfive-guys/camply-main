@@ -30,7 +30,7 @@ public class UserController {
 	private UserService userservice;
 
 
-	@PostMapping("/register")
+	@PostMapping("/general/register")
 	public ResponseEntity<String> emailRegister(@RequestBody UserVO userVO) {
 		try {
 			userservice.registerUser(userVO);
@@ -39,8 +39,21 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during registration: " + e.getMessage());
 		}
 	}
+
+	@PostMapping("/admin/register")
+	public ResponseEntity<String> adminRegister(@RequestBody UserVO userVO) {
+		try {
+			userservice.registerAdmin(userVO);
+			return ResponseEntity.ok("Admin email register Success");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during registration: " + e.getMessage());
+		}
+	}
+
+
+
 	
-	 @GetMapping("/login")
+	 /*@GetMapping("/login")
 	    public ResponseEntity<?> login(@RequestBody UserVO camplyuservo) {
 		 
 				 
@@ -54,7 +67,7 @@ public class UserController {
 	        	if (camplyuservo_info.getUSER_TYPE().equals("Admin")) {
 		        	user_info.put("USER_ID", camplyuservo_info.getUSER_ID());
 		        	user_info.put("USER_EMAIL", camplyuservo_info.getUSER_EMAIL());
-		        	user_info.put("USER_BUSINESSNAME", camplyuservo_info.getUSER_BUSINESSNAME());
+		        	user_info.put("USER_BUSINESSNAME", camplyuservo_info.getUSER_BUSINESSADDRESS());
 		        	user_info.put("USER_BUSINESSNUMBER", camplyuservo_info.getUSER_BUSINESSNUMBER());
 		        	user_info.put("USER_TYPE", camplyuservo_info.getUSER_TYPE());
 	        	} else if (camplyuservo_info.getUSER_TYPE().equals("General")){
@@ -73,6 +86,8 @@ public class UserController {
 	        	user_info.put("message", "이메일 혹은 비밀번호가 일치하지 않습니다.");
 	            return new ResponseEntity<>(user_info, HttpStatus.UNAUTHORIZED);
 	        }
-	    }
+	    }*/
+
+
 }
 

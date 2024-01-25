@@ -2,17 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import logo from '../../img/Logo.png';
 import { Container } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 
-function EmailRegister() {
-  const [checkedItems, setCheckedItems] = useState([]);
 
-  const agreeHandler = (checked, value) => {
-    if (checked) {
-      setCheckedItems([...checkedItems, value]);
-    } else if (!checked && checkedItems.includes(value)) {
-      setCheckedItems(checkedItems.filter((el) => el !== value));
-    }
-  };
+function ManagerEmailRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
@@ -21,7 +14,16 @@ function EmailRegister() {
   const [companyAddress, setCompanyAddress] = useState("");
   const [companyPhone, setCompanyPhone] = useState("");
 
-  const onSubmit = async () => { };
+  const [checkedEmail, setCheckedEmail] = useState("");
+  const [checkedPassword, setCheckedPassword] = useState("");
+  const [checkedPassword2, setCheckedPassword2] = useState("");
+  const [checkedName, setCheckedName] = useState("");
+  const [checkedNickname, setCheckedNickname] = useState("");
+  const [checkedCompanyNumber, setCheckedCompanyNumber] = useState("");
+  const [checkedCompanyAddress, setCheckedCompanyAddress] = useState("");
+  const [checkedCompanyPhone, setCheckedCompanyPhone] = useState("");
+
+  const navigate = useNavigate();
 
   const emailCheck = async () => {
     if (email === "") {
@@ -33,9 +35,13 @@ function EmailRegister() {
     if (password === "") {
       setCheckedPassword("비밀번호를 입력해주세요.");
     } else {
-      var regex =
-        /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-      console.log("비밀번호 유효성 검사 :: ", regex.test(password));
+      var regex = /^[a-zA-Z0-9]+$/;
+
+      if (!regex.test(password)) {
+        setCheckedPassword("영문과 숫자만 사용 가능합니다.");
+      } else {
+        setCheckedPassword("");
+      }
     }
   };
 
@@ -77,16 +83,87 @@ function EmailRegister() {
     }
   };
 
-  const [checkedEmail, setCheckedEmail] = useState("");
-  const [checkedPassword, setCheckedPassword] = useState("");
-  const [checkedPassword2, setCheckedPassword2] = useState("");
-  const [checkedName, setCheckedName] = useState("");
-  const [checkedNickname, setCheckedNickname] = useState("");
-  const [checkedCompanyNumber, setCheckedCompanyNumber] = useState("");
-  const [checkedCompanyAddress, setCheckedCompanyAddress] = useState("");
-  const [checkedCompanyPhone, setCheckedCompanyPhone] = useState("");
+  const validateForm = () => {
+    let isValid = true;
 
+    if (email === "") {
+      setCheckedEmail("필수 항목입니다.");
+      isValid = false;
+    } else {
+      setCheckedEmail("");
+    }
 
+    if (password === "") {
+      setCheckedPassword("비밀번호를 입력해주세요.");
+      isValid = false;
+    } else {
+      const regex = /^[a-zA-Z0-9]+$/;
+      if (!regex.test(password)) {
+        setCheckedPassword("영문과 숫자만 사용 가능합니다.");
+        isValid = false;
+      } else {
+        setCheckedPassword("");
+      }
+    }
+
+    if (password !== document.getElementById("passwordConfirm").value) {
+      setCheckedPassword2("비밀번호가 일치하지 않습니다.");
+      isValid = false;
+    } else {
+      setCheckedPassword2("");
+    }
+
+    if (name === "") {
+      setCheckedName("필수 항목입니다.");
+      isValid = false;
+    } else {
+      setCheckedName("");
+    }
+
+    if (nickname === "") {
+      setCheckedNickname("필수 항목입니다.");
+      isValid = false;
+    } else {
+      setCheckedNickname("");
+    }
+
+    return isValid;
+  };
+
+  const onSubmit = async () => {
+    if (validateForm()) {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/user/admin/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              USER_EMAIL: email,
+              USER_PASSWORD: password,
+              USER_NAME: name,
+              USER_NICKNAME: nickname,
+              USER_BUSINESSNUMBER: companyNumber,
+              USER_BUSINESSADDRESS: companyAddress, 
+              USER_BUSINESSPHONE: companyPhone,
+              USER_TYPE: "Admin",
+            }),
+          }
+        );
+        if (response.ok) {
+          console.log("Registration successful");
+
+          navigate("/login");
+        } else {
+          console.error("Registration failed");
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+      }
+    }
+  };
 
   return (
     <section>
@@ -141,7 +218,7 @@ function EmailRegister() {
                       id="password"
                       type="password"
                       value={password}
-                      placeholder="비밀번호 (영문+숫자+특수문자 8자 이상)"
+                      placeholder="비밀번호 (영문+숫자 8자 이상)"
                       required
                       onChange={(e) => {
                         setPassword(e.target.value);
@@ -278,35 +355,6 @@ function EmailRegister() {
                 <FormError>{checkedCompanyPhone}</FormError>
               </FormBlock>
 
-              <FormBlockCheckAllWrap>
-                <Terms>
-                  <TermsBody>
-                    <TermsItem>
-                      <InputCheckBox>
-                        {/* <Terms1 type="checkbox"></Terms1> */}
-                        <input
-                          type="checkbox"
-                          value="provision"
-                          onChange={(e) => {
-                            agreeHandler(e.currentTarget.checked, e.target.value);
-                          }}
-                          checked={
-                            checkedItems.includes("provision") ? true : false
-                          }
-                        />
-                      </InputCheckBox>
-                      <Terms1Label>만 19세 이상입니다.</Terms1Label>
-                    </TermsItem>
-                    {/*  */}
-                    <TermsItem></TermsItem>
-                    {/*  */}
-                  </TermsBody>
-                </Terms>
-
-                <Terms1Error />
-                <TermsError />
-              </FormBlockCheckAllWrap>
-
               <FormBlockSubmit>
                 <FormBlockBody>
                   <BtnLogin
@@ -319,6 +367,7 @@ function EmailRegister() {
                   </BtnLogin>
                 </FormBlockBody>
               </FormBlockSubmit>
+
             </LoginSection>
           </LoginWrap>
         </ReauthPhone>
@@ -594,4 +643,4 @@ const WrapLogin = styled.div`
   background: #fff;
 `;
 
-export default EmailRegister;
+export default ManagerEmailRegister;

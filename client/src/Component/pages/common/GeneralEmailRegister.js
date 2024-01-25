@@ -10,6 +10,11 @@ function GeneralEmailRegister() {
   const [checkedPassword2, setCheckedPassword2] = useState("");
   const [checkedName, setCheckedName] = useState("");
   const [checkedNickname, setCheckedNickname] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [name, setName] = useState("");
   const navigate = useNavigate();
 
   const emailCheck = async () => {
@@ -52,10 +57,7 @@ function GeneralEmailRegister() {
     }
   };
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [name, setName] = useState("");
+  
 
   const validateForm = () => {
     let isValid = true;
@@ -108,7 +110,7 @@ function GeneralEmailRegister() {
     if (validateForm()) {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/user/register",
+          "http://localhost:8080/api/user/general/register",
           {
             method: "POST",
             headers: {
@@ -271,6 +273,7 @@ function GeneralEmailRegister() {
                   </BtnLogin>
                 </FormBlockBody>
               </FormBlockSubmit>
+
             </LoginSection>
           </LoginWrap>
         </ReauthPhone>

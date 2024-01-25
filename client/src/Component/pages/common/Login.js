@@ -9,16 +9,14 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  let body = {
-    username: email,
-    password: password,
-  };
-
   const onSubmit = async () => {
     try {
       const response = await axios.post(
-        "",
-        body,
+        "http://localhost:8080/api/user/emailLogin", // Update the URL to your API endpoint
+        {
+          USER_EMAIL: email,
+          USER_PASSWORD: password,
+        },
         {
           headers: { "Content-Type": "application/json" },
         }
@@ -26,7 +24,7 @@ function Login() {
 
       console.log(response.data.token);
 
-      if (response.data.token !== null) {
+      if (response.data.token) {
         localStorage.clear();
         localStorage.setItem("token", response.data.token);
         console.log("response.data.token:  " + response.data.token);
@@ -36,12 +34,11 @@ function Login() {
         setEmail("");
         setPassword("");
         localStorage.clear();
+        alert("이메일이나 비밀번호가 일치하지 않습니다.");
       }
     } catch (e) {
-      alert(
-        "회원 정보가 일치 하지 않습니다. 아이디와 비민번호를 다시 확인해 주세요!"
-      );
       console.log(e);
+      alert("로그인에 실패했습니다. 다시 시도해 주세요.");
     }
   };
 
