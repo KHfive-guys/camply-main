@@ -12,6 +12,8 @@ import { CgChevronDownO } from "react-icons/cg";
 import { CgCloseO } from "react-icons/cg";
 import { FiShoppingCart } from "react-icons/fi";
 import logo from '../../Assets/logo.png';
+import OpenWeatherMap from '../camp/CampMain/Home/openWeatherMap';
+
 
 function NavBar() {
   const location = useLocation();
@@ -70,7 +72,7 @@ function NavBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto" defaultActiveKey="#home">
             <Nav.Item>
-              <Nav.Link as={Link} to="/" onClick={() => updateExpanded(false)}>
+              <Nav.Link as={Link} to="/home" onClick={() => updateExpanded(false)}>
                 <AiOutlineHome style={{ marginBottom: '2px' }} /> 홈페이지
               </Nav.Link>
             </Nav.Item>
@@ -82,27 +84,7 @@ function NavBar() {
                     <FaClipboardList style={{ marginBottom: '2px' }} /> 전체 상품
                   </Nav.Link>
                 </Nav.Item>
-                
-              </>
-            )}
-
-            {isShopPath && (
-              <>
                 <Nav.Item>
-                  <Nav.Link as={Link} to="/shop/sell" onClick={() => updateExpanded(false)}>
-                    <AiOutlineHome style={{ marginBottom: '2px' }} /> 상품등록
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link as={Link} to="/shop/main" onClick={() => updateExpanded(false)}>
-                    <FiShoppingCart style={{ marginBottom: '2px' }} /> 쇼핑몰
-                  </Nav.Link>
-                </Nav.Item>
-                {/* 추가적인 Shop에 대한 내용 */}
-              </>
-            )}
-
-            <Nav.Item>
               <Nav.Link href="#" onClick={handleWeatherModalShow}>
                 <IoMdSunny style={{ marginBottom: '2px' }} /> 날씨
               </Nav.Link>
@@ -113,7 +95,7 @@ function NavBar() {
                 <Modal.Title>날씨</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                {/* 날씨 정보 컴포넌트 등 */}
+                <OpenWeatherMap/>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleWeatherModalClose}>
@@ -121,6 +103,32 @@ function NavBar() {
                 </Button>
               </Modal.Footer>
             </Modal>
+            <Nav.Item>
+                  <Nav.Link as={Link} to="/shop/main" onClick={() => updateExpanded(false)}>
+                    <AiOutlineHome style={{ marginBottom: '2px' }} /> 쇼핑몰
+                  </Nav.Link>
+                </Nav.Item>
+                
+              </>
+            )}
+
+            {isShopPath && (
+              <>
+                <Nav.Item>
+                  <Nav.Link as={Link} to="/seller" onClick={() => updateExpanded(false)}>
+                    <AiOutlineHome style={{ marginBottom: '2px' }} /> 상품등록
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link as={Link} to="/shop/cart" onClick={() => updateExpanded(false)}>
+                    <FiShoppingCart style={{ marginBottom: '2px' }} /> 장바구니
+                  </Nav.Link>
+                </Nav.Item>
+                {/* 추가적인 Shop에 대한 내용 */}
+              </>
+            )}
+
+            
 
             <Nav.Item>
               <Nav.Link as={Link} to={isLoggedIn ? "/logout" : "/login"} onClick={() => updateExpanded(false)}>

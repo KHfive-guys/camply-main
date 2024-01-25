@@ -30,7 +30,7 @@ const ProductMyPage = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
         await axios.delete(
-          `http://localhost:8080/mypage/productDelete/${productId}`
+          `http://localhost:8080/shop/mypage/productDelete/${productId}`
         );
         setProducts(products.filter((p) => p.productId !== productId));
       } catch (error) {
@@ -151,7 +151,7 @@ const ProductMyPage = () => {
                   <NavDropdown title="..." id="basic-nav-dropdown">
                     <NavDropdown.Item
                       as={Link}
-                      to={`/editProduct/${ShopProduct.productId}`}
+                      to={`/seller/product/edit/${ShopProduct.productId}`}
                     >
                       수정
                     </NavDropdown.Item>

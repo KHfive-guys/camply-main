@@ -7,7 +7,7 @@ import ShopDetail from "./ShopDetail/ShopDetail";
 
 const Main = () => {
   const [products, setProducts] = useState([]);
-  const [productIds] = useState([97,99]);
+  const [productIds] = useState([97,99,113,115,103,105,107]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,12 +27,6 @@ const Main = () => {
     fetchData();
   }, [productIds]);
   
-
-
-  
-
-
-
 
 
 
