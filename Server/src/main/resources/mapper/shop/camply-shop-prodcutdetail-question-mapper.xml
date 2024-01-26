@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.camply.shop.productdetail.questioncomment.dao.CommentDao">
-
-<!--댓글 표시-->
-   <resultMap id="CommentView" type="com.camply.shop.productdetail.questioncomment.vo.CommentVO">
-			<id property="commentNo" column="COMMENT_NO"/>
-			  	<result property="questionNo" column="QUESTION_NO"/>
-			  	<result property="commentText" column="COMMENT_TEXT"/>
-			  	<result property="commentDate" column="COMMENT_DATE"/>
-		        
+<mapper namespace="com.camply.shop.productdetail.question.dao.QuestionDao">
+   
+   
+   <!--문의글 조회-->
+   <resultMap id="selectQuestion" type="com.camply.shop.productdetail.question.vo.QuestionVO">
+			<id property="questionNo" column="QUESTION_NO"/>
+			  	<result property="questionTitle" column="QUESTION_TITLE"/>
+			  	<result property="questionText" column="QUESTION_TEXT"/>
+		        <result property="questionName" column="QUESTION_NAME"/>
+		        <result property="questionDate" column="QUESTION_DATE"/>
+		        <result property="questionHit" column="QUESTION_HIT"/>
 	</resultMap>
-	<select id="getComment" resultMap="CommentView" parameterType="int" >
-		SELECT * FROM Shop_Question_Comment WHERE comment_no = #{commentNo}
+	<select id="getQuestion" resultMap="selectQuestion" parameterType="int" >
+		SELECT * FROM Shop_Question WHERE question_no = #{questionNo}
 	</select>
 	
-<!--댓글 작성  -->
-    <insert id="insertComment" parameterType="com.camply.shop.productdetail.questioncomment.vo.CommentVO">
-        INSERT INTO SHOP_QUESTION_COMMENT (comment_no,question_no, comment_text, comment_date)
-        VALUES (QUESTION_COMMENT_SEQ.NEXTVAL, #{questionNo}, #{commentText},sysdate)
+   <!--문의글 작성-->
+    <insert id="insertQuestion" parameterType="com.camply.shop.productdetail.question.vo.QuestionVO">
+        INSERT INTO Shop_Question (question_no, question_title, question_text, question_name, question_date, question_hit)
+        VALUES (QUESTION_NO_SEQ.NEXTVAL, #{questionTitle}, #{questionText}, #{questionName}, sysdate, 0)
     </insert>
+    <!--문의글 조회수 증가 -->
+    <update id="incrementQuestionHit" parameterType="int">
+    UPDATE Shop_Question
+    SET question_hit = question_hit + 1
+    WHERE question_no = #{questionNo}
+	</update>
+    
+       <!--문의글 목록 조회-->
+    <select id="selectAllQuestions" resultType="com.camply.shop.productdetail.question.vo.QuestionVO">
+ 	   SELECT * FROM Shop_Question
+    </select>
 </mapper>
