@@ -1,54 +1,51 @@
-import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { Container } from 'react-bootstrap';
-
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const onSubmit = async () => {
+  const navigate = useNavigate();
+
+  const [USER_EMAIL, setEmail] = useState("");
+  const [USER_PASSWORD, setPassword] = useState("");
+
+  const emailLogin = async () => {
+
+    console.log("login button USER_EMAIL" + USER_EMAIL);
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/user/emailLogin", // Update the URL to your API endpoint
+      const response = await fetch (
+        "http://localhost:8080/api/user/login",
         {
-          USER_EMAIL: email,
-          USER_PASSWORD: password,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          headers : {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "POST, GET, PUT",
+            "Access-Control-Allow-Headers": "Content-Type",
+          }, body: JSON.stringify({
+            USER_EMAIL: USER_EMAIL,
+            USER_PASSWORD : USER_PASSWORD,
+          }),
         }
       );
 
-      console.log(response.data.token);
-
-      if (response.data.token) {
-        localStorage.clear();
-        localStorage.setItem("token", response.data.token);
-        console.log("response.data.token:  " + response.data.token);
-
-        window.location.replace("/");
-      } else {
-        setEmail("");
-        setPassword("");
-        localStorage.clear();
-        alert("이메일이나 비밀번호가 일치하지 않습니다.");
-      }
-    } catch (e) {
-      console.log(e);
-      alert("로그인에 실패했습니다. 다시 시도해 주세요.");
+      if (response.ok) {
+          const user_info = await response.json();
+          
+          console.log('Login successful. Member info:', user_info);
+          navigate("/camp");
+          // 여기에서 memberInfo를 상태로 저장하거나 다른 처리를 수행할 수 있습니다.
+        } else {
+          console.error('Invalid username or password');
+        }
+    } catch (error) {
+      console.error("Error during login:", error);
     }
   };
 
-  return (
-    <section>
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content">
-        </Container>
-      </Container>
 
+  return (
+    <>
       <LoginWrap>
         <LoginContainer>
           <LoginHeadLogo>
@@ -72,7 +69,7 @@ function Login() {
                 href="">
                 <SpIcon className="naver"></SpIcon>
               </RadiusButton>
-
+              
               <RadiusButton className="kakao" href="">
                 <SpIcon className="kakao"></SpIcon>
               </RadiusButton>
@@ -88,20 +85,20 @@ function Login() {
                 <EmailLoginInput
                   id="email"
                   type="email"
-                  value={email}
+                  value={USER_EMAIL}
                   placeholder="이메일"
                   required
                   onChange={(e) => {
-                    setEmail(e.target.value);
+                    setEmail(e.target.value)
                   }}
                 />
                 <EmailLoginInput
                   id="password"
-                  value={password}
+                  value={USER_PASSWORD}
                   placeholder="비밀번호"
                   required
                   onChange={(e) => {
-                    setPassword(e.target.value);
+                    setPassword(e.target.value)
                   }}
                 />
               </div>
@@ -118,22 +115,23 @@ function Login() {
             <CommonButton
               type="button"
               onClick={() => {
-                onSubmit();
-                console.log("body: " + email + ", " + password);
+                // onSubmit();
+                emailLogin();
               }}
             >
               로그인
             </CommonButton>
 
             <RegisterButton type="button">
-              <Link to="/register">
+            <Link to="/register">
                 회원가입
-              </Link>
+          </Link>
             </RegisterButton>
+
           </LoginSigninContent>
         </LoginContainer>
       </LoginWrap>
-    </section>
+    </>
   );
 }
 
