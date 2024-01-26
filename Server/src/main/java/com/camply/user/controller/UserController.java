@@ -53,16 +53,14 @@ public class UserController {
 
 
 	
-	 /*@GetMapping("/login")
-	    public ResponseEntity<?> login(@RequestBody UserVO camplyuservo) {
+		@PostMapping("/login")
+	    public ResponseEntity<?> login(@RequestBody UserVO userVO) {
 		 
-				 
 		 HashMap<String, String> user_info = new HashMap<String, String>();
 
-		 UserVO camplyuservo_info= userservice.getMemberByUsername(camplyuservo.getUSER_EMAIL());
-		 
-	        
-	        if (camplyuservo_info != null && camplyuservo_info.getUSER_PASSWORD().equals(camplyuservo.getUSER_PASSWORD())) {
+		 UserVO camplyuservo_info= userservice.getMemberByUsername(userVO.getUSER_EMAIL());
+
+	        if (camplyuservo_info != null && camplyuservo_info.getUSER_PASSWORD().equals(userVO.getUSER_PASSWORD())) {
 
 	        	if (camplyuservo_info.getUSER_TYPE().equals("Admin")) {
 		        	user_info.put("USER_ID", camplyuservo_info.getUSER_ID());
@@ -77,8 +75,6 @@ public class UserController {
 		        	user_info.put("USER_NICKNAME", camplyuservo_info.getUSER_NICKNAME());
 		        	user_info.put("USER_TYPE", camplyuservo_info.getUSER_TYPE());
 	        	}
-
-	       
 	        	return new ResponseEntity<>(user_info, HttpStatus.OK);
 	        } else {
 
@@ -86,7 +82,7 @@ public class UserController {
 	        	user_info.put("message", "이메일 혹은 비밀번호가 일치하지 않습니다.");
 	            return new ResponseEntity<>(user_info, HttpStatus.UNAUTHORIZED);
 	        }
-	    }*/
+	    }
 
 
 }

@@ -30,7 +30,7 @@ public class UserService {
 	}
 
     public UserVO getMemberByUsername(String USER_EMAIL) {
-    	
+
         return Userdao.selectEmail(USER_EMAIL);
     }
 
