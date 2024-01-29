@@ -1,16 +1,62 @@
-import React  from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
-import logo from '../../img/Logo.png';
-import { Link } from "react-router-dom";
-import { Container } from 'react-bootstrap';
+import logo from "../../img/Logo.png";
+import { Link, useNavigate } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
 function Register() {
+  const handleNaverLogin = () => {
+    const naverLogin = new window.naver.LoginWithNaverId({
+      clientId: "HQHp_3R0uDH7Ey5eoKgv",
+      callbackUrl: "http://localhost:8080/naver/callback",
+      isPopup: false,
+      loginButton: { color: "green", type: 3, height: 42 },
+    });
+
+    naverLogin.init();
+
+    naverLogin.getLoginStatus((status) => {
+      if (status) {
+        const uniqueId = naverLogin.user.getId();
+        const email = naverLogin.user.getEmail();
+      }
+    });
+  };
+
+    const [kakaoEmail, setKakaoEmail] = useState("");
+    const navigate = useNavigate();
+  
+    const handleKakaoLogin = () => {
+      if (!window.Kakao.isInitialized()) {
+        window.Kakao.init("e4e518b34dec41360511f03ad7a9ac61");
+      }
+    
+      window.Kakao.Auth.login({
+        success: (authObj) => {
+          window.Kakao.API.request({
+            url: "/v2/user/me",
+            success: (response) => {
+              const email = response.kakao_account.email;
+    
+              // Pass Kakao email as state while navigating
+              navigate("/register/kakao", { state: { email } });
+            },
+            fail: (error) => {
+              console.error(error);
+            },
+          });
+        },
+        fail: (error) => {
+          console.error(error);
+        },
+      });
+    };
+
 
   return (
     <section>
       <Container fluid className="home-section" id="home">
-        <Container className="home-content">
-        </Container>
+        <Container className="home-content"></Container>
       </Container>
 
       <LoginWrap>
@@ -26,16 +72,16 @@ function Register() {
             <Title>회원가입 방법 선택하기</Title>
             <LoginSns className="wrap">
               <Item>
-                <Kakaotalk href="">
+                <button onClick={handleKakaoLogin}>
                   <SpIcon className="Kakaotalk" />
-                  "카카오톡으로 가입하기"
-                </Kakaotalk>
+                  카카오톡으로 가입하기
+                </button>
               </Item>
               <Item>
-                <Naver href="">
-                  <SpIcon className="" />
+                <button onClick={handleNaverLogin}>
+                  <SpIcon className="SpNaver" />
                   네이버로 가입하기
-                </Naver>
+                </button>
               </Item>
               <Item>
                 <Link to="/register/general/email">
