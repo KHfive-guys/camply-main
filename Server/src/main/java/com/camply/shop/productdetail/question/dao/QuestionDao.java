@@ -22,7 +22,7 @@ public interface QuestionDao {
 	void incrementQuestionHit(int questionNo);
 	
 	// 문의 수정
-	void updateQuestion(int questionNo);
+	void updateQuestion(int questionNo, QuestionVO question);
 	
 	// 문의 삭제
 	void deleteQuestion(int questionNo);

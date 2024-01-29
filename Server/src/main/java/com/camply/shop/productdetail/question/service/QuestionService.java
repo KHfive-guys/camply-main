@@ -37,8 +37,8 @@ public class QuestionService {
 	
 	//문의 수정
 	@Transactional
-	public void questionUpdate(int questionNo) {
-		questionDao.updateQuestion(questionNo);
+	public void questionUpdate(int questionNo, QuestionVO question) {
+		questionDao.updateQuestion(questionNo,question);
 	}
 	
 	//문의 삭제

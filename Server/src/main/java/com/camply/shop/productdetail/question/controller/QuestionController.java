@@ -2,6 +2,7 @@ package com.camply.shop.productdetail.question.controller;
 
 import java.util.List;
 
+import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -50,12 +51,11 @@ public class QuestionController {
 		questionService.postQuestion(questionVO);
 		return ResponseEntity.ok("success");
 	}
-
-	// 문의수정
-	@PatchMapping("/update")
-	public void updateQuestion(@PathVariable int questionNo) {
-		questionService.questionUpdate(questionNo);
-
+	
+	//문의 수정
+	@PatchMapping("/update/{questionNo}")
+	public void updateQuestion(@PathVariable int questionNo, @RequestBody QuestionVO question) {
+	    questionService.questionUpdate(questionNo, question);
 	}
 	
 	//문의삭제

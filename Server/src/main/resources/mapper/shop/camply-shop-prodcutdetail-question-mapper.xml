@@ -36,7 +36,7 @@
     </select>
     
     <!--문의글 수정  -->
-    <update id="updateQuestion" parameterType="int">
+    <update id="updateQuestion" parameterType="com.camply.shop.productdetail.question.vo.QuestionVO">
     UPDATE Shop_Question
     SET QUESTION_TITLE = #{questionTitle}, QUESTION_TEXT = #{questionText}
     WHERE QUESTION_NO = #{questionNo}
