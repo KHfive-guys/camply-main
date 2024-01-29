@@ -6,15 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import com.camply.user.service.UserService;
 import com.camply.user.vo.UserVO;
@@ -87,6 +85,25 @@ public class UserController {
 	        }
 	    }
 
+	@GetMapping("/general/register")
+	public String loginSuccess(@AuthenticationPrincipal OAuth2User principal,
+							   @RequestParam(value = "naverResponse", required = false) String naverResponse,
+							   @RequestParam(value = "kakaoResponse", required = false) String kakaoResponse,
+							   Model model) {
 
+		if (naverResponse != null) {
+			// 네이버로 로그인한 경우
+			// 네이버 응답 처리
+			userservice.naverLogin(
+					principal.getAttribute("email")
+			);
+		} else if (kakaoResponse != null) {
+			userservice.kakaoLogin(
+					principal.getAttribute("email")
+			);
+		}
+		model.addAttribute("email", principal.getAttribute("email"));
+		return "loginSuccess";
+	}
 }
 
