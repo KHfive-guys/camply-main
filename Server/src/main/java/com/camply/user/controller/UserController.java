@@ -53,7 +53,7 @@ public class UserController {
 
 
 	
-	@GetMapping("/login")
+	@PostMapping("/login")
 	    public ResponseEntity<?> login(@RequestBody UserVO camplyuservo) {
 		 
 				 
