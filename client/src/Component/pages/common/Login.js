@@ -3,46 +3,39 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-
   const navigate = useNavigate();
 
   const [USER_EMAIL, setEmail] = useState("");
   const [USER_PASSWORD, setPassword] = useState("");
 
   const emailLogin = async () => {
-
     console.log("login button USER_EMAIL" + USER_EMAIL);
     try {
-      const response = await fetch (
-        "http://localhost:8080/api/user/login",
-        {
-          method: "POST",
-          headers : {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "POST, GET, PUT",
-            "Access-Control-Allow-Headers": "Content-Type",
-          }, body: JSON.stringify({
-            USER_EMAIL: USER_EMAIL,
-            USER_PASSWORD : USER_PASSWORD,
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:8080/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Origin: "http://localhost:3000", // Replace with your frontend URL
+        },
+        body: JSON.stringify({
+          USER_EMAIL: USER_EMAIL,
+          USER_PASSWORD: USER_PASSWORD,
+        }),
+      });
 
       if (response.ok) {
-          const user_info = await response.json();
-          
-          console.log('Login successful. Member info:', user_info);
-          navigate("/camp");
-          // 여기에서 memberInfo를 상태로 저장하거나 다른 처리를 수행할 수 있습니다.
-        } else {
-          console.error('Invalid username or password');
-        }
+        const user_info = await response.json();
+
+        console.log("Login successful. Member info:", user_info);
+        navigate("/camp");
+        // 여기에서 memberInfo를 상태로 저장하거나 다른 처리를 수행할 수 있습니다.
+      } else {
+        console.error("Invalid username or password");
+      }
     } catch (error) {
       console.error("Error during login:", error);
     }
   };
-
 
   return (
     <>
@@ -64,16 +57,13 @@ function Login() {
           </LoginHeadText>
           <LoginSignupContent>
             <HorizontalButtons>
-              <RadiusButton
-                className="naver"
-                href="">
+              <RadiusButton className="naver" href="">
                 <SpIcon className="naver"></SpIcon>
               </RadiusButton>
-              
+
               <RadiusButton className="kakao" href="">
                 <SpIcon className="kakao"></SpIcon>
               </RadiusButton>
-
             </HorizontalButtons>
           </LoginSignupContent>
           <LoginSigninContent>
@@ -89,7 +79,7 @@ function Login() {
                   placeholder="이메일"
                   required
                   onChange={(e) => {
-                    setEmail(e.target.value)
+                    setEmail(e.target.value);
                   }}
                 />
                 <EmailLoginInput
@@ -98,7 +88,7 @@ function Login() {
                   placeholder="비밀번호"
                   required
                   onChange={(e) => {
-                    setPassword(e.target.value)
+                    setPassword(e.target.value);
                   }}
                 />
               </div>
@@ -123,11 +113,8 @@ function Login() {
             </CommonButton>
 
             <RegisterButton type="button">
-            <Link to="/register">
-                회원가입
-          </Link>
+              <Link to="/register">회원가입</Link>
             </RegisterButton>
-
           </LoginSigninContent>
         </LoginContainer>
       </LoginWrap>
@@ -270,7 +257,6 @@ const RadiusButton = styled.a`
     padding-right: 4px;
     background: #3c5b96;
   }
-
 `;
 
 const HorizontalButtons = styled.div`
@@ -306,7 +292,6 @@ const SpIcon = styled.span`
   font-size: 0;
   line-height: 0;
   letter-spacing: 0;
-
 
   &.kakao {
     background-position: -631px -626px;
@@ -365,7 +350,6 @@ const LoginHeadText = styled.div`
       left: 0;
     }
   }
-
 `;
 
 const LoginHeadLogo = styled.div`

@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "../../img/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import KakaoLogin from 'react-kakao-login';
+
 
 function Register() {
   const handleNaverLogin = () => {
@@ -23,34 +25,37 @@ function Register() {
     });
   };
 
-    const [kakaoEmail, setKakaoEmail] = useState("");
-    const navigate = useNavigate();
-  
-    const handleKakaoLogin = () => {
-      if (!window.Kakao.isInitialized()) {
-        window.Kakao.init("e4e518b34dec41360511f03ad7a9ac61");
-      }
-    
-      window.Kakao.Auth.login({
-        success: (authObj) => {
-          window.Kakao.API.request({
-            url: "/v2/user/me",
-            success: (response) => {
-              const email = response.kakao_account.email;
-    
-              // Pass Kakao email as state while navigating
-              navigate("/register/kakao", { state: { email } });
+  const navigate = useNavigate();
+
+  const handleKakaoLogin = async (response) => {
+    const { email, nickname } = response.profile.kakao_account;
+
+    try {
+        const registrationResponse = await fetch("http://localhost:8080/login/oauth2/code/kakao", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Anonymous" 
             },
-            fail: (error) => {
-              console.error(error);
-            },
-          });
-        },
-        fail: (error) => {
-          console.error(error);
-        },
-      });
-    };
+            mode: "cors",
+            credentials: "include",
+            body: JSON.stringify({
+                USER_EMAIL: email,
+                USER_NAME: nickname,
+                USER_NICKNAME: nickname,
+            }),
+        });
+
+        if (registrationResponse.ok) {
+            console.log("카카오 회원가입 성공");
+            navigate("/login");
+        } else {
+            console.error("카카오 회원가입 실패");
+        }
+    } catch (error) {
+        console.error("카카오 회원가입 실패", error);
+    }
+};
 
 
   return (
@@ -71,12 +76,18 @@ function Register() {
 
             <Title>회원가입 방법 선택하기</Title>
             <LoginSns className="wrap">
-              <Item>
-                <button onClick={handleKakaoLogin}>
-                  <SpIcon className="Kakaotalk" />
-                  카카오톡으로 가입하기
-                </button>
-              </Item>
+            <Item>
+                <KakaoLogin
+                    token="e4e518b34dec41360511f03ad7a9ac61"
+                    onSuccess={handleKakaoLogin}
+                    onFail={(e) => console.log(e)}
+                    onLogout={(e) => console.log(e)}
+                >
+                    <button>
+                        카카오톡으로 가입하기
+                    </button>
+                </KakaoLogin>
+            </Item>
               <Item>
                 <button onClick={handleNaverLogin}>
                   <SpIcon className="SpNaver" />
@@ -118,7 +129,6 @@ const Hidden = styled.div`
   }
 `;
 const More = styled.button``;
-const Kakaotalk = styled.a``;
 const Item = styled.div``;
 
 const LoginSns = styled.div`
@@ -153,11 +163,6 @@ const LoginSns = styled.div`
 
       ${Naver} {
         background: #63c33d;
-      }
-
-      ${Kakaotalk} {
-        background: #fce84d;
-        color: #333;
       }
 
       ${More} {
@@ -246,12 +251,6 @@ const LoginSection = styled.section`
 const SpIcon = styled.span`
   &.SpNaver {
     background-position: -689px 0px;
-    width: 32px;
-    padding-top: 32px;
-  }
-
-  &.Kakaotalk {
-    background-position: -631px -626px;
     width: 32px;
     padding-top: 32px;
   }

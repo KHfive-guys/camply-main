@@ -38,8 +38,6 @@ import Chair from "./Component/pages/shop/Category/Table";
 import CreateProduct from "./Component/pages/shop/ShopOrder/CreateProduct";
 import SellerProduct from "./Component/pages/shop/ShopOrder/SellerProduct";
 import UpdateProduct from "./Component/pages/shop/ShopOrder/UpdateProduct";
-import ShopMore from "./Component/pages/shop/ShopDetail/ShopMore";
-import KakaoRegister from "./Component/pages/common/KakaoRegister";
 
 function App() {
   const [load, upadateLoad] = useState(true);
@@ -118,7 +116,6 @@ function App() {
         <Route path="/register/manager" element={<ManagerRegister />} />
         <Route path="/register/general/email" element={<GeneralEmailRegister />} />
         <Route path="/register/manager/email" element={<ManagerEmailRegister />} />
-        <Route path="/register/kakao" element={<KakaoRegister />} />
         <Route path="/login" element={<Login />} />
         <Route path="/camp/board/add" element={<CampBoard />} />
         <Route path="/camp/board/all" element={<CampBoardAll />} />

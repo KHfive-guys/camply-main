@@ -31,22 +31,26 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 public class camplyUserSecurityConfig {
+
+
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Add your React app's origin
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
 		configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origins", "Content-Type", "Accept", "Authorization"));
 		configuration.setAllowCredentials(true);
+
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
+
 		return source;
 	}
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-				.cors(cors -> cors.disable())
+				.cors(cors -> {})
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
@@ -54,14 +58,14 @@ public class camplyUserSecurityConfig {
 				)
 				.oauth2Login(oauth2Login ->
 						oauth2Login
-								.successHandler(new SimpleUrlAuthenticationSuccessHandler("/loginSuccess")))
+								.successHandler(new SimpleUrlAuthenticationSuccessHandler("/home")))
 
 				.formLogin(formLogin ->
 						formLogin
 								.loginPage("/login")
 								.usernameParameter("USER_EMAIL")
 								.passwordParameter("USER_PASSWORD")
-								.defaultSuccessUrl("/")
+								.defaultSuccessUrl("/home")
 								.failureUrl("/login")
 				)
 				.logout(logout ->
@@ -69,6 +73,10 @@ public class camplyUserSecurityConfig {
 								.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 								.logoutSuccessUrl("/")
 								.invalidateHttpSession(true)
+
+				)
+				.anonymous(anonymous -> anonymous
+						.authorities("ROLE_ANONYMOUS")
 				);
 
 		return http.build();
@@ -134,14 +142,14 @@ public class camplyUserSecurityConfig {
 		return ClientRegistration.withRegistrationId("kakao")
 				.clientId("cfc1a70784e87ec9b6cd4654f31990d2")
 				.clientSecret("k8XO2jG62S2alyjciSZsVQvmQHHIzVwG")
-				.redirectUri("http://localhost:8080/api/user/general/register")
+				.redirectUri("http://localhost:8080/login/oauth2/code/kakao")
 				.clientName("Kakao")
 				.authorizationUri("https://kauth.kakao.com/oauth/authorize")
 				.tokenUri("https://kauth.kakao.com/oauth/token")
 				.userInfoUri("https://kapi.kakao.com/v2/user/me")
 				.userNameAttributeName("id")
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-				.scope("account_email")
+				.scope("account_email", "profile_nickname", "name")
 				.build();
 	}
 

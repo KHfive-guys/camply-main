@@ -111,7 +111,7 @@ function KakaoRegister() {
     if (validateForm()) {
       try {
         const response = await fetch(
-          "",
+          "http://localhost:8080/api/user/general/register",
           {
             method: "POST",
             headers: {
