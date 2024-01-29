@@ -12,12 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewCommentVO {
-/*
- COMMENT_NO
-REVIEW_NO
-COMMENT_TITLE
-COMMENT_DATE
- * */
 	private int commentNo;
 	private int reviewNo;
 	private String commentTtile;

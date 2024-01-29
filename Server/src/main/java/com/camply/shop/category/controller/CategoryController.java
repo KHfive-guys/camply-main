@@ -14,23 +14,22 @@ import com.camply.shop.category.service.CategoryService;
 import com.camply.shop.common.vo.ProductVO;
 
 @RestController
-@RequestMapping("/category")
-@CrossOrigin(origins="http://localhost:3000", 
-allowCredentials="true",
-allowedHeaders="*")
+@RequestMapping("/shop/category")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
-	//카테고리페이지에 썸네일 노출시키는 컨트롤러 값
+
+	// 카테고리페이지에 썸네일 노출시키는 컨트롤러 값
 	@GetMapping("/main/{productCategory}")
 	public ResponseEntity<List<ProductVO>> getCategoryThumnail(@PathVariable String productCategory) {
 		List<ProductVO> product = categoryService.getCategory(productCategory);
-		  
+
 		if (product != null) {
-		    return ResponseEntity.ok(product);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-		
-}
+			return ResponseEntity.ok(product);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
 }

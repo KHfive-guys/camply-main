@@ -1,7 +1,5 @@
 package com.camply.shop.productdetail.question.vo;
 
-
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionVO {
-	
+
 	private int questionNo;
 	private String questionTitle;
 	private String questionText;

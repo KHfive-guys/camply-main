@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentVO {
-	
+
 	private int commentNo;
 	private int questionNo;
 	private String commentText;
