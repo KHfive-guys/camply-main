@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +31,7 @@ public class UserController {
 	@Autowired
 	private UserService userservice;
 
+	private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@PostMapping("/general/register")
 	public ResponseEntity<String> emailRegister(@RequestBody UserVO userVO) {
@@ -52,17 +55,15 @@ public class UserController {
 
 
 
-	
-	@GetMapping("/login")
-	    public ResponseEntity<?> login(@RequestBody UserVO camplyuservo) {
+		@PostMapping("/login")
+	    public ResponseEntity<?> login(@RequestBody UserVO userVO) {
+
 		 
-				 
 		 HashMap<String, String> user_info = new HashMap<String, String>();
 
-		 UserVO camplyuservo_info= userservice.getMemberByUsername(camplyuservo.getUSER_EMAIL());
-		 
-	        
-	        if (camplyuservo_info != null && camplyuservo_info.getUSER_PASSWORD().equals(camplyuservo.getUSER_PASSWORD())) {
+		 UserVO camplyuservo_info= userservice.getMemberByUsername(userVO.getUSER_EMAIL());
+
+	        if (camplyuservo_info != null && passwordEncoder.matches(userVO.getUSER_PASSWORD(), camplyuservo_info.getUSER_PASSWORD())) {
 
 	        	if (camplyuservo_info.getUSER_TYPE().equals("Admin")) {
 		        	user_info.put("USER_ID", camplyuservo_info.getUSER_ID());
@@ -77,8 +78,6 @@ public class UserController {
 		        	user_info.put("USER_NICKNAME", camplyuservo_info.getUSER_NICKNAME());
 		        	user_info.put("USER_TYPE", camplyuservo_info.getUSER_TYPE());
 	        	}
-
-	       
 	        	return new ResponseEntity<>(user_info, HttpStatus.OK);
 	        } else {
 
