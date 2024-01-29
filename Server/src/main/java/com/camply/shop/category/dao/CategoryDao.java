@@ -8,6 +8,7 @@ import com.camply.shop.common.vo.ProductVO;
 
 @Mapper
 public interface CategoryDao {
-	//카테고리페이지
-		List<ProductVO> getCategory(String productCategory);
+	
+	// 카테고리페이지
+	List<ProductVO> getCategory(String productCategory);
 }

@@ -13,21 +13,19 @@ import com.camply.shop.productdetail.service.ProductDetailService;
 
 @RestController
 @RequestMapping("/shop/detail")
-@CrossOrigin(origins="http://localhost:3000", 
-allowCredentials="true",
-allowedHeaders="*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class ProductDetailController {
 
 	@Autowired
 	private ProductDetailService productDetailService;
-	
+
 	@GetMapping("/{productId}")
-	   public ResponseEntity<ProductVO> getProductById(@PathVariable int productId) {
-        ProductVO product = productDetailService.getProductById(productId);
-        if (product != null) {
-            return ResponseEntity.ok(product);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+	public ResponseEntity<ProductVO> getProductById(@PathVariable int productId) {
+		ProductVO product = productDetailService.getProductById(productId);
+		if (product != null) {
+			return ResponseEntity.ok(product);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 }

@@ -53,7 +53,7 @@ public class UserController {
 
 
 	
-	 /*@GetMapping("/login")
+	@GetMapping("/login")
 	    public ResponseEntity<?> login(@RequestBody UserVO camplyuservo) {
 		 
 				 
@@ -86,7 +86,7 @@ public class UserController {
 	        	user_info.put("message", "이메일 혹은 비밀번호가 일치하지 않습니다.");
 	            return new ResponseEntity<>(user_info, HttpStatus.UNAUTHORIZED);
 	        }
-	    }*/
+	    }
 
 
 }

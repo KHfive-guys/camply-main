@@ -11,9 +11,10 @@ public class OrderService {
 
 	@Autowired
 	private OrderDao orderDao;
-	//댓글 작성
+
+	// 주문 작성
 	public void postOrder(OrderVO orderVO) {
 		orderDao.insertOrder(orderVO);
 	}
-	
+
 }

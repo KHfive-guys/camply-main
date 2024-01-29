@@ -13,31 +13,28 @@ import org.springframework.web.bind.annotation.RestController;
 import com.camply.shop.productdetail.reviewcomment.service.ReviewCommentService;
 import com.camply.shop.productdetail.reviewcomment.vo.ReviewCommentVO;
 
-
-
 @RestController
 @RequestMapping("/reviewcomment")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class ReviewCommentController {
 	@Autowired
 	private ReviewCommentService reviewCommentService;
-	
-	//리뷰 댓글 조회
+
+	// 리뷰 댓글 조회
 	@GetMapping("/View/{commentNo}")
-	public ResponseEntity<ReviewCommentVO> getReview(@PathVariable int commentNo){
+	public ResponseEntity<ReviewCommentVO> getReview(@PathVariable int commentNo) {
 		ReviewCommentVO reviewCommentVO = reviewCommentService.getComment(commentNo);
-		if(reviewCommentVO != null) {
+		if (reviewCommentVO != null) {
 			return ResponseEntity.ok(reviewCommentVO);
-		}else {
+		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
-	
-	//리뷰 댓글 작성
+
+	// 리뷰 댓글 작성
 	@PostMapping("/post")
-	  public ResponseEntity<String> postComment(@RequestBody ReviewCommentVO reviewCommentVO) {
+	public ResponseEntity<String> postComment(@RequestBody ReviewCommentVO reviewCommentVO) {
 		reviewCommentService.postComment(reviewCommentVO);
-        return ResponseEntity.ok("Success");
-    }
+		return ResponseEntity.ok("Success");
+	}
 }

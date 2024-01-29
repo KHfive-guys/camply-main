@@ -12,18 +12,18 @@ import com.camply.shop.main.dao.MainDao;
 public class MainService {
 	@Autowired
 	private MainDao mainDao;
-	
-	//메인페이지
+
+	// 메인페이지
 	public ProductVO getMain(int productId) {
 		return mainDao.getMain(productId);
 	}
-	
+
 	public List<ProductVO> searchMain(String productName) {
 		return mainDao.searchMain(productName);
 	}
-	
+
 	public List<ProductVO> getMainCategory(String productCategory) {
 		return mainDao.getMainCategory(productCategory);
 	}
-	
+
 }
