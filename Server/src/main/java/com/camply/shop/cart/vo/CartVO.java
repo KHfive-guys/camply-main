@@ -10,15 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartVO {
-	/*
-CART_ID
-PRODUCT_ID
-CART_CATEGORY
-CART_IMG
-CART_NAME
-CART_PRICE
-CART_AMOUNT
-	 * */
 	private int cartId;
 	private int productId;
 	private String cartCategory;
@@ -26,5 +17,5 @@ CART_AMOUNT
 	private String cartName;
 	private String cartPrice;
 	private String cartAmount;
-	
+
 }

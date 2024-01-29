@@ -4,9 +4,9 @@ import { useParams, Link } from "react-router-dom";
 import '../css/ShopDetail/ShopDetail.css';
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import Nav from '../../camp/CampNavbar';
-import ShopReview from './ShopReview';
-import ShopMore from './ShopMore';
-import ShopInquiry from './ShopInquiry';
+import ShopReview from './ShopReview/ShopReview';
+import ShopMore from './ShopMore/ShopMore';
+import ShopInquiry from './ShopInquiry/ShopInquiry';
 import { Routes, Route} from 'react-router-dom';
 
 
@@ -181,15 +181,17 @@ const ShopDetail = () => {
                 <Link to={`/shop/detail/${productId}/inquiry`}><span className='nav-first-ul-li-a-span'>문의</span></Link>
               </li>
             </ul>
+             
+          </nav>
           
-            <Routes>
-                <Route path="/" element={<ShopMore/>} />
-                <Route path="/review" element={<ShopReview />} />
-                <Route path="/inquiry" element={<ShopInquiry />} />
-            </Routes>   
-          </nav>   
-            
         </div>
+        <hr></hr>
+        <ShopMore/>
+        <hr></hr>
+        <ShopReview/>
+        <hr></hr>
+        <ShopInquiry/>
+        <hr></hr> 
         <div className='Footer'>
         </div>
       </div>

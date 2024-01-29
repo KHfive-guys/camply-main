@@ -13,8 +13,8 @@ public class CategoryService {
 
 	@Autowired
 	private CategoryDao categoryDao;
-	
-	//카테고리
+
+	// 카테고리 썸네일 노출
 	public List<ProductVO> getCategory(String productCategory) {
 		return categoryDao.getCategory(productCategory);
 	}

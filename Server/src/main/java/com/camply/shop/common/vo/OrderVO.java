@@ -36,6 +36,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -45,7 +46,7 @@ public class OrderVO {
 	private int userId;
 	private String orderOrdererName;
 	private String orderOrderEmail;
-	private String orderOrderPhone;	
+	private String orderOrderPhone;
 	private String orderReceiverName;
 	private String orderReceiverAddress;
 	private String orderReceiverAddressDetail;
@@ -60,25 +61,5 @@ public class OrderVO {
 	private int orderProductPrice;
 	private String orderStatus;
 	private int productId;
-	
-	private ProductVO product;
-	
-	public ProductVO getProduct() {
-		return product;
-	}
-	public void setProduct(ProductVO product) {
-        this.product = product;
-    }
-	
-	//상품가격 * 주문수량 = 총결제금액 계산식
-	public int calculateToTalAmount() {
-		return this.orderProductQuantity * this.product.getProductPrice();
-	}
-	
-	//클라이언트에서 <td> {order.formattedTotalAmount}</td> 호출할 때 원화로 포맷팅하여 호출
-	public String getFormattedTotalAmount() {
-		int tatalAmount = calculateToTalAmount();
-        return NumberFormat.getNumberInstance(Locale.KOREA).format(tatalAmount) + "원";
-	}
-	
+
 }

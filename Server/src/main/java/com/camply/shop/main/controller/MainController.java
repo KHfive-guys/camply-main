@@ -15,46 +15,46 @@ import com.camply.shop.main.service.MainService;
 
 @RestController
 @RequestMapping("/shop/main")
-@CrossOrigin(origins="http://localhost:3000", 
-allowCredentials="true",
-allowedHeaders="*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class MainController {
 	@Autowired
 	private MainService mainService;
-	
-	//메인페이지에서 ID값 기준으로 썸네일 노출시키는 컨트롤러 값
+
+	// 메인페이지에서 ID값 기준으로 썸네일 노출시키는 컨트롤러 값
 	@GetMapping("/view/{productId}")
 	public ResponseEntity<ProductVO> getMainThumnail(@PathVariable int productId) {
 		ProductVO product = mainService.getMain(productId);
-		  
+
 		if (product != null) {
-		    return ResponseEntity.ok(product);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-		
+			return ResponseEntity.ok(product);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
 	}
-	//메인페이지에 검색 진행하는 컨트롤러 값
+
+	// 메인페이지에 검색 진행하는 컨트롤러 값
 	@GetMapping("/search/{productName}")
 	public ResponseEntity<List<ProductVO>> searchMain(@PathVariable String productName) {
 		List<ProductVO> product = mainService.searchMain(productName);
-		
+
 		if (product != null) {
-		    return ResponseEntity.ok(product);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-		
+			return ResponseEntity.ok(product);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
 	}
-	//메인페이지에서 카테고리별로 썸네일 노출하는 컨트롤러 값
+
+	// 메인페이지에서 카테고리별로 썸네일 노출하는 컨트롤러 값
 	@GetMapping("/category/{productCategory}")
 	public ResponseEntity<List<ProductVO>> getMainCategory(@PathVariable String productCategory) {
 		List<ProductVO> product = mainService.getMainCategory(productCategory);
-		  
+
 		if (product != null) {
-		    return ResponseEntity.ok(product);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+			return ResponseEntity.ok(product);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }

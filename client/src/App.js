@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import ShopDetail from "./Component/pages/shop/ShopDetail/ShopDetail";
 import OrderMain from "./Component/pages/shop/ShopOrder/OrderMain";
@@ -56,7 +57,7 @@ function App() {
     <Router>
       <Routes>
         <Route
-          path="/home"
+          path="/"
           element={
             <div>
               <h1>안녕하세요. 캠플리에 오신걸 환영합니다.</h1>
@@ -130,6 +131,7 @@ function App() {
           element={
             <ShopLayout>
               <Routes>
+
                 <Route path="/main" element={<ShopMain />} />
                 <Route path="/detail/:productId" element={<ShopDetail />} />
                 <Route path="/order" element={<OrderMain />} />
@@ -141,12 +143,24 @@ function App() {
                 <Route path="/kitchen" element={<Kitchen />} />S
                 <Route path="/lamp" element={<Lamp />} />
                 <Route path="/fireplace" element={<BBQ />} />
+
               </Routes>
             </ShopLayout>
           }
         />
+
+          <Route path="/shop/detail/:productId" element={<ShopDetail/>}/>
+          <Route path="/shop/detail/:productId/more" element={<ShopMore/>}/>
+          <Route path="/shop/detail/:productId/review" element={<ShopReview/>}/>
+          <Route parh="/shop/detail/:productId/inquiry" element={<ShopInquiry/>}/>
+          <Route path="/shop/question/view/:questionNo" element={<InquiryDetail/>}/>
+          <Route path="/inquiry/update/:questionNo" element={<InquiryUpdate/>}/>
+          <Route path="/inquiry/writer" element={<InquiryWriter/>}/>
+          <Route path="/review/writer" element={<ReviewWriter/>}/>
       </Routes>
+      
       <Footer />
+
     </Router>
   );
 }

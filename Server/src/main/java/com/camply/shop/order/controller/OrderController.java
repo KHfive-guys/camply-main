@@ -13,15 +13,12 @@ import com.camply.shop.order.service.OrderService;
 
 @RestController
 @RequestMapping("/shop/order")
-@CrossOrigin(origins="http://localhost:3000", 
-allowCredentials="true",
-allowedHeaders="*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class OrderController {
-	
+
 	@Autowired
 	private OrderService orderService;
-	
-	
+
 	@PostMapping("/post")
 	public ResponseEntity<String> postOrder(@RequestBody OrderVO orederVO) {
 		orderService.postOrder(orederVO);
