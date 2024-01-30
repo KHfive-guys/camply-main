@@ -3,16 +3,20 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./css/CampBoardAll.css";
 import { Container } from "react-bootstrap";
-import CampNavbar from '../CampNavbar';
+import CampNavbar from "../CampNavbar";
 
 function CampBoardAll() {
   const [boardData, setBoardData] = useState([]);
-
-  const handleRowClick = (camp_id) => {
-    window.location.href = `/camp/board/get/${camp_id}`;
-  };
+  const [userType, setUserType] = useState("");
 
   useEffect(() => {
+    const token = localStorage.getItem("yourTokenKey");
+    if (token) {
+      const decodedToken = parseJwt(token);
+      setUserType(decodedToken.USER_TYPE);
+      console.log("Decoded Token:", decodedToken);
+    }
+
     axios
       .get("http://localhost:8080/camp/board/all")
       .then((response) => {
@@ -23,9 +27,25 @@ function CampBoardAll() {
       });
   }, []);
 
+  const parseJwt = (token) => {
+    try {
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
+      return {
+        ...decodedToken,
+        USER_TYPE: decodedToken.auth.includes("Admin") ? "Admin" : "User",
+      };
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const handleRowClick = (camp_id) => {
+    window.location.href = `/camp/board/get/${camp_id}`;
+  };
+
   return (
     <section>
-      <CampNavbar/>
+      <CampNavbar />
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
@@ -58,9 +78,11 @@ function CampBoardAll() {
           )}
         </tbody>
       </table>
-      <Link to="/camp/board/add">
-        <button>게시글 작성하기</button>
-      </Link>
+      {userType === "Admin" && (
+        <Link to="/camp/board/add">
+          <button>게시글 작성하기</button>
+        </Link>
+      )}
     </section>
   );
 }

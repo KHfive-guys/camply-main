@@ -71,7 +71,7 @@ public class camplyUserSecurityConfig {
 				.logout(logout ->
 						logout
 								.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-								.logoutSuccessUrl("/")
+								.logoutSuccessUrl("/login")
 								.invalidateHttpSession(true)
 
 				)
