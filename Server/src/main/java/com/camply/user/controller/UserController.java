@@ -64,11 +64,9 @@ public class UserController {
 
 		UserVO camplyuservo_info = userservice.getMemberByUsername(userVO.getUSER_EMAIL());
 
-
 		if (camplyuservo_info != null && passwordEncoder.matches(userVO.getUSER_PASSWORD(), camplyuservo_info.getUSER_PASSWORD())) {
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(camplyuservo_info.getUSER_EMAIL(), userVO.getUSER_PASSWORD()));
-
 
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -76,7 +74,9 @@ public class UserController {
 
 			user_info.put("USER_EMAIL", camplyuservo_info.getUSER_EMAIL());
 			user_info.put("USER_TYPE", camplyuservo_info.getUSER_TYPE());
-			user_info.put("token", token);  // Include the token in the response
+			user_info.put("token", token);
+
+			// Return the token in the response
 			return new ResponseEntity<>(user_info, HttpStatus.OK);
 		} else {
 			user_info.put("result", "FAIL");
@@ -84,6 +84,4 @@ public class UserController {
 			return new ResponseEntity<>(user_info, HttpStatus.UNAUTHORIZED);
 		}
 	}
-
-
 }

@@ -4,9 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
-
   const [USER_EMAIL, setEmail] = useState("");
   const [USER_PASSWORD, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const emailLogin = async () => {
     console.log("login button USER_EMAIL" + USER_EMAIL);
@@ -15,26 +15,35 @@ function Login() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Origin: "http://localhost:3000", // Replace with your frontend URL
+          Origin: "http://localhost:3000",
         },
         body: JSON.stringify({
           USER_EMAIL: USER_EMAIL,
           USER_PASSWORD: USER_PASSWORD,
         }),
       });
-
+  
       if (response.ok) {
         const user_info = await response.json();
-
+  
         console.log("Login successful. Member info:", user_info);
-        navigate("/camp");
-        // 여기에서 memberInfo를 상태로 저장하거나 다른 처리를 수행할 수 있습니다.
+  
+        localStorage.setItem("yourTokenKey", user_info.token);
+  
+        setLoggedIn(true);
+        navigate("/");
       } else {
         console.error("Invalid username or password");
       }
     } catch (error) {
       console.error("Error during login:", error);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("yourTokenKey");
+    setLoggedIn(false);
+    navigate("/login");
   };
 
   return (
@@ -105,7 +114,6 @@ function Login() {
             <CommonButton
               type="button"
               onClick={() => {
-                // onSubmit();
                 emailLogin();
               }}
             >

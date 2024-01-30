@@ -55,21 +55,20 @@ public class JwtTokenProvider {
     }
 
     public String generateOAuth2RegisterToken(Authentication authentication) {
-        //util
+        // util
         Date toKenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 10));
 
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         String email = oAuth2User.getAttribute("email");
 
-        String registerToken = Jwts.builder()
+        return Jwts.builder()
                 .setSubject("OAuth2Register")
                 .claim("email", email)
                 .setExpiration(toKenExpiresDate)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-
-        return registerToken;
     }
+
     public Boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -89,5 +88,5 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
     }
-
 }
+
