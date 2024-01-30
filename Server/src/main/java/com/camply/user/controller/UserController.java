@@ -64,9 +64,11 @@ public class UserController {
 
 		UserVO camplyuservo_info = userservice.getMemberByUsername(userVO.getUSER_EMAIL());
 
+
 		if (camplyuservo_info != null && passwordEncoder.matches(userVO.getUSER_PASSWORD(), camplyuservo_info.getUSER_PASSWORD())) {
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(camplyuservo_info.getUSER_EMAIL(), userVO.getUSER_PASSWORD()));
+
 
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 

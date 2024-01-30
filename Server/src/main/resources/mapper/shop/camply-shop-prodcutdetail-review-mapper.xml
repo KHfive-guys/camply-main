@@ -4,6 +4,7 @@
 <mapper namespace="com.camply.shop.productdetail.review.dao.ReviewDao">
    
    
+   
    <!--후기글 조회-->
    <resultMap id="ReviewView" type="com.camply.shop.productdetail.review.vo.ReviewVO">
 			<id property="reviewNo" column="REVIEW_NO"/>
@@ -16,7 +17,13 @@
 	<select id="getReview" resultMap="ReviewView" parameterType="int" >
 		SELECT * FROM Shop_Review WHERE REVIEW_NO = #{reviewNo}
 	</select>
-	 <!--문의글 조회수 증가 -->
+	
+	<!--후기글 전체 조회  -->
+	<select id="selectAllReview" resultType="com.camply.shop.productdetail.review.vo.ReviewVO">
+	SELECT * FROM Shop_Review
+	</select>
+	
+	<!--후기글 조회수 증가 -->
     <update id="incrementReviewHit" parameterType="int">
     UPDATE Shop_Review
     SET review_hit = review_hit + 1
@@ -28,4 +35,17 @@
         INSERT INTO Shop_Review (REVIEW_NO, REVIEW_TITLE, REVIEW_TEXT, REVIEW_NAME, REVIEW_DATE, REVIEW_HIT)
         VALUES (REVIEW_NO_SEQ.NEXTVAL, #{reviewTitle}, #{reviewText}, #{reviewName}, sysdate, 0)
     </insert>
+   
+   <!--후기글 수정  -->
+    <update id="updateReview" parameterType="int">
+    UPDATE Shop_Review
+    SET REVIEW_TITLE = #{reviewTitle}, REVIEW_TEXT = #{reviewText}
+    WHERE REVIEW_NO = #{reviewNo}
+    </update>
+ 	
+ 	<!--후기글 삭제  -->
+ 	<delete id="deleteReview" parameterType="int">
+ 	DELETE FROM Shop_Review WHERE REVIEW_NO = #{reviewNo}
+ 	</delete>  
+    
 </mapper>

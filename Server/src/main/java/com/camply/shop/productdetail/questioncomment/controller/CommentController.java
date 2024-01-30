@@ -17,28 +17,26 @@ import com.camply.shop.productdetail.questioncomment.vo.CommentVO;
 @RequestMapping("/comment")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class CommentController {
-	
+
 	@Autowired
 	private CommentService commentService;
-	
-	//댓글 조회
+
+	// 댓글 조회
 	@GetMapping("/{commentNo}")
-	public ResponseEntity<CommentVO> getComment(@PathVariable int commentNo){
-	CommentVO commentVO = commentService.getComment(commentNo);
-		if(commentVO != null) {
+	public ResponseEntity<CommentVO> getComment(@PathVariable int commentNo) {
+		CommentVO commentVO = commentService.getComment(commentNo);
+		if (commentVO != null) {
 			return ResponseEntity.ok(commentVO);
-		}else {
+		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
-	
-	//댓글 작성
+
+	// 댓글 작성
 	@PostMapping("/post")
-	  public ResponseEntity<String> postComment(@RequestBody CommentVO commentVO) {
-        commentService.postComment(commentVO);
-        return ResponseEntity.ok("Success");
-    }
-	
-	
+	public ResponseEntity<String> postComment(@RequestBody CommentVO commentVO) {
+		commentService.postComment(commentVO);
+		return ResponseEntity.ok("Success");
+	}
+
 }

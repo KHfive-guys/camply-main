@@ -10,11 +10,12 @@ import com.camply.shop.productdetail.dao.ProductDetailDao;
 
 @Service
 public class ProductDetailService {
-	
+
 	@Autowired
 	private ProductDetailDao productDetialDao;
-	//상품 상세페이지
-	  public ProductVO getProductById(int productId) {
-	        return productDetialDao.getProductById(productId);
-	    }
+
+	// 상품 상세페이지
+	public ProductVO getProductById(int productId) {
+		return productDetialDao.getProductById(productId);
+	}
 }

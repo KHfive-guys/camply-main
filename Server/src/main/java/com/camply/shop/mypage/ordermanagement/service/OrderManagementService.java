@@ -10,10 +10,10 @@ import com.camply.shop.mypage.ordermanagement.dao.OrderManagementDAO;
 
 @Service
 public class OrderManagementService {
-	
+
 	@Autowired
 	private OrderManagementDAO orderManagementDAO;
-	
+
 	public List<OrderVO> getOrderList(int userId) {
 		return orderManagementDAO.getOrderList(userId);
 	}
