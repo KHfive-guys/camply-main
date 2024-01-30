@@ -36,11 +36,19 @@
     </select>
     
     <!--문의글 수정  -->
-    <update id="updateQuestion" parameterType="int">
-    UPDATE Shop_Question	
-    SET QUESTION_TITLE = #{questionTitle}, QUESTION_TEXT = #{questionText}
-    WHERE QUESTION_NO = #{questionNo}
-    </update>
+
+    <update id="updateQuestion" parameterType="com.camply.shop.productdetail.question.vo.QuestionVO">
+    UPDATE Shop_Question
+    <set>
+        <if test="questionTitle != null">
+            QUESTION_TITLE = #{questionTitle},
+        </if>
+        <if test="questionText != null">
+            QUESTION_TEXT = #{questionText},
+        </if>
+    </set>
+ 	</update>
+
  	
  	<!--문의글 삭제  -->
  	<delete id="deleteQuestion" parameterType="int">

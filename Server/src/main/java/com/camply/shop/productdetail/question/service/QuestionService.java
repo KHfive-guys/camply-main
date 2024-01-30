@@ -36,10 +36,10 @@ public class QuestionService {
 	}
 	
 	//문의 수정
-	@Transactional
-	public void questionUpdate(int questionNo) {
-		questionDao.updateQuestion(questionNo);
-	}
+		@Transactional
+		public void questionUpdate(QuestionVO questionVO) {
+			questionDao.updateQuestion(questionVO);
+		}
 	
 	//문의 삭제
 	public void questionDelete(int questionNo) {
