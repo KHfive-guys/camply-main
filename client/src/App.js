@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ShopDetail from './Component/pages/shop/ShopDetail/ShopDetail';
 import {
@@ -54,9 +53,13 @@ import ReviewWriter from './Component/pages/shop/ShopDetail/ShopReview/ReviewWri
 import ShopCart from './Component/pages/shop/ShopCart';
 import campMainImg from './Component/img/MainImg/메인페이지 이미지2.jpeg';
 import OrderCart from './Component/pages/shop/ShopOrder/Order/OrderCart';
+
+
+
 import "./Component/pages/camp/CampStyle.css";
 import "./CampApp.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 
 function App() {
   const [load, upadateLoad] = useState(true);
@@ -105,41 +108,39 @@ function App() {
           }
         />
         <Route
-          path="/seller"
-          element={
-            <div>
-              <h1>상품관리 페이지.</h1>
-              <Link to="/seller/sell">상품등록</Link>
-              <Link to="/seller/list">상품리스트</Link>
-            </div>
-          }
-        />
-
-        <Route
+        path="/seller"
+        element={
+          <div>
+            <h1>상품관리 페이지.</h1>
+            <Link to="/seller/sell">상품등록</Link>
+            <Link to="/seller/list">상품리스트</Link>
+          </div>
+        }
+      />
+      
+      <Route
+    
           path="/seller/*"
           element={
             <>
               <Preloader load={load} />
-              <div className="App" id={load ? "no-scroll" : "scroll"}>
+              <div className="App" id={load ? 'no-scroll' : 'scroll'}>
                 <Routes>
                   <Route path="/sell" element={<CreateProduct />} />
                   <Route path="/list" element={<SellerProduct />} />
-                  <Route
-                    path="/product/edit/:productId"
-                    element={<UpdateProduct />}
-                  />
+                  <Route path="/product/edit/:productId" element={<UpdateProduct/>} />
                 </Routes>
               </div>
             </>
           }
         />
 
-        <Route
+      <Route
           path="/camp/*"
           element={
             <>
               <Preloader load={load} />
-              <div className="App" id={load ? "no-scroll" : "scroll"}>
+              <div className="App" id={load ? 'no-scroll' : 'scroll'}>
                 <Navbar />
                 <ScrollToTop />
                 <Routes>
@@ -147,28 +148,40 @@ function App() {
                   <Route path="/reservation" element={<Reservations />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/inquiry" element={<Inquiry />} />
+                  
                 </Routes>
               </div>
             </>
           }
         />
-        <Route path="/register" element={<Register />} />
-        <Route path="/register/general" element={<GeneralRegister />} />
-        <Route path="/register/manager" element={<ManagerRegister />} />
-        <Route path="/register/general/email" element={<GeneralEmailRegister />} />
-        <Route path="/register/manager/email" element={<ManagerEmailRegister />} />
+        <Route path="/register" element={<Register/>}/>
+                  <Route
+                    path="/register/general"
+                    element={<GeneralRegister />}
+                  />
+                  <Route
+                    path="/register/manager"
+                    element={<ManagerRegister />}
+                  />
+                  <Route
+                    path="/register/general/email"
+                    element={<GeneralEmailRegister />}
+                  />
+                  <Route
+                    path="/register/manager/email"
+                    element={<ManagerEmailRegister />}
+                  />
         <Route path="/login" element={<Login />} />
         <Route path="/camp/board/add" element={<CampBoard />} />
         <Route path="/camp/board/all" element={<CampBoardAll />} />
         <Route path="/camp/board/get/:camp_id" element={<CampBoardDetail />} />
         <Route path="/camp/board/edit/:camp_id" element={<CampBoardUpdate />} />
-
+        
         <Route
           path="/shop/*"
           element={
             <ShopLayout>
               <Routes>
-
               <Route path="/main" element={<ShopMain />} />
                 <Route path="/order" element={<OrderCart/>} />
                 <Route path="/mypage" element={<ShopMyPage />} />
@@ -179,7 +192,6 @@ function App() {
                 <Route path="/kitchen" element={<Kitchen/>}/>
                 <Route path="/lamp" element={<Lamp/>}/>
                 <Route path="/fireplace" element={<BBQ/>}/>
-
               </Routes>
             </ShopLayout>
           }
