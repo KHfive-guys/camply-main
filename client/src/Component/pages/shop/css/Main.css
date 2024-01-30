@@ -5,7 +5,7 @@
 }
 
 .main-container {
-    height: 100vh; /* 화면 전체 높이에 맞게 조절 */
+    height: 100vh; 
     background-image: url('../img/MainImg/캠핑\ 메인페이지\ 이미지.webp');
     background-size: cover;
     background-position: center;

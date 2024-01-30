@@ -30,8 +30,8 @@
 	<insert id="insertCart"
 		parameterType="com.camply.shop.cart.vo.CartVO">
 		INSERT INTO SHOP_CART (CART_ID, PRODUCT_ID, CART_CATEGORY,
-		CART_IMG,CART_NAME,CART_PRICE,CART_PRICE,CART_AMOUNT)
+		CART_IMG,CART_NAME,CART_PRICE,CART_AMOUNT)
 		VALUES
 		(CART_ID_SEQ.NEXTVAL,#{productId},#{cartCategory},#{cartImg},#{cartName},#{cartPrice},#{cartAmount})
 	</insert>
-</mapper>
+</mapper>	

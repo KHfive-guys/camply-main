@@ -1,82 +1,97 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../shop/css/ShopCart/ShopCart.css';
-import {Routes, Route, Link} from 'react-router-dom';
-import ShopOrder from './ShopOrder/OrderMain';
+import { useNavigate, useParams } from 'react-router-dom';
+import Nav from '../camp/CampNavbar';
 
-const ShoppingCart = () => {
-  const [product] = useState([]);
-  const [cartItems, setCartItems] = useState(product);
+const ShopCart = () => {
+  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
+  const { productId } = useParams();
 
   useEffect(() => {
-    // Fetch cart items from the server
-    const fetchCartItems = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/cart/post');
-        setCartItems(response.data);
+        if (productId) {
+          const response = await axios.get(`http://localhost:8080/shop/cart/${productId}`);
+          setProducts(response.data);
+        } else {
+          console.error('productId가 없습니다.');
+        }
       } catch (error) {
-        console.error('Error fetching cart items', error);
+        console.error('장바구니 목록을 불러오는데 실패했습니다.', error);
       }
     };
 
-    fetchCartItems();
-  }, []);
+    fetchData();
+  }, [productId]);
 
+  const addToCart = async (cartAmount, currentProductId, currentCartPrice) => {
+    try {
+      if (currentProductId) {
+        const totalPrice = cartAmount * currentCartPrice;
   
-  const handlePurchase = async () => {
-   
-    console.log('Purchase items:', cartItems);
+        await axios.post(`http://localhost:8080/shop/cart/post`, {
+          productId: currentProductId,
+          cartAmount: cartAmount,
+          totalPrice: totalPrice,
+        });
+  
+        alert('상품이 장바구니에 저장되었습니다.');
+        navigate(`/shop/cart`);
+      } else {
+        console.error('productId가 없어 상품을 추가할 수 없습니다.');
+      }
+    } catch (error) {
+      console.error('상품을 장바구니에 추가하는 중 실패', error);
+    }
   };
 
-  const handleDeleteAll = async () => {
-    
-    console.log('Delete all items in the cart');
-  };
-
-
-  const handleDeleteSelected = async () => {
-  
-    console.log('Delete selected items in the cart');
+  const renderProducts = () => {
+    return (
+      <div>
+        {products.length > 0 ? (
+          <>
+            {products.map((product) => (
+              <div key={product.productId}>
+                <ul>
+                  <li>
+                    <img style={{ width: '378px', height: '400px' }} src={product.cartImg} alt={product.cartName} />
+                  </li>
+                  <li>
+                    <p>수량: {product.cartAmount}</p>
+                    <input
+                      type="number"
+                      value={product.cartAmount}
+                      onChange={(e) => setProducts((prevProducts) => {
+                        const updatedProducts = prevProducts.map((p) =>
+                          p.productId === product.productId ? { ...p, cartAmount: e.target.value } : p
+                        );
+                        return updatedProducts;
+                      })}
+                    />
+                  </li>
+                  <li>
+                    <p>가격{product.cartPrice})</p>
+                  </li>
+                  <button onClick={() => addToCart(product.cartAmount, product.productId, product.cartPrice)}>장바구니에 추가</button>
+                </ul>
+              </div>
+            ))}
+          </>
+        ) : (
+          <p>장바구니에 상품이 없습니다.</p>
+        )}
+      </div>
+    );
   };
 
   return (
-    <div style={{paddingTop:'150px', paddingBottom:'150px'}} className="shopping-cart-container">
-      <h2>장바구니</h2>
-      <table className="cart-table">
-        <thead>
-          <tr>
-            <th>IMG</th>
-            <th>NAME</th>
-            <th>PRICE</th>
-            <th>AMOUNT</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cartItems.map((cartItem) => (
-            <tr key={cartItem.cartId}>
-              <td>
-                <img src={cartItem.productThumbnail} alt={cartItem.productName} className="product-image" />
-              </td>
-              <td>{cartItem.productName}</td>
-              <td>{cartItem.productPrice}</td>
-              <td>{cartItem.productAmount}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="cart-buttons">
-        <Link to='/shop/order'>
-        <button onClick={handlePurchase}>구매하기</button>
-        </Link> 
-        <button onClick={handleDeleteAll}>전체 삭제하기</button>
-        <button onClick={handleDeleteSelected}>선택 삭제하기</button>
-      </div>
-
-      <Routes>
-        <Route path='/shop/order' element={<ShopOrder/>}/>
-      </Routes>
-    </div>
+    <>
+      <hr />
+      <Nav />
+      {renderProducts()}
+    </>
   );
 };
 
-export default ShoppingCart;
+export default ShopCart;

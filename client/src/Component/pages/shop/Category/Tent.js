@@ -12,7 +12,7 @@ const Tent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/category/main/tent");
+        const response = await axios.get("http://localhost:8080/shop/category/main/tent");
         setProducts(response.data);
       } catch (error) {
         console.error("상품을 불러오는 중 에러 발생", error);
