@@ -20,8 +20,8 @@ public class QuestionService {
 	}
 
 	// 문의 조회
-	public QuestionVO getQuestion(int questionNo) {
-		return questionDao.getQuestion(questionNo);
+	public List<QuestionVO> getQuestion(int productId) {
+		return questionDao.getQuestion(productId);
 	}
 
 	// 문의 작성
@@ -34,14 +34,14 @@ public class QuestionService {
 	public void incrementQuestionHit(int questionNo) {
 		questionDao.incrementQuestionHit(questionNo);
 	}
-	
-	//문의 수정
-		@Transactional
-		public void questionUpdate(QuestionVO questionVO) {
-			questionDao.updateQuestion(questionVO);
-		}
-	
-	//문의 삭제
+
+	// 문의 수정
+	@Transactional
+	public void questionUpdate(QuestionVO questionVO) {
+		questionDao.updateQuestion(questionVO);
+	}
+
+	// 문의 삭제
 	public void questionDelete(int questionNo) {
 		questionDao.deleteQuestion(questionNo);
 	}

@@ -21,6 +21,7 @@ import com.camply.shop.productdetail.question.vo.QuestionVO;
 @RequestMapping("/shop/question")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class QuestionController {
+
 	@Autowired
 	private QuestionService questionService;
 
@@ -32,10 +33,10 @@ public class QuestionController {
 	}
 
 	// 문의글 조회수 증가
-	@GetMapping("/view/{questionNo}")
-	public ResponseEntity<QuestionVO> getQuestion(@PathVariable int questionNo) {
-		questionService.incrementQuestionHit(questionNo);
-		QuestionVO question = questionService.getQuestion(questionNo);
+	@GetMapping("/view/{productId}")
+	public ResponseEntity<List<QuestionVO>> getQuestion(@PathVariable int productId) {
+		questionService.incrementQuestionHit(productId);
+		List<QuestionVO> question = questionService.getQuestion(productId);
 
 		if (question != null) {
 			return ResponseEntity.ok(question);
@@ -53,16 +54,16 @@ public class QuestionController {
 
 	// 문의수정
 	@PatchMapping("/update/{questionNo}")
-	 public ResponseEntity<String> updateQuestion(@PathVariable int questionNo, @RequestBody QuestionVO questionVO) {
-        questionVO.setQuestionNo(questionNo);
-        questionService.questionUpdate(questionVO);
-        return ResponseEntity.ok("Question updated successfully");
-    }
-	
-	//문의삭제
+	public ResponseEntity<String> updateQuestion(@PathVariable int questionNo, @RequestBody QuestionVO questionVO) {
+		questionVO.setQuestionNo(questionNo);
+		questionService.questionUpdate(questionVO);
+		return ResponseEntity.ok("Question updated successfully");
+	}
+
+	// 문의삭제
 	@DeleteMapping("/delete/{questionNo}")
 	public void deleteQuestion(@PathVariable int questionNo) {
 		questionService.questionDelete(questionNo);
 	}
-	
+
 }

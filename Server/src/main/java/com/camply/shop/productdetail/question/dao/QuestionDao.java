@@ -13,7 +13,7 @@ public interface QuestionDao {
 	List<QuestionVO> selectAllQuestions();
 
 	// 문의 조회
-	QuestionVO getQuestion(int questionNo);
+	List<QuestionVO> getQuestion(int productId);
 
 	// 문의 작성
 	void insertQuestion(QuestionVO questionVO);

@@ -7,6 +7,7 @@
    <!--문의글 조회-->
    <resultMap id="selectQuestion" type="com.camply.shop.productdetail.question.vo.QuestionVO">
 			<id property="questionNo" column="QUESTION_NO"/>
+				<result property="productId" column="PRODUCT_ID"/>
 			  	<result property="questionTitle" column="QUESTION_TITLE"/>
 			  	<result property="questionText" column="QUESTION_TEXT"/>
 		        <result property="questionName" column="QUESTION_NAME"/>
@@ -14,13 +15,13 @@
 		        <result property="questionHit" column="QUESTION_HIT"/>
 	</resultMap>
 	<select id="getQuestion" resultMap="selectQuestion" parameterType="int" >
-		SELECT * FROM Shop_Question WHERE question_no = #{questionNo}
+		SELECT * FROM Shop_Question WHERE PRODUCT_ID = #{productId} ORDER BY QUESTION_NO DESC
 	</select>
 	
    <!--문의글 작성-->
     <insert id="insertQuestion" parameterType="com.camply.shop.productdetail.question.vo.QuestionVO">
-        INSERT INTO Shop_Question (question_no, question_title, question_text, question_name, question_date, question_hit)
-        VALUES (QUESTION_NO_SEQ.NEXTVAL, #{questionTitle}, #{questionText}, #{questionName}, sysdate, 0)
+        INSERT INTO Shop_Question (question_no,product_id, question_title, question_text, question_name, question_date, question_hit)
+        VALUES (QUESTION_NO_SEQ.NEXTVAL,#{productId}, #{questionTitle}, #{questionText}, #{questionName}, sysdate, 0)
     </insert>
     
     <!--문의글 조회수 증가 -->
