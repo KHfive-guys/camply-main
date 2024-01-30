@@ -43,5 +43,7 @@ public class UserVO{
 
 	@JsonProperty("USER_BUSINESSPHONE")
 	private String USER_BUSINESSPHONE;
+
+
 	
 }

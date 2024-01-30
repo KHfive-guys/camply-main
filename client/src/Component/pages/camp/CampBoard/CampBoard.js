@@ -94,32 +94,41 @@ function BbsWrite() {
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
-  
+
     const parseJwt = (token) => {
-      try {
-        return JSON.parse(atob(token.split(".")[1]));
-      } catch (e) {
-        return null;
-      }
+        try {
+            return JSON.parse(decodeURIComponent(escape(atob(token.split(".")[1]))));
+        } catch (e) {
+            return null;
+        }
     };
-  
+
+    const decodeUTF8 = (input) => {
+        try {
+            return decodeURIComponent(escape(input));
+        } catch (e) {
+            return input;
+        }
+    };
+
     if (token) {
-      try {
-        const decodedToken = parseJwt(token);
-        console.log("Decoded Token:", decodedToken);
-  
-        setUserId(decodedToken.user_id || "");
-        setNewBoard((prevNewBoard) => ({
-          ...prevNewBoard,
-          user_id: decodedToken.user_id || "",
-          USER_BUSINESSADDRESS: decodedToken.USER_BUSINESSADDRESS || "",
-          USER_BUSINESSPHONE: decodedToken.USER_BUSINESSPHONE || "",  
-        }));
-      } catch (error) {
-        console.error("Error decoding token:", error);
-      }
+        try {
+            const decodedToken = parseJwt(token);
+            console.log("Decoded Token:", decodedToken);
+
+            setUserId(decodedToken.user_id || "");
+            setNewBoard((prevNewBoard) => ({
+                ...prevNewBoard,
+                user_id: decodedToken.user_id || "",
+                USER_BUSINESSADDRESS: decodeUTF8(decodedToken.USER_BUSINESSADDRESS || ""),
+                USER_BUSINESSPHONE: decodeUTF8(decodedToken.USER_BUSINESSPHONE || ""),
+            }));
+        } catch (error) {
+            console.error("Error decoding token:", error);
+        }
     }
-  }, []);
+}, []);
+
 
   return (
     <section>
