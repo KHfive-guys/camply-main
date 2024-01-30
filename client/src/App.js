@@ -1,8 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import ShopDetail from './Component/pages/shop/ShopDetail/ShopDetail';
-import OrderMain from './Component/pages/shop/ShopOrder/Order/OrderMain';
-import SellMain from './Component/pages/shop/ShopSell/SellMain';
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,7 +9,6 @@ import {
   Link,
 } from 'react-router-dom';
 
-import Cart from './Component/pages/shop/ShopCart/Cart';
 import ShopMain from './Component/pages/shop/ShopMain';
 import ShopMyPage from './Component/pages/shop/ShopMyPage/ShopMyPage';
 import Register from './Component/pages/common/Register';
@@ -57,43 +54,9 @@ import ReviewWriter from './Component/pages/shop/ShopDetail/ShopReview/ReviewWri
 import ShopCart from './Component/pages/shop/ShopCart';
 import campMainImg from './Component/img/MainImg/메인페이지 이미지2.jpeg';
 import OrderCart from './Component/pages/shop/ShopOrder/Order/OrderCart';
-
-
-
-import Cart from "./Component/pages/shop/ShopCart/Cart";
-import ShopMain from "./Component/pages/shop/ShopMain";
-import ShopMyPage from "./Component/pages/shop/ShopMyPage/ShopMyPage";
-import Register from "./Component/pages/common/Register";
-import GeneralRegister from "./Component/pages/common/GeneralRegister";
-import ManagerRegister from "./Component/pages/common/ManagerRegister";
-import GeneralEmailRegister from "./Component/pages/common/GeneralEmailRegister";
-import ManagerEmailRegister from "./Component/pages/common/ManagerEmailRegister";
-import Login from "./Component/pages/common/Login";
-import CampBoard from "./Component/pages/camp/CampBoard/CampBoard";
-import CampBoardAll from "./Component/pages/camp/CampBoard/CampBoardAll";
-import CampBoardDetail from "./Component/pages/camp/CampBoard/CampBoardDetail";
-import CampBoardUpdate from "./Component/pages/camp/CampBoard/CampBoardUpdate";
-import Preloader from "./Pre";
-import Navbar from "./Component/pages/camp/CampNavbar";
-import Home from "./Component/pages/camp/CampMain/Home/Home";
-import About from "./Component/pages/camp/CampMain/About/About";
-import Reservations from "./Component/pages/camp/CampMain/Reservations/Reservations";
-import Inquiry from "./Component/pages/camp/CampMain/Inquiry/Inquiry";
-import ScrollToTop from "./Component/pages/camp/CampScrollToTop";
 import "./Component/pages/camp/CampStyle.css";
 import "./CampApp.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Footer from "./Component/pages/camp/CampFooter";
-import ShopLayout from "./Component/pages/shop/ShopLayout";
-import Tent from "./Component/pages/shop/Category/Tent";
-import Sleeping from "./Component/pages/shop/Category/Sleeping";
-import Kitchen from "./Component/pages/shop/Category/Kitchen";
-import Lamp from "./Component/pages/shop/Category/Lamp";
-import BBQ from "./Component/pages/shop/Category/BBQ";
-import Chair from "./Component/pages/shop/Category/Table";
-import CreateProduct from "./Component/pages/shop/ShopOrder/CreateProduct";
-import SellerProduct from "./Component/pages/shop/ShopOrder/SellerProduct";
-import UpdateProduct from "./Component/pages/shop/ShopOrder/UpdateProduct";
 
 function App() {
   const [load, upadateLoad] = useState(true);
