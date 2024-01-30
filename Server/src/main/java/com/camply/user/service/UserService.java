@@ -42,4 +42,12 @@ public class UserService {
 			throw new RuntimeException("Error during user registration with Kakao", e);
 		}
 	}
+
+	public UserVO getUserVOByUsername(String USER_EMAIL) {
+		return userdao.selectEmail(USER_EMAIL);
+	}
+
+	public String getUserIdFromUserVO(UserVO userVO) {
+		return userVO.getUSER_ID();
+	}
 }

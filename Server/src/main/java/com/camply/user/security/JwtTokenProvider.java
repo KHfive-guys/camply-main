@@ -3,7 +3,10 @@ package com.camply.user.security;
 import java.security.Key;
 import java.util.Date;
 
+import com.camply.user.service.UserService;
+import com.camply.user.vo.UserVO;
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +22,9 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtTokenProvider {
 
+    @Autowired
+    private UserService userService;
+
     private final Key key;
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
@@ -31,6 +37,9 @@ public class JwtTokenProvider {
             throw new RuntimeException("Invalid authentication details");
         }
 
+        UserVO userVO = userService.getUserVOByUsername(authentication.getName());
+        String userId = userService.getUserIdFromUserVO(userVO);
+
         StringBuilder roles = new StringBuilder();
         authentication.getAuthorities().forEach(authority -> roles.append(authority.getAuthority()).append(","));
 
@@ -39,7 +48,14 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setSubject("AccessToken")
                 .claim("email", email)
+                .claim("user_id", userId)
                 .claim("auth", roles.toString())
+                .claim("USER_NAME", userVO.getUSER_NAME())
+                .claim("USER_NICKNAME", userVO.getUSER_NICKNAME())
+                .claim("USER_ADDRESS", userVO.getUSER_ADDRESS())
+                .claim("USER_BUSINESSADDRESS", userVO.getUSER_BUSINESSADDRESS())
+                .claim("USER_BUSINESSNUMBER", userVO.getUSER_BUSINESSNUMBER())
+                .claim("USER_BUSINESSPHONE", userVO.getUSER_BUSINESSPHONE())
                 .setExpiration(tokenExpiresDate)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
