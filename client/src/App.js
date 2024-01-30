@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ShopDetail from './Component/pages/shop/ShopDetail/ShopDetail';
-import OrderMain from './Component/pages/shop/ShopOrder/Order/OrderMain';
-import SellMain from './Component/pages/shop/ShopSell/SellMain';
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,7 +8,6 @@ import {
   Link,
 } from 'react-router-dom';
 
-import Cart from './Component/pages/shop/ShopCart/Cart';
 import ShopMain from './Component/pages/shop/ShopMain';
 import ShopMyPage from './Component/pages/shop/ShopMyPage/ShopMyPage';
 import Register from './Component/pages/common/Register';
@@ -57,6 +54,11 @@ import ShopCart from './Component/pages/shop/ShopCart';
 import campMainImg from './Component/img/MainImg/메인페이지 이미지2.jpeg';
 import OrderCart from './Component/pages/shop/ShopOrder/Order/OrderCart';
 
+
+
+import "./Component/pages/camp/CampStyle.css";
+import "./CampApp.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 
 function App() {
