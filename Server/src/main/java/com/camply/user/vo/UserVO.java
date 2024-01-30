@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -27,19 +28,19 @@ public class UserVO{
 	
 	@JsonProperty("USER_NICKNAME")
 	private String USER_NICKNAME;
+
+	@JsonProperty("USER_ADDRESS")
+	private String USER_ADDRESS;
 	
 	@JsonProperty("USER_TYPE")
 	private String USER_TYPE;
 
-	@JsonProperty("USER_BUSINESSNAME")
-	private String USER_BUSINESSNAME;
+	@JsonProperty("USER_BUSINESSADDRESS")
+	private String USER_BUSINESSADDRESS;
 	
 	@JsonProperty("USER_BUSINESSNUMBER")
 	private String USER_BUSINESSNUMBER;
-	
-	@JsonProperty("USER_ADDRESS")
-	private String USER_ADDRESS;
-	
+
 	@JsonProperty("USER_BUSINESSPHONE")
 	private String USER_BUSINESSPHONE;
 	

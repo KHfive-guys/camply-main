@@ -3,21 +3,19 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./css/CampBoardAll.css";
 import { Container } from "react-bootstrap";
+import CampNavbar from '../CampNavbar';
 
 function CampBoardAll() {
-
   const [boardData, setBoardData] = useState([]);
 
   const handleRowClick = (camp_id) => {
     window.location.href = `/camp/board/get/${camp_id}`;
   };
-  
-  useEffect(() => {
 
+  useEffect(() => {
     axios
       .get("http://localhost:8080/camp/board/all")
       .then((response) => {
-        
         setBoardData(response.data);
       })
       .catch((error) => {
@@ -27,6 +25,7 @@ function CampBoardAll() {
 
   return (
     <section>
+      <CampNavbar/>
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>

@@ -7,14 +7,14 @@ import ShopDetail from "./ShopDetail/ShopDetail";
 
 const Main = () => {
   const [products, setProducts] = useState([]);
-  const [productIds] = useState([97,99]);
+  const [productIds] = useState([97,99,113,115,103,105,107]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const productData = await Promise.all(
           productIds.map(async (productId) => {
-            const response = await axios.get(`http://localhost:8080/main/view/${productId}`);
+            const response = await axios.get(`http://localhost:8080/shop/main/view/${productId}`);
             return response.data;
           })
         );
@@ -27,12 +27,6 @@ const Main = () => {
     fetchData();
   }, [productIds]);
   
-
-
-  
-
-
-
 
 
 

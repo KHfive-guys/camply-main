@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Container } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
+import CampNavbar from "../CampNavbar";
 
 function UpdateBoard() {
   const { camp_id } = useParams();
   const navigate = useNavigate();
+  
+
   const [boardData, setBoardData] = useState({
     user_id: 0,
     camp_select: "",
@@ -18,20 +21,68 @@ function UpdateBoard() {
     camp_price: 0,
     camp_image: "",
     camp_description: "",
+    camp_facility: "",
   });
+
+  const [facilities, setFacilities] = useState({
+    수영장: false,
+    족구장: false,
+    와이파이: false,
+    공용화장실: false,
+    개인화장실: false,
+    설거지장: false,
+    샤워장: false,
+    주차장: false,
+    마트: false,
+    바베큐장: false,
+  });
+  
 
   useEffect(() => {
     axios
       .get(`http://localhost:8080/camp/board/get/${camp_id}`)
       .then((response) => {
         setBoardData(response.data);
+        const facilityArray = response.data.camp_facility.split(", ");
+        setFacilities((prevFacilities) => {
+          const updatedFacilities = { ...prevFacilities };
+          facilityArray.forEach((facility) => {
+            updatedFacilities[facility] = true;
+          });
+          return updatedFacilities;
+        });
       })
       .catch((error) => {
         console.error("Error fetching board data:", error);
       });
   }, [camp_id]);
 
+  const handleCheckboxChange = (facility) => {
+    const prevFacilities = { ...facilities };
+  
+    setFacilities((prevFacilities) => ({
+      ...prevFacilities,
+      [facility]: !prevFacilities[facility],
+    }));
+  
+    setBoardData((prevBoardData) => ({
+      ...prevBoardData,
+      camp_facility: Object.entries({
+        ...prevFacilities,
+        [facility]: !prevFacilities[facility],
+      })
+        .filter(([_, checked]) => checked)
+        .map(([facility]) => facility)
+        .join(", "),
+    }));
+  };
+
   const handleUpdate = () => {
+    const selectedFacilities = Object.entries(facilities)
+      .filter(([facility, checked]) => checked)
+      .map(([facility]) => facility)
+      .join(", ");
+  
     axios
       .put(`http://localhost:8080/camp/board/edit/${camp_id}`, boardData, {
         headers: {
@@ -41,7 +92,7 @@ function UpdateBoard() {
       .then(() => {
         alert("수정이 완료되었습니다.");
         console.log("Update successful");
-        navigate(`/camp/board/all`);
+        navigate(`/camp/board/get/${camp_id}`);
       })
       .catch((error) => {
         console.error("Update failed:", error);
@@ -53,8 +104,10 @@ function UpdateBoard() {
     navigate(`/camp/board/get/${camp_id}`);
   };
 
+
   return (
     <section>
+      <CampNavbar />
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
@@ -354,6 +407,28 @@ function UpdateBoard() {
                     setBoardData({ ...boardData, camp_image: e.target.value })
                   }
                 />
+              </td>
+            </tr>
+
+            <tr>
+              <th className="table-primary">부대 시설</th>
+              <td>
+                <div className="facilities-checkbox-container">
+                  {Object.entries(facilities).map(
+                    ([facility, checked], index) => (
+                      <div key={facility}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            onChange={() => handleCheckboxChange(facility)}
+                          />
+                          {facility}
+                        </label>
+                      </div>
+                    )
+                  )}
+                </div>
               </td>
             </tr>
 

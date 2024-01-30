@@ -36,12 +36,12 @@ const CreateProduct = () => {
     try {
       // Spring Boot 애플리케이션의 API 엔드포인트에 데이터 전송
       const response = await axios.post(
-        'http://localhost:8080/mypage/productAdd',
+        'http://localhost:8080/shop/mypage/productAdd',
         product
       );
       console.log(response.data);
       alert('상품이 성공적으로 등록되었습니다.');
-      navigate('/productMyPage');
+      navigate('/sell/list');
     } catch (error) {
       console.error('Error registering product:', error);
       alert('상품 등록에 실패했습니다.');

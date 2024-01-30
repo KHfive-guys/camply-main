@@ -14,7 +14,7 @@ const OrderProduct = () => {
       try {
         // 서버에서 주문 목록을 가져옵니다. 여기서는 판매자 ID가 1이라고 가정합니다.
         const response = await axios.get(
-          'http://localhost:8080/mypage/orderList/1'
+          'http://localhost:8080/shop/mypage/orderList/1'
         );
 
         // 응답 데이터를 state에 저장합니다.

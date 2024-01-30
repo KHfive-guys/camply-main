@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import './App.css';
-
+import '../../../../App.css';
 const UpdateProduct = () => {
   const navigate = useNavigate();
   const { productId } = useParams(); // URL에서 productId를 추출
@@ -17,7 +16,7 @@ const UpdateProduct = () => {
       }
       try {
         const response = await axios.get(
-          `http://localhost:8080/mypage/product/${productId}`
+          `http://localhost:8080/shop/mypage/product/${productId}`
         );
         setProduct(response.data); // 응답 데이터로 상태를 업데이트
       } catch (error) {
@@ -39,11 +38,11 @@ const UpdateProduct = () => {
     event.preventDefault();
     try {
       await axios.put(
-        `http://localhost:8080/mypage/product/edit/${productId}`,
+        `http://localhost:8080/shop/mypage/product/edit/${productId}`,
         product
       );
       alert('상품이 성공적으로 수정되었습니다.');
-      navigate('/productMyPage');
+      navigate('/seller/list');
     } catch (error) {
       console.error('Error updating product:', error);
       alert('상품 수정에 실패했습니다.');
@@ -52,7 +51,7 @@ const UpdateProduct = () => {
 
   //조회 페이지로 되돌아가기
   const handleCancel = () => {
-    navigate('/productMyPage');
+    navigate('/seller/list');
   };
 
   if (!product) {

@@ -2,17 +2,18 @@ package com.camply.user.controller;
 
 import java.util.HashMap;
 
+import com.camply.user.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.security.authentication.AuthenticationManager;
+
 
 import com.camply.user.service.UserService;
 import com.camply.user.vo.UserVO;
@@ -24,54 +25,63 @@ import com.camply.user.vo.UserVO;
 public class UserController {
 
 	/**
-	 * 	회원가입
+	 * 회원가입
 	 */
 	@Autowired
 	private UserService userservice;
-	
-	
-	@PostMapping("/userRegister")
-	public ResponseEntity emailRegister(@RequestBody UserVO uservo) {
-	
-		userservice.registerUser(uservo);
-		
-		
-		return ResponseEntity.ok("General email register Success");
+
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
+
+	private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+	@PostMapping("/general/register")
+	public ResponseEntity<String> emailRegister(@RequestBody UserVO userVO) {
+		try {
+			userservice.registerUser(userVO);
+			return ResponseEntity.ok("General email register Success");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during registration: " + e.getMessage());
+		}
 	}
-	
-	 @GetMapping("/login")
-	    public ResponseEntity<?> login(@RequestBody UserVO camplyuservo) {
-		 
-				 
-		 HashMap<String, String> user_info = new HashMap<String, String>();
 
-		 UserVO camplyuservo_info= userservice.getMemberByUsername(camplyuservo.getUSER_EMAIL());
-		 
-	        
-	        if (camplyuservo_info != null && camplyuservo_info.getUSER_PASSWORD().equals(camplyuservo.getUSER_PASSWORD())) {
+	@PostMapping("/admin/register")
+	public ResponseEntity<String> adminRegister(@RequestBody UserVO userVO) {
+		try {
+			userservice.registerAdmin(userVO);
+			return ResponseEntity.ok("Admin email register Success");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during registration: " + e.getMessage());
+		}
+	}
 
-	        	if (camplyuservo_info.getUSER_TYPE().equals("Admin")) {
-		        	user_info.put("USER_ID", camplyuservo_info.getUSER_ID());
-		        	user_info.put("USER_EMAIL", camplyuservo_info.getUSER_EMAIL());
-		        	user_info.put("USER_BUSINESSNAME", camplyuservo_info.getUSER_BUSINESSNAME());
-		        	user_info.put("USER_BUSINESSNUMBER", camplyuservo_info.getUSER_BUSINESSNUMBER());
-		        	user_info.put("USER_TYPE", camplyuservo_info.getUSER_TYPE());
-	        	} else if (camplyuservo_info.getUSER_TYPE().equals("General")){
-		        	user_info.put("USER_ID", camplyuservo_info.getUSER_ID());
-		        	user_info.put("USER_EMAIL", camplyuservo_info.getUSER_EMAIL());
-		        	user_info.put("USER_NAME", camplyuservo_info.getUSER_NAME());
-		        	user_info.put("USER_NICKNAME", camplyuservo_info.getUSER_NICKNAME());
-		        	user_info.put("USER_TYPE", camplyuservo_info.getUSER_TYPE());
-	        	}
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestBody UserVO userVO) {
+		HashMap<String, String> user_info = new HashMap<>();
 
-	       
-	        	return new ResponseEntity<>(user_info, HttpStatus.OK);
-	        } else {
+		UserVO camplyuservo_info = userservice.getMemberByUsername(userVO.getUSER_EMAIL());
 
-	        	user_info.put("result", "FAIL");
-	        	user_info.put("message", "이메일 혹은 비밀번호가 일치하지 않습니다.");
-	            return new ResponseEntity<>(user_info, HttpStatus.UNAUTHORIZED);
-	        }
-	    }
+		if (camplyuservo_info != null && passwordEncoder.matches(userVO.getUSER_PASSWORD(), camplyuservo_info.getUSER_PASSWORD())) {
+			Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(camplyuservo_info.getUSER_EMAIL(), userVO.getUSER_PASSWORD()));
+
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+
+			String token = jwtTokenProvider.generateToken(authentication);
+
+			user_info.put("USER_EMAIL", camplyuservo_info.getUSER_EMAIL());
+			user_info.put("USER_TYPE", camplyuservo_info.getUSER_TYPE());
+			user_info.put("token", token);  // Include the token in the response
+			return new ResponseEntity<>(user_info, HttpStatus.OK);
+		} else {
+			user_info.put("result", "FAIL");
+			user_info.put("message", "이메일 혹은 비밀번호가 일치하지 않습니다.");
+			return new ResponseEntity<>(user_info, HttpStatus.UNAUTHORIZED);
+		}
+	}
+
+
 }
-

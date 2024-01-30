@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Reply from './Board/Reply';
+import CampNavbar from '../CampNavbar';
 
 function CampBoardDetail() {
   const [boardData, setBoardData] = useState({});
@@ -109,6 +110,7 @@ function CampBoardDetail() {
 
   return (
     <section>
+      <CampNavbar/>
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
@@ -127,6 +129,7 @@ function CampBoardDetail() {
             <th>아동 인원</th>
             <th>1박 가격</th>
             <th>사진</th>
+            <th>부대 시설</th>
             <th>상세설명</th>
             <th>수정</th>
             <th>삭제</th>
@@ -145,6 +148,7 @@ function CampBoardDetail() {
             <td>{boardData.camp_child}</td>
             <td>{boardData.camp_price}</td>
             <td>{boardData.camp_image}</td>
+            <td>{boardData.camp_facility}</td>
             <td>{boardData.camp_description}</td>
             <td>
               <div className="my-5 d-flex justify-content-center">

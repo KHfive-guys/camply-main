@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import '../../shop/css/ShopOrder/OrderMain.css';
+import PostCode from '../../common/AddressApi/PostCode';
 
 const OrderMain = ()=> {
 
@@ -25,7 +26,7 @@ const OrderMain = ()=> {
                                     <p className='item-title'>{order.productName}</p>
                                 </div>
                                 <p>
-                                    수량 :
+                                    {order.cartOrder} :
                                     <sapn>1</sapn>
                                 </p>
                                 <p>
@@ -75,7 +76,9 @@ const OrderMain = ()=> {
                                         <div className='address-search'>
                                             <div className='address-num'>
                                                 <input type='text' placeholder='우편번호' disabled className='address-number-01 from'/>
-                                                    <button type='button'>주소검색</button> 
+                                                    <button type='button'>
+                                                      주소검색
+                                                      </button> 
                                             </div>        
                                                 <input type='text' placeholder='기본주소' disabled className='default-address-01 form'></input>
                                                 <input type='text' placeholder='상세주소' className='form'></input>
@@ -95,7 +98,9 @@ const OrderMain = ()=> {
                                     <div className='address-search'>
                                         <div className='address-num'>
                                             <input type='text' placeholder='우편번호' disabled className='address-number-01 from'/>
-                                            <button type='button'>주소검색</button> 
+                                            <button type='button'>주소검색
+                                            
+                                            </button> 
                                         </div>
                                             <input type='text' placeholder='기본주소' disabled className='default-address-01 form'></input>
                                             <input type='text' placeholder='상세주소' className='form'></input>

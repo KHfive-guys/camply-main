@@ -1,16 +1,67 @@
-import React  from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import logo from '../../img/Logo.png';
-import { Link } from "react-router-dom";
-import { Container } from 'react-bootstrap';
+import logo from "../../img/Logo.png";
+import { Link, useNavigate } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import KakaoLogin from 'react-kakao-login';
+
 
 function Register() {
+  const handleNaverLogin = () => {
+    const naverLogin = new window.naver.LoginWithNaverId({
+      clientId: "HQHp_3R0uDH7Ey5eoKgv",
+      callbackUrl: "http://localhost:8080/naver/callback",
+      isPopup: false,
+      loginButton: { color: "green", type: 3, height: 42 },
+    });
+
+    naverLogin.init();
+
+    naverLogin.getLoginStatus((status) => {
+      if (status) {
+        const uniqueId = naverLogin.user.getId();
+        const email = naverLogin.user.getEmail();
+      }
+    });
+  };
+
+  const navigate = useNavigate();
+
+  const handleKakaoLogin = async (response) => {
+    const { email, nickname } = response.profile.kakao_account;
+
+    try {
+        const registrationResponse = await fetch("http://localhost:8080/login/oauth2/code/kakao", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Anonymous" 
+            },
+            mode: "cors",
+            credentials: "include",
+            body: JSON.stringify({
+                USER_EMAIL: email,
+                USER_NAME: nickname,
+                USER_NICKNAME: nickname,
+            }),
+        });
+
+        if (registrationResponse.ok) {
+            console.log("카카오 회원가입 성공");
+            navigate("/login");
+        } else {
+            console.error("카카오 회원가입 실패");
+        }
+    } catch (error) {
+        console.error("카카오 회원가입 실패", error);
+    }
+};
+
 
   return (
     <section>
       <Container fluid className="home-section" id="home">
-        <Container className="home-content">
-        </Container>
+        <Container className="home-content"></Container>
       </Container>
 
       <LoginWrap>
@@ -25,17 +76,23 @@ function Register() {
 
             <Title>회원가입 방법 선택하기</Title>
             <LoginSns className="wrap">
+            <Item>
+                <KakaoLogin
+                    token="e4e518b34dec41360511f03ad7a9ac61"
+                    onSuccess={handleKakaoLogin}
+                    onFail={(e) => console.log(e)}
+                    onLogout={(e) => console.log(e)}
+                >
+                    <button>
+                        카카오톡으로 가입하기
+                    </button>
+                </KakaoLogin>
+            </Item>
               <Item>
-                <Kakaotalk href="">
-                  <SpIcon className="Kakaotalk" />
-                  "카카오톡으로 가입하기"
-                </Kakaotalk>
-              </Item>
-              <Item>
-                <Naver href="">
-                  <SpIcon className="" />
+                <button onClick={handleNaverLogin}>
+                  <SpIcon className="SpNaver" />
                   네이버로 가입하기
-                </Naver>
+                </button>
               </Item>
               <Item>
                 <Link to="/register/general/email">
@@ -72,7 +129,6 @@ const Hidden = styled.div`
   }
 `;
 const More = styled.button``;
-const Kakaotalk = styled.a``;
 const Item = styled.div``;
 
 const LoginSns = styled.div`
@@ -107,11 +163,6 @@ const LoginSns = styled.div`
 
       ${Naver} {
         background: #63c33d;
-      }
-
-      ${Kakaotalk} {
-        background: #fce84d;
-        color: #333;
       }
 
       ${More} {
@@ -200,12 +251,6 @@ const LoginSection = styled.section`
 const SpIcon = styled.span`
   &.SpNaver {
     background-position: -689px 0px;
-    width: 32px;
-    padding-top: 32px;
-  }
-
-  &.Kakaotalk {
-    background-position: -631px -626px;
     width: 32px;
     padding-top: 32px;
   }

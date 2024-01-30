@@ -1,57 +1,44 @@
-import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { Container } from 'react-bootstrap';
-
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  let body = {
-    username: email,
-    password: password,
-  };
+  const [USER_EMAIL, setEmail] = useState("");
+  const [USER_PASSWORD, setPassword] = useState("");
 
-  const onSubmit = async () => {
+  const emailLogin = async () => {
+    console.log("login button USER_EMAIL" + USER_EMAIL);
     try {
-      const response = await axios.post(
-        "",
-        body,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await fetch("http://localhost:8080/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Origin: "http://localhost:3000", // Replace with your frontend URL
+        },
+        body: JSON.stringify({
+          USER_EMAIL: USER_EMAIL,
+          USER_PASSWORD: USER_PASSWORD,
+        }),
+      });
 
-      console.log(response.data.token);
+      if (response.ok) {
+        const user_info = await response.json();
 
-      if (response.data.token !== null) {
-        localStorage.clear();
-        localStorage.setItem("token", response.data.token);
-        console.log("response.data.token:  " + response.data.token);
-
-        window.location.replace("/");
+        console.log("Login successful. Member info:", user_info);
+        navigate("/camp");
+        // 여기에서 memberInfo를 상태로 저장하거나 다른 처리를 수행할 수 있습니다.
       } else {
-        setEmail("");
-        setPassword("");
-        localStorage.clear();
+        console.error("Invalid username or password");
       }
-    } catch (e) {
-      alert(
-        "회원 정보가 일치 하지 않습니다. 아이디와 비민번호를 다시 확인해 주세요!"
-      );
-      console.log(e);
+    } catch (error) {
+      console.error("Error during login:", error);
     }
   };
 
   return (
-    <section>
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content">
-        </Container>
-      </Container>
-
+    <>
       <LoginWrap>
         <LoginContainer>
           <LoginHeadLogo>
@@ -70,16 +57,13 @@ function Login() {
           </LoginHeadText>
           <LoginSignupContent>
             <HorizontalButtons>
-              <RadiusButton
-                className="naver"
-                href="">
+              <RadiusButton className="naver" href="">
                 <SpIcon className="naver"></SpIcon>
               </RadiusButton>
 
               <RadiusButton className="kakao" href="">
                 <SpIcon className="kakao"></SpIcon>
               </RadiusButton>
-
             </HorizontalButtons>
           </LoginSignupContent>
           <LoginSigninContent>
@@ -91,7 +75,7 @@ function Login() {
                 <EmailLoginInput
                   id="email"
                   type="email"
-                  value={email}
+                  value={USER_EMAIL}
                   placeholder="이메일"
                   required
                   onChange={(e) => {
@@ -100,7 +84,7 @@ function Login() {
                 />
                 <EmailLoginInput
                   id="password"
-                  value={password}
+                  value={USER_PASSWORD}
                   placeholder="비밀번호"
                   required
                   onChange={(e) => {
@@ -121,23 +105,20 @@ function Login() {
             <CommonButton
               type="button"
               onClick={() => {
-                onSubmit();
-                console.log("body: " + email + ", " + password);
+                // onSubmit();
+                emailLogin();
               }}
             >
               로그인
             </CommonButton>
 
             <RegisterButton type="button">
-              <Link to="/register">
-                회원가입
-              </Link>
+              <Link to="/register">회원가입</Link>
             </RegisterButton>
-
           </LoginSigninContent>
         </LoginContainer>
       </LoginWrap>
-    </section>
+    </>
   );
 }
 
@@ -276,7 +257,6 @@ const RadiusButton = styled.a`
     padding-right: 4px;
     background: #3c5b96;
   }
-
 `;
 
 const HorizontalButtons = styled.div`
@@ -312,7 +292,6 @@ const SpIcon = styled.span`
   font-size: 0;
   line-height: 0;
   letter-spacing: 0;
-
 
   &.kakao {
     background-position: -631px -626px;
@@ -371,7 +350,6 @@ const LoginHeadText = styled.div`
       left: 0;
     }
   }
-
 `;
 
 const LoginHeadLogo = styled.div`
