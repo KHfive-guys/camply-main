@@ -32,7 +32,7 @@ public class QuestionController {
 		return ResponseEntity.ok(questions);
 	}
 
-	// 문의글 조회수 증가
+	// 문의글 조회
 	@GetMapping("/view/{productId}")
 	public ResponseEntity<List<QuestionVO>> getQuestion(@PathVariable int productId) {
 		questionService.incrementQuestionHit(productId);
@@ -44,7 +44,19 @@ public class QuestionController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
+	
+	//업데이트용 문의 조회
+	@GetMapping("/{questionNo}")
+	public ResponseEntity<QuestionVO> getQuestionNo(@PathVariable int questionNo){
+		QuestionVO question = questionService.getQuestionNo(questionNo);
+		if (question != null) {
+			return ResponseEntity.ok(question);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	
 	// 문의작성
 	@PostMapping("/post")
 	public ResponseEntity<String> postQuestion(@RequestBody QuestionVO questionVO) {

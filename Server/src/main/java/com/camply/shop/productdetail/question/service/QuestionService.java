@@ -23,7 +23,10 @@ public class QuestionService {
 	public List<QuestionVO> getQuestion(int productId) {
 		return questionDao.getQuestion(productId);
 	}
-
+	// 업데이트 문의 조회
+	public QuestionVO getQuestionNo(int questionNo) {
+		return questionDao.selectUpdateQuestions(questionNo);
+	}
 	// 문의 작성
 	public void postQuestion(QuestionVO questionVO) {
 		questionDao.insertQuestion(questionVO);
