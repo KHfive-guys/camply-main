@@ -36,6 +36,7 @@
     </select>
     
     <!--문의글 수정  -->
+
     <update id="updateQuestion" parameterType="com.camply.shop.productdetail.question.vo.QuestionVO">
     UPDATE Shop_Question
     <set>
@@ -47,6 +48,7 @@
         </if>
     </set>
  	</update>
+
  	
  	<!--문의글 삭제  -->
  	<delete id="deleteQuestion" parameterType="int">

@@ -1,38 +1,40 @@
 import React, {useState, useEffect} from 'react';
-import '../../shop/css/ShopOrder/OrderMain.css';
-import PostCode from '../../common/AddressApi/PostCode';
+import Layout from '../../../shop/ShopLayout';
+import '../../css/ShopOrder/OrderMain.css';
+import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
+
+
+
 
 const OrderMain = ()=> {
 
-    const [order] = useState([]);
+    const [productId, setProductId] = useState([]);
+    
 
 
-
-
-    useEffect(() => {
-
-    })
 
 
     return (
+        
         <div className='root'>
             <div className='order-main'>
-                <main style={{paddingTop:'200px'}} className='main-container'>
+                <main className='main-container'>
                     <section className='product-list'>
                         <ul>
                             <li>
                                 <div>
-                                    <img src={order.productThumbnail} alt='제품 이미지'/>
-                                    <p className='item-title'>{order.productName}</p>
+                                    <img src='https://www.ocamall.com/shopimages/ocamall/024007002641.jpg?1643870246' alt='제품 이미지'/>
+                                    <p className='item-title'>텐트의자</p>
                                 </div>
                                 <p>
-                                    {order.cartOrder} :
+                                    수량 :
                                     <sapn>1</sapn>
                                 </p>
                                 <p>
                                     상품 금액 :
                                     <sapn>
-                                        {order.productPrice}
+                                        3,700
                                     </sapn>
                                 </p>
                             </li>
@@ -43,7 +45,7 @@ const OrderMain = ()=> {
                             <p className='eEOGCf'>주문 정보</p>
                             <form className='form'>
                                 <div>
-                                    <p>{order.userId}</p>
+                                    <p>주문자</p>
                                     <div>
                                         <input type='text' className='input'/>
                                     </div>
@@ -76,9 +78,7 @@ const OrderMain = ()=> {
                                         <div className='address-search'>
                                             <div className='address-num'>
                                                 <input type='text' placeholder='우편번호' disabled className='address-number-01 from'/>
-                                                    <button type='button'>
-                                                      주소검색
-                                                      </button> 
+                                                    <button type='button'>주소검색</button> 
                                             </div>        
                                                 <input type='text' placeholder='기본주소' disabled className='default-address-01 form'></input>
                                                 <input type='text' placeholder='상세주소' className='form'></input>
@@ -98,9 +98,7 @@ const OrderMain = ()=> {
                                     <div className='address-search'>
                                         <div className='address-num'>
                                             <input type='text' placeholder='우편번호' disabled className='address-number-01 from'/>
-                                            <button type='button'>주소검색
-                                            
-                                            </button> 
+                                            <button type='button'>주소검색</button> 
                                         </div>
                                             <input type='text' placeholder='기본주소' disabled className='default-address-01 form'></input>
                                             <input type='text' placeholder='상세주소' className='form'></input>
@@ -116,10 +114,10 @@ const OrderMain = ()=> {
                                 </div>
                                 <div>
                                     <select className='form'>
-                                        <option value="0">메시지 선택(선택사항)</option>
-                                        <option value="1">부재시 문 앞에 놓고 가주세요.</option>
-                                        <option value="2">경비실에 맡겨주세요.</option>
-                                        <option value="3">배송전에 문자 주세요.</option>
+                                        <option value="none">메시지 선택(선택사항)</option>
+                                        <option value="0">부재시 문 앞에 놓고 가주세요.</option>
+                                        <option value="1">경비실에 맡겨주세요.</option>
+                                        <option value="2">배송전에 문자 주세요.</option>
                                     </select>
                                 </div>
                             </form>
@@ -143,19 +141,19 @@ const OrderMain = ()=> {
                             <div className='order-price-info'>
                                 <p>
                                     <span>상품 금액 :</span>
-                                   {order.productPrice}
+                                    3,700
+                                    원
                                 </p>
                                 <p>
                                     <span>배송비 :</span>
                                     무료
                                 </p>
                                 <p className='order-total-price'>
-                                    <span>총 주문금액 : </span>
-                                    {order.productPrice}
+                                    <span>총 주문금액</span>
+                                    :
+                                    3,700
                                 </p>
-                                <button type='button'>
-                                    구매하기
-                                    </button>
+                                <button>구매하기</button>
                             </div>
                         </div>
                     </section>

@@ -1,29 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import logo from '../../img/Logo.png';
-import { Container } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import logo from "../../img/Logo.png";
+import { Container } from "react-bootstrap";
+import { useNavigate, useLocation } from "react-router-dom";
 
-
-function ManagerEmailRegister() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [name, setName] = useState("");
-  const [companyNumber, setCompanyNumber] = useState("");
-  const [companyAddress, setCompanyAddress] = useState("");
-  const [companyPhone, setCompanyPhone] = useState("");
+function KakaoRegister() {
+  const location = useLocation();
+  const kakaoEmail = location.state?.email || "";
 
   const [checkedEmail, setCheckedEmail] = useState("");
   const [checkedPassword, setCheckedPassword] = useState("");
   const [checkedPassword2, setCheckedPassword2] = useState("");
   const [checkedName, setCheckedName] = useState("");
   const [checkedNickname, setCheckedNickname] = useState("");
-  const [checkedCompanyNumber, setCheckedCompanyNumber] = useState("");
-  const [checkedCompanyAddress, setCheckedCompanyAddress] = useState("");
-  const [checkedCompanyPhone, setCheckedCompanyPhone] = useState("");
-  
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [name, setName] = useState("");
   const navigate = useNavigate();
 
   const emailCheck = async () => {
@@ -63,24 +57,6 @@ function ManagerEmailRegister() {
   const nicknameCheck = async () => {
     if (email === "") {
       setCheckedNickname("필수 항목입니다.");
-    }
-  };
-
-  const companyNumberCheck = async () => {
-    if (email === "") {
-      setCheckedCompanyNumber("필수 항목입니다.");
-    }
-  };
-
-  const companyAddressCheck = async () => {
-    if (email === "") {
-      setCheckedCompanyAddress("필수 항목입니다.");
-    }
-  };
-
-  const companyPhoneCheck = async () => {
-    if (email === "") {
-      setCheckedCompanyPhone("필수 항목입니다.");
     }
   };
 
@@ -135,7 +111,7 @@ function ManagerEmailRegister() {
     if (validateForm()) {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/user/admin/register",
+          "",
           {
             method: "POST",
             headers: {
@@ -146,10 +122,7 @@ function ManagerEmailRegister() {
               USER_PASSWORD: password,
               USER_NAME: name,
               USER_NICKNAME: nickname,
-              USER_BUSINESSNUMBER: companyNumber,
-              USER_BUSINESSADDRESS: companyAddress, 
-              USER_BUSINESSPHONE: companyPhone,
-              USER_TYPE: "Admin",
+              USER_TYPE: "General",
             }),
           }
         );
@@ -169,8 +142,7 @@ function ManagerEmailRegister() {
   return (
     <section>
       <Container fluid className="home-section" id="home">
-        <Container className="home-content">
-        </Container>
+        <Container className="home-content"></Container>
       </Container>
 
       <WrapLogin>
@@ -184,7 +156,7 @@ function ManagerEmailRegister() {
             <LoginSection>
               <LoginTitle>정말 간단한 회원가입하기</LoginTitle>
               <SignupStep className="wrap">
-                <Title>판매자 가입하기</Title>
+                <Title>일반회원 가입하기</Title>
               </SignupStep>
               <FormBlock>
                 <FormBlockHead>
@@ -196,7 +168,7 @@ function ManagerEmailRegister() {
                     <EmailInput
                       id="email"
                       type="email"
-                      value={email}
+                      value={kakaoEmail}
                       placeholder="이메일을 입력해주세요."
                       required
                       onChange={(e) => {
@@ -219,7 +191,7 @@ function ManagerEmailRegister() {
                       id="password"
                       type="password"
                       value={password}
-                      placeholder="비밀번호 (영문+숫자 8자 이상)"
+                      placeholder="비밀번호 (영문+숫자+8자 이상)"
                       required
                       onChange={(e) => {
                         setPassword(e.target.value);
@@ -290,72 +262,6 @@ function ManagerEmailRegister() {
                 <FormError>{checkedNickname}</FormError>
               </FormBlock>
 
-              <FormBlock>
-                <FormBlockHead>
-                  <AsteriskRed>*</AsteriskRed> 사업자 번호
-                </FormBlockHead>
-                <FormBlockBody>
-                  <InputTextSizeWTypeL>
-                    <NicknameInput
-                      id="companyNumber"
-                      value={companyNumber}
-                      type="text"
-                      placeholder="사업자 번호를 입력해 주세요"
-                      required
-                      onChange={(e) => {
-                        setCompanyNumber(e.target.value);
-                      }}
-                      onBlur={() => companyNumberCheck()}
-                    />
-                  </InputTextSizeWTypeL>
-                </FormBlockBody>
-                <FormError>{checkedCompanyNumber}</FormError>
-              </FormBlock>
-
-              <FormBlock>
-                <FormBlockHead>
-                  <AsteriskRed>*</AsteriskRed> 사업자 주소
-                </FormBlockHead>
-                <FormBlockBody>
-                  <InputTextSizeWTypeL>
-                    <NicknameInput
-                      id="companyAddress"
-                      value={companyAddress}
-                      type="text"
-                      placeholder="사업자 주소를 입력해 주세요"
-                      required
-                      onChange={(e) => {
-                        setCompanyAddress(e.target.value);
-                      }}
-                      onBlur={() => companyAddressCheck()}
-                    />
-                  </InputTextSizeWTypeL>
-                </FormBlockBody>
-                <FormError>{checkedCompanyAddress}</FormError>
-              </FormBlock>
-
-              <FormBlock>
-                <FormBlockHead>
-                  <AsteriskRed>*</AsteriskRed> 사업자 전화번호
-                </FormBlockHead>
-                <FormBlockBody>
-                  <InputTextSizeWTypeL>
-                    <NicknameInput
-                      id="companyPhone"
-                      value={companyPhone}
-                      type="text"
-                      placeholder="사업자 전화번호를 입력해 주세요"
-                      required
-                      onChange={(e) => {
-                        setCompanyPhone(e.target.value);
-                      }}
-                      onBlur={() => companyPhoneCheck()}
-                    />
-                  </InputTextSizeWTypeL>
-                </FormBlockBody>
-                <FormError>{checkedCompanyPhone}</FormError>
-              </FormBlock>
-
               <FormBlockSubmit>
                 <FormBlockBody>
                   <BtnLogin
@@ -368,7 +274,6 @@ function ManagerEmailRegister() {
                   </BtnLogin>
                 </FormBlockBody>
               </FormBlockSubmit>
-
             </LoginSection>
           </LoginWrap>
         </ReauthPhone>
@@ -644,4 +549,4 @@ const WrapLogin = styled.div`
   background: #fff;
 `;
 
-export default ManagerEmailRegister;
+export default KakaoRegister;
