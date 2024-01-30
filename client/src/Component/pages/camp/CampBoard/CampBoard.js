@@ -1,15 +1,16 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { Container } from "react-bootstrap";
 import "./css/CampBoard.css";
 import CampNavbar from "../CampNavbar";
+
 function BbsWrite() {
   const navigate = useNavigate();
-
+  const [userId, setUserId] = useState("");
   const [newBoard, setNewBoard] = useState({
-    user_id: 0,
+    user_id: "",
     camp_id: 0,
     camp_select: "",
     camp_location: "",
@@ -25,7 +26,6 @@ function BbsWrite() {
   });
 
   const boardAdd = () => {
-    // 부대 시설을 문자열로 변환하여 저장
     const selectedFacilities = Object.entries(facilities)
       .filter(([facility, checked]) => checked)
       .map(([facility]) => facility)
@@ -39,7 +39,7 @@ function BbsWrite() {
       .then((response) => {
         console.log("성공", response.data);
         setNewBoard({
-          user_id: 0,
+          user_id: "",
           camp_id: 0,
           camp_select: "",
           camp_location: "",
@@ -65,7 +65,7 @@ function BbsWrite() {
           마트: false,
           바베큐장: false,
         });
-        navigate("/camp/board/all"); // Directly navigate to the desired route
+        navigate("/camp/board/all"); 
       })
       .catch((error) => {
         console.error("실패", error);
@@ -92,6 +92,35 @@ function BbsWrite() {
     }));
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("yourTokenKey");
+  
+    const parseJwt = (token) => {
+      try {
+        return JSON.parse(atob(token.split(".")[1]));
+      } catch (e) {
+        return null;
+      }
+    };
+  
+    if (token) {
+      try {
+        const decodedToken = parseJwt(token);
+        console.log("Decoded Token:", decodedToken);
+  
+        setUserId(decodedToken.user_id || "");
+        setNewBoard((prevNewBoard) => ({
+          ...prevNewBoard,
+          user_id: decodedToken.user_id || "",
+          USER_BUSINESSADDRESS: decodedToken.USER_BUSINESSADDRESS || "",
+          USER_BUSINESSPHONE: decodedToken.USER_BUSINESSPHONE || "",  
+        }));
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    }
+  }, []);
+
   return (
     <section>
       <CampNavbar />
@@ -102,19 +131,14 @@ function BbsWrite() {
       <div>
         <table className="table">
           <tbody>
-            <tr>
+          <tr>
               <th className="table-primary">유저 아이디</th>
               <td>
                 <input
-                  type="number"
+                  type="text"
                   className="form-control"
-                  value={newBoard.user_id}
-                  onChange={(e) =>
-                    setNewBoard({
-                      ...newBoard,
-                      user_id: parseInt(e.target.value, 10),
-                    })
-                  }
+                  value={userId || ""}
+                  readOnly
                 />
               </td>
             </tr>
@@ -288,18 +312,18 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 주소</th>
-              <td>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={newBoard.camp_address}
-                  onChange={(e) =>
-                    setNewBoard({ ...newBoard, camp_address: e.target.value })
-                  }
-                />
-              </td>
-            </tr>
+  <th className="table-primary">캠핑장 주소</th>
+  <td>
+    <input
+      type="text"
+      className="form-control"
+      value={newBoard.USER_BUSINESSADDRESS}
+      onChange={(e) =>
+        setNewBoard({ ...newBoard, USER_BUSINESSADDRESS: e.target.value })
+      }
+    />
+  </td>
+</tr>
 
             <tr>
               <th className="table-primary">캠핑장 이름</th>
@@ -316,18 +340,18 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 전화번호</th>
-              <td>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={newBoard.camp_phone}
-                  onChange={(e) =>
-                    setNewBoard({ ...newBoard, camp_phone: e.target.value })
-                  }
-                />
-              </td>
-            </tr>
+  <th className="table-primary">캠핑장 전화번호</th>
+  <td>
+    <input
+      type="text"
+      className="form-control"
+      value={newBoard.USER_BUSINESSPHONE}
+      onChange={(e) =>
+        setNewBoard({ ...newBoard, USER_BUSINESSPHONE: e.target.value })
+      }
+    />
+  </td>
+</tr>
 
             <tr>
               <th className="table-primary">성인 인원</th>
