@@ -22,6 +22,7 @@ function ManagerEmailRegister() {
   const [checkedCompanyNumber, setCheckedCompanyNumber] = useState("");
   const [checkedCompanyAddress, setCheckedCompanyAddress] = useState("");
   const [checkedCompanyPhone, setCheckedCompanyPhone] = useState("");
+  
 
   const navigate = useNavigate();
 

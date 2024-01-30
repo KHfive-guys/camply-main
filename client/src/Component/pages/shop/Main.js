@@ -3,17 +3,23 @@ import axios from "axios";
 import { Routes,Route,Link } from "react-router-dom"; // Link 추가
 import '../shop/css/ShopMain.css';
 import ShopDetail from "./ShopDetail/ShopDetail";
-
+import Pagination from "react-js-pagination";
+import '@mui/material/Pagination/Pagination';
 
 const Main = () => {
   const [products, setProducts] = useState([]);
-  const [productIds] = useState([97,99,113,115,103,105,107]);
+  const [productIds] = useState([111,99,113,115,103,105,107]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
         const productData = await Promise.all(
-          productIds.map(async (productId) => {
+          productIds.slice(startIndex, endIndex).map(async (productId) => {
             const response = await axios.get(`http://localhost:8080/shop/main/view/${productId}`);
             return response.data;
           })
@@ -31,15 +37,13 @@ const Main = () => {
 
 
   return (
+
     <div className="newItem-section">
     <div className='category-item' style={{ display: 'flex', justifyContent: 'center' }}>
-    
-    
       {products.length > 0 ? (
         <div>
           <h2 style={{ display: 'flex', justifyContent: 'flex-start' }}>신상품</h2>
           {products.map((product) => (
-            
             <section style={{float:'left'}} key={product.productId}>
               <Link to={`/shop/detail/${product.productId}`}>
                 <ul className='swiper-wrapper'>
@@ -63,21 +67,32 @@ const Main = () => {
                     </div>
                   </li>
                 </ul>
-                
                   <Routes>
                     <Route path="/shop/detail/:productId" element={<ShopDetail/>}/>
                   </Routes>
               </Link>
+            
             </section>
+              
           ))}
+          
         </div>
         
       ) : (
         <p>상품을 찾을 수 없습니다.</p>
       )}
     </div>
-    
-  </div> 
+      <div style={{display:'flex',justifyContent:'center', marginTop:'50px'}}>
+        <Pagination
+                activePage={currentPage}
+                itemsCountPerPage={itemsPerPage}
+                totalItemsCount={productIds.length}
+                pageRangeDisplayed={2}
+                onChange={(pageNumber) => setCurrentPage(pageNumber)}
+              />
+      </div>      
+  </div>
+  
   );
 };
 

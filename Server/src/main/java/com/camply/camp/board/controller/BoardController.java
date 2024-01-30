@@ -30,7 +30,7 @@ public class BoardController {
 	@PostMapping("/add")
 	public ResponseEntity<String> insertPost(@RequestBody BoardVO boardVO) {
 		boardService.insertPost(boardVO);
-		return ResponseEntity.ok("Camp added successfully");
+		return ResponseEntity.ok("캠핑장 추가 성공");
 	}
 
 	@GetMapping("/all")
@@ -40,7 +40,7 @@ public class BoardController {
 			List<BoardVO> boards = boardService.getAllBoard();
 			return ResponseEntity.ok(boards);
 		} catch (Exception e) {
-			return ResponseEntity.status(500).body("asdf");
+			return ResponseEntity.status(500).body("캠핑장 게시판 전체 불러오기 실패");
 		}
 		
 	}
@@ -51,7 +51,7 @@ public class BoardController {
 			BoardVO board = boardService.getBoardById(camp_id);
 			return ResponseEntity.ok(board);
 		} catch (Exception e) {
-			return ResponseEntity.status(500).body("Failed to retrieve board with ID: " + camp_id);
+			return ResponseEntity.status(500).body("캠핑장 정보 가져오기 실패: " + camp_id);
 		}
 	}
 
@@ -59,9 +59,9 @@ public class BoardController {
 	public String deleteBoardById(@PathVariable Long camp_id, RedirectAttributes redirectAttributes) {
 		try {
 			boardService.deleteBoardById(camp_id);
-			redirectAttributes.addFlashAttribute("successMessage", "Camp posting deleted successfully");
+			redirectAttributes.addFlashAttribute("successMessage", "캠핑장 삭제 완료");
 		} catch (Exception e) {
-			redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete camp posting with ID: " + camp_id);
+			redirectAttributes.addFlashAttribute("errorMessage", "캠핑장 삭제 실패: " + camp_id);
 		}
 
 		return "redirect:/camp/board/all";
