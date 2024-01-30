@@ -15,9 +15,6 @@ public interface UserDao {
 	
 	UserVO selectEmail(String USER_EMAIL);
 
-	UserLoginVO findByEmailAndPassword(@Param("user_email") String user_email, @Param("user_password") String user_password);
-
-	UserLoginVO findByEmail(@Param("user_email") String user_email);
 
 }
 

@@ -7,6 +7,7 @@ function Login() {
   const [USER_EMAIL, setEmail] = useState("");
   const [USER_PASSWORD, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userType, setUserType] = useState("");
 
   const emailLogin = async () => {
     console.log("login button USER_EMAIL" + USER_EMAIL);
@@ -25,11 +26,11 @@ function Login() {
   
       if (response.ok) {
         const user_info = await response.json();
-  
         console.log("Login successful. Member info:", user_info);
   
-        localStorage.setItem("yourTokenKey", user_info.token);
+        setUserType(user_info.USER_TYPE);
   
+        localStorage.setItem("yourTokenKey", user_info.token);
         setLoggedIn(true);
         navigate("/");
       } else {
@@ -45,6 +46,7 @@ function Login() {
     setLoggedIn(false);
     navigate("/login");
   };
+  
 
   return (
     <>
