@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ShopDetail from './Component/pages/shop/ShopDetail/ShopDetail';
-import OrderMain from './Component/pages/shop/ShopOrder/OrderMain';
+import OrderMain from './Component/pages/shop/ShopOrder/Order/OrderMain';
 import SellMain from './Component/pages/shop/ShopSell/SellMain';
 import {
   BrowserRouter as Router,
@@ -53,7 +53,9 @@ import UpdateBoard from './Component/pages/camp/CampBoard/CampBoardUpdate';
 import InquiryUpdate from './Component/pages/shop/ShopDetail/ShopInquiry/InquiryUpdate';
 import InquiryWriter from './Component/pages/shop/ShopDetail/ShopInquiry/InquiryWriter';
 import ReviewWriter from './Component/pages/shop/ShopDetail/ShopReview/ReviewWriter';
-
+import ShopCart from './Component/pages/shop/ShopCart';
+import campMainImg from './Component/img/MainImg/메인페이지 이미지2.jpeg';
+import OrderCart from './Component/pages/shop/ShopOrder/Order/OrderCart';
 
 
 
@@ -74,10 +76,32 @@ function App() {
         <Route
           path="/"
           element={
-            <div>
-              <h1>안녕하세요. 캠플리에 오신걸 환영합니다.</h1>
-              <Link to="/camp">캠핑예약으로 이동하기</Link>
-              <Link to="/shop/main">쇼핑몰로 이동하기</Link>
+            <div className="container text-center mt-5">
+              <h1 className="display-4">
+                안녕하세요. 캠플리에 오신걸 환영합니다.
+              </h1>
+              <p className="lead">캠핑 예약 또는 쇼핑 몰로 이동하세요.</p>
+              <div className="d-flex justify-content-center">
+                <Link to="/camp" className="btn btn-primary m-2">
+                  <img
+                    src={campMainImg}
+                    alt="Camping Image"
+                    className="img-thumbnail"
+                    style={{ width: '200px', height: '200px' }}
+                  />
+                  <p>캠핑 예약</p>
+                </Link>
+
+                <Link to="/shop/main" className="btn btn-success m-2">
+                  <img
+                    src={campMainImg}
+                    alt="Shopping Image"
+                    className="img-thumbnail"
+                    style={{ width: '200px', height: '200px' }}
+                  />
+                  <p>쇼핑 몰</p>
+                </Link>
+              </div>
             </div>
           }
         />
@@ -157,14 +181,13 @@ function App() {
             <ShopLayout>
               <Routes>
               <Route path="/main" element={<ShopMain />} />
-               
-                <Route path="/order" element={<OrderMain/>} />
+                <Route path="/order" element={<OrderCart/>} />
                 <Route path="/mypage" element={<ShopMyPage />} />
-                <Route path="/cart" element={<Cart/>} />
+                <Route path="/cart" element={<ShopCart/>} />
                 <Route path="/tent" element={<Tent/>}/>
                 <Route path="/chair" element={<Chair/>}/>
                 <Route path="/sleeping" element={<Sleeping/>}/>
-                <Route path="/kitchen" element={<Kitchen/>}/>S
+                <Route path="/kitchen" element={<Kitchen/>}/>
                 <Route path="/lamp" element={<Lamp/>}/>
                 <Route path="/fireplace" element={<BBQ/>}/>
               </Routes>

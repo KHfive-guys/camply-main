@@ -11,7 +11,7 @@ const BBQ = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/category/main/fireplace");
+        const response = await axios.get("http://localhost:8080/shop/category/main/fireplace");
         setProducts(response.data);
       } catch (error) {
         console.error("상품을 불러오는 중 에러 발생", error);

@@ -26,9 +26,7 @@ const InquiryDetail = () => {
     }
 };
     
-const handleUpdateClick = () => {
-    navigate(`/inquiry/update/${questionNo}`);
-  };    
+ 
 
   const handleDeleteClick = async () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
@@ -36,13 +34,19 @@ const handleUpdateClick = () => {
         await axios.delete(
           `http://localhost:8080/shop/question/delete/${questionNo}`
         );
-        setQuestion(question.filter((q) => q.questionNo !== questionNo));
+        
+        alert('삭제 완료');
+        navigate(`/shop/question/view`);    
       } catch (error) {
         console.error('삭제중 애러: ', error);
       }
     }
   };
 
+
+    const moveToUpdate = () => {
+        navigate(`/inquiry/update/${questionNo}`);
+    };
 
 
 
@@ -71,7 +75,7 @@ const handleUpdateClick = () => {
                         </div>
                         <p>내용 {question.questionText}</p>
                         <div>
-                            <button onClick={handleUpdateClick}>수정</button>
+                            <button onClick={moveToUpdate}>수정</button>
                             <button onClick={handleDeleteClick}>삭제</button>
                             
                         </div>

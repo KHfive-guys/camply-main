@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../../pages/shop/css/ShopCart/ShopCart.css';
 import {Routes, Route, Link} from 'react-router-dom';
-import ShopOrder from '../ShopOrder/OrderMain';
+import ShopOrder from '../ShopOrder/Order/OrderMain';
 
 const ShoppingCart = () => {
   const [product] = useState([]);

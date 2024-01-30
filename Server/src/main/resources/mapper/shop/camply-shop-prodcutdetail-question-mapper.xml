@@ -37,7 +37,7 @@
     
     <!--문의글 수정  -->
     <update id="updateQuestion" parameterType="int">
-    UPDATE Shop_Question
+    UPDATE Shop_Question	
     SET QUESTION_TITLE = #{questionTitle}, QUESTION_TEXT = #{questionText}
     WHERE QUESTION_NO = #{questionNo}
     </update>
