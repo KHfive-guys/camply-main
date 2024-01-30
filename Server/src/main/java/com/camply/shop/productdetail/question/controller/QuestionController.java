@@ -21,6 +21,7 @@ import com.camply.shop.productdetail.question.vo.QuestionVO;
 @RequestMapping("/shop/question")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class QuestionController {
+
 	@Autowired
 	private QuestionService questionService;
 
@@ -31,11 +32,11 @@ public class QuestionController {
 		return ResponseEntity.ok(questions);
 	}
 
-	// 문의글 조회수 증가
-	@GetMapping("/view/{questionNo}")
-	public ResponseEntity<QuestionVO> getQuestion(@PathVariable int questionNo) {
-		questionService.incrementQuestionHit(questionNo);
-		QuestionVO question = questionService.getQuestion(questionNo);
+	// 문의글 조회
+	@GetMapping("/view/{productId}")
+	public ResponseEntity<List<QuestionVO>> getQuestion(@PathVariable int productId) {
+		questionService.incrementQuestionHit(productId);
+		List<QuestionVO> question = questionService.getQuestion(productId);
 
 		if (question != null) {
 			return ResponseEntity.ok(question);
@@ -43,7 +44,19 @@ public class QuestionController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
+	
+	//업데이트용 문의 조회
+	@GetMapping("/{questionNo}")
+	public ResponseEntity<QuestionVO> getQuestionNo(@PathVariable int questionNo){
+		QuestionVO question = questionService.getQuestionNo(questionNo);
+		if (question != null) {
+			return ResponseEntity.ok(question);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
+	
 	// 문의작성
 	@PostMapping("/post")
 	public ResponseEntity<String> postQuestion(@RequestBody QuestionVO questionVO) {
@@ -53,16 +66,16 @@ public class QuestionController {
 
 	// 문의수정
 	@PatchMapping("/update/{questionNo}")
-	 public ResponseEntity<String> updateQuestion(@PathVariable int questionNo, @RequestBody QuestionVO questionVO) {
-        questionVO.setQuestionNo(questionNo);
-        questionService.questionUpdate(questionVO);
-        return ResponseEntity.ok("Question updated successfully");
-    }
-	
-	//문의삭제
+	public ResponseEntity<String> updateQuestion(@PathVariable int questionNo, @RequestBody QuestionVO questionVO) {
+		questionVO.setQuestionNo(questionNo);
+		questionService.questionUpdate(questionVO);
+		return ResponseEntity.ok("Question updated successfully");
+	}
+
+	// 문의삭제
 	@DeleteMapping("/delete/{questionNo}")
 	public void deleteQuestion(@PathVariable int questionNo) {
 		questionService.questionDelete(questionNo);
 	}
-	
+
 }

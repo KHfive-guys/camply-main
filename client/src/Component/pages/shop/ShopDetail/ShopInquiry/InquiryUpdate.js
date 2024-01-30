@@ -6,13 +6,9 @@ const InquiryUpdate = () => {
   const navigate = useNavigate();
   const { questionNo } = useParams();
   const [question, setQuestion] = useState({
-    questionNo: 0,
     questionTitle: "",
     questionText: "",
-    questionName: "",
   });
-
-  const { questionTitle, questionText, questionName } = question;
 
   const onChange = (event) => {
     const { name, value } = event.target;
@@ -22,36 +18,26 @@ const InquiryUpdate = () => {
   const getQuestion = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/shop/question/view/${questionNo}`
+        `http://localhost:8080/shop/question/${questionNo}` // 수정: 문의글 단건 조회 경로로 변경
       );
-      // 문의글 정보를 서버로부터 받아와서 상태를 업데이트
       setQuestion(response.data);
     } catch (error) {
       console.error("문의글 정보를 불러오는 중 오류 발생", error);
-      // 문의글 정보를 받아오지 못했을 때 초기 상태로 설정
-      setQuestion({
-        questionNo: 0,
-        questionTitle: "",
-        questionText: "",
-        questionName: "",
-      });
     }
   };
 
   const updateQuestion = async (event) => {
-    event.preventDefault(); // 폼 제출 방지
+    event.preventDefault();
     try {
       await axios.patch(
-        `http://localhost:8080/shop/question/update/ ` + questionNo,
+        `http://localhost:8080/shop/question/update/${questionNo}`,
         {
-          questionTitle,
-          questionText,
+          questionTitle: question.questionTitle,
+          questionText: question.questionText,
         }
       );
-      // 문의글 정보를 서버로부터 받아와서 상태를 업데이트
-      getQuestion();
       alert("수정 완료!");
-      navigate(`/shop/question`);
+      navigate(`/shop/question/view/${questionNo}`);
     } catch (error) {
       console.error("문의글 수정 중 오류 발생", error);
     }
@@ -77,8 +63,6 @@ const InquiryUpdate = () => {
             onChange={onChange}
           />
         </div>
-        <br />
-
         <br />
         <div>
           <span>내용</span>

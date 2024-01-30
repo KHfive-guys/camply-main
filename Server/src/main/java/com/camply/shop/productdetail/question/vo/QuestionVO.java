@@ -17,6 +17,7 @@ import lombok.Setter;
 public class QuestionVO {
 
 	private int questionNo;
+	private int productId;
 	private String questionTitle;
 	private String questionText;
 	private String questionName;

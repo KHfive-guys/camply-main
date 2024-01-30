@@ -37,7 +37,7 @@ public class camplyUserSecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Add your React app's origin
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT","PATCH"));
 		configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origins", "Content-Type", "Accept", "Authorization"));
 		configuration.setAllowCredentials(true);
 
