@@ -38,7 +38,7 @@ public class JwtTokenProvider {
         }
 
         UserVO userVO = userService.getUserVOByUsername(authentication.getName());
-        String userId = userService.getUserIdFromUserVO(userVO);
+        Long userId = userService.getUserIdFromUserVO(userVO);
 
         StringBuilder roles = new StringBuilder();
         authentication.getAuthorities().forEach(authority -> roles.append(authority.getAuthority()).append(","));

@@ -15,7 +15,7 @@ import lombok.Setter;
 public class UserVO{
 	
 	@JsonProperty("USER_ID")
-	private String USER_ID;
+	private Long USER_ID;
 
 	@JsonProperty("USER_EMAIL")
 	private String USER_EMAIL;
