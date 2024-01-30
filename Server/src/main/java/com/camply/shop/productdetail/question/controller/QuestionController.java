@@ -52,11 +52,12 @@ public class QuestionController {
 	}
 
 	// 문의수정
-	@PatchMapping("/update")
-	public void updateQuestion(@PathVariable int questionNo) {
-		questionService.questionUpdate(questionNo);
-
-	}
+	@PatchMapping("/update/{questionNo}")
+	 public ResponseEntity<String> updateQuestion(@PathVariable int questionNo, @RequestBody QuestionVO questionVO) {
+        questionVO.setQuestionNo(questionNo);
+        questionService.questionUpdate(questionVO);
+        return ResponseEntity.ok("Question updated successfully");
+    }
 	
 	//문의삭제
 	@DeleteMapping("/delete/{questionNo}")
