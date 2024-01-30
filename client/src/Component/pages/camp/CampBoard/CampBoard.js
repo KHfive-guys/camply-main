@@ -9,6 +9,8 @@ import CampNavbar from "../CampNavbar";
 function BbsWrite() {
   const navigate = useNavigate();
   const [userId, setUserId] = useState("");
+  const [USER_BUSINESSADDRESS, setUserBusinessAddress] = useState("");
+  const [USER_BUSINESSPHONE, setUserBusinessPhone] = useState("");
   const [newBoard, setNewBoard] = useState({
     user_id: "",
     camp_id: 0,
@@ -117,11 +119,13 @@ function BbsWrite() {
             console.log("Decoded Token:", decodedToken);
 
             setUserId(decodedToken.user_id || "");
+            setUserBusinessAddress(decodedToken.USER_BUSINESSADDRESS || "");
+            setUserBusinessPhone(decodedToken.USER_BUSINESSPHONE || "");
             setNewBoard((prevNewBoard) => ({
                 ...prevNewBoard,
                 user_id: decodedToken.user_id || "",
-                USER_BUSINESSADDRESS: decodeUTF8(decodedToken.USER_BUSINESSADDRESS || ""),
-                USER_BUSINESSPHONE: decodeUTF8(decodedToken.USER_BUSINESSPHONE || ""),
+                camp_address: decodedToken.USER_BUSINESSADDRESS || "",
+                camp_phone: decodedToken.USER_BUSINESSPHONE || "",
             }));
         } catch (error) {
             console.error("Error decoding token:", error);
@@ -321,18 +325,16 @@ function BbsWrite() {
             </tr>
 
             <tr>
-  <th className="table-primary">캠핑장 주소</th>
-  <td>
-    <input
-      type="text"
-      className="form-control"
-      value={newBoard.USER_BUSINESSADDRESS}
-      onChange={(e) =>
-        setNewBoard({ ...newBoard, USER_BUSINESSADDRESS: e.target.value })
-      }
-    />
-  </td>
-</tr>
+              <th className="table-primary">캠핑장 주소</th>
+              <td>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={USER_BUSINESSADDRESS || ""}
+                  readOnly
+                />
+              </td>
+            </tr>
 
             <tr>
               <th className="table-primary">캠핑장 이름</th>
@@ -349,18 +351,16 @@ function BbsWrite() {
             </tr>
 
             <tr>
-  <th className="table-primary">캠핑장 전화번호</th>
-  <td>
-    <input
-      type="text"
-      className="form-control"
-      value={newBoard.USER_BUSINESSPHONE}
-      onChange={(e) =>
-        setNewBoard({ ...newBoard, USER_BUSINESSPHONE: e.target.value })
-      }
-    />
-  </td>
-</tr>
+              <th className="table-primary">캠핑장 전화번호</th>
+              <td>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={USER_BUSINESSPHONE || ""}
+                  readOnly
+                />
+              </td>
+            </tr>
 
             <tr>
               <th className="table-primary">성인 인원</th>
