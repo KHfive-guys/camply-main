@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//myBatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.camply.camp.search.dao.CampSearchDao">
+
+    <resultMap id="CampSearchMap" type="com.camply.camp.search.vo.CampSearchVO">
+        <id column="CAMP_ID" property="CAMP_ID"/>
+        <result column="USER_ID" property="USER_ID"/>
+        <result column="CAMP_SELECT" property="CAMP_SELECT"/>
+        <result column="CAMP_LOCATION" property="CAMP_LOCATION"/>
+        <result column="CAMP_NAME" property="CAMP_NAME"/>
+        <result column="CAMP_ADDRESS" property="CAMP_ADDRESS"/>
+        <result column="CAMP_PHONE" property="CAMP_PHONE"/>
+        <result column="CAMP_ADULT" property="CAMP_ADULT"/>
+        <result column="CAMP_CHILD" property="CAMP_CHILD"/>
+        <result column="CAMP_PRICE" property="CAMP_PRICE"/>
+        <result column="CAMP_DESCRIPTION" property="CAMP_DESCRIPTION"/>
+        <result column="CAMP_IMAGE" property="CAMP_IMAGE"/>
+        <result column="CAMP_FACILITY" property="CAMP_FACILITY"/>
+        <collection property="CampReservationSearch" resultMap="CampReservationSearchMap"/>
+    </resultMap>
+     
+    <resultMap id="CampReservationSearchMap" type="com.camply.camp.search.vo.CampReservationSearchVO">
+    	 <id column="CAMP_ID" property="CAMP_ID"/>
+        <result column="CAMP_CHECKIN" property="CAMP_CHECKIN"/>
+        <result column="CAMP_CHECKOUT" property="CAMP_CHECKOUT"/>
+    </resultMap>
+
+    <select id="searchCampList"  resultMap="CampSearchMap">
+        SELECT * FROM CAMP_POSTING p LEFT JOIN CAMP_RESERVATION r on p.CAMP_ID = r.CAMP_ID WHERE p.CAMP_SELECT = #{CAMP_SELECT}
+		<if test="CAMP_LOCATION != null">
+       		AND p.CAMP_LOCATION = #{CAMP_LOCATION}
+       </if>
+       <if test="CAMP_ADULT != null">
+       		AND p.CAMP_ADULT >= #{CAMP_ADULT}
+       </if>
+          <if test="CAMP_CHILD != null">
+       		AND p.CAMP_CHILD >= #{CAMP_CHILD}
+       </if>
+       </if>
+          <if test="CAMP_CHILD != null">
+       		AND p.CAMP_CHILD >= #{CAMP_CHILD}
+       </if>
+    </select>
+
+
+</mapper>
