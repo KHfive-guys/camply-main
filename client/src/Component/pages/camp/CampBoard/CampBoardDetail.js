@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Reply from "./Board/Reply";
 import CampNavbar from "../CampNavbar";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 const parseJwt = (token) => {
   console.log("Parsed JWT:", token);
@@ -18,6 +19,12 @@ function CampBoardDetail() {
   );
   const [isCurrentUser, setIsCurrentUser] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const handleHeart = () => {
+    setLike(!like);
+    alert("좋아요");
+  };
+  const [like, setLike] = useState(false);
 
   const initializeMap = useCallback(() => {
     if (window.kakao && boardData.camp_address) {
@@ -73,6 +80,15 @@ function CampBoardDetail() {
       return;
     }
 
+    const userToken = localStorage.getItem("yourTokenKey");
+    setUserToken(userToken);
+
+    if (!userToken) {
+      setIsCurrentUser(null);
+      setLoading(false);
+      return;
+    }
+
     axios
       .get(`http://localhost:8080/camp/board/get/${camp_id}`, {
         headers: {
@@ -93,7 +109,7 @@ function CampBoardDetail() {
           const currentUser =
             response.data.user_id === userTokenPayload?.user_id;
           console.log("Is current user:", currentUser);
-          setIsCurrentUser(currentUser);
+          setIsCurrentUser(currentUser ? userTokenPayload?.user_id : null);
 
           setLoading(false);
         } catch (error) {
@@ -103,7 +119,8 @@ function CampBoardDetail() {
       .catch((error) => {
         console.error("게시글 가져오기 실패:", error);
       });
-  }, [camp_id, navigate, userToken]);
+  }, [camp_id, navigate]);
+
   useEffect(() => {
     setUserToken(localStorage.getItem("yourTokenKey"));
   }, [camp_id]);
@@ -165,6 +182,7 @@ function CampBoardDetail() {
             <th>상세설명</th>
             {isCurrentUser && <th>수정</th>}
             {isCurrentUser && <th>삭제</th>}
+            <th>찜하기</th>
           </tr>
         </thead>
         <tbody>
@@ -182,8 +200,8 @@ function CampBoardDetail() {
             <td>{boardData.camp_image}</td>
             <td>{boardData.camp_facility}</td>
             <td>{boardData.camp_description}</td>
-            <td>
-              {isCurrentUser && (
+            {isCurrentUser && (
+              <td>
                 <div className="my-5 d-flex justify-content-center">
                   <button
                     className="btn btn-outline-secondary"
@@ -192,14 +210,26 @@ function CampBoardDetail() {
                     <i className="fas fa-pen"></i> 수정하기
                   </button>
                 </div>
-              )}
-            </td>
+              </td>
+            )}
+            {isCurrentUser && (
+              <td>
+                <button onClick={handleDelete}>삭제</button>
+              </td>
+            )}
             <td>
-              {isCurrentUser && <button onClick={handleDelete}>삭제</button>}
+              <div className="like" onClick={handleHeart}>
+                {like ? (
+                  <AiFillHeart style={{ color: "#FEA92A", fontSize: "30px" }} />
+                ) : (
+                  <AiOutlineHeart style={{ fontSize: "30px" }} />
+                )}
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
+
       <h1>지도</h1>
       <div id="map" style={{ width: "100%", height: "400px" }}></div>
 

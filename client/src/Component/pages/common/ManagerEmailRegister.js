@@ -4,7 +4,6 @@ import logo from "../../img/Logo.png";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-
 function ManagerEmailRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +24,6 @@ function ManagerEmailRegister() {
 
   const [map, setMap] = useState({});
   const [marker, setMarker] = useState(null);
-
 
   const navigate = useNavigate();
 
