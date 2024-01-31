@@ -94,7 +94,7 @@ function NavBar() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/home"
+                to="/"
                 onClick={() => updateExpanded(false)}
               >
                 <AiOutlineHome style={{ marginBottom: "2px" }} /> 홈페이지
@@ -173,7 +173,7 @@ function NavBar() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to={isLoggedIn ? "/" : "/login"}
+                to={isLoggedIn ? "/login": "/login"}
                 onClick={handleLogout}
               >
                 {isLoggedIn ? (
