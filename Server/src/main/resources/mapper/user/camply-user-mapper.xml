@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camply.user.dao.UserDao">
-
 	<resultMap id="UserVO" type="com.camply.user.vo.UserVO">
 			<id property="USER_ID" column="USER_ID"/>
 			  	<result property="USER_EMAIL" column="USER_EMAIL"/>
@@ -14,7 +13,7 @@
 			  	<result property="USER_BUSINESSNUMBER" column="USER_BUSINESSNUMBER"/>
 			  	<result property="USER_ADDRESS" column="USER_ADDRESS"/>
 			  	<result property="USER_BUSINESSPHONE" column="USER_BUSINESSPHONE"/>
-		        
+		       
 	</resultMap>
 	
 	<insert id="emailRegister"  parameterType="com.camply.user.vo.UserVO">
