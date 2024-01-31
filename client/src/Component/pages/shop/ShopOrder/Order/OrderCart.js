@@ -32,6 +32,9 @@ const OrderCart = () => {
     const [userPhone, setUserPhone] = useState("");
     const [userEmail, setUserEmail] = useState("");
 
+    
+
+
     useEffect(() => {
         if (location && location.state && location.state.quantity) {
             // location이 존재하고 state도 존재하며 quantity도 존재할 때만 실행
@@ -50,6 +53,8 @@ const OrderCart = () => {
         }));
     };
 
+    
+
     // 핸드폰 번호 상태 관리
     const [orderOrderPhone, setOrderOrderPhone] = useState({
         part1: '',
@@ -65,6 +70,7 @@ const OrderCart = () => {
             [name]: value,
         }));
     };
+
 
 
     useEffect(() => {
@@ -140,12 +146,7 @@ const OrderCart = () => {
                     orderOrdererName: decodedToken.USER_NAME || "",
                     orderOrderEmail: decodedToken.email || "",
                     orderOrderPhone: decodedToken.userPhone || "",  // userPhone을 바로 대입
-                    orderReceiverName: '',
-                    orderReceiverAddress: '',
-                    orderReceiverAddressDetail: '',
-                    orderReceiverPhone: '',
-                    orderReceiverMessage: '',
-                    orderReceiverDeleveryMsg: '',
+                    
 
 
                 }));
@@ -208,10 +209,12 @@ const OrderCart = () => {
                                             <p className='item-title'>{product.productName}</p>
                                         </div>
                                         <p>
-                                            수량 : <span>{location.state?.quantity || 0}</span>
+                                            수량 : <span>{location.state?.quantity || "0"}</span>
                                         </p>
                                         <p>
-                                            상품 금액 : <span>{product.orderProductPrice}</span>
+                                         <span>상품 금액 :</span> {product.productPrice}원
+                                        
+                                                
                                         </p>
                                     </li>
                                 </ul>
@@ -351,13 +354,14 @@ const OrderCart = () => {
                                 <div className='order-price'>
                                     <div className='order-price-info'>
                                         <p>
-                                            <span>상품 금액 :</span> {product.orderProductPrice}
+                                            <span>상품 금액 :</span> {product.productPrice}원
                                         </p>
                                         <p>
+                                       
                                             <span>배송비 :</span> 무료
                                         </p>
                                         <p className='order-total-price'>
-                                            <span>총 금액</span> {product.orderProductAmount * product.orderProductPrice}
+                                        <span>총 금액</span> {location.state?.quantity * product.productPrice}
                                         </p>
                                         <button onClick={saveOrder}>구매하기</button>
                                         <button onClick={backToList}>취소</button>

@@ -72,7 +72,7 @@ function NavBar() {
       className={navColour ? "sticky" : "navbar"}
     >
       <Container>
-        <Navbar.Brand href={isCampPath ? "/camp" : "/shop"} className="d-flex">
+        <Navbar.Brand href={isCampPath ? "/camp" : "/shop/main"} className="d-flex">
           <img
             src={logo}
             className="logo"
