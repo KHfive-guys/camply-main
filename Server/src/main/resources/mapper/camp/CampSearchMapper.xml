@@ -26,18 +26,14 @@
     </resultMap>
 
     <select id="searchCampList"  resultMap="CampSearchMap">
-        SELECT * FROM CAMP_POSTING p LEFT JOIN CAMP_RESERVATION r on p.CAMP_ID = r.CAMP_ID WHERE p.CAMP_SELECT = #{CAMP_SELECT}
+        SELECT p.* FROM CAMP_POSTING p LEFT JOIN CAMP_RESERVATION r on p.CAMP_ID = r.CAMP_ID WHERE p.CAMP_SELECT = #{CAMP_SELECT}
 		<if test="CAMP_LOCATION != null">
        		AND p.CAMP_LOCATION = #{CAMP_LOCATION}
        </if>
        <if test="CAMP_ADULT != null">
        		AND p.CAMP_ADULT >= #{CAMP_ADULT}
        </if>
-          <if test="CAMP_CHILD != null">
-       		AND p.CAMP_CHILD >= #{CAMP_CHILD}
-       </if>
-       </if>
-          <if test="CAMP_CHILD != null">
+       <if test="CAMP_CHILD != null">
        		AND p.CAMP_CHILD >= #{CAMP_CHILD}
        </if>
     </select>
