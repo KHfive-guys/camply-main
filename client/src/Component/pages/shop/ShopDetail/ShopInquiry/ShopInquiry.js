@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom"; // useParams 추가
+import { Link, useNavigate, useParams,useLocation } from "react-router-dom"; // useParams 추가
 import "../../css/ShopDetail/ShopInquiry/ShopInquiry.css";
 import InquiryDetail from "./InquiryDetail";
 
@@ -39,7 +39,7 @@ const ShopInquiry = () => {
   // 작성하기 버튼 클릭 시 이동하는 함수
   const handleWriteClick = () => {
     // 문의글 작성 경로에 productId를 포함하여 수정
-    navigate(`/shop/question/post?productId=${productId}`);
+    navigate(`/inquiry/writer?productId=${productId}`);
   };
 
   return (
@@ -58,11 +58,11 @@ const ShopInquiry = () => {
               </div>
             </li>
           ))}
-          <div className='inqueiry-btn'>
-            <button type='button' onClick={handleWriteClick}>
-              작성하기
-            </button>
-          </div>
+          <div className='inquiry-btn'>
+          <button type='button' onClick={handleWriteClick}>
+            작성하기
+          </button>
+        </div>
         </ul>
       </section>
     </div>
