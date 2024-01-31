@@ -1,11 +1,10 @@
 package com.camply.camp.search.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,16 +23,15 @@ public class CampSearchController {
 
 	private final CampSearchService campsearchsearvice;
 	
-	@GetMapping("/campList")
+	@PostMapping("/campList")
 	public ResponseEntity<?> searchCampList(@RequestBody CampSearchVO campsearchvo) {
 		
-		System.out.println("code check CampSearchController campsearchvo : " + campsearchvo.getCAMP_SELECT());
 		try {
 
-			ArrayList<CampSearchVO> campList = campsearchsearvice.searchCampList(campsearchvo);
-			
-			if (campList != null) {
+			ArrayList<CampSearchVO> campList = campsearchsearvice.campList(campsearchvo);
 
+			if (campList != null) {
+	
 				return ResponseEntity.ok(campList);
 				
 			} else {
