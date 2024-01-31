@@ -67,6 +67,7 @@ const ShopDetail = () => {
         cartPrice: product.productPrice,
       };
 
+
       const response = await axios.post('http://localhost:8080/shop/cart/post', cartData);
       alert('상품이 장바구니에 추가되었습니다.');
       navigate(`/shop/cart/`);
