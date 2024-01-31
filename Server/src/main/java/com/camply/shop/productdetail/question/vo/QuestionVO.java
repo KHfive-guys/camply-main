@@ -17,10 +17,11 @@ import lombok.Setter;
 public class QuestionVO {
 
 	private int questionNo;
+	private Long userId;
 	private int productId;
 	private String questionTitle;
 	private String questionText;
-	private String questionName;
+	private String userName;
 	private LocalDateTime questionDate;
 	private int questionHit;
 }
