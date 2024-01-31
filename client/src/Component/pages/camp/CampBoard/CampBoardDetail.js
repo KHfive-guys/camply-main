@@ -2,13 +2,22 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import Reply from './Board/Reply';
-import CampNavbar from '../CampNavbar';
+import Reply from "./Board/Reply";
+import CampNavbar from "../CampNavbar";
+
+const parseJwt = (token) => {
+  console.log("Parsed JWT:", token);
+};
 
 function CampBoardDetail() {
   const [boardData, setBoardData] = useState({});
   const { camp_id } = useParams();
   const navigate = useNavigate();
+  const [userToken, setUserToken] = useState(
+    localStorage.getItem("yourTokenKey")
+  );
+  const [isCurrentUser, setIsCurrentUser] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const initializeMap = useCallback(() => {
     if (window.kakao && boardData.camp_address) {
@@ -65,19 +74,38 @@ function CampBoardDetail() {
     }
 
     axios
-      .get(`http://localhost:8080/camp/board/get/${camp_id}`)
+      .get(`http://localhost:8080/camp/board/get/${camp_id}`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
       .then((response) => {
-        if (!response.data) {
-          navigate("/camp/board/all");
-          alert("해당하는 캠핑장 정보가 없습니다.");
-          return;
-        }
         setBoardData(response.data);
+
+        try {
+          const base64Url = userToken.split('.')[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const userTokenPayload = JSON.parse(atob(base64));
+          
+          console.log("User ID from token:", userTokenPayload?.user_id);
+          console.log("User ID from response:", response.data.user_id);
+
+          const currentUser = response.data.user_id === userTokenPayload?.user_id;
+          console.log("Is current user:", currentUser);
+          setIsCurrentUser(currentUser);
+
+          setLoading(false);
+        } catch (error) {
+          console.error("Error decoding JWT token:", error);
+        }
       })
       .catch((error) => {
         console.error("게시글 가져오기 실패:", error);
       });
-  }, [camp_id, navigate]);
+  }, [camp_id, navigate, userToken]);
+  useEffect(() => {
+    setUserToken(localStorage.getItem("yourTokenKey"));
+  }, [camp_id]);
 
   const handleUpdateClick = () => {
     navigate(`/camp/board/edit/${camp_id}`);
@@ -107,23 +135,13 @@ function CampBoardDetail() {
     }
   };
 
-  const [isCurrentUser, setIsCurrentUser] = useState(false);
-
-  useEffect(() => {
-    if (boardData.user_id) {
-      const token = localStorage.getItem("yourTokenKey");
-
-      if (token) {
-        const decodedToken = parseJwt(token);
-        setIsCurrentUser(decodedToken.user_id === boardData.user_id);
-      }
-    }
-  }, [boardData.user_id]);
-
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <section>
-      <CampNavbar/>
+      <CampNavbar />
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
@@ -164,17 +182,19 @@ function CampBoardDetail() {
             <td>{boardData.camp_facility}</td>
             <td>{boardData.camp_description}</td>
             <td>
-              <div className="my-5 d-flex justify-content-center">
-                <button
-                  className="btn btn-outline-secondary"
-                  onClick={handleUpdateClick}
-                >
-                  <i className="fas fa-pen"></i> 수정하기
-                </button>
+            <div className="my-5 d-flex justify-content-center">
+                {isCurrentUser && (
+                  <button
+                    className="btn btn-outline-secondary"
+                    onClick={handleUpdateClick}
+                  >
+                    <i className="fas fa-pen"></i> 수정하기
+                  </button>
+                )}
               </div>
             </td>
             <td>
-              <button onClick={handleDelete}>삭제</button>
+              {isCurrentUser && <button onClick={handleDelete}>삭제</button>}
             </td>
           </tr>
         </tbody>
@@ -182,7 +202,7 @@ function CampBoardDetail() {
       <h1>지도</h1>
       <div id="map" style={{ width: "100%", height: "400px" }}></div>
 
-      <Reply/>
+      <Reply />
     </section>
   );
 }
