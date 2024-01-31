@@ -107,6 +107,19 @@ function CampBoardDetail() {
     }
   };
 
+  const [isCurrentUser, setIsCurrentUser] = useState(false);
+
+  useEffect(() => {
+    if (boardData.user_id) {
+      const token = localStorage.getItem("yourTokenKey");
+
+      if (token) {
+        const decodedToken = parseJwt(token);
+        setIsCurrentUser(decodedToken.user_id === boardData.user_id);
+      }
+    }
+  }, [boardData.user_id]);
+
 
   return (
     <section>

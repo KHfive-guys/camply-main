@@ -24,14 +24,14 @@ function BbsWrite() {
     camp_price: 0,
     camp_image: "",
     camp_description: "",
-    camp_facility:"",
+    camp_facility: "",
   });
 
   const boardAdd = () => {
     const selectedFacilities = Object.entries(facilities)
       .filter(([facility, checked]) => checked)
       .map(([facility]) => facility)
-      .join(', ');
+      .join(", ");
 
     axios
       .post("http://localhost:8080/camp/board/add", {
@@ -67,7 +67,7 @@ function BbsWrite() {
           마트: false,
           바베큐장: false,
         });
-        navigate("/camp/board/all"); 
+        navigate("/camp/board/all");
       })
       .catch((error) => {
         console.error("실패", error);
@@ -98,41 +98,42 @@ function BbsWrite() {
     const token = localStorage.getItem("yourTokenKey");
 
     const parseJwt = (token) => {
-        try {
-            return JSON.parse(decodeURIComponent(escape(atob(token.split(".")[1]))));
-        } catch (e) {
-            return null;
-        }
+      try {
+        return JSON.parse(
+          decodeURIComponent(escape(atob(token.split(".")[1])))
+        );
+      } catch (e) {
+        return null;
+      }
     };
 
     const decodeUTF8 = (input) => {
-        try {
-            return decodeURIComponent(escape(input));
-        } catch (e) {
-            return input;
-        }
+      try {
+        return decodeURIComponent(escape(input));
+      } catch (e) {
+        return input;
+      }
     };
 
     if (token) {
-        try {
-            const decodedToken = parseJwt(token);
-            console.log("Decoded Token:", decodedToken);
+      try {
+        const decodedToken = parseJwt(token);
+        console.log("Decoded Token:", decodedToken);
 
-            setUserId(decodedToken.user_id || "");
-            setUserBusinessAddress(decodedToken.USER_BUSINESSADDRESS || "");
-            setUserBusinessPhone(decodedToken.USER_BUSINESSPHONE || "");
-            setNewBoard((prevNewBoard) => ({
-                ...prevNewBoard,
-                user_id: decodedToken.user_id || "",
-                camp_address: decodedToken.USER_BUSINESSADDRESS || "",
-                camp_phone: decodedToken.USER_BUSINESSPHONE || "",
-            }));
-        } catch (error) {
-            console.error("Error decoding token:", error);
-        }
+        setUserId(decodedToken.user_id || "");
+        setUserBusinessAddress(decodedToken.USER_BUSINESSADDRESS || "");
+        setUserBusinessPhone(decodedToken.USER_BUSINESSPHONE || "");
+        setNewBoard((prevNewBoard) => ({
+          ...prevNewBoard,
+          user_id: decodedToken.user_id || "",
+          camp_address: decodedToken.USER_BUSINESSADDRESS || "",
+          camp_phone: decodedToken.USER_BUSINESSPHONE || "",
+        }));
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
     }
-}, []);
-
+  }, []);
 
   return (
     <section>
@@ -144,7 +145,7 @@ function BbsWrite() {
       <div>
         <table className="table">
           <tbody>
-          <tr>
+            <tr>
               <th className="table-primary">유저 아이디</th>
               <td>
                 <input
