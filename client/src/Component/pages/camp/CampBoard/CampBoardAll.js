@@ -18,9 +18,11 @@ function CampBoardAll() {
     }
 
     axios
-      .get("http://localhost:8080/camp/board/all")
+      .get("http://localhost:8080/camp/board/all", { responseType: "arraybuffer" })
       .then((response) => {
-        setBoardData(response.data);
+        const decodedData = new TextDecoder("utf-8").decode(response.data);
+        const jsonData = JSON.parse(decodedData);
+        setBoardData(jsonData);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -30,9 +32,25 @@ function CampBoardAll() {
   const parseJwt = (token) => {
     try {
       const decodedToken = JSON.parse(atob(token.split(".")[1]));
-      return {
+
+      const decodeUTF8Fields = (fields) => {
+        return Object.fromEntries(
+          Object.entries(fields).map(([key, value]) => [key, decodeURIComponent(escape(value))])
+        );
+      };
+
+      const decodedUser = {
         ...decodedToken,
-        USER_TYPE: decodedToken.auth.includes("Admin") ? "Admin" : "User",
+        ...decodeUTF8Fields({
+          user_name: decodedToken.user_name,
+          user_address: decodedToken.user_address,
+          user_businessaddress: decodedToken.user_businessaddress,
+        }),
+      };
+
+      return {
+        ...decodedUser,
+        USER_TYPE: decodedUser.auth.includes("Admin") ? "Admin" : "User",
       };
     } catch (e) {
       return null;
