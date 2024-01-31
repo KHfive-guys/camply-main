@@ -24,7 +24,7 @@
 
 <select id="searchCampList" resultMap="CampSearchMap" parameterType="com.camply.camp.search.vo.CampSearchVO">
     SELECT * FROM CAMP_POSTING WHERE CAMP_SELECT = #{CAMP_SELECT}
-<!--      <if test="CAMP_LOCATION != null">
+         <if test="CAMP_LOCATION != null">
         AND CAMP_LOCATION = #{CAMP_LOCATION}
     </if>
     <if test="CAMP_ADULT != null">
@@ -32,7 +32,7 @@
     </if>
     <if test="CAMP_CHILD != null">
         AND CAMP_CHILD >= #{CAMP_CHILD}
-    </if> -->
+    </if> 
 </select>
 
 
