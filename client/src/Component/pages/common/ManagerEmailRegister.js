@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import logo from '../../img/Logo.png';
-import { Container } from 'react-bootstrap';
+import logo from "../../img/Logo.png";
+import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 
@@ -22,7 +22,10 @@ function ManagerEmailRegister() {
   const [checkedCompanyNumber, setCheckedCompanyNumber] = useState("");
   const [checkedCompanyAddress, setCheckedCompanyAddress] = useState("");
   const [checkedCompanyPhone, setCheckedCompanyPhone] = useState("");
-  
+
+  const [map, setMap] = useState({});
+  const [marker, setMarker] = useState(null);
+
 
   const navigate = useNavigate();
 
@@ -147,7 +150,7 @@ function ManagerEmailRegister() {
               USER_NAME: name,
               USER_NICKNAME: nickname,
               USER_BUSINESSNUMBER: companyNumber,
-              USER_BUSINESSADDRESS: companyAddress, 
+              USER_BUSINESSADDRESS: companyAddress,
               USER_BUSINESSPHONE: companyPhone,
               USER_TYPE: "Admin",
             }),
@@ -155,7 +158,6 @@ function ManagerEmailRegister() {
         );
         if (response.ok) {
           console.log("Registration successful");
-
           navigate("/login");
         } else {
           console.error("Registration failed");
@@ -166,11 +168,40 @@ function ManagerEmailRegister() {
     }
   };
 
+  useEffect(() => {
+    const initializeMap = () => {
+      window.kakao.maps.load(() => {
+        const container = document.getElementById("map");
+        const options = {
+          center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+          level: 3,
+        };
+        setMap(new window.kakao.maps.Map(container, options));
+        setMarker(new window.kakao.maps.Marker());
+      });
+    };
+
+    return () => {
+      window.onload = null;
+    };
+  }, []);
+
+  const onClickAddr = () => {
+    new window.daum.Postcode({
+      oncomplete: function (addrData) {
+        var geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.addressSearch(addrData.address, function (result, status) {
+            setCompanyAddress(addrData.address);
+        });
+      },
+    }).open();
+  };
+  
+
   return (
     <section>
       <Container fluid className="home-section" id="home">
-        <Container className="home-content">
-        </Container>
+        <Container className="home-content"></Container>
       </Container>
 
       <WrapLogin>
@@ -324,9 +355,7 @@ function ManagerEmailRegister() {
                       type="text"
                       placeholder="사업자 주소를 입력해 주세요"
                       required
-                      onChange={(e) => {
-                        setCompanyAddress(e.target.value);
-                      }}
+                      onClick={onClickAddr}
                       onBlur={() => companyAddressCheck()}
                     />
                   </InputTextSizeWTypeL>
@@ -368,7 +397,6 @@ function ManagerEmailRegister() {
                   </BtnLogin>
                 </FormBlockBody>
               </FormBlockSubmit>
-
             </LoginSection>
           </LoginWrap>
         </ReauthPhone>
