@@ -183,7 +183,7 @@ function App() {
             <ShopLayout>
               <Routes>
               <Route path="/main" element={<ShopMain />} />
-                <Route path="/order" element={<OrderCart/>} />
+              <Route path="/order/:productId" element={<OrderCart/>} />
                 <Route path="/mypage" element={<ShopMyPage />} />
                 <Route path="/cart" element={<ShopCart/>} />
                 <Route path="/tent" element={<Tent/>}/>
