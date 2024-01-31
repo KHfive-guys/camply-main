@@ -5,9 +5,12 @@ import axios from 'axios';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 const OrderCart = () => {
-    const [product, setProduct] = useState('');
+    const [product, setProduct] = useState("");
+    const [userIds, setUserIds] = useState(null);
     const [order, setOrder] = useState({
         
+        orderId: '0',
+        userIds: '',
         orderOrdererName: '',
         orderOrderEmail: '',
         orderOrderPhone: '',
@@ -17,14 +20,17 @@ const OrderCart = () => {
         orderReceiverPhone: '',
         orderReceiverMessage: '',
         orderReceiverDeleveryMsg: '',
-       
+    
     });
     const navigate = useNavigate();
     const { productId } = useParams();
     const location = useLocation();  // useLocation을 여기로 이동
+    const [userName, setUserName] = useState("");
+    const [userAddress, setUserAddress] = useState("");
+    const [userPhone, setUserPhone] = useState("");
+    const [userEmail, setUserEmail] = useState("");
 
-
-     useEffect(() => {
+    useEffect(() => {
         if (location && location.state && location.state.quantity) {
             // location이 존재하고 state도 존재하며 quantity도 존재할 때만 실행
             // 필요에 따라 추가적인 로직을 수행할 수 있습니다.
@@ -71,23 +77,67 @@ const OrderCart = () => {
         fetchProduct();
     }, [productId]);
 
-    console.log('product:', product);
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const token = localStorage.getItem("yourTokenKey");
+    
+            const parseJwt = (token) => {
+                try {
+                    return JSON.parse(
+                        decodeURIComponent(escape(atob(token.split(".")[1])))
+                    );
+                } catch (e) {
+                    return null;
+                }
+            };
+    
+        if (token) {
+            const decodedToken = parseJwt(token);
+            console.log("Decoded Token:", decodedToken);
+
+            setUserIds(decodedToken.user_id || "");
+            setUserName(decodedToken.USER_NAME|| "");
+            setUserEmail(decodedToken.email || "");
+            setUserPhone(decodedToken.userPhone || "");  // userPhone을 문자열로 변경
+            setUserAddress(decodedToken.userAddress || "");
+
+            setOrder((prevOrder) => ({
+                ...prevOrder,
+                userId: decodedToken.user_id || "",
+                orderOrdererName: decodedToken.USER_NAME || "",
+                orderOrderEmail: decodedToken.email || "",
+                orderOrderPhone: decodedToken.userPhone || "",  // userPhone을 바로 대입
+                orderReceiverName: '',
+                orderReceiverAddress: '',
+                orderReceiverAddressDetail: '',
+                orderReceiverPhone: '',
+                orderReceiverMessage: '',
+                orderReceiverDeleveryMsg: '',
+
+                
+            }));
+                
+        }
+    };  
+        fetchUserData();
+    }, []);
     const saveOrder = async () => {
         try {
             await new Promise(resolve => setTimeout(resolve, 1000));
 
             const orderData = {
-                
-                orderOrdererName,
-                orderOrderEmail,
-                orderOrderPhone,
-                orderReceiverName,
-                orderReceiverAddress,
-                orderReceiverAddressDetail,
-                orderReceiverPhone,
-                orderReceiverMessage,
-                orderReceiverDeleveryMsg,
+                orderId:0,
+                userId:order.userIds,
+                orderOrdererName:order.orderOrdererName,
+                orderOrderEmail:order.orderOrderEmail,
+                orderOrderPhone:order.orderOrderPhone,
+                orderReceiverName:'',
+                orderReceiverAddress:'',
+                orderReceiverAddressDetail:'',
+                orderReceiverPhone:'',
+                orderReceiverMessage:'',
+                orderReceiverDeleveryMsg:'',
                 productId: productId,
                 orderProductAmount: location.state.quantity,
                 orderProductPrice: product.productPrice || 0,
@@ -109,7 +159,6 @@ const OrderCart = () => {
             console.error('주문을 저장하는 중 오류 발생', error);
         }
     };
-
     const backToList = () => {
         navigate('/shop/main');
     };
@@ -142,7 +191,7 @@ const OrderCart = () => {
                                         <div>
                                             <p>주문자</p>
                                             <div>
-                                                <input type='text' name='orderOrdererName' className='input' value={orderOrdererName} onChange={onChange} />
+                                                <input type='text' name='userName' className='input' value={userName || ""} onChange={onChange} />
                                             </div>
                                         </div>
                                         <div>
@@ -150,9 +199,9 @@ const OrderCart = () => {
                                             <div>
                                                 <input
                                                     type='email'
-                                                    name='orderOrderEmail'
+                                                    name='userEmail'
                                                     className='input'
-                                                    value={orderOrderEmail}
+                                                    value={userEmail ||""}
                                                     onChange={onChange}
                                                 ></input>
                                                 <span>@</span>
@@ -182,24 +231,25 @@ const OrderCart = () => {
                                             <div >
                                                 <input
                                                     type='number'
-                                                    value={orderOrderPhone.part1}
-                                                    name='part1'
+                                                    value={userPhone.part1 || ""}
+                                                    name='userPhone'
                                                     onChange={onChangePhone}
                                                     className='form'
                                                     maxLength={3}
                                                 />
                                                 <input
                                                     type='number'
-                                                    value={orderOrderPhone.part2}
-                                                    name='part2'
+                                                    value={userPhone.part2 || ""}
+                                                    name='userPhone                                                     value={userPhone.part2}
+                                                    '
                                                     onChange={onChangePhone}
                                                     className='form'
                                                     maxLength={4}
                                                 />
                                                 <input
                                                     type='number'
-                                                    value={orderOrderPhone.part3}
-                                                    name='part3'
+                                                    value={userPhone.part3 || ""}
+                                                    name='userPhone'
                                                     onChange={onChangePhone}
                                                     className='form'
                                                     maxLength={4}
@@ -212,7 +262,7 @@ const OrderCart = () => {
                                         <div>
                                             <p>받는사람</p>
                                             <div>
-                                                <input type='text' value={orderReceiverName} name="orderReceiverName" onChange={onChange} />
+                                                <input type='text' value={orderReceiverName ||""} name="orderReceiverName" onChange={onChange} />
                                             </div>
                                         </div>
                                         <div className='address-form'>
