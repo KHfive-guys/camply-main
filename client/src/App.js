@@ -22,6 +22,7 @@ import CampBoardDetail from './Component/pages/camp/CampBoard/CampBoardDetail';
 import CampBoardUpdate from './Component/pages/camp/CampBoard/CampBoardUpdate';
 import Preloader from './Pre';
 import Navbar from './Component/pages/camp/CampNavbar';
+import CampSearch from './Component/pages/camp/CampSearch/CampSearch';
 import Home from './Component/pages/camp/CampMain/Home/Home';
 import About from './Component/pages/camp/CampMain/About/About';
 import Reservations from './Component/pages/camp/CampMain/Reservations/Reservations';
@@ -178,6 +179,7 @@ function App() {
         <Route path="/camp/board/get/:camp_id" element={<CampBoardDetail />} />
         <Route path="/camp/board/edit/:camp_id" element={<CampBoardUpdate />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/camp/searchList" element={<CampSearch />} />
         
         <Route
           path="/shop/*"
