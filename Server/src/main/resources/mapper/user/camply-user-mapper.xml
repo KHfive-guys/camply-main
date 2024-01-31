@@ -33,4 +33,12 @@
 	<select id="emailLogin" parameterType="com.camply.user.vo.UserVO">
 		SELECT * FROM USER_INFO WHERE USER_EMAIL = #{USER_EMAIL} AND USER_PASSWORD = #{USER_PASSWORD}
 	</select>
+
+	<select id="selectUserById" resultMap="UserVO" parameterType="Long">
+		SELECT * FROM USER_INFO WHERE USER_ID = #{USER_ID}
+	</select>
+
+	<delete id="deleteUserById" parameterType="Long">
+		DELETE FROM USER_INFO WHERE USER_ID = #{USER_ID}
+	</delete>
 </mapper>

@@ -36,7 +36,6 @@ public class BoardController {
 	@GetMapping("/all")
 	public ResponseEntity<?> getAllBoard() {
 		try {
-			System.out.println("code check");
 			List<BoardVO> boards = boardService.getAllBoard();
 			return ResponseEntity.ok(boards);
 		} catch (Exception e) {
