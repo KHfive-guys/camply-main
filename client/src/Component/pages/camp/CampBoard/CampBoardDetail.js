@@ -83,14 +83,15 @@ function CampBoardDetail() {
         setBoardData(response.data);
 
         try {
-          const base64Url = userToken.split('.')[1];
-          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const base64Url = userToken.split(".")[1];
+          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
           const userTokenPayload = JSON.parse(atob(base64));
-          
+
           console.log("User ID from token:", userTokenPayload?.user_id);
           console.log("User ID from response:", response.data.user_id);
 
-          const currentUser = response.data.user_id === userTokenPayload?.user_id;
+          const currentUser =
+            response.data.user_id === userTokenPayload?.user_id;
           console.log("Is current user:", currentUser);
           setIsCurrentUser(currentUser);
 
@@ -162,8 +163,8 @@ function CampBoardDetail() {
             <th>사진</th>
             <th>부대 시설</th>
             <th>상세설명</th>
-            <th>수정</th>
-            <th>삭제</th>
+            {isCurrentUser && <th>수정</th>}
+            {isCurrentUser && <th>삭제</th>}
           </tr>
         </thead>
         <tbody>
@@ -182,16 +183,16 @@ function CampBoardDetail() {
             <td>{boardData.camp_facility}</td>
             <td>{boardData.camp_description}</td>
             <td>
-            <div className="my-5 d-flex justify-content-center">
-                {isCurrentUser && (
+              {isCurrentUser && (
+                <div className="my-5 d-flex justify-content-center">
                   <button
                     className="btn btn-outline-secondary"
                     onClick={handleUpdateClick}
                   >
                     <i className="fas fa-pen"></i> 수정하기
                   </button>
-                )}
-              </div>
+                </div>
+              )}
             </td>
             <td>
               {isCurrentUser && <button onClick={handleDelete}>삭제</button>}

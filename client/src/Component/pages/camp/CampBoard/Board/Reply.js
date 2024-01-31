@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 
 function ReplyComponent() {
   const [replyData, setReplyData] = useState([]);
+  const [userId, setUserId] = useState("");
   const [newReply, setNewReply] = useState({
     user_id: "",
     camp_rating: 0,
@@ -78,23 +79,56 @@ function ReplyComponent() {
       });
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("yourTokenKey");
+
+    const parseJwt = (token) => {
+      try {
+        return JSON.parse(
+          decodeURIComponent(escape(atob(token.split(".")[1])))
+        );
+      } catch (e) {
+        return null;
+      }
+    };
+
+    const decodeUTF8 = (input) => {
+      try {
+        return decodeURIComponent(escape(input));
+      } catch (e) {
+        return input;
+      }
+    };
+
+    if (token) {
+      try {
+        const decodedToken = parseJwt(token);
+        console.log("Decoded Token:", decodedToken);
+
+        setUserId(decodedToken.user_id || "");
+        setNewReply((prevNewBoard) => ({
+          ...prevNewBoard,
+          user_id: decodedToken.user_id || "",
+        }));
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    }
+  }, []);
+
   return (
     <div>
       <h1>리뷰</h1>
       <div>
         <label>User ID:</label>
-        <input
-          type="text"
-          value={newReply.user_id}
-          onChange={(e) =>
-            setNewReply({ ...newReply, user_id: e.target.value })
-          }
-        />
+        <input type="text" value={userId || ""} readOnly />
 
         <label>평점:</label>
         <input
           type="number"
           value={newReply.camp_rating}
+          min="1"
+          max="5"
           onChange={(e) =>
             setNewReply({ ...newReply, camp_rating: e.target.value })
           }
@@ -133,20 +167,24 @@ function ReplyComponent() {
               <td>{reply.camp_rating}</td>
               <td>{reply.camp_review}</td>
               <td>
-                <Button
-                  variant="outline-secondary"
-                  onClick={() => handleUpdateReply(reply.camp_reviewnumber)}
-                >
-                  수정
-                </Button>
+                {reply.user_id === userId && (
+                  <Button
+                    variant="outline-secondary"
+                    onClick={() => handleUpdateReply(reply.camp_reviewnumber)}
+                  >
+                    수정
+                  </Button>
+                )}
               </td>
               <td>
-                <Button
-                  variant="danger"
-                  onClick={() => handleDeleteReply(reply.camp_reviewnumber)}
-                >
-                  삭제
-                </Button>
+                {reply.user_id === userId && (
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDeleteReply(reply.camp_reviewnumber)}
+                  >
+                    삭제
+                  </Button>
+                )}
               </td>
             </tr>
           ))}
