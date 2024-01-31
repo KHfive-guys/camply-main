@@ -6,9 +6,11 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 const OrderCart = () => {
     const [product, setProduct] = useState("");
+    const [map, setMap] = useState({});
+    const [marker, setMarker] = useState(null);
     const [userIds, setUserIds] = useState(null);
     const [order, setOrder] = useState({
-        
+
         orderId: '0',
         userIds: '',
         orderOrdererName: '',
@@ -20,7 +22,7 @@ const OrderCart = () => {
         orderReceiverPhone: '',
         orderReceiverMessage: '',
         orderReceiverDeleveryMsg: '',
-    
+
     });
     const navigate = useNavigate();
     const { productId } = useParams();
@@ -36,7 +38,7 @@ const OrderCart = () => {
             // 필요에 따라 추가적인 로직을 수행할 수 있습니다.
             console.log('Quantity:', location.state.quantity);
         }
-    }, [location]); 
+    }, [location]);
 
     const { orderId, userId, orderOrdererName, orderOrderEmail, orderReceiverName, orderReceiverAddress, orderReceiverAddressDetail, orderReceiverPhone, orderReceiverMessage, orderReceiverDeleveryMsg } = order;
 
@@ -64,6 +66,7 @@ const OrderCart = () => {
         }));
     };
 
+
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -77,11 +80,40 @@ const OrderCart = () => {
         fetchProduct();
     }, [productId]);
 
+    useEffect(() => {
+        const initializeMap = () => {
+          window.kakao.maps.load(() => {
+            const container = document.getElementById("map");
+            const options = {
+              center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+              level: 3,
+            };
+            setMap(new window.kakao.maps.Map(container, options));
+            setMarker(new window.kakao.maps.Marker());
+          });
+        };
+    
+        return () => {
+          window.onload = null;
+        };
+      }, []);
+    
+      const onClickAddr = () => {
+        new window.daum.Postcode({
+          oncomplete: function (addrData) {
+            var geocoder = new window.kakao.maps.services.Geocoder();
+            geocoder.addressSearch(addrData.address, function (result, status) {
+                setUserAddress(addrData.address);
+            });
+          },
+        }).open();
+      };
+
 
     useEffect(() => {
         const fetchUserData = async () => {
             const token = localStorage.getItem("yourTokenKey");
-    
+
             const parseJwt = (token) => {
                 try {
                     return JSON.parse(
@@ -91,35 +123,35 @@ const OrderCart = () => {
                     return null;
                 }
             };
-    
-        if (token) {
-            const decodedToken = parseJwt(token);
-            console.log("Decoded Token:", decodedToken);
 
-            setUserIds(decodedToken.user_id || "");
-            setUserName(decodedToken.USER_NAME|| "");
-            setUserEmail(decodedToken.email || "");
-            setUserPhone(decodedToken.userPhone || "");  // userPhone을 문자열로 변경
-            setUserAddress(decodedToken.userAddress || "");
+            if (token) {
+                const decodedToken = parseJwt(token);
+                console.log("Decoded Token:", decodedToken);
 
-            setOrder((prevOrder) => ({
-                ...prevOrder,
-                userId: decodedToken.user_id || "",
-                orderOrdererName: decodedToken.USER_NAME || "",
-                orderOrderEmail: decodedToken.email || "",
-                orderOrderPhone: decodedToken.userPhone || "",  // userPhone을 바로 대입
-                orderReceiverName: '',
-                orderReceiverAddress: '',
-                orderReceiverAddressDetail: '',
-                orderReceiverPhone: '',
-                orderReceiverMessage: '',
-                orderReceiverDeleveryMsg: '',
+                setUserIds(decodedToken.user_id || "");
+                setUserName(decodedToken.USER_NAME || "");
+                setUserEmail(decodedToken.email || "");
+                setUserPhone(decodedToken.userPhone || "");  // userPhone을 문자열로 변경
+                setUserAddress(decodedToken.userAddress || "");
 
-                
-            }));
-                
-        }
-    };  
+                setOrder((prevOrder) => ({
+                    ...prevOrder,
+                    userId: decodedToken.user_id || "",
+                    orderOrdererName: decodedToken.USER_NAME || "",
+                    orderOrderEmail: decodedToken.email || "",
+                    orderOrderPhone: decodedToken.userPhone || "",  // userPhone을 바로 대입
+                    orderReceiverName: '',
+                    orderReceiverAddress: '',
+                    orderReceiverAddressDetail: '',
+                    orderReceiverPhone: '',
+                    orderReceiverMessage: '',
+                    orderReceiverDeleveryMsg: '',
+
+
+                }));
+
+            }
+        };
         fetchUserData();
     }, []);
     const saveOrder = async () => {
@@ -127,17 +159,17 @@ const OrderCart = () => {
             await new Promise(resolve => setTimeout(resolve, 1000));
 
             const orderData = {
-                orderId:0,
-                userId:order.userIds,
-                orderOrdererName:order.orderOrdererName,
-                orderOrderEmail:order.orderOrderEmail,
-                orderOrderPhone:order.orderOrderPhone,
-                orderReceiverName:'',
-                orderReceiverAddress:'',
-                orderReceiverAddressDetail:'',
-                orderReceiverPhone:'',
-                orderReceiverMessage:'',
-                orderReceiverDeleveryMsg:'',
+                orderId: 0,
+                userId: order.userIds,
+                orderOrdererName: order.orderOrdererName,
+                orderOrderEmail: order.orderOrderEmail,
+                orderOrderPhone: order.orderOrderPhone,
+                orderReceiverName: '',
+                orderReceiverAddress: '',
+                orderReceiverAddressDetail: '',
+                orderReceiverPhone: '',
+                orderReceiverMessage: '',
+                orderReceiverDeleveryMsg: '',
                 productId: productId,
                 orderProductAmount: location.state.quantity,
                 orderProductPrice: product.productPrice || 0,
@@ -147,7 +179,7 @@ const OrderCart = () => {
             };
             console.log('orderData:', orderData);
 
-            const response = await axios.post('http://localhost:8080/shop/order/post/' , orderData);
+            const response = await axios.post('http://localhost:8080/shop/order/post/', orderData);
 
             console.log('Response:', response);
 
@@ -201,7 +233,7 @@ const OrderCart = () => {
                                                     type='email'
                                                     name='userEmail'
                                                     className='input'
-                                                    value={userEmail ||""}
+                                                    value={userEmail || ""}
                                                     onChange={onChange}
                                                 ></input>
                                                 <span>@</span>
@@ -262,18 +294,18 @@ const OrderCart = () => {
                                         <div>
                                             <p>받는사람</p>
                                             <div>
-                                                <input type='text' value={orderReceiverName ||""} name="orderReceiverName" onChange={onChange} />
+                                                <input type='text' value={orderReceiverName || ""} name="orderReceiverName" onChange={onChange} />
                                             </div>
                                         </div>
                                         <div className='address-form'>
                                             <p>주소</p>
                                             <div className='address-search'>
                                                 <div className='address-num'>
-                                                    <input type='text' placeholder='우편번호' className='address-number-01 from' />
-                                                    <button type='button'>주소검색</button>
+                                                    <input type='text' placeholder='우편번호' id='companyAddress'    required className='address-number-01 from' />
+                                                    <button type='button' onClick={onClickAddr}>주소검색</button>
                                                 </div>
-                                                <input type='text' placeholder='기본주소' value={orderReceiverAddress} name='orderReceiverAddress' onChange={onChange} className='default-address-01 form'></input>
-                                                <input type='text' placeholder='상세주소' value={orderReceiverAddressDetail} name="orderReceiverAddressDetail" onChange={onChange} className='form'></input>
+                                                <input type='text' placeholder='기본주소' value={userAddress}  name='orderReceiverAddress' onChange={onChange}  className='default-address-01 form'></input>
+
                                             </div>
                                         </div>
                                         <div>
