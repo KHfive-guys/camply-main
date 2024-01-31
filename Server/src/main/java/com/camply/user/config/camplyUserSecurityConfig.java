@@ -50,7 +50,7 @@ public class camplyUserSecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-				.cors(cors -> {})
+				.cors(cors -> cors.disable())
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests

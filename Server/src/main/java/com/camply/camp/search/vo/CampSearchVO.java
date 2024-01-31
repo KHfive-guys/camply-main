@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,9 +17,6 @@ public class CampSearchVO {
 	@JsonProperty("CAMP_ID")
     private Long CAMP_ID;
 	
-	@JsonProperty("USER_ID")
-    private Long USER_ID;
-	
 	@JsonProperty("CAMP_SELECT")
     private String CAMP_SELECT;
 	
@@ -29,13 +25,6 @@ public class CampSearchVO {
 	
 	@JsonProperty("CAMP_NAME")
     private String CAMP_NAME;
-	
-	@JsonProperty("CAMP_ADDRESS")
-    private String CAMP_ADDRESS;
-	
-	@JsonProperty("CAMP_PHONE")
-    private String CAMP_PHONE;
-	
 	@JsonProperty("CAMP_ADULT")
     private Long CAMP_ADULT;
 	
@@ -47,11 +36,5 @@ public class CampSearchVO {
 	
 	@JsonProperty("CAMP_IMAGE")
     private String CAMP_IMAGE;
-	
-	@JsonProperty("CAMP_DESCRIPTION")
-    private String CAMP_DESCRIPTION;
-	
-	@JsonProperty("CAMP_FACILTIY")
-    private String CAMP_FACILTIY;
 
 }
