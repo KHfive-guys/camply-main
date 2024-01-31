@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
 import '../css/ShopDetail/ShopDetail.css';
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import Nav from '../../camp/CampNavbar';
 import ShopReview from './ShopReview/ShopReview';
 import ShopMore from './ShopMore/ShopMore';
 import ShopInquiry from './ShopInquiry/ShopInquiry';
-import { Routes, Route} from 'react-router-dom';
-
 
 const ShopDetail = () => {
   const { productId } = useParams();
@@ -17,68 +14,26 @@ const ShopDetail = () => {
   const [like, setLike] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [cartId, setCartId] = useState(null);
-
- 
-
-
+  const [userToken, setUserToken] = useState('');
+  const [isCurrentUser, setIsCurrentUser] = useState(false);
   const navigate = useNavigate();
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/shop/detail/${productId}`);
-        console.log('Quantity:', quantity);
-        console.log(response.data);
         setProduct(response.data);
       } catch (error) {
-        
-        console.log('Formatted Product Price:', product ? product.formattedProductPrice : 'N/A');
         console.error("상품 세부 정보를 불러오는 중 오류 발생", error);
       }
     };
-  
+
     fetchData();
   }, [productId]);
 
-  const saveOrder = async () => {
-    try {
-      // 상품 정보가 업데이트될 때까지 대기
-      await new Promise(resolve => setTimeout(resolve, 1000));
-  
-      // 업데이트된 product 정보를 사용하여 orderData 생성
-      const orderData = {
-        orderOrdererName:'',
-        orderOrderEmail:'',
-        orderOrderPhone:'',
-        orderReceiverName:'',
-        orderReceiverAddress:'',
-        orderReceiverAddressDetail:'',
-        orderReceiverPhone:'',
-        orderReceiverMessage:'',
-        orderReceiverDeleveryMsg:'',
-        productId: productId,
-        orderProductAmount: product.orderProductAmount,
-        orderProductPrice: product.orderProductPrice,
-        productThumbnail: product.orderProductImg,
-        orderProductName: product.orderProductName,
-      };
-      
-      
-
-
-      await axios.post('http://localhost:8080/shop/order/post', orderData);
-      
-      
-      alert('주문완료');
-  
-      navigate('/shop/main');
-      
-    } catch (error) {
-      
-      console.error('주문을 저장하는 중 오23류 발생', error);
-    }
-  };
+  useEffect(() => {
+    setUserToken(localStorage.getItem("yourTokenKey"));
+  }, []);
 
   const handleHeart = () => {
     setLike(!like);
@@ -101,8 +56,7 @@ const ShopDetail = () => {
         console.error('상품 정보가 없습니다.');
         return;
       }
-  
-      // 서버로 전송할 데이터
+
       const cartData = {
         cartId: cartId,
         productId: productId,
@@ -112,37 +66,34 @@ const ShopDetail = () => {
         cartName: product.productName,
         cartPrice: product.productPrice,
       };
-  
-      // 서버에 데이터 전송
+
       const response = await axios.post('http://localhost:8080/shop/cart/post', cartData);
-  
       alert('상품이 장바구니에 추가되었습니다.');
       navigate(`/shop/cart/`);
     } catch (error) {
       console.error('상품을 장바구니에 추가하는 중 오류 발생', error);
     }
-   
-    };
-    const handleOrderClick = () => {
-      navigate(`/shop/order`, { state: { product, quantity } });
-  
+  };
+
+  const handleOrderClick = () => {
+    navigate(`/shop/order/${productId}`, { state: { product, quantity } });
   };
 
   return (
     <div className='main-shopping'>
-      <hr></hr>
-      <Nav/>
-      <div className='main-section1'>
-        <div className='main-section2'>
-          <main className='main-section3'>
-            {product ? (
-              <>
-                <div className='main-img'>
-                  <div className='right-section-img'>
-                    <img style={{ width: '378px', height: '400px' }} src={product.productThumbnail} />
-                  </div>
+    <hr></hr>
+    <Nav />
+    <div className='main-section1'>
+      <div className='main-section2'>
+        <main className='main-section3'>
+          {product ? (
+            <>
+              <div className='main-img'>
+                <div className='right-section-img'>
+                  <img style={{ width: '378px', height: '400px' }} src={product.productThumbnail} alt="상품 이미지" />
                 </div>
-                <section className='right-section'>
+              </div>
+              <section className='right-section'>
                   <div className='right-section2'>무료배송</div>
                   <div className='right-section3'>
                     <h1 className='right-section-title'>{product.productName}</h1>
