@@ -54,6 +54,7 @@ import ReviewWriter from './Component/pages/shop/ShopDetail/ShopReview/ReviewWri
 import ShopCart from './Component/pages/shop/ShopCart';
 import campMainImg from './Component/img/MainImg/메인페이지 이미지2.jpeg';
 import OrderCart from './Component/pages/shop/ShopOrder/Order/OrderCart';
+import MyPage from './Component/pages/common/MyPage';
 
 
 
@@ -177,6 +178,7 @@ function App() {
         <Route path="/camp/board/all" element={<CampBoardAll />} />
         <Route path="/camp/board/get/:camp_id" element={<CampBoardDetail />} />
         <Route path="/camp/board/edit/:camp_id" element={<CampBoardUpdate />} />
+        <Route path="/mypage" element={<MyPage />} />
         <Route path="/camp/searchList" element={<CampSearch />} />
         
         <Route

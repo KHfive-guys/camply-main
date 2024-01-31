@@ -49,4 +49,12 @@ public class UserService {
 	public Long getUserIdFromUserVO(UserVO userVO) {
 		return userVO.getUSER_ID();
 	}
+
+	public void deleteUserById(Long USER_ID) {
+		userdao.deleteUserById(USER_ID);
+	}
+
+	public UserVO getUserById(Long USER_ID) {
+		return userdao.selectUserById(USER_ID);
+	}
 }

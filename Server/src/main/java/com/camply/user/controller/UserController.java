@@ -2,6 +2,7 @@ package com.camply.user.controller;
 
 import java.util.HashMap;
 
+import com.camply.camp.board.vo.BoardVO;
 import com.camply.user.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -84,4 +85,26 @@ public class UserController {
 			return new ResponseEntity<>(user_info, HttpStatus.UNAUTHORIZED);
 		}
 	}
+
+	@DeleteMapping("/delete/{user_id}")
+	public ResponseEntity<String> deleteUser(@PathVariable Long user_id) {
+		try {
+			userservice.deleteUserById(user_id);
+			return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
+		} catch (Exception e) {
+			// Handle exceptions appropriately (e.g., log the error)
+			return new ResponseEntity<>("Failed to delete user: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/get/{user_id}")
+	public ResponseEntity<?> getUserById(@PathVariable Long user_id) {
+		try {
+			UserVO userVO = userservice.getUserById(user_id);
+			return ResponseEntity.ok(userVO);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("캠핑장 정보 가져오기 실패: " + user_id);
+		}
+	}
+
 }
