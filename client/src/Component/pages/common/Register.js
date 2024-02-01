@@ -4,12 +4,13 @@ import general from "../../img/general.png";
 import manager from "../../img/manager.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from 'react-bootstrap';
+import CampNavBar from '../camp/CampNavbar';
 
 const Register = () =>  {
- 
   
   return (
     <section>
+      <CampNavBar/>
       <Container fluid className="home-section" id="home">
         <Container className="home-content">
         </Container>

@@ -10,9 +10,8 @@ const OrderCart = () => {
     const [marker, setMarker] = useState(null);
     const [userIds, setUserIds] = useState(null);
     const [order, setOrder] = useState({
-
-        orderId: '0',
-        userIds: '',
+        orderId: 0,  // 숫자로 초기화
+        userId: '',  // userId로 변경
         orderOrdererName: '',
         orderOrderEmail: '',
         orderOrderPhone: '',
@@ -22,7 +21,6 @@ const OrderCart = () => {
         orderReceiverPhone: '',
         orderReceiverMessage: '',
         orderReceiverDeleveryMsg: '',
-
     });
     const navigate = useNavigate();
     const { productId } = useParams();
@@ -31,6 +29,10 @@ const OrderCart = () => {
     const [userAddress, setUserAddress] = useState("");
     const [userPhone, setUserPhone] = useState("");
     const [userEmail, setUserEmail] = useState("");
+    const [zipCode, setZipcode] = useState("");
+
+    
+
 
     useEffect(() => {
         if (location && location.state && location.state.quantity) {
@@ -50,23 +52,36 @@ const OrderCart = () => {
         }));
     };
 
-    // 핸드폰 번호 상태 관리
-    const [orderOrderPhone, setOrderOrderPhone] = useState({
+
+    const [orderReceiverPhoneParts, setOrderReceiverPhoneParts] = useState({
         part1: '',
         part2: '',
         part3: '',
     });
 
-    const onChangePhone = (event) => {
+    const onChangeReceiverPhone = (event) => {
         const { value, name } = event.target;
 
-        setOrderOrderPhone((prevPhone) => ({
-            ...prevPhone,
+        setOrderReceiverPhoneParts((prevPhoneParts) => ({
+            ...prevPhoneParts,
             [name]: value,
+        }));
+
+        const { part1, part2, part3 } = orderReceiverPhoneParts;
+        const combinedPhoneNumber = `${part1}-${part2}-${part3}`;
+        
+        setOrder((prevOrder) => ({
+            ...prevOrder,
+            orderReceiverPhone: combinedPhoneNumber,
         }));
     };
 
 
+
+   
+
+    
+    
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -100,14 +115,21 @@ const OrderCart = () => {
     
       const onClickAddr = () => {
         new window.daum.Postcode({
-          oncomplete: function (addrData) {
-            var geocoder = new window.kakao.maps.services.Geocoder();
-            geocoder.addressSearch(addrData.address, function (result, status) {
-                setUserAddress(addrData.address);
-            });
-          },
+            oncomplete: function (addrData) {
+                var geocoder = new window.kakao.maps.services.Geocoder();
+                geocoder.addressSearch(addrData.address, function (result, status) {
+                    setZipcode(addrData.zipCode);
+                    setUserAddress(addrData.address);
+                    setOrder((prevOrder) => ({
+                        ...prevOrder,
+                        orderReceiverAddress: addrData.address|| '', 
+                    }));
+                });
+            },
         }).open();
-      };
+    };
+        const productPrice = product && product.productPrice ? product.productPrice : 0;
+        const formattedPrice = productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 
     useEffect(() => {
@@ -127,49 +149,59 @@ const OrderCart = () => {
             if (token) {
                 const decodedToken = parseJwt(token);
                 console.log("Decoded Token:", decodedToken);
-
+    
                 setUserIds(decodedToken.user_id || "");
                 setUserName(decodedToken.USER_NAME || "");
                 setUserEmail(decodedToken.email || "");
-                setUserPhone(decodedToken.userPhone || "");  // userPhone을 문자열로 변경
+                // getUserPhoneFormatted 함수를 호출하여 형식화된 전화번호를 설정
+                setUserPhone(getUserPhoneFormatted(decodedToken.USER_BUSINESSPHONE) || "");
                 setUserAddress(decodedToken.userAddress || "");
-
+    
                 setOrder((prevOrder) => ({
                     ...prevOrder,
                     userId: decodedToken.user_id || "",
                     orderOrdererName: decodedToken.USER_NAME || "",
                     orderOrderEmail: decodedToken.email || "",
-                    orderOrderPhone: decodedToken.userPhone || "",  // userPhone을 바로 대입
-                    orderReceiverName: '',
-                    orderReceiverAddress: '',
-                    orderReceiverAddressDetail: '',
-                    orderReceiverPhone: '',
-                    orderReceiverMessage: '',
-                    orderReceiverDeleveryMsg: '',
-
-
+                    orderOrderPhone: getUserPhoneFormatted(decodedToken.USER_BUSINESSPHONE) || "",
+                    orderReceiverAddress: decodedToken.userAddress || "",
+                    // 나머지 필요한 정보들 추가
                 }));
-
             }
         };
         fetchUserData();
     }, []);
+
+    // 핸드폰 번호 010-0000-0000 혁식으로 나타내기 위한 함수
+    const getUserPhoneFormatted = (phoneNumber) => {
+        if (phoneNumber && phoneNumber.length === 11) {
+            return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7)}`;
+            // 폰 번호객체에서 0번 인덱스부터 ,2번 인덱스 문자열을 추출하고 - 추가  3번 인덱스부터  
+            // 6번 인덱스까지 문자열을 추출하고 마지막은 7번 인덱스부터 끝까지의 부분을 출력해서 나머지 4자리를 나타냄 
+        }
+        
+        return phoneNumber;
+    };
+
+
+    // 주소찾기 스타일
+    
+    
     const saveOrder = async () => {
         try {
             await new Promise(resolve => setTimeout(resolve, 1000));
 
             const orderData = {
                 orderId: 0,
-                userId: order.userIds,
+                userId: order.userId,
                 orderOrdererName: order.orderOrdererName,
                 orderOrderEmail: order.orderOrderEmail,
                 orderOrderPhone: order.orderOrderPhone,
-                orderReceiverName: '',
-                orderReceiverAddress: '',
-                orderReceiverAddressDetail: '',
-                orderReceiverPhone: '',
-                orderReceiverMessage: '',
-                orderReceiverDeleveryMsg: '',
+                orderReceiverName: order.orderReceiverName,
+                orderReceiverAddress: order.orderReceiverAddress,
+                orderReceiverAddressDetail: order.orderReceiverAddressDetail,
+                orderReceiverPhone: order.orderReceiverPhone,
+                orderReceiverMessage: order.orderReceiverMessage,
+                orderReceiverDeleveryMsg: order.orderReceiverDeleveryMsg,
                 productId: productId,
                 orderProductAmount: location.state.quantity,
                 orderProductPrice: product.productPrice || 0,
@@ -208,10 +240,12 @@ const OrderCart = () => {
                                             <p className='item-title'>{product.productName}</p>
                                         </div>
                                         <p>
-                                            수량 : <span>{location.state?.quantity || 0}</span>
+                                            수량 : <span>{location.state?.quantity || "0"}</span>
                                         </p>
                                         <p>
-                                            상품 금액 : <span>{product.orderProductPrice}</span>
+                                         <span>상품 금액 :</span> {formattedPrice}원
+                                        
+                                                
                                         </p>
                                     </li>
                                 </ul>
@@ -235,57 +269,21 @@ const OrderCart = () => {
                                                     className='input'
                                                     value={userEmail || ""}
                                                     onChange={onChange}
-                                                ></input>
-                                                <span>@</span>
-                                                <select
-                                                    name='emailDomain' // 새로 추가된 부분
-                                                    className='input'
-                                                    onChange={onChange}
-
-                                                >
-                                                    <option value='direct'>직접 입력</option>
-                                                    <option value='naver.com'>naver.com</option>
-                                                    <option value='gmail.com'>gmail.com</option>
-                                                    <option value='yahoo.com'>yahoo.com</option>
-                                                    <option value='nate.com'>nate.com</option>
-                                                </select>
-                                                {order.emailDomain === 'direct' && ( // 새로 추가된 부분
-                                                    <input
-                                                        type='text'
-                                                        className='direct-input form'
-                                                        placeholder='직접 입력'
-                                                    />
-                                                )}
+                                                />
                                             </div>
                                         </div>
                                         <div>
-                                            <p>휴대전화</p>
+                                            <p>연락처</p>
                                             <div >
-                                                <input
-                                                    type='number'
-                                                    value={userPhone.part1 || ""}
-                                                    name='userPhone'
-                                                    onChange={onChangePhone}
-                                                    className='form'
-                                                    maxLength={3}
-                                                />
-                                                <input
-                                                    type='number'
-                                                    value={userPhone.part2 || ""}
-                                                    name='userPhone                                                     value={userPhone.part2}
-                                                    '
-                                                    onChange={onChangePhone}
-                                                    className='form'
-                                                    maxLength={4}
-                                                />
-                                                <input
-                                                    type='number'
-                                                    value={userPhone.part3 || ""}
-                                                    name='userPhone'
-                                                    onChange={onChangePhone}
-                                                    className='form'
-                                                    maxLength={4}
-                                                />
+                                            <input
+                                                type='tel'
+                                                value={userPhone || ""}
+                                                name='userPhone'
+                                                className='form'
+                                                maxLength={13}  
+                                                
+                                                placeholder="010-0000-0000"
+                                            />
                                             </div>
                                         </div>
                                     </form>
@@ -301,19 +299,41 @@ const OrderCart = () => {
                                             <p>주소</p>
                                             <div className='address-search'>
                                                 <div className='address-num'>
-                                                    <input type='text' placeholder='우편번호' id='companyAddress'    required className='address-number-01 from' />
-                                                    <button type='button' onClick={onClickAddr}>주소검색</button>
+                                                    <input type='text' placeholder='우편번호' id='companyAddress' value={zipCode}    required className='address-number-01 from' />
+                                                    <button type='button' onClick={onClickAddr} >주소검색</button>
                                                 </div>
                                                 <input type='text' placeholder='기본주소' value={userAddress}  name='orderReceiverAddress' onChange={onChange}  className='default-address-01 form'></input>
+                                                <input type='text' placeholder='상세주소' value={orderReceiverAddressDetail} name='orderReceiverAddressDetail' onChange={onChange} className='default-address-01 form'></input>
 
                                             </div>
                                         </div>
                                         <div>
                                             <p >휴대전화</p>
                                             <div value={orderReceiverPhone} name="orderReceiverPhone" onChange={onChange}>
-                                                <input type='number' className='form' maxLength={3} />
-                                                <input type='number' className='form' maxLength={4} />
-                                                <input type='number' className='form' maxLength={4} />
+                                            <input
+                                                type='tel'
+                                                value={orderReceiverPhoneParts.part1}
+                                                name='part1'
+                                                onChange={onChangeReceiverPhone}
+                                                className='form'
+                                                maxLength={3}
+                                            />
+                                            <input
+                                                type='tel'
+                                                value={orderReceiverPhoneParts.part2}
+                                                name='part2'
+                                                onChange={onChangeReceiverPhone}
+                                                className='form'
+                                                maxLength={4}
+                                            />
+                                            <input
+                                                type='tel'
+                                                value={orderReceiverPhoneParts.part3}
+                                                name='part3'
+                                                onChange={onChangeReceiverPhone}
+                                                className='form'
+                                                maxLength={4}
+                                            />
                                             </div>
                                         </div>
                                         <hr></hr>
@@ -351,13 +371,14 @@ const OrderCart = () => {
                                 <div className='order-price'>
                                     <div className='order-price-info'>
                                         <p>
-                                            <span>상품 금액 :</span> {product.orderProductPrice}
+                                            <span>상품 금액 :</span> {formattedPrice}원
                                         </p>
                                         <p>
+                                       
                                             <span>배송비 :</span> 무료
                                         </p>
                                         <p className='order-total-price'>
-                                            <span>총 금액</span> {product.orderProductAmount * product.orderProductPrice}
+                                        <span>총 금액</span> {location.state?.quantity * productPrice}원
                                         </p>
                                         <button onClick={saveOrder}>구매하기</button>
                                         <button onClick={backToList}>취소</button>

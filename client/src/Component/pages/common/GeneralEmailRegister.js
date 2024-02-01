@@ -3,6 +3,7 @@ import styled from "styled-components";
 import logo from "../../img/Logo.png";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import CampNavbar from '../camp/CampNavbar';
 
 function GeneralEmailRegister() {
   const [checkedEmail, setCheckedEmail] = useState("");
@@ -140,6 +141,7 @@ function GeneralEmailRegister() {
 
   return (
     <section>
+      <CampNavbar/>
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>

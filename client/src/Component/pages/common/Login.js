@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import KakaoLogin from "react-kakao-login";
+import { Container } from "react-bootstrap";
+import CampNavbar from '../camp/CampNavbar';
 
 function Login() {
   const navigate = useNavigate();
@@ -23,13 +26,13 @@ function Login() {
           USER_PASSWORD: USER_PASSWORD,
         }),
       });
-  
+
       if (response.ok) {
         const user_info = await response.json();
         console.log("Login successful. Member info:", user_info);
-  
+
         setUserType(user_info.USER_TYPE);
-  
+
         localStorage.setItem("yourTokenKey", user_info.token);
         setLoggedIn(true);
         navigate("/");
@@ -41,20 +44,31 @@ function Login() {
     }
   };
 
+  const handleSuccess = (response) => {
+    console.log("Kakao login success:", response);
+  };
+
+  const handleFailure = (error) => {
+    console.error("Kakao login failure:", error);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("yourTokenKey");
     setLoggedIn(false);
     navigate("/login");
   };
-  
-
   return (
     <>
+    <section>
+    <CampNavbar />
+      <Container fluid className="home-section" id="home">
+        <Container className="home-content"></Container>
+      </Container>
+
       <LoginWrap>
         <LoginContainer>
           <LoginHeadLogo>
             <h1>
-              <a>{/* <IconLogo /> */}</a>
             </h1>
           </LoginHeadLogo>
           <LoginHeadText>
@@ -68,13 +82,20 @@ function Login() {
           </LoginHeadText>
           <LoginSignupContent>
             <HorizontalButtons>
-              <RadiusButton className="naver" href="">
-                <SpIcon className="naver"></SpIcon>
-              </RadiusButton>
+              <CustomNaverButton className="naver" href="">
+                Naver Login
+              </CustomNaverButton>
 
-              <RadiusButton className="kakao" href="">
-                <SpIcon className="kakao"></SpIcon>
-              </RadiusButton>
+              <KakaoLogin
+                token="e4e518b34dec41360511f03ad7a9ac61"
+                onSuccess={handleSuccess}
+                onFail={handleFailure}
+                render={({ onClick }) => (
+                  <CustomKakaoButton className="kakao" onClick={onClick}>
+                    Kakao Login
+                  </CustomKakaoButton>
+                )}
+              />
             </HorizontalButtons>
           </LoginSignupContent>
           <LoginSigninContent>
@@ -128,6 +149,7 @@ function Login() {
           </LoginSigninContent>
         </LoginContainer>
       </LoginWrap>
+      </section>
     </>
   );
 }
@@ -293,29 +315,6 @@ const BorderAndText = styled.div`
   }
 `;
 
-const SpIcon = styled.span`
-  background-image: url("https://www.idus.com/resources/dist/images/sp/sp-icon_1634026706070.png");
-  height: 0;
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0;
-  line-height: 0;
-  letter-spacing: 0;
-
-  &.kakao {
-    background-position: -631px -626px;
-    width: 32px;
-    padding-top: 32px;
-  }
-
-  &.naver {
-    background-position: -689px 0px;
-    width: 32px;
-    padding-top: 32px;
-  }
-`;
-
 const LoginSignupContent = styled.div``;
 
 const NeedLogin = styled.p``;
@@ -383,5 +382,26 @@ const LoginWrap = styled.div`
   padding: 1px 0 50px;
   min-height: 100%;
   background: #fff;
+`;
+
+const CustomKakaoButton = styled.button`
+  /* Your custom styles here */
+  background-color: #ffeb00;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+`;
+
+const CustomNaverButton = styled.a`
+  /* Your custom styles here */
+  background-color: #03c75a;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block;
 `;
 export default Login;

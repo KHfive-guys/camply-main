@@ -1,5 +1,7 @@
 package com.camply.shop.productdetail.questioncomment.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,8 @@ public class CommentService {
 	private CommentDao commentDao;
 
 	// 댓글 조회
-	public CommentVO getComment(int commentNo) {
-		return commentDao.getComment(commentNo);
+	public List<CommentVO> getComment(int questionNo) {
+		return commentDao.getComment(questionNo);
 	}
 
 	// 댓글 작성

@@ -36,7 +36,7 @@ public class camplyUserSecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Add your React app's origin
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT","PATCH"));
 		configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origins", "Content-Type", "Accept", "Authorization"));
 		configuration.setAllowCredentials(true);
@@ -50,7 +50,7 @@ public class camplyUserSecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-				.cors(cors -> cors.disable())
+				.cors(cors -> {})
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
@@ -144,14 +144,12 @@ public class camplyUserSecurityConfig {
 				.clientSecret("k8XO2jG62S2alyjciSZsVQvmQHHIzVwG")
 				.redirectUri("http://localhost:8080/login/oauth2/code/kakao")
 				.clientName("Kakao")
-				.authorizationUri("https://kauth.kakao.com/oauth/authorize")
-				.tokenUri("https://kauth.kakao.com/oauth/token")
+				.authorizationUri("https://kauth.kakao.com/oauth2/authorize")
+				.tokenUri("https://kauth.kakao.com/oauth2/token")
 				.userInfoUri("https://kapi.kakao.com/v2/user/me")
 				.userNameAttributeName("id")
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 				.scope("account_email", "profile_nickname", "name")
 				.build();
 	}
-
-
 }

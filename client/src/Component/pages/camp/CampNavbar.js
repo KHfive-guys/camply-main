@@ -13,6 +13,13 @@ import { CgCloseO } from "react-icons/cg";
 import { FiShoppingCart } from "react-icons/fi";
 import logo from "../../Assets/logo.png";
 import OpenWeatherMap from "../camp/CampMain/Home/openWeatherMap";
+import { GiCampingTent } from "react-icons/gi";
+import { MdAddShoppingCart } from "react-icons/md";
+import { PiShoppingBagOpenLight } from "react-icons/pi";
+import { MdFormatListBulletedAdd } from "react-icons/md";
+
+
+
 
 function NavBar() {
   const location = useLocation();
@@ -28,6 +35,7 @@ function NavBar() {
 
   const handleWeatherModalClose = () => setShowWeatherModal(false);
   const handleWeatherModalShow = () => setShowWeatherModal(true);
+  const currentPage = location.pathname;
 
   function scrollHandler() {
     if (window.scrollY >= 20) {
@@ -65,6 +73,7 @@ function NavBar() {
   }, []);
 
   return (
+    
     <Navbar
       expanded={expand}
       fixed="top"
@@ -72,7 +81,7 @@ function NavBar() {
       className={navColour ? "sticky" : "navbar"}
     >
       <Container>
-        <Navbar.Brand href={isCampPath ? "/camp" : "/shop"} className="d-flex">
+        <Navbar.Brand href="/" className="d-flex">
           <img
             src={logo}
             className="logo"
@@ -89,30 +98,32 @@ function NavBar() {
           <span></span>
           <span></span>
         </Navbar.Toggle>
+
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto" defaultActiveKey="#home">
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/"
+                to={isCampPath ? "/camp" : "/shop/main"}
                 onClick={() => updateExpanded(false)}
               >
                 <AiOutlineHome style={{ marginBottom: "2px" }} /> 홈페이지
               </Nav.Link>
             </Nav.Item>
 
+
             {isCampPath && (
               <>
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to="/camp/board/all"
+                    to="/camp/board/add"
                     onClick={() => updateExpanded(false)}
                   >
-                    <FaClipboardList style={{ marginBottom: "2px" }} /> 전체
-                    상품
+                    <MdFormatListBulletedAdd style={{ marginBottom: "2px" }} /> 캠핑장 등록
                   </Nav.Link>
                 </Nav.Item>
+
                 <Nav.Item>
                   <Nav.Link href="#" onClick={handleWeatherModalShow}>
                     <IoMdSunny style={{ marginBottom: "2px" }} /> 날씨
@@ -135,13 +146,14 @@ function NavBar() {
                     </Button>
                   </Modal.Footer>
                 </Modal>
+
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
                     to="/shop/main"
                     onClick={() => updateExpanded(false)}
                   >
-                    <AiOutlineHome style={{ marginBottom: "2px" }} /> 쇼핑몰
+                    <PiShoppingBagOpenLight style={{ marginBottom: "2px" }} /> 쇼핑몰
                   </Nav.Link>
                 </Nav.Item>
               </>
@@ -155,9 +167,10 @@ function NavBar() {
                     to="/seller"
                     onClick={() => updateExpanded(false)}
                   >
-                    <AiOutlineHome style={{ marginBottom: "2px" }} /> 상품등록
+                    <MdAddShoppingCart style={{ marginBottom: "2px" }} /> 상품 등록
                   </Nav.Link>
                 </Nav.Item>
+
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
@@ -167,13 +180,23 @@ function NavBar() {
                     <FiShoppingCart style={{ marginBottom: "2px" }} /> 장바구니
                   </Nav.Link>
                 </Nav.Item>
+
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to="/camp"
+                    onClick={() => updateExpanded(false)}
+                  >
+                    <GiCampingTent style={{ marginBottom: "2px" }} /> 캠핑장 예약
+                  </Nav.Link>
+                </Nav.Item>
               </>
             )}
 
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to={isLoggedIn ? "/login": "/login"}
+                to={isLoggedIn ? "/login" : "/login"}
                 onClick={handleLogout}
               >
                 {isLoggedIn ? (

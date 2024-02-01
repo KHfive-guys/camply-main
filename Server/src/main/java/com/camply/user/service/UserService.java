@@ -29,19 +29,6 @@ public class UserService {
 		return userdao.selectEmail(USER_EMAIL);
 	}
 
-	public void kakaoRegister(String email, String name, String nickname) {
-		try {
-			UserVO user = new UserVO();
-			user.setUSER_EMAIL(email);
-			user.setUSER_NAME(name);
-			user.setUSER_NICKNAME(nickname);
-			userdao.emailRegister(user);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("Error during user registration with Kakao", e);
-		}
-	}
-
 	public UserVO getUserVOByUsername(String USER_EMAIL) {
 		return userdao.selectEmail(USER_EMAIL);
 	}
