@@ -72,7 +72,7 @@ function NavBar() {
       className={navColour ? "sticky" : "navbar"}
     >
       <Container>
-        <Navbar.Brand href={isCampPath ? "/camp" : "/shop/main"} className="d-flex">
+        <Navbar.Brand href="/" className="d-flex">
           <img
             src={logo}
             className="logo"
@@ -89,12 +89,13 @@ function NavBar() {
           <span></span>
           <span></span>
         </Navbar.Toggle>
+
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto" defaultActiveKey="#home">
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/"
+                to={isCampPath ? "/camp" : "/shop/main"}
                 onClick={() => updateExpanded(false)}
               >
                 <AiOutlineHome style={{ marginBottom: "2px" }} /> 홈페이지

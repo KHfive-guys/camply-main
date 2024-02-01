@@ -4,6 +4,7 @@ import logo from "../../img/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import KakaoLogin from 'react-kakao-login';
+import CampNavBar from '../camp/CampNavbar';
 
 
 function Register() {
@@ -60,6 +61,7 @@ function Register() {
 
   return (
     <section>
+      <CampNavBar/>
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
