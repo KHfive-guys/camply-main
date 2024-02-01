@@ -36,7 +36,7 @@ public class camplyUserSecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Add your React app's origin
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT","PATCH"));
 		configuration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origins", "Content-Type", "Accept", "Authorization"));
 		configuration.setAllowCredentials(true);
@@ -50,7 +50,7 @@ public class camplyUserSecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-				.cors(cors -> cors.disable())
+				.cors(cors -> {})
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
@@ -152,6 +152,4 @@ public class camplyUserSecurityConfig {
 				.scope("account_email", "profile_nickname", "name")
 				.build();
 	}
-
-
 }
