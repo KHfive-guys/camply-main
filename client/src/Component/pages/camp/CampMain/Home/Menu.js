@@ -6,19 +6,19 @@ import { TbCampfire } from 'react-icons/tb';
 function Menu() {
   const campingLinks = [
     {
-      href: '/',
+      href: '/camp/searchList',
       icon: <FaCampground />,
     },
     {
-      href: '/',
+      href: '/camp/searchList',
       icon: <GiCampingTent />,
     },
     {
-      href: '/',
+      href: '/camp/searchList',
       icon: <TbCampfire />,
     },
     {
-      href: '/',
+      href: '/camp/searchList',
       icon: <GiForestCamp />,
     },
   ];
