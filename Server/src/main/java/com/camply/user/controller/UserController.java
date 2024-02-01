@@ -92,7 +92,6 @@ public class UserController {
 			userservice.deleteUserById(user_id);
 			return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
 		} catch (Exception e) {
-			// Handle exceptions appropriately (e.g., log the error)
 			return new ResponseEntity<>("Failed to delete user: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
