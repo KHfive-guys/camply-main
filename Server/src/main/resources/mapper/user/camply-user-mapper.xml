@@ -40,9 +40,5 @@
 	<delete id="deleteUserById" parameterType="Long">
 		DELETE FROM USER_INFO WHERE USER_ID = #{USER_ID}
 	</delete>
-
-	<insert id="kakaoRegister"  parameterType="com.camply.user.vo.UserVO">
-		INSERT INTO USER_INFO (USER_EMAIL, USER_NAME, USER_NICKNAME) VALUES (#{USER_EMAIL}, #{USER_NAME}, #{USER_NICKNAME})
-	</insert>
 </mapper>
 
