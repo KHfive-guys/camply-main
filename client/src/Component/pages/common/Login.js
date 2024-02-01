@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import KakaoLogin from "react-kakao-login";
 
 function Login() {
   const navigate = useNavigate();
@@ -23,13 +24,15 @@ function Login() {
           USER_PASSWORD: USER_PASSWORD,
         }),
       });
-  
+
+      
+
       if (response.ok) {
         const user_info = await response.json();
         console.log("Login successful. Member info:", user_info);
-  
+
         setUserType(user_info.USER_TYPE);
-  
+
         localStorage.setItem("yourTokenKey", user_info.token);
         setLoggedIn(true);
         navigate("/");
@@ -41,13 +44,21 @@ function Login() {
     }
   };
 
+  
+
+  const handleSuccess = (response) => {
+    console.log("Kakao login success:", response);
+  };
+
+  const handleFailure = (error) => {
+    console.error("Kakao login failure:", error);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("yourTokenKey");
     setLoggedIn(false);
     navigate("/login");
   };
-  
-
   return (
     <>
       <LoginWrap>
@@ -69,12 +80,17 @@ function Login() {
           <LoginSignupContent>
             <HorizontalButtons>
               <RadiusButton className="naver" href="">
-                <SpIcon className="naver"></SpIcon>
               </RadiusButton>
 
-              <RadiusButton className="kakao" href="">
-                <SpIcon className="kakao"></SpIcon>
-              </RadiusButton>
+              <KakaoLogin
+                token="e4e518b34dec41360511f03ad7a9ac61"
+                onSuccess={handleSuccess}
+                onFail={handleFailure}
+                render={({ onClick }) => (
+                  <RadiusButton className="kakao" onClick={onClick}>
+                  </RadiusButton>
+                )}
+              />
             </HorizontalButtons>
           </LoginSignupContent>
           <LoginSigninContent>
@@ -293,28 +309,6 @@ const BorderAndText = styled.div`
   }
 `;
 
-const SpIcon = styled.span`
-  background-image: url("https://www.idus.com/resources/dist/images/sp/sp-icon_1634026706070.png");
-  height: 0;
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 0;
-  line-height: 0;
-  letter-spacing: 0;
-
-  &.kakao {
-    background-position: -631px -626px;
-    width: 32px;
-    padding-top: 32px;
-  }
-
-  &.naver {
-    background-position: -689px 0px;
-    width: 32px;
-    padding-top: 32px;
-  }
-`;
 
 const LoginSignupContent = styled.div``;
 
