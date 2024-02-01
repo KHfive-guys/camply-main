@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import KakaoLogin from "react-kakao-login";
+import { Container } from "react-bootstrap";
+import CampNavbar from '../camp/CampNavbar';
 
 function Login() {
   const navigate = useNavigate();
@@ -25,8 +27,6 @@ function Login() {
         }),
       });
 
-      
-
       if (response.ok) {
         const user_info = await response.json();
         console.log("Login successful. Member info:", user_info);
@@ -44,8 +44,6 @@ function Login() {
     }
   };
 
-  
-
   const handleSuccess = (response) => {
     console.log("Kakao login success:", response);
   };
@@ -61,11 +59,16 @@ function Login() {
   };
   return (
     <>
+    <section>
+    <CampNavbar />
+      <Container fluid className="home-section" id="home">
+        <Container className="home-content"></Container>
+      </Container>
+
       <LoginWrap>
         <LoginContainer>
           <LoginHeadLogo>
             <h1>
-              <a>{/* <IconLogo /> */}</a>
             </h1>
           </LoginHeadLogo>
           <LoginHeadText>
@@ -79,16 +82,18 @@ function Login() {
           </LoginHeadText>
           <LoginSignupContent>
             <HorizontalButtons>
-              <RadiusButton className="naver" href="">
-              </RadiusButton>
+              <CustomNaverButton className="naver" href="">
+                Naver Login
+              </CustomNaverButton>
 
               <KakaoLogin
                 token="e4e518b34dec41360511f03ad7a9ac61"
                 onSuccess={handleSuccess}
                 onFail={handleFailure}
                 render={({ onClick }) => (
-                  <RadiusButton className="kakao" onClick={onClick}>
-                  </RadiusButton>
+                  <CustomKakaoButton className="kakao" onClick={onClick}>
+                    Kakao Login
+                  </CustomKakaoButton>
                 )}
               />
             </HorizontalButtons>
@@ -144,6 +149,7 @@ function Login() {
           </LoginSigninContent>
         </LoginContainer>
       </LoginWrap>
+      </section>
     </>
   );
 }
@@ -309,7 +315,6 @@ const BorderAndText = styled.div`
   }
 `;
 
-
 const LoginSignupContent = styled.div``;
 
 const NeedLogin = styled.p``;
@@ -377,5 +382,26 @@ const LoginWrap = styled.div`
   padding: 1px 0 50px;
   min-height: 100%;
   background: #fff;
+`;
+
+const CustomKakaoButton = styled.button`
+  /* Your custom styles here */
+  background-color: #ffeb00;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+`;
+
+const CustomNaverButton = styled.a`
+  /* Your custom styles here */
+  background-color: #03c75a;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block;
 `;
 export default Login;
