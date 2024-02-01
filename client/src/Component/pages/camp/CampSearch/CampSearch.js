@@ -6,7 +6,8 @@ function SearchPage() {
     const [searchResults, setSearchResults] = useState([]);
 
     const [searchCamp, setSearchCamp] = useState({
-        CAMP_SELECT: "글램핑",
+       CAMP_ID: "0",
+       CAMP_SELECT: "글램핑",
         CAMP_LOCATION: "서울",
         CAMP_ADULT: "0",
         CAMP_CHILD: "0",
@@ -26,7 +27,12 @@ function SearchPage() {
         } catch (error) {
         console.error("Error during search:", error.message);
       }
-    }
+    };
+
+    const handleRowClick = (CAMP_ID) => {
+      window.location.href = `/camp/board/get/${CAMP_ID}`;
+    };
+
   return (
     <Container className="mt-5">
       <Row className="justify-content-center mt-4">
@@ -124,7 +130,7 @@ function SearchPage() {
       {searchResults.length > 0 && (
         <Row className="mt-3">
           {searchResults.map((site) => (
-            <Col key={site.CAMP_ID} md={4} className="mb-3">
+            <Col key={site.CAMP_ID} md={4} className="mb-3" onClick={() => handleRowClick(site.CAMP_ID)}>
               <Card>
                 <Card.Body>
                   <Card.Title>{site.CAMP_SELECT}</Card.Title>
