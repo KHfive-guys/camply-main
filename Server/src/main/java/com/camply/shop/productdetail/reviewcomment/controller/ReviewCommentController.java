@@ -1,5 +1,7 @@
 package com.camply.shop.productdetail.reviewcomment.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,16 +16,16 @@ import com.camply.shop.productdetail.reviewcomment.service.ReviewCommentService;
 import com.camply.shop.productdetail.reviewcomment.vo.ReviewCommentVO;
 
 @RestController
-@RequestMapping("/reviewcomment")
+@RequestMapping("/shop/review/comment")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class ReviewCommentController {
 	@Autowired
 	private ReviewCommentService reviewCommentService;
 
 	// 리뷰 댓글 조회
-	@GetMapping("/View/{commentNo}")
-	public ResponseEntity<ReviewCommentVO> getReview(@PathVariable int commentNo) {
-		ReviewCommentVO reviewCommentVO = reviewCommentService.getComment(commentNo);
+	@GetMapping("/list/{commentNo}")
+	public ResponseEntity<List<ReviewCommentVO>> getReview(@PathVariable int commentNo) {
+		List<ReviewCommentVO> reviewCommentVO = reviewCommentService.getComment(commentNo);
 		if (reviewCommentVO != null) {
 			return ResponseEntity.ok(reviewCommentVO);
 		} else {

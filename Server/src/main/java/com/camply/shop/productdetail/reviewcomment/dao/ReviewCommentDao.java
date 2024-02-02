@@ -1,5 +1,7 @@
 package com.camply.shop.productdetail.reviewcomment.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.camply.shop.productdetail.reviewcomment.vo.ReviewCommentVO;
@@ -8,7 +10,7 @@ import com.camply.shop.productdetail.reviewcomment.vo.ReviewCommentVO;
 public interface ReviewCommentDao {
 
 	// 댓글 조회
-	ReviewCommentVO getComment(int commentNo);
+	List<ReviewCommentVO> getComment(int commentNo);
 
 	// 댓글 작성
 	void insertComment(ReviewCommentVO commentVO);

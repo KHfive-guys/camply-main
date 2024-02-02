@@ -15,7 +15,7 @@ public interface QuestionDao {
 	// 문의 조회
 	List<QuestionVO> getQuestion(int productId);
 	
-	// 업데이트 문의 조회
+	// 업데이트용 문의 조회
 	QuestionVO selectUpdateQuestions(int questionNo);
 	
 	// 문의 작성

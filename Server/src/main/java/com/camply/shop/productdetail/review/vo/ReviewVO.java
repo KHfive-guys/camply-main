@@ -14,11 +14,11 @@ import lombok.Setter;
 public class ReviewVO {
 
 	private int reviewNo;
-	private int userId;
+	private Long userId;
 	private int productId;
 	private String reviewTitle;
 	private String reviewText;
-	private String reviewName;
+	private String userName;
 	private LocalDateTime reviewDate;
 	private int reviewHit;
 }
