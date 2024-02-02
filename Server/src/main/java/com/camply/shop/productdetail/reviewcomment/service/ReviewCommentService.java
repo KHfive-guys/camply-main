@@ -1,5 +1,7 @@
 package com.camply.shop.productdetail.reviewcomment.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ public class ReviewCommentService {
 	private ReviewCommentDao reviewCommentDao;
 
 	// 댓글 조회
-	public ReviewCommentVO getComment(int commentNo) {
+	public List<ReviewCommentVO> getComment(int commentNo) {
 		return reviewCommentDao.getComment(commentNo);
 	}
 

@@ -21,21 +21,35 @@ import com.camply.shop.productdetail.review.vo.ReviewVO;
 @RequestMapping("/shop/review")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class ReviewController {
+
 	@Autowired
 	private ReviewService reviewService;
 
 	// 후기글 전체 조회
 	@GetMapping("/all")
-	public ResponseEntity<List<ReviewVO>> getAllReview(){
+	public ResponseEntity<List<ReviewVO>> getAllReview() {
 		List<ReviewVO> review = reviewService.getAllReview();
 		return ResponseEntity.ok(review);
 	}
 
 	// 후기 조회
-	@GetMapping("/view/{reviewNo}")
-	public ResponseEntity<ReviewVO> getReview(@PathVariable int reviewNo) {
-		reviewService.incrementReviewHit(reviewNo);
-		ReviewVO reviewVO = reviewService.getReview(reviewNo);
+	@GetMapping("/view/{productId}")
+	public ResponseEntity<List<ReviewVO>> getReview(@PathVariable int productId) {
+		reviewService.incrementReviewHit(productId);
+		List<ReviewVO> reviewVO = reviewService.getReview(productId);
+
+		if (reviewVO != null) {
+			return ResponseEntity.ok(reviewVO);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	// 업데이트용 후기 조회
+	@GetMapping("/{reviewNo}")
+	public ResponseEntity<ReviewVO> getReviewNo(@PathVariable int reviewNo) {
+		ReviewVO reviewVO = reviewService.getReviewNo(reviewNo);
+
 		if (reviewVO != null) {
 			return ResponseEntity.ok(reviewVO);
 		} else {
@@ -51,9 +65,11 @@ public class ReviewController {
 	}
 
 	// 후기 수정
-	@PatchMapping("/update")
-	public void updateReview(@PathVariable int reviewNo) {
-		reviewService.reviewUpdate(reviewNo);
+	@PatchMapping("/update/{reviewNo}")
+	public ResponseEntity<String> updateReview(@PathVariable int reviewNo, @RequestBody ReviewVO reviewVO) {
+		reviewVO.setReviewNo(reviewNo);
+		reviewService.reviewUpdate(reviewVO);
+		return ResponseEntity.ok("Review update succesfully");
 	}
 
 	// 후기 삭제

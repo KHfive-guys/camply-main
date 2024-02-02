@@ -8,11 +8,15 @@ import com.camply.shop.productdetail.review.vo.ReviewVO;
 
 @Mapper
 public interface ReviewDao {
-	
+
 	// 후기 전체 조회
 	List<ReviewVO> selectAllReview();
+
 	// 후기 조회
-	ReviewVO getReview(int reviewNo);
+	List<ReviewVO> getReview(int prodcutId);
+
+	// 업데이트용 문의 조회
+	ReviewVO selectUpdateReview(int reviewNo);
 
 	// 후기 작성
 	void insertReview(ReviewVO reviewVO);
@@ -21,7 +25,7 @@ public interface ReviewDao {
 	void incrementReviewHit(int reviewNo);
 
 	// 후기 수정
-	void updateReview(int reviewNo);
+	void updateReview(ReviewVO reviewVO);
 
 	// 후기 삭제
 	void deleteReview(int reviewNo);

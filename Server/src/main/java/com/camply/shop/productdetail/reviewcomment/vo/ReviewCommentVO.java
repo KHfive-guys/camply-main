@@ -14,6 +14,6 @@ import lombok.Setter;
 public class ReviewCommentVO {
 	private int commentNo;
 	private int reviewNo;
-	private String commentTtile;
-	private String commentDati;
+	private String commentText;
+	private String commentDate;
 }

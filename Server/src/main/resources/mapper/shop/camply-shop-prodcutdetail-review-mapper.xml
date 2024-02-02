@@ -3,18 +3,23 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camply.shop.productdetail.review.dao.ReviewDao">
    
-   
-   
-   <!--후기글 조회-->
-   <resultMap id="ReviewView" type="com.camply.shop.productdetail.review.vo.ReviewVO">
+   <resultMap id="SelectReview" type="com.camply.shop.productdetail.review.vo.ReviewVO">
 			<id property="reviewNo" column="REVIEW_NO"/>
+				<result property="productId" column="PRODUCT_ID" />	
 			  	<result property="reviewTitle" column="REVIEW_TITLE"/>
 			  	<result property="reviewText" column="REVIEW_TEXT"/>
 		        <result property="reviewName" column="REVIEW_NAME"/>
 		        <result property="reviewDate" column="REVIEW_DATE"/>
 		        <result property="reviewHit" column="REVIEW_HIT"/>
 	</resultMap>
-	<select id="getReview" resultMap="ReviewView" parameterType="int" >
+	
+	  <!--후기글 조회-->
+	<select id="getReview" resultMap="SelectReview" parameterType="int" >
+		SELECT * FROM Shop_Review WHERE PRODUCT_ID = #{productId} ORDER BY REVIEW_NO DESC
+	</select>
+	
+	<!--후기글 수정시 기존값 가져오기 위한 조회  -->
+	<select id="selectUpdateReview" resultMap="SelectReview" parameterType = "int">
 		SELECT * FROM Shop_Review WHERE REVIEW_NO = #{reviewNo}
 	</select>
 	
@@ -32,15 +37,22 @@
 	
    <!--후기글 작성-->
     <insert id="insertReview" parameterType="com.camply.shop.productdetail.review.vo.ReviewVO">
-        INSERT INTO Shop_Review (REVIEW_NO, REVIEW_TITLE, REVIEW_TEXT, REVIEW_NAME, REVIEW_DATE, REVIEW_HIT)
-        VALUES (REVIEW_NO_SEQ.NEXTVAL, #{reviewTitle}, #{reviewText}, #{reviewName}, sysdate, 0)
+        INSERT INTO Shop_Review (REVIEW_TITLE,USER_ID,PRODUCT_ID, REVIEW_TEXT, USER_NAME, REVIEW_DATE, REVIEW_HIT)
+        VALUES ( #{reviewTitle}, #{userId}, #{productId}, #{reviewText}, #{userName}, sysdate, 0)
     </insert>
    
    <!--후기글 수정  -->
-    <update id="updateReview" parameterType="int">
+    <update id="updateReview" parameterType="com.camply.shop.productdetail.review.vo.ReviewVO">
     UPDATE Shop_Review
-    SET REVIEW_TITLE = #{reviewTitle}, REVIEW_TEXT = #{reviewText}
-    WHERE REVIEW_NO = #{reviewNo}
+    <set>
+    <if test="reviewTitle != null">
+    	REVIEW_TITLE = #{reviewTitle},
+    </if>
+    <if test="reviewText != null">
+    	REVIEW_TEXT = #{reviewText},
+    </if>
+    </set>
+  	 WHERE REVIEW_NO = #{reviewNo}
     </update>
  	
  	<!--후기글 삭제  -->

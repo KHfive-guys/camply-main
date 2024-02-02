@@ -32,7 +32,7 @@ const InquiryDetail = () => {
         );
         setQuestion(questionResponse.data);
         const commentsResponse = await axios.get(
-          `http://localhost:8080/shop/comment/list/${questionNo}`
+          `http://localhost:8080/shop/question/comment/list/${questionNo}`
         );
         setComments(commentsResponse.data);
         const userId = extractUserIdFromToken();
@@ -92,12 +92,13 @@ const InquiryDetail = () => {
         )}
       </div>
 
-      <CommentWriter questionNo={questionNo} updateComments={() => {}} />
+      <CommentWriter questionNo={+questionNo} updateComments={() => {}} />
       <div className='comment-list'>
         <h3>덧글 목록</h3>
         {comments.map((comment) => (
           <div key={comment.commentNo} className='comment'>
             <p>{comment.commentText}</p>
+            <p>{comment.commentDate}</p>
           </div>
         ))}
       </div>

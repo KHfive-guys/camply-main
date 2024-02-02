@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // useParams 제거
+import { useNavigate } from "react-router-dom";
 
-const CommentWriter = ({ questionNo, updateComments }) => {
-  // props로 questionNo 받음
+const CommentWriter = ({ reviewNo, updateComments }) => {
+  // props로 reviewNo 받음
   const navigate = useNavigate();
-  // const { questionNo } = useParams(); // useParams 사용 제거
   const [comment, setComment] = useState({
     commentText: "",
   });
@@ -22,15 +21,15 @@ const CommentWriter = ({ questionNo, updateComments }) => {
   const saveComment = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:8080/shop/question/comment/post`,
+        `http://localhost:8080/shop/review/comment/post`,
         {
           ...comment,
-          questionNo: questionNo, // 숫자형 questionNo 사용
+          reviewNo: reviewNo, // 숫자형 reviewNo 사용
         }
       );
       if (response.status === 200) {
         alert("덧글 등록 완료");
-        navigate(`/shop/question/view/${questionNo}`);
+        navigate(`/shop/review/view/${reviewNo}`);
         updateComments(); // 덧글 목록 업데이트
       } else {
         alert("덧글 등록에 실패했습니다.");
@@ -42,7 +41,7 @@ const CommentWriter = ({ questionNo, updateComments }) => {
   };
 
   const backToList = () => {
-    navigate(`/shop/question/view/${questionNo}`);
+    navigate(`/shop/review/view/${reviewNo}`);
   };
 
   return (

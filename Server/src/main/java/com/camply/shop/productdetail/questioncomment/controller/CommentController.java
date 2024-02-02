@@ -16,7 +16,7 @@ import com.camply.shop.productdetail.questioncomment.service.CommentService;
 import com.camply.shop.productdetail.questioncomment.vo.CommentVO;
 
 @RestController
-@RequestMapping("/shop/comment")
+@RequestMapping("/shop/question/comment")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class CommentController {
 
