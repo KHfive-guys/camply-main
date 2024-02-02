@@ -24,7 +24,7 @@ function MyPage() {
         })
         .then((response) => {
           console.log("User Data Response:", response.data);
-          setUserData(response.data[0] || {});
+          setUserData(response.data || {});
           setLoading(false);
         })
         .catch((error) => {

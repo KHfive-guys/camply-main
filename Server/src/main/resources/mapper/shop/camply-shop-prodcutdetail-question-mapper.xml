@@ -12,7 +12,7 @@
 		<result property="productId" column="PRODUCT_ID" />
 		<result property="questionTitle" column="QUESTION_TITLE" />
 		<result property="questionText" column="QUESTION_TEXT" />
-		<result property="questionName" column="QUESTION_NAME" />
+		<result property="userName" column="USER_NAME" />
 		<result property="questionDate" column="QUESTION_DATE" />
 		<result property="questionHit" column="QUESTION_HIT" />
 	</resultMap>
@@ -30,10 +30,8 @@
 	<!--문의글 작성 -->
 	<insert id="insertQuestion"
 		parameterType="com.camply.shop.productdetail.question.vo.QuestionVO">
-		INSERT INTO Shop_Question (question_no,product_id, question_title,
-		question_text, question_name, question_date, question_hit)
-		VALUES (QUESTION_NO_SEQ.NEXTVAL,#{productId}, #{questionTitle},
-		#{questionText}, #{questionName}, sysdate, 0)
+		INSERT INTO Shop_Question (question_title,question_text, user_name, question_date, question_hit,product_id,user_id)
+		VALUES (#{questionTitle},#{questionText}, #{userName}, sysdate, 0,#{productId}, #{userId})
 	</insert>
 
 	<!--문의글 조회수 증가 -->

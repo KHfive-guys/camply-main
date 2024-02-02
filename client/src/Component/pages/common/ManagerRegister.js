@@ -3,11 +3,13 @@ import styled from "styled-components";
 import logo from '../../img/Logo.png';
 import { Link } from "react-router-dom";
 import { Container } from 'react-bootstrap';
+import CampNavbar from '../camp/CampNavbar';
 
 function Register() {
 
   return (
     <section>
+      <CampNavbar/>
       <Container fluid className="home-section" id="home">
         <Container className="home-content">
         </Container>

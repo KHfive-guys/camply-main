@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.camply.user.dao.KakaoDAO">
+    <resultMap id="KakaoVO" type="com.camply.user.vo.KakaoVO">
+        <id property="USER_ID" column="USER_ID"/>
+        <result property="USER_EMAIL" column="USER_EMAIL"/>
+        <result property="USER_PASSWORD" column="USER_PASSWORD"/>
+        <result property="USER_NAME" column="USER_NAME"/>
+        <result property="USER_NICKNAME" column="USER_NICKNAME"/>
+        <result property="USER_TYPE" column="USER_TYPE"/>
+        <result property="USER_BUSINESSADDRESS" column="USER_BUSINESSADDRESS"/>
+        <result property="USER_BUSINESSNUMBER" column="USER_BUSINESSNUMBER"/>
+        <result property="USER_ADDRESS" column="USER_ADDRESS"/>
+        <result property="USER_BUSINESSPHONE" column="USER_BUSINESSPHONE"/>
+
+    </resultMap>
+
+    <insert id="kakaoRegister"  parameterType="com.camply.user.vo.KakaoVO">
+        INSERT INTO USER_INFO (USER_EMAIL, USER_NAME, USER_NICKNAME) VALUES (#{USER_EMAIL}, #{USER_NAME}, #{USER_NICKNAME})
+    </insert>
+</mapper>
+

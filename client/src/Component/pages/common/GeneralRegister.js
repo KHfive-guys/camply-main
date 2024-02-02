@@ -4,6 +4,7 @@ import logo from "../../img/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import KakaoLogin from 'react-kakao-login';
+import CampNavBar from '../camp/CampNavbar';
 
 
 function Register() {
@@ -28,7 +29,7 @@ function Register() {
   const navigate = useNavigate();
 
   const handleKakaoLogin = async (response) => {
-    const { email, nickname } = response.profile.kakao_account;
+    const { account_email	, profile_nickname, name } = response.profile.kakao_account;
 
     try {
         const registrationResponse = await fetch("http://localhost:8080/login/oauth2/code/kakao", {
@@ -40,9 +41,9 @@ function Register() {
             mode: "cors",
             credentials: "include",
             body: JSON.stringify({
-                USER_EMAIL: email,
-                USER_NAME: nickname,
-                USER_NICKNAME: nickname,
+                USER_EMAIL: account_email	,
+                USER_NAME: name,
+                USER_NICKNAME: profile_nickname,
             }),
         });
 
@@ -60,6 +61,7 @@ function Register() {
 
   return (
     <section>
+      <CampNavBar/>
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
@@ -68,7 +70,6 @@ function Register() {
         <HeadBannerGroup />
         <LoginSectionRoot>
           <LoginHeadLogo>
-            <h1></h1>
           </LoginHeadLogo>
           <img src={logo} width="300px" />
           <LoginSection>
