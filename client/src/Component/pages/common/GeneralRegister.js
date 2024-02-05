@@ -48,7 +48,7 @@ function Register() {
         });
 
         if (registrationResponse.ok) {
-            console.log("카카오 회원가입 성공");
+            console.log("카카오 회원가입 성공");
             navigate("/login");
         } else {
             console.error("카카오 회원가입 실패");
