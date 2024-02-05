@@ -44,4 +44,8 @@ public class UserService {
 	public UserVO getUserById(Long USER_ID) {
 		return userdao.selectUserById(USER_ID);
 	}
+
+	public void updateUserById(UserVO user) {
+		userdao.updateUserById(user);
+	}
 }

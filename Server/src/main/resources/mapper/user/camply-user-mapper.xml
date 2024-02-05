@@ -40,5 +40,21 @@
 	<delete id="deleteUserById" parameterType="Long">
 		DELETE FROM USER_INFO WHERE USER_ID = #{USER_ID}
 	</delete>
+
+	<update id="updateUserById" parameterType="com.camply.user.vo.UserVO">
+		UPDATE USER_INFO
+		<set>
+			<if test="USER_EMAIL != null">USER_EMAIL = #{USER_EMAIL},</if>
+			<if test="USER_PASSWORD != null">USER_PASSWORD = #{USER_PASSWORD},</if>
+			<if test="USER_NAME != null">USER_NAME = #{USER_NAME},</if>
+			<if test="USER_NICKNAME != null">USER_NICKNAME = #{USER_NICKNAME},</if>
+			<if test="USER_BUSINESSNUMBER != null">USER_BUSINESSNUMBER = #{USER_BUSINESSNUMBER},</if>
+			<if test="USER_BUSINESSADDRESS != null">USER_BUSINESSADDRESS = #{USER_BUSINESSADDRESS},</if>
+			<if test="USER_ADDRESS != null">USER_ADDRESS = #{USER_ADDRESS},</if>
+			<if test="USER_BUSINESSPHONE != null">USER_BUSINESSPHONE = #{USER_BUSINESSPHONE},</if>
+		</set>
+		WHERE USER_ID = #{USER_ID}
+	</update>
+
 </mapper>
 

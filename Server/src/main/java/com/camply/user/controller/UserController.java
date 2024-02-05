@@ -106,4 +106,10 @@ public class UserController {
 		}
 	}
 
+	@PutMapping("/update/{user_id}")
+	public void updateUserById(@PathVariable Long user_id, @RequestBody UserVO user) {
+		user.setUSER_ID(user_id);
+		userservice.updateUserById(user);
+	}
+
 }

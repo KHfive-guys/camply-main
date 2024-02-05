@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import ShopDetail from "./Component/pages/shop/ShopDetail/ShopDetail";
 import {
   BrowserRouter as Router,
@@ -57,6 +57,7 @@ import ShopCart from "./Component/pages/shop/ShopCart";
 import campMainImg from "./Component/img/MainImg/메인페이지 이미지2.jpeg";
 import OrderCart from "./Component/pages/shop/ShopOrder/Order/OrderCart";
 import MyPage from "./Component/pages/common/MyPage";
+import EditUser from "./Component/pages/common/EditUser"
 
 import "./Component/pages/camp/CampStyle.css";
 import "./CampApp.css";
@@ -173,6 +174,7 @@ function App() {
         <Route path='/camp/board/get/:camp_id' element={<CampBoardDetail />} />
         <Route path='/camp/board/edit/:camp_id' element={<CampBoardUpdate />} />
         <Route path='/mypage' element={<MyPage />} />
+        <Route path='/mypage/edit' element={<EditUser />} />
         <Route path='/camp/searchList' element={<CampSearch />} />
 
         <Route
