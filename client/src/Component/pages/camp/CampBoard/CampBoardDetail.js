@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { useParams, useNavigate, useLocation} from "react-router-dom";
+import { Container ,Button } from "react-bootstrap";
 import Reply from "./Board/Reply";
 import CampNavbar from "../CampNavbar";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
@@ -11,6 +11,8 @@ const parseJwt = (token) => {
 };
 
 function CampBoardDetail() {
+
+  const location = useLocation();
   const [boardData, setBoardData] = useState({});
   const { camp_id } = useParams();
   const navigate = useNavigate();
@@ -156,12 +158,35 @@ function CampBoardDetail() {
   if (loading) {
     return <p>Loading...</p>;
   }
+  // 검색페이지에서 검색 조건 받기
+  const searchInfo = { ...location.state };
+
+  // 예약페이지 이동
+  const reserveMove = ({}) => {
+    navigate('/camp/reserve',  {
+      state: {
+        // 캠핑장 번호
+        CAMP_ID : `${boardData.camp_id}`,
+        // 캠핑유형
+        CAMP_SELECT : `${searchInfo.CAMP_SELECT}`,
+        // 선택인원 (성인)
+        CAMP_ADULT : `${searchInfo.CAMP_ADULT}`,
+        // 선택인원 (아이)
+        CAMP_CHILD : `${searchInfo.CAMP_CHILD}`,
+        // 체크인 시간
+        CAMP_CHECKIN : `${searchInfo.CAMP_CHECKIN}`,
+        // 체크아웃 시간
+        CAMP_CHECKOUT : `${searchInfo.CAMP_CHECKOUT}`,
+      }
+    })
+  }
 
   return (
     <section>
       <CampNavbar />
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
+
       </Container>
       <h1>Camp Board - Camp Details</h1>
       <table>
@@ -229,6 +254,9 @@ function CampBoardDetail() {
           </tr>
         </tbody>
       </table>
+      <Button variant="primary"  onClick={reserveMove}className="mt-3">
+            예약하기
+      </Button>
 
       <h1>지도</h1>
       <div id="map" style={{ width: "100%", height: "400px" }}></div>
