@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Container, Button, Form, Modal } from "react-bootstrap";
 import CampNavbar from "../camp/CampNavbar";
 import bcrypt from "bcryptjs";
