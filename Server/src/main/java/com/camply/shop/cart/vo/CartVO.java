@@ -12,10 +12,11 @@ import lombok.Setter;
 public class CartVO {
 	private int cartId;
 	private int productId;
+	private Long userId;
 	private String cartCategory;
 	private String cartImg;
 	private String cartName;
-	private String cartPrice;
-	private String cartAmount;
+	private int cartPrice;
+	private int cartAmount;
 
 }
