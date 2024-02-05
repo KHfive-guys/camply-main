@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
+import {useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function SearchPage() {
+
+  const navigate = useNavigate();
     const [searchResults, setSearchResults] = useState([]);
 
     const [searchCamp, setSearchCamp] = useState({
@@ -30,7 +33,20 @@ function SearchPage() {
     };
 
     const handleRowClick = (CAMP_ID) => {
-      window.location.href = `/camp/board/get/${CAMP_ID}`;
+      navigate(`/camp/board/get/${CAMP_ID}`, {
+        state: {
+          // 캠핑 유형
+          CAMP_SELECT : `${searchCamp.CAMP_SELECT}`,
+          // 선택인원 (성인)
+          CAMP_ADULT : `${searchCamp.CAMP_ADULT}`,
+          // 선택인원 (아이)
+          CAMP_CHILD : `${searchCamp.CAMP_CHILD}`,
+          // 체크인 시간
+          CAMP_CHECKIN : `${searchCamp.CAMP_CHECKIN}`,         
+          // 체크아웃 시간
+          CAMP_CHECKOUT : `${searchCamp.CAMP_CHECKOUT}`,
+        }
+      })
     };
 
   return (
