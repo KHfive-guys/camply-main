@@ -52,6 +52,7 @@ public class JwtTokenProvider {
                 .claim("user_id", userId)
                 .claim("auth", roles.toString())
                 .claim("USER_NAME", userVO.getUSER_NAME())
+                .claim("USER_PASSWORD", userVO.getUSER_PASSWORD())
                 .claim("USER_NICKNAME", userVO.getUSER_NICKNAME())
                 .claim("USER_ADDRESS", userVO.getUSER_ADDRESS())
                 .claim("USER_BUSINESSADDRESS", userVO.getUSER_BUSINESSADDRESS())

@@ -12,8 +12,5 @@ public interface UserDao {
 	UserVO selectEmail(String USER_EMAIL);
 	void deleteUserById(Long USER_ID);
 	UserVO selectUserById(Long USER_ID);
-
-
-
-
+	void updateUserById(UserVO Uservo);
 }

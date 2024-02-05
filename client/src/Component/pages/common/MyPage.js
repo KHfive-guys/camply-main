@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
+import { Container, Button, Form } from "react-bootstrap";
 import CampNavbar from "../camp/CampNavbar";
 
 function MyPage() {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordVerified, setPasswordVerified] = useState(false);
   const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
@@ -72,6 +76,31 @@ function MyPage() {
     }
   };
 
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleVerifyPassword = () => {
+    const token = localStorage.getItem("yourTokenKey");
+    const payloadBase64 = token.split(".")[1];
+    const payload = JSON.parse(atob(payloadBase64));
+    const storedPassword = payload.USER_PASSWORD;
+  
+    if (password === storedPassword) {
+      setPasswordVerified(true);
+    } else {
+      alert("비밀번호가 일치하지 않습니다.");
+    }
+  };
+  
+  useEffect(() => {
+    if (passwordVerified) {
+      navigate("/mypage/edit");
+    }
+  }, [passwordVerified, navigate]);
+
+  
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -85,8 +114,35 @@ function MyPage() {
 
       <h1>마이페이지</h1>
       <div>
-        <p>이름: {userData.USER_NAME}</p>
         <p>이메일: {userData.USER_EMAIL}</p>
+        <p>이름: {userData.USER_NAME}</p>
+        <p>닉네임: {userData.USER_NICKNAME}</p>
+
+        {userData.USER_TYPE === "General" && (
+          <p>주소: {userData.USER_ADDRESS}</p>
+        )}
+
+        {userData.USER_TYPE === "Admin" && (
+          <>
+            <p>사업자 번호: {userData.USER_BUSINESSNUMBER}</p>
+            <p>사업자 주소: {userData.USER_BUSINESSADDRESS}</p>
+            <p>사업자 전화번호: {userData.USER_BUSINESSPHONE}</p>
+          </>
+        )}
+
+        <Form.Group controlId="formPassword">
+          <Form.Label>비밀번호 확인</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="비밀번호를 입력해주세요"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </Form.Group>
+        <Button variant="primary" onClick={handleVerifyPassword}>
+          비밀번호 확인 후 수정
+        </Button>
+
         <button onClick={handleDeleteAccount} disabled={deleting}>
           {deleting ? "회원 탈퇴 중..." : "회원 탈퇴"}
         </button>
