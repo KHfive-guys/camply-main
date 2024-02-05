@@ -49,8 +49,8 @@ function SearchPage() {
                     CAMP_SELECT: e.target.value,
                   });}}
               >
-                <option value="글램핑">글램핑</option>
                 <option value="팬션">팬션</option>
+                <option value="글램핑">글램핑</option>
                 <option value="텐트">텐트</option>
                 <option value="카라반">카라반</option>
                 <option value="사이트">사이트</option>

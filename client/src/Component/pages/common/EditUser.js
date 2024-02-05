@@ -111,7 +111,7 @@ function EditUser() {
         <>
           <Form onSubmit={handleFormSubmit}>
             <Form.Group className="mb-3" controlId="formEmail">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>이메일</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="이메일을 입력해주세요"
@@ -122,7 +122,7 @@ function EditUser() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formName">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>이름</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="이름을 입력해주세요"
@@ -130,7 +130,17 @@ function EditUser() {
                 value={formValues.USER_NAME}
                 onChange={handleInputChange}
               />
-              
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formEmail">
+              <Form.Label>닉네임</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="닉네임을 입력해주세요"
+                name="USER_NICKNAME"
+                value={formValues.USER_NICKNAME}
+                onChange={handleInputChange}
+              />
             </Form.Group>
 
             {userData.USER_TYPE === "General" && (
