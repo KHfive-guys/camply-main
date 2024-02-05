@@ -64,12 +64,7 @@ import CampSearchGlamping from "./Component/pages/camp/CampSearch/CampSearchGlam
 import CampSearchCaravan from "./Component/pages/camp/CampSearch/CampSearchCaravan";
 import CampSearchSite from "./Component/pages/camp/CampSearch/CampSearchSite";
 import CampSearchPension from "./Component/pages/camp/CampSearch/CampSearchPension";
-
 import CampReserve from "./Component/pages/camp/CampReserve/CampReserve";
-
-
-
-
 
 import "./Component/pages/camp/CampStyle.css";
 import "./CampApp.css";
@@ -188,14 +183,12 @@ function App() {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage/edit' element={<EditUser />} />
         <Route path='/camp/searchList' element={<CampSearch />} />
-        <Route path='/camp/searchList/camp' element={<CampSearchTent />} />
+        <Route path='/camp/searchList/tent' element={<CampSearchTent />} />
         <Route path='/camp/searchList/glamping' element={<CampSearchGlamping />} />
         <Route path='/camp/searchList/caravan' element={<CampSearchCaravan />} />
         <Route path='/camp/searchList/site' element={<CampSearchSite />} />
         <Route path='/camp/searchList/pension' element={<CampSearchPension />} />
         <Route path='/camp/reserve' element={<CampReserve />} />
-
-
 
         <Route
           path='/shop/*'
