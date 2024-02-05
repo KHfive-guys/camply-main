@@ -102,7 +102,7 @@ public class UserController {
 			UserVO userVO = userservice.getUserById(user_id);
 			return ResponseEntity.ok(userVO);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("캠핑장 정보 가져오기 실패: " + user_id);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("유저 정보 가져오기 실패: " + user_id);
 		}
 	}
 

@@ -17,9 +17,8 @@ import { GiCampingTent } from "react-icons/gi";
 import { MdAddShoppingCart } from "react-icons/md";
 import { PiShoppingBagOpenLight } from "react-icons/pi";
 import { MdFormatListBulletedAdd } from "react-icons/md";
-
-
-
+import { LuUserCircle2 } from "react-icons/lu";
+import axios from "axios";
 
 function NavBar() {
   const location = useLocation();
@@ -28,6 +27,7 @@ function NavBar() {
   const isCampPath = currentPath.startsWith("/camp");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const [userData, setUserData] = useState({});
 
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
@@ -36,6 +36,39 @@ function NavBar() {
   const handleWeatherModalClose = () => setShowWeatherModal(false);
   const handleWeatherModalShow = () => setShowWeatherModal(true);
   const currentPage = location.pathname;
+
+  const [decodedToken, setDecodedToken] = useState({});
+
+  const parseUserIdFromToken = (token) => {
+    const payloadBase64 = token.split(".")[1];
+    const payload = JSON.parse(atob(payloadBase64));
+    return payload.user_id;
+  };
+
+  const [userType, setUserType] = useState("");
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("yourTokenKey");
+
+    if (token) {
+      const USER_ID = parseUserIdFromToken(token);
+
+      axios
+        .get(`http://localhost:8080/api/user/get/${USER_ID}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log("User Data Response:", response.data);
+          setUserData(response.data || {});
+        })
+        .catch((error) => {
+          console.error("사용자 정보 가져오기 실패:", error);
+        });
+    }
+  }, []);
 
   function scrollHandler() {
     if (window.scrollY >= 20) {
@@ -67,13 +100,34 @@ function NavBar() {
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
+  
     if (token) {
-      setLoggedIn(true);
+      const USER_ID = parseUserIdFromToken(token);
+  
+      axios
+        .get(`http://localhost:8080/api/user/get/${USER_ID}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log("User Data Response:", response.data);
+          setUserData(response.data || {});
+          setUserType(response.data.USER_TYPE);
+        })
+        .catch((error) => {
+          console.error("사용자 정보 가져오기 실패:", error);
+        });
     }
   }, []);
+  
+
+  useEffect(() => {
+    console.log("isLoggedIn:", isLoggedIn);
+    console.log("USER_TYPE:", decodedToken.USER_TYPE);
+  }, [isLoggedIn, decodedToken.USER_TYPE]);
 
   return (
-    
     <Navbar
       expanded={expand}
       fixed="top"
@@ -111,18 +165,22 @@ function NavBar() {
               </Nav.Link>
             </Nav.Item>
 
-
             {isCampPath && (
               <>
-                <Nav.Item>
-                  <Nav.Link
-                    as={Link}
-                    to="/camp/board/add"
-                    onClick={() => updateExpanded(false)}
-                  >
-                    <MdFormatListBulletedAdd style={{ marginBottom: "2px" }} /> 캠핑장 등록
-                  </Nav.Link>
-                </Nav.Item>
+                {isLoggedIn && userType === "Admin" &&(
+                  <Nav.Item>
+                    <Nav.Link
+                      as={Link}
+                      to="/camp/board/add"
+                      onClick={() => updateExpanded(false)}
+                    >
+                      <MdFormatListBulletedAdd
+                        style={{ marginBottom: "2px" }}
+                      />{" "}
+                      캠핑장 등록
+                    </Nav.Link>
+                  </Nav.Item>
+                )}
 
                 <Nav.Item>
                   <Nav.Link href="#" onClick={handleWeatherModalShow}>
@@ -153,7 +211,8 @@ function NavBar() {
                     to="/shop/main"
                     onClick={() => updateExpanded(false)}
                   >
-                    <PiShoppingBagOpenLight style={{ marginBottom: "2px" }} /> 쇼핑몰
+                    <PiShoppingBagOpenLight style={{ marginBottom: "2px" }} />{" "}
+                    쇼핑몰
                   </Nav.Link>
                 </Nav.Item>
               </>
@@ -161,36 +220,59 @@ function NavBar() {
 
             {isShopPath && (
               <>
-                <Nav.Item>
-                  <Nav.Link
-                    as={Link}
-                    to="/seller"
-                    onClick={() => updateExpanded(false)}
-                  >
-                    <MdAddShoppingCart style={{ marginBottom: "2px" }} /> 상품 등록
-                  </Nav.Link>
-                </Nav.Item>
+                {isLoggedIn && (
+                  <>
+                    {isLoggedIn && userType === "Admin" && (
+                      <Nav.Item>
+                        <Nav.Link
+                          as={Link}
+                          to="/seller"
+                          onClick={() => updateExpanded(false)}
+                        >
+                          <MdAddShoppingCart style={{ marginBottom: "2px" }} />{" "}
+                          상품 등록
+                        </Nav.Link>
+                      </Nav.Item>
+                    )}
 
-                <Nav.Item>
-                  <Nav.Link
-                    as={Link}
-                    to="/shop/cart"
-                    onClick={() => updateExpanded(false)}
-                  >
-                    <FiShoppingCart style={{ marginBottom: "2px" }} /> 장바구니
-                  </Nav.Link>
-                </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link
+                        as={Link}
+                        to="/shop/cart"
+                        onClick={() => updateExpanded(false)}
+                      >
+                        <FiShoppingCart style={{ marginBottom: "2px" }} />{" "}
+                        장바구니
+                      </Nav.Link>
+                    </Nav.Item>
+                  </>
+                )}
 
+              
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
                     to="/camp"
                     onClick={() => updateExpanded(false)}
                   >
-                    <GiCampingTent style={{ marginBottom: "2px" }} /> 캠핑장 예약
+                    <GiCampingTent style={{ marginBottom: "2px" }} /> 캠핑장
+                    예약
                   </Nav.Link>
                 </Nav.Item>
+              
               </>
+            )}
+
+            {isLoggedIn && (
+              <Nav.Item>
+                <Nav.Link
+                  as={Link}
+                  to="/mypage"
+                  onClick={() => updateExpanded(false)}
+                >
+                  <LuUserCircle2 style={{ marginBottom: "2px" }} /> 마이페이지
+                </Nav.Link>
+              </Nav.Item>
             )}
 
             <Nav.Item>
