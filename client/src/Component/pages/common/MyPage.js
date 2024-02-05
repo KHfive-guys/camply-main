@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import { Container, Button, Form } from "react-bootstrap";
+import { Container, Button, Form, Modal } from "react-bootstrap";
 import CampNavbar from "../camp/CampNavbar";
+import bcrypt from "bcryptjs";
 
 function MyPage() {
   const [userData, setUserData] = useState({});
@@ -10,9 +11,8 @@ function MyPage() {
   const [deleting, setDeleting] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordVerified, setPasswordVerified] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-
-  
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
@@ -80,26 +80,46 @@ function MyPage() {
     setPassword(e.target.value);
   };
 
-  const handleVerifyPassword = () => {
-    const token = localStorage.getItem("yourTokenKey");
-    const payloadBase64 = token.split(".")[1];
-    const payload = JSON.parse(atob(payloadBase64));
-    const storedPassword = payload.USER_PASSWORD;
-  
-    if (password === storedPassword) {
-      setPasswordVerified(true);
-    } else {
-      alert("비밀번호가 일치하지 않습니다.");
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
+  const handleEdit = async () => {
+    handleCloseModal();
+    try {
+      const token = localStorage.getItem("yourTokenKey");
+      const USER_ID = parseUserIdFromToken(token);
+
+      const response = await axios.get(
+        `http://localhost:8080/api/user/get/${USER_ID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const storedPassword = response.data.USER_PASSWORD;
+      console.log("Entered Password:", password);
+      console.log("Stored Password:", storedPassword);
+
+      const passwordMatch = await bcrypt.compare(password, storedPassword);
+
+      if (passwordMatch) {
+        setPasswordVerified(true);
+        navigate("/mypage/edit");
+      } else {
+        alert("비밀번호가 일치하지 않습니다.");
+      }
+    } catch (error) {
+      console.error("Error during password verification:", error);
     }
   };
-  
+
   useEffect(() => {
     if (passwordVerified) {
       navigate("/mypage/edit");
     }
   }, [passwordVerified, navigate]);
-
-  
 
   if (loading) {
     return <p>Loading...</p>;
@@ -130,22 +150,38 @@ function MyPage() {
           </>
         )}
 
-        <Form.Group controlId="formPassword">
-          <Form.Label>비밀번호 확인</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </Form.Group>
-        <Button variant="primary" onClick={handleVerifyPassword}>
-          비밀번호 확인 후 수정
+        <Button variant="primary" onClick={handleShowModal}>
+          수정하기
         </Button>
 
         <button onClick={handleDeleteAccount} disabled={deleting}>
           {deleting ? "회원 탈퇴 중..." : "회원 탈퇴"}
         </button>
+
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>비밀번호 확인</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group controlId="formPasswordModal">
+              <Form.Label>비밀번호를 입력하세요</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              취소
+            </Button>
+            <Button variant="primary" onClick={handleEdit}>
+              확인
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </section>
   );
