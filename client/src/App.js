@@ -58,11 +58,11 @@ import campMainImg from "./Component/img/MainImg/메인페이지 이미지2.jpeg
 import OrderCart from "./Component/pages/shop/ShopOrder/Order/OrderCart";
 import MyPage from "./Component/pages/common/MyPage";
 import EditUser from "./Component/pages/common/EditUser"
-import CampSearchTent from "./Component/pages/camp/CampSearchTent";
-import CampSearchGlamping from "./Component/pages/camp/CampSearchGlamping";
-import CampSearchCaravan from "./Component/pages/camp/CampSearchCaravan";
-import CampSearchSite from "./Component/pages/camp/CampSearchSite";
-import CampSearchPension from "./Component/pages/camp/CampSearchPension";
+import CampSearchTent from "./Component/pages/camp/CampSearch/CampSearchTent";
+import CampSearchGlamping from "./Component/pages/camp/CampSearch/CampSearchGlamping";
+import CampSearchCaravan from "./Component/pages/camp/CampSearch/CampSearchCaravan";
+import CampSearchSite from "./Component/pages/camp/CampSearch/CampSearchSite";
+import CampSearchPension from "./Component/pages/camp/CampSearch/CampSearchPension";
 
 
 
@@ -185,7 +185,7 @@ function App() {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage/edit' element={<EditUser />} />
         <Route path='/camp/searchList' element={<CampSearch />} />
-        <Route path='/camp/searchList/camp' element={<CampSearchTent />} />
+        <Route path='/camp/searchList/tent' element={<CampSearchTent />} />
         <Route path='/camp/searchList/glamping' element={<CampSearchGlamping />} />
         <Route path='/camp/searchList/caravan' element={<CampSearchCaravan />} />
         <Route path='/camp/searchList/site' element={<CampSearchSite />} />
