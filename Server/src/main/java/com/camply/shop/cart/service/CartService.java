@@ -1,5 +1,7 @@
 package com.camply.shop.cart.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +23,10 @@ public class CartService {
 	// 장바구니 정보 저장
 	public void insertCart(CartVO cartVO) {
 		cartDao.insertCart(cartVO);
+	}
+	
+	//내 장바구니 정보 보기
+	public List<CartVO> getCart(Long userId){
+		return cartDao.getCart(userId);
 	}
 }

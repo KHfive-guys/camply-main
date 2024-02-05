@@ -1,5 +1,7 @@
 package com.camply.shop.cart.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.camply.shop.cart.vo.CartVO;
@@ -13,4 +15,7 @@ public interface CartDao {
 
 	// 장바구니 값 넣기
 	void insertCart(CartVO cartVO);
+
+	// 내 장바구니 리스트
+	List<CartVO> getCart(Long userId);
 }

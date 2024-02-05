@@ -48,9 +48,9 @@ public class ProductVO {
 	private String productContent;
 	private int productStock;
 	private LocalDate productCreateDate;
-	private int userId;
+	private Long userId;
 	private String productStatus;
-	private Long productCode;
+	private String productCode;
 	
 	 // 실제 숫자값에 대한 getter
     public int getProductPrice() {

@@ -1,5 +1,7 @@
 package com.camply.shop.cart.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,4 +41,16 @@ public class CartController {
 		cartService.insertCart(cartVO);
 		return ResponseEntity.ok("success");
 	}
+	
+	//내 장바구니 상품보기
+	@GetMapping("/mycart/{userId}")
+	public ResponseEntity<List<CartVO>> getCart(@PathVariable Long userId){
+		List<CartVO> cart = cartService.getCart(userId);
+		if(cart != null) {
+			return ResponseEntity.ok(cart);
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	
 }
