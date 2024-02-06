@@ -5,11 +5,20 @@ import axios from "axios";
 import { Link, useNavigate, useParams,useLocation } from "react-router-dom"; // useParams 추가
 import "../../css/ShopDetail/ShopInquiry/ShopInquiry.css";
 import InquiryDetail from "./InquiryDetail";
+import {Button} from '@mui/material';
+import { FaCheck } from "react-icons/fa";
+
+
 
 const ShopInquiry = () => {
   const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
   const { productId } = useParams(); // URL 파라미터에서 productId 추출
+
+
+  
+
+
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -59,9 +68,9 @@ const ShopInquiry = () => {
             </li>
           ))}
           <div className='inquiry-btn'>
-          <button type='button' onClick={handleWriteClick}>
-            작성하기
-          </button>
+          <Button type='button' variant="contained" color="success" onClick={handleWriteClick}>
+            작성하기 <FaCheck/>
+          </Button>
         </div>
         </ul>
       </section>

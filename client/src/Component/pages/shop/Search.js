@@ -56,9 +56,10 @@ const Search = () => {
     {/* 여기서 검색 결과를 표시하거나 활용할 수 있습니다. */}
     <div style={{display:'flex', justifyContent:'center'}} className='searchResult'>
       {searchResults.length > 0 && (
-        
         <ul className='swiper-wrapper'>
-          <h2 style={{paddingBottom:'30px', marginBottom:'50px'}}>검색결과{searchResults.length}</h2>
+          <div>
+          <h2 style={{paddingBottom:'30px'}}>검색결과:<span style={{color:'red'}}>{searchResults.length}</span></h2>
+          </div>
           {searchResults.map((product) => (
             <li className='swiper-slide swiper-slide-active' style={{
               width: "272.5px",
