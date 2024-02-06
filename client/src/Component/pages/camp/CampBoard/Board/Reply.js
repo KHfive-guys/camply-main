@@ -8,7 +8,7 @@ function ReplyComponent() {
   const [userId, setUserId] = useState("");
   const [newReply, setNewReply] = useState({
     user_id: "",
-    camp_rating: 0,
+    camp_rating: 5,
     camp_review: "",
   });
   const { camp_id } = useParams();
@@ -31,7 +31,7 @@ function ReplyComponent() {
         setReplyData((prevReplies) => [...prevReplies, response.data]);
         setNewReply({
           user_id: "",
-          camp_rating: 0,
+          camp_rating: 5,
           camp_review: "",
         });
       })
@@ -43,6 +43,7 @@ function ReplyComponent() {
           .get(`http://localhost:8080/board/reply/${camp_id}`)
           .then((response) => {
             setReplyData(response.data);
+            window.location.reload();
           })
           .catch((error) => {
             console.error("리뷰 목록 가져오기 실패:", error);
