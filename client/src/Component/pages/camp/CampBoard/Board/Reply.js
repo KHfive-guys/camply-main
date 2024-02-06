@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 function ReplyComponent() {
   const [replyData, setReplyData] = useState([]);
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState("");
   const [newReply, setNewReply] = useState({
-    user_id: '',
+    user_id: "",
     camp_rating: 5,
-    camp_review: '',
+    camp_review: "",
   });
   const { camp_id } = useParams();
 
@@ -20,7 +20,7 @@ function ReplyComponent() {
         setReplyData(response.data);
       })
       .catch((error) => {
-        console.error('리뷰 목록 가져오기 실패:', error);
+        console.error("리뷰 목록 가져오기 실패:", error);
       });
   }, [camp_id]);
 
@@ -30,13 +30,13 @@ function ReplyComponent() {
       .then((response) => {
         setReplyData((prevReplies) => [...prevReplies, response.data]);
         setNewReply({
-          user_id: '',
+          user_id: "",
           camp_rating: 5,
-          camp_review: '',
+          camp_review: "",
         });
       })
       .catch((error) => {
-        console.error('리뷰 추가 실패:', error);
+        console.error("리뷰 추가 실패:", error);
       })
       .finally(() => {
         axios
@@ -46,7 +46,7 @@ function ReplyComponent() {
             window.location.reload();
           })
           .catch((error) => {
-            console.error('리뷰 목록 가져오기 실패:', error);
+            console.error("리뷰 목록 가져오기 실패:", error);
           });
       });
   };
@@ -59,10 +59,10 @@ function ReplyComponent() {
     axios
       .put(`http://localhost:8080/board/reply/update`, selectedReply)
       .then(() => {
-        console.log('리뷰 수정 성공');
+        console.log("리뷰 수정 성공");
       })
       .catch((error) => {
-        console.error('리뷰 수정 실패:', error);
+        console.error("리뷰 수정 실패:", error);
       });
   };
 
@@ -73,20 +73,20 @@ function ReplyComponent() {
         setReplyData((prevReplies) =>
           prevReplies.filter((reply) => reply.camp_reviewnumber !== replyId)
         );
-        console.log('Reply deleted successfully');
+        console.log("Reply deleted successfully");
       })
       .catch((error) => {
-        console.error('Failed to delete reply:', error);
+        console.error("Failed to delete reply:", error);
       });
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('yourTokenKey');
+    const token = localStorage.getItem("yourTokenKey");
 
     const parseJwt = (token) => {
       try {
         return JSON.parse(
-          decodeURIComponent(escape(atob(token.split('.')[1])))
+          decodeURIComponent(escape(atob(token.split(".")[1])))
         );
       } catch (e) {
         return null;
@@ -104,15 +104,15 @@ function ReplyComponent() {
     if (token) {
       try {
         const decodedToken = parseJwt(token);
-        console.log('Decoded Token:', decodedToken);
+        console.log("Decoded Token:", decodedToken);
 
-        setUserId(decodedToken.user_id || '');
+        setUserId(decodedToken.user_id || "");
         setNewReply((prevNewBoard) => ({
           ...prevNewBoard,
-          user_id: decodedToken.user_id || '',
+          user_id: decodedToken.user_id || "",
         }));
       } catch (error) {
-        console.error('Error decoding token:', error);
+        console.error("Error decoding token:", error);
       }
     }
   }, []);
@@ -122,7 +122,7 @@ function ReplyComponent() {
       <h1>리뷰</h1>
       <div>
         <label>User ID:</label>
-        <input type="text" value={userId || ''} readOnly />
+        <input type="text" value={userId || ""} readOnly />
 
         <label>평점:</label>
         <input

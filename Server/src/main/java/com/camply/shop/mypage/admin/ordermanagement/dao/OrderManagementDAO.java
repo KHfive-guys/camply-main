@@ -1,4 +1,4 @@
-package com.camply.shop.mypage.ordermanagement.dao;
+package com.camply.shop.mypage.admin.ordermanagement.dao;
 
 import java.util.List;
 

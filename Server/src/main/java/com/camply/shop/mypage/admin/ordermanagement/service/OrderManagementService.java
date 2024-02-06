@@ -1,4 +1,4 @@
-package com.camply.shop.mypage.ordermanagement.service;
+package com.camply.shop.mypage.admin.ordermanagement.service;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.camply.shop.common.vo.OrderVO;
-import com.camply.shop.mypage.ordermanagement.dao.OrderManagementDAO;
+import com.camply.shop.mypage.admin.ordermanagement.dao.OrderManagementDAO;
 
 @Service
 public class OrderManagementService {

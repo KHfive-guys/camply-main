@@ -1,4 +1,4 @@
-package com.camply.shop.mypage.ordermanagement.controller;
+package com.camply.shop.mypage.admin.ordermanagement.controller;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.camply.shop.common.vo.OrderVO;
-import com.camply.shop.mypage.ordermanagement.service.OrderManagementService;
+import com.camply.shop.mypage.admin.ordermanagement.service.OrderManagementService;
 
 @RestController
 @RequestMapping("/shop/mypage")
