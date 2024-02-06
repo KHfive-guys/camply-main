@@ -4,13 +4,19 @@ import { Routes,Route,Link } from "react-router-dom"; // Link 추가
 import '../shop/css/ShopMain.css';
 import ShopDetail from "./ShopDetail/ShopDetail";
 import Pagination from "react-js-pagination";
-import '@mui/material/Pagination/Pagination';
+
 
 const Main = () => {
   const [products, setProducts] = useState([]);
-  const [productIds] = useState([111,99,113,115,103,105,107]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const [productIds] = useState([
+    190,
+    182,
+    186,
+    188,
+    184,
+  ]);
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 1부터 시작
+  const itemsPerPage = 3;
 
 
   useEffect(() => {
@@ -31,7 +37,8 @@ const Main = () => {
     };
 
     fetchData();
-  }, [productIds]);
+  }, [productIds, currentPage]);
+
   
 
 
@@ -82,15 +89,15 @@ const Main = () => {
         <p>상품을 찾을 수 없습니다.</p>
       )}
     </div>
-      <div style={{display:'flex',justifyContent:'center', marginTop:'50px'}}>
+    <div className="pagination" style={{display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
         <Pagination
-                activePage={currentPage}
-                itemsCountPerPage={itemsPerPage}
-                totalItemsCount={productIds.length}
-                pageRangeDisplayed={2}
-                onChange={(pageNumber) => setCurrentPage(pageNumber)}
-              />
-      </div>      
+          activePage={currentPage}
+          itemsCountPerPage={itemsPerPage}
+          totalItemsCount={productIds.length}
+          pageRangeDisplayed={2}
+          onChange={(pageNumber) => setCurrentPage(pageNumber)}
+        />
+      </div>     
   </div>
   
   );
