@@ -93,6 +93,41 @@ function EditUser() {
       });
   };
 
+  const [map, setMap] = useState({});
+  const [marker, setMarker] = useState(null);
+
+  useEffect(() => {
+    const initializeMap = () => {
+      window.kakao.maps.load(() => {
+        const container = document.getElementById("map");
+        const options = {
+          center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+          level: 3,
+        };
+        setMap(new window.kakao.maps.Map(container, options));
+        setMarker(new window.kakao.maps.Marker());
+      });
+    };
+
+    return () => {
+      window.onload = null;
+    };
+  }, []);
+
+  const onClickAddr = () => {
+    new window.daum.Postcode({
+      oncomplete: function (addrData) {
+        var geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.addressSearch(addrData.address, function (result, status) {
+          setFormValues({
+            ...formValues,
+            USER_ADDRESS: addrData.address,
+          });
+        });
+      },
+    }).open();
+  };
+
   return (
     <section>
       <CampNavbar />
@@ -151,6 +186,7 @@ function EditUser() {
                   placeholder="주소를 입력해주세요"
                   name="USER_ADDRESS"
                   value={formValues.USER_ADDRESS}
+                  onClick={onClickAddr}
                   onChange={handleInputChange}
                 />
               </Form.Group>
@@ -176,6 +212,7 @@ function EditUser() {
                     placeholder="사업자 주소를 입력해주세요"
                     name="USER_BUSINESSADDRESS"
                     value={formValues.USER_BUSINESSADDRESS}
+                    onClick={onClickAddr}
                     onChange={handleInputChange}
                   />
                 </Form.Group>
