@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import '../../shop/css/ShopMain.css';
 import Pagination from "react-js-pagination";
 
-
 const Tent = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,8 +14,8 @@ const Tent = () => {
       try {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
-        const response = await axios.get("http://localhost:8080/shop/category/main/tent");
-        setProducts(response.data);
+        const response = await axios.get(`http://localhost:8080/shop/category/main/tent`);
+        setProducts(response.data.slice(startIndex, endIndex));
       } catch (error) {
         console.error("상품을 불러오는 중 에러 발생", error);
       }

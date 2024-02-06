@@ -7,6 +7,7 @@ import Sleeping from './Category/Sleeping';
 import BBQ from './Category/BBQ';
 import Kitchen from './Category/Kitchen';
 import Lamp from './Category/Lamp';
+import CategoryList from './CategoryList';
 
 const ShopMain = () => 
 {
@@ -30,14 +31,7 @@ const ShopMain = () =>
       </div>
       <div>
         <Main/>
-        
-        <h2 style={{marginBottom:'70px', marginTop:'50px', textAlign:'center'}}>카테고리별 상품</h2>
-        <Tent/>
-        <Sleeping/>
-        <Lamp/>
-        <BBQ/>
-        <Table/>
-        <Kitchen/>
+        <CategoryList/>
       </div>
     </div>
   );
