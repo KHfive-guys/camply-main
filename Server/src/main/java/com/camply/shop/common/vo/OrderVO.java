@@ -42,8 +42,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderVO {
-	private int orderId;
-	private int userId;
+	private int orderNo;
+	private Long userId;
 	private String orderOrdererName;
 	private String orderOrderEmail;
 	private String orderOrderPhone;
@@ -53,12 +53,11 @@ public class OrderVO {
 	private String orderReceiverPhone;
 	private String orderReceiverMessage;
 	private String orderReceiverDeleveryMsg;
-	private String orderProductImg;
-	private String orderProductName;
+	private String productThumbnail;
+	private String productName;
 	private int orderProductAmount;
-	private int orderProductQuantity;
 	private LocalDateTime orderDate;
-	private int orderProductPrice;
+	private int productPrice;
 	private String orderStatus;
 	private int productId;
 
