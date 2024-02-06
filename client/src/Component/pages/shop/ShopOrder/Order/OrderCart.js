@@ -207,6 +207,7 @@ const OrderCart = () => {
                 orderProductPrice: product.productPrice || 0,
                 productThumbnail: product.productThumbnail || '',
                 orderProductName: product.productName || '',
+                 
 
             };
             console.log('orderData:', orderData);
