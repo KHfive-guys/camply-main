@@ -8,18 +8,12 @@ import {
   Link,
 } from "react-router-dom";
 
-import ShopMain from "./Component/pages/shop/ShopMain";
-import ShopMyPage from "./Component/pages/shop/ShopMyPage/ShopMyPage";
 import Register from "./Component/pages/common/Register";
 import GeneralRegister from "./Component/pages/common/GeneralRegister";
 import ManagerRegister from "./Component/pages/common/ManagerRegister";
 import GeneralEmailRegister from "./Component/pages/common/GeneralEmailRegister";
 import ManagerEmailRegister from "./Component/pages/common/ManagerEmailRegister";
 import Login from "./Component/pages/common/Login";
-import CampBoard from "./Component/pages/camp/CampBoard/CampBoard";
-import CampBoardAll from "./Component/pages/camp/CampBoard/CampBoardAll";
-import CampBoardDetail from "./Component/pages/camp/CampBoard/CampBoardDetail";
-import CampBoardUpdate from "./Component/pages/camp/CampBoard/CampBoardUpdate";
 import Preloader from "./Pre";
 import Navbar from "./Component/pages/camp/CampNavbar";
 import CampSearch from "./Component/pages/camp/CampSearch/CampSearch";
@@ -32,6 +26,8 @@ import "./Component/pages/camp/CampStyle.css";
 import "./CampApp.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "./Component/pages/camp/CampFooter";
+import ShopMain from "./Component/pages/shop/ShopMain";
+import ShopMyPage from "./Component/pages/shop/ShopMyPage/ShopMyPage";
 import ShopLayout from "./Component/pages/shop/ShopLayout";
 import Tent from "./Component/pages/shop/Category/Tent";
 import Sleeping from "./Component/pages/shop/Category/Sleeping";
@@ -54,12 +50,15 @@ import InquiryUpdate from "./Component/pages/shop/ShopDetail/ShopInquiry/Inquiry
 import InquiryWriter from "./Component/pages/shop/ShopDetail/ShopInquiry/InquiryWriter";
 import ReviewWriter from "./Component/pages/shop/ShopDetail/ShopReview/ReviewWriter";
 import ShopCart from "./Component/pages/shop/ShopCart";
-import campMainImg from "./Component/img/MainImg/메인페이지 이미지2.jpeg";
 import OrderCart from "./Component/pages/shop/ShopOrder/Order/OrderCart";
 import MyPage from "./Component/pages/common/MyPage";
 import EditUser from "./Component/pages/common/EditUser"
+import campMainImg from "./Component/img/MainImg/메인페이지 이미지2.jpeg";
+import CampBoard from "./Component/pages/camp/CampBoard/CampBoard";
+import CampBoardAll from "./Component/pages/camp/CampBoard/CampBoardAll";
+import CampBoardDetail from "./Component/pages/camp/CampBoard/CampBoardDetail";
+import CampBoardUpdate from "./Component/pages/camp/CampBoard/CampBoardUpdate";
 import CampReserve from "./Component/pages/camp/CampReserve/CampReserve";
-
 import CampBoardTent from "./Component/pages/camp/CampBoard/CampBoardTent";
 import CampBoardCaravan from "./Component/pages/camp/CampBoard/CampBoardCaravan";
 import CampBoardGlamping from "./Component/pages/camp/CampBoard/CampBoardGlamping";
