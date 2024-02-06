@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import '../css/ShopSell/CreateProduct.css';
 
 const initialProductState = {
-  userId: '', //로그인 된 userId 값 받아오기
   productName: '',
   productDescription: '',
   productPrice: '',
@@ -16,7 +15,7 @@ const initialProductState = {
   productMain3: '',
   productContent: '',
   productStock: '',
-  productCreateDate: '',
+  productCreateDate: new Date().toISOString().split('T')[0], // 오늘 날짜로 기본 설정
   productStatus: '판매중',
   productCode: '',
 };
@@ -24,6 +23,49 @@ const initialProductState = {
 const CreateProduct = () => {
   const [product, setProduct] = useState({ ...initialProductState });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // 컴포넌트 마운트 시 상품 코드 생성 로직을 실행
+    generateProductCode();
+  }, [product.productCategory]); // 카테고리가 변경될 때마다 상품 코드를 재생성
+
+  const generateProductCode = async () => {
+    // localStorage에서 사용자 ID를 가져옵니다.
+    const userId = localStorage.getItem('userId'); // 사용자 ID를 로컬 스토리지에서 가져옴
+    const token = localStorage.getItem('yourTokenKey');
+
+    if (!token || !userId) {
+      console.error('Token or UserID is not available');
+      return;
+    }
+
+    try {
+      // 백엔드에서 사용자별 상품 등록 수를 조회하는 요청
+      const response = await axios.get(
+        'http://localhost:8080/shop/mypage/getUserProductCount',
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const productCount = response.data + 1; // 다음 등록될 상품의 순번
+
+      const categoryCode = product.productCategory
+        .substring(0, 3)
+        .toUpperCase();
+      const date = new Date().toISOString().split('T')[0].replace(/-/g, '');
+
+      // 상품 코드 설정
+      const newProductCode = `${categoryCode}${date}${userId}${String(
+        productCount
+      ).padStart(5, '0')}`;
+      setProduct((prevProduct) => ({
+        ...prevProduct,
+        productCode: newProductCode,
+      }));
+    } catch (error) {
+      console.error('Error generating product code:', error);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,11 +79,16 @@ const CreateProduct = () => {
       // Spring Boot 애플리케이션의 API 엔드포인트에 데이터 전송
       const response = await axios.post(
         'http://localhost:8080/shop/mypage/productAdd',
-        product
+        product,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('yourTokenKey')}`,
+          },
+        }
       );
       console.log(response.data);
       alert('상품이 성공적으로 등록되었습니다.');
-      navigate('/sell/list');
+      navigate('/seller/list');
     } catch (error) {
       console.error('Error registering product:', error);
       alert('상품 등록에 실패했습니다.');
@@ -49,18 +96,8 @@ const CreateProduct = () => {
   };
 
   return (
-    <div>
+    <div className="create-update-Product">
       <h2>상품등록</h2>
-      <div className="form-group">
-        <label htmlFor="userId">판매자: </label>
-        <input
-          type="text"
-          name="userId"
-          onChange={handleInputChange}
-          value={product.userId}
-          className="form-control"
-        />
-      </div>
 
       <div className="form-group">
         <label htmlFor="productCode">상품코드: </label>
@@ -69,6 +106,8 @@ const CreateProduct = () => {
           name="productCode"
           onChange={handleInputChange}
           value={product.productCode}
+          readOnly
+          placeholder="등록 시 자동생성"
           className="form-control"
         />
       </div>
@@ -115,12 +154,12 @@ const CreateProduct = () => {
             value={product.productCategory}
             className="form-control"
           >
-            <option value="tent">텐트(10)</option>
-            <option value="sleepingbag">침낭(20)</option>
-            <option value="lamp">램프(30)</option>
-            <option value="fireplace">화로BBQ(40)</option>
-            <option value="chair">의자(50)</option>
-            <option value="kitchen">키친(60)</option>
+            <option value="tent">tent</option>
+            <option value="sleepingbag">sleepingbag</option>
+            <option value="lamp">lamp</option>
+            <option value="fireplace">fireplace</option>
+            <option value="chair">chair</option>
+            <option value="kitchen">kitchen</option>
           </select>
           <div className="dropdown-icon">&#9660;</div>
         </div>
@@ -188,6 +227,7 @@ const CreateProduct = () => {
           name="productCreateDate"
           onChange={handleInputChange}
           value={product.productCreateDate}
+          readOnly
           className="form-control"
         />
       </div>

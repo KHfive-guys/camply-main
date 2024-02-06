@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import '../../../../App.css';
+import '../css/ShopSell/CreateProduct.css';
+
 const UpdateProduct = () => {
   const navigate = useNavigate();
   const { productId } = useParams(); // URL에서 productId를 추출
   const [product, setProduct] = useState(null); // 초기 상태를 null로 설정
+  const [originalProduct, setOriginalProduct] = useState(null); // 원본 상품 데이터 상태
+
+  // 토큰을 로컬 스토리지에서 가져옵니다.
+  const token = localStorage.getItem('yourTokenKey');
 
   //수정할 페이지 불러옴
   useEffect(() => {
@@ -16,16 +21,23 @@ const UpdateProduct = () => {
       }
       try {
         const response = await axios.get(
-          `http://localhost:8080/shop/mypage/product/${productId}`
+          `http://localhost:8080/shop/mypage/product/${productId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
+            },
+          }
         );
-        setProduct(response.data); // 응답 데이터로 상태를 업데이트
+        console.log('Fetched product data:', response.data); // 데이터 로깅
+        setOriginalProduct(response.data); // 원본 데이터 상태 설정
+        setProduct(response.data); // 수정 가능한 데이터 상태 설정
       } catch (error) {
         console.error('Error fetching product data:', error);
       }
     };
 
     fetchProduct();
-  }, [productId]); // 의존성 배열에 productId를 추가하여 productId가 변경될 때마다 함수를 실행
+  }, [productId, token]); // 의존성 배열에 productId와 token을 추가하여 해당 값들이 변경될 때마다 함수를 실행
 
   // 입력 필드의 변경을 처리하는 함수
   const handleInputChange = (event) => {
@@ -33,13 +45,28 @@ const UpdateProduct = () => {
     setProduct({ ...product, [name]: value });
   };
 
+  //변경사항이 없을 경우 처리하는 함수
+  const hasChanges = () => {
+    return JSON.stringify(product) !== JSON.stringify(originalProduct);
+  };
   // 폼 제출을 처리하는 함수
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!hasChanges()) {
+      alert('변경된 사항이 없습니다.');
+      return; // 변경사항이 없으므로 여기서 함수 실행을 종료
+    }
+
     try {
       await axios.put(
         `http://localhost:8080/shop/mypage/product/edit/${productId}`,
-        product
+        product,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
+          },
+        }
       );
       alert('상품이 성공적으로 수정되었습니다.');
       navigate('/seller/list');
@@ -59,20 +86,10 @@ const UpdateProduct = () => {
   }
 
   return (
-    <div>
+    <div className="create-update-Product">
       <h2>상품수정</h2>
       <form onSubmit={handleSubmit}>
-        {/* 각 필드를 입력할 수 있는 입력 요소를 생성합니다. */}
-        <div className="form-group">
-          <label htmlFor="userId">판매자: </label>
-          <input
-            type="text"
-            name="userId"
-            value={product.userId || ''}
-            onChange={handleInputChange}
-            className="form-control"
-          />
-        </div>
+        {/* 각 필드를 입력할 수 있는 입력 요소를 생성 */}
 
         {/* 상품코드 입력 필드 */}
         <div className="form-group">
@@ -82,6 +99,7 @@ const UpdateProduct = () => {
             name="productCode"
             value={product.productCode || ''}
             onChange={handleInputChange}
+            readOnly
             className="form-control"
           />
         </div>
@@ -130,14 +148,15 @@ const UpdateProduct = () => {
               name="productCategory"
               onChange={handleInputChange}
               value={product.productCategory || ''}
+              readOnly
               className="form-control"
             >
-              <option value="tent">텐트(10)</option>
-              <option value="sleepingbag">침낭(20)</option>
-              <option value="lamp">램프(30)</option>
-              <option value="fireplace">화로BBQ(40)</option>
-              <option value="chair">의자(50)</option>
-              <option value="kitchen">키친(60)</option>
+              <option value="tent">tent</option>
+              <option value="sleepingbag">sleepingbag</option>
+              <option value="lamp">lamp</option>
+              <option value="fireplace">fireplace</option>
+              <option value="chair">chair</option>
+              <option value="kitchen">kitchen</option>
             </select>
             <div className="dropdown-icon">&#9660;</div>
           </div>
@@ -227,7 +246,7 @@ const UpdateProduct = () => {
             >
               <option value="판매중">판매중</option>
               <option value="판매중지">판매중지</option>
-              <option value="판매종료">품절</option>
+              <option value="품절">품절</option>
             </select>
             <div className="dropdown-icon">&#9660;</div>
           </div>

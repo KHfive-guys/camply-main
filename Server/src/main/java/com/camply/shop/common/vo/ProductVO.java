@@ -35,7 +35,7 @@ PRODUCT_CODE	NUMBER
 @AllArgsConstructor
 public class ProductVO {
 	
-	private int productId;
+	private Long productId;
 	private String productName;
 	private String productDescription;
 	private int productPrice;
