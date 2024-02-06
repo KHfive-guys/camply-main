@@ -6,17 +6,23 @@ import ShopDetail from "./ShopDetail/ShopDetail";
 import Pagination from "react-js-pagination";
 
 
+
 const Main = () => {
   const [products, setProducts] = useState([]);
   const [productIds] = useState([
+    196,
     190,
     182,
     186,
+    192,
+    194,
+    200,
     188,
+    198,
     184,
   ]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 1부터 시작
-  const itemsPerPage = 3;
+  const itemsPerPage = 5;
 
 
   useEffect(() => {

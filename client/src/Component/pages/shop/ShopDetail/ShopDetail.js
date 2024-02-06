@@ -128,15 +128,21 @@ const ShopDetail = () => {
                     </div>
                   </div>
                   <ul className='right-section-ul'>
-                    <li className='right-section-li'>
+
+                  <li className='right-section-li'>
                       <dt className='right-section-dt'>배송</dt>
+                      <dd className='right-section-dd'>
+                        <p className='right-section-dd-p'>무료</p>
+                      </dd>
                     </li>
+
                     <li className='right-section-li'>
                       <dt className='right-section-dt'>판매자</dt>
                       <dd className='right-section-dd'>
                         <p className='right-section-dd-p'>{product.userId}</p>
                       </dd>
                     </li>
+
                     <li className='right-section-li'>
                       <dt className='right-section-dt'>판매단위</dt>
                       <dd className='right-section-dd'>
@@ -148,20 +154,14 @@ const ShopDetail = () => {
                         onClick={handleDecreaseQuantity}
                         className='right-section-article-img'
                       >
-                        <img
-                          src='https://choar816.github.io/open-market/73ef1e8c52aa8aab95e50eec7036f567.svg'
-                          alt='수량 증가'
-                        />
+                        
                       </button>
                       <div>{quantity}</div>
                       <button
                         onClick={handleIncreaseQuantity}
                         className='right-section-article-img2'
                       >
-                        <img
-                          src='https://choar816.github.io/open-market/d658909c1751cb655de642c07d7e90da.svg'
-                          alt='수량 감소'
-                        />
+                       
                       </button>
                     </article>
 
@@ -169,11 +169,11 @@ const ShopDetail = () => {
                       <div className='right-section-footer-div3-div'>
                         <div className='right-section-footer-div3-div-div1'>
                           <span className='right-section-footer-div3-span'>
-                            총 상품금액:{" "}
-                            {new Intl.NumberFormat("ko-KR", {
-                              style: "currency",
-                              currency: "KRW",
-                            }).format(quantity * product.productPrice)}
+                              총 상품금액:{" "}
+                              {new Intl.NumberFormat("ko-KR", {
+                                style: "currency",
+                                currency: "KRW",
+                              }).format(quantity * product.productPrice)}
                           </span>
                         </div>
                         <div className='right-section-footer-div3-div2'>

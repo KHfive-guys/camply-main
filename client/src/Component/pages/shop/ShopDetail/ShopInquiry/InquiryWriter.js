@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate, useParams,useLocation } from "react-router-dom"; 
+import { Link, useNavigate, useParams,useLocation } from "react-router-dom";
+import {Button} from '@mui/material';
+import '../../css/ShopDetail/ShopInquiry/InquriyWriter.css';
+import Nav from '../../../camp/CampNavbar';
+import { FaCheck } from "react-icons/fa";
+import { IoIosArrowBack } from "react-icons/io";
 
 const QuestionPost = () => {
   const [questionData, setQuestionData] = useState({
@@ -27,6 +32,11 @@ const QuestionPost = () => {
           [name]: value,
       });
   };
+
+
+    const handleback = () => {
+      navigate(-1);
+    }
 
     // 문의글 작성 핸들러
     const handleSubmit = async (e) => {
@@ -57,28 +67,52 @@ const QuestionPost = () => {
   };
 
     return (
+      <>
+      <Nav/>
       <form onSubmit={handleSubmit}>
+        <h2 style={{textAlign:'center',marginTop:'60px'}}>상품문의</h2>
           {/* productId 필드는 hidden 유형으로 변경 */}
-          <input
+          
+          <input 
               type="hidden"
               name="productId"
               value={questionData.productId}
           />
-          <input
-              type="text"
-              name="questionTitle"
-              placeholder="문의 제목"
-              value={questionData.questionTitle}
-              onChange={handleChange}
-          />
+          <div className="writer-container">
+          <div className="inquiry-title">
+            
+            제목
+            <br/>
+            <input
+                type="text"
+                name="questionTitle"
+                placeholder="제목"
+                value={questionData.questionTitle}
+                onChange={handleChange}
+            />
+          </div>
+          <br/>
+          
+          <div className="inquiry-content">
+          
+            내용
+            <br/>
           <textarea
               name="questionText"
-              placeholder="문의 내용"
+              placeholder=" 내용"
               value={questionData.questionText}
               onChange={handleChange}
           />
-          <button type="submit">문의글 작성</button>
+          </div>
+            <div className="writer-btn">
+                <Button color="success" variant="contained" type="submit">작성하기 <FaCheck/></Button>
+                <Button variant="outlined" color="error" onClick={handleback}>
+                <IoIosArrowBack/> 목록보기
+                </Button>
+            </div> 
+      </div>      
       </form>
+      </>
   );
 };
 

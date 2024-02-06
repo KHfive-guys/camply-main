@@ -7,6 +7,10 @@ const CategoryList = () => {
   const [categoryProducts, setCategoryProducts] = useState({});
   const [productCategorys] = useState(["tent", "kitchen", "fireplace","lamp","sleepingbag","chair"]);
 
+  
+
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,7 +36,7 @@ const CategoryList = () => {
   return (
     <div className='category-item' style={{ display: 'flex', justifyContent: 'center' }}>
       <section>
-        <h2 style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '50px' }}>카테고리별 상품목록</h2>
+        <h2 style={{ display: 'flex', justifyContent: 'center'}}>카테고리별 상품목록</h2>
         {Object.keys(categoryProducts).map((category) => (
           <div key={category}>
            
