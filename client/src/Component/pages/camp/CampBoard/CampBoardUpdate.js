@@ -104,6 +104,41 @@ function UpdateBoard() {
     navigate(`/camp/board/get/${camp_id}`);
   };
 
+  const [map, setMap] = useState({});
+  const [marker, setMarker] = useState(null);
+
+  useEffect(() => {
+    const initializeMap = () => {
+      window.kakao.maps.load(() => {
+        const container = document.getElementById("map");
+        const options = {
+          center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+          level: 3,
+        };
+        setMap(new window.kakao.maps.Map(container, options));
+        setMarker(new window.kakao.maps.Marker());
+      });
+    };
+
+    return () => {
+      window.onload = null;
+    };
+  }, []);
+
+  const onClickAddr = () => {
+    new window.daum.Postcode({
+      oncomplete: function (addrData) {
+        var geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.addressSearch(addrData.address, function (result, status) {
+          setBoardData({
+            ...boardData,
+            camp_address: addrData.address,
+          });
+        });
+      },
+    }).open();
+  };
+
 
   return (
     <section>
@@ -304,9 +339,9 @@ function UpdateBoard() {
               <th className="table-primary">캠핑장 주소</th>
               <td>
                 <input
-                  type="text"
                   className="form-control"
                   value={boardData.camp_address || ""}
+                  onClick={onClickAddr}
                   onChange={(e) =>
                     setBoardData({ ...boardData, camp_address: e.target.value })
                   }
