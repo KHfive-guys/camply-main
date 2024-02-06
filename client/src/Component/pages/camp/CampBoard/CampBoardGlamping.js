@@ -76,7 +76,7 @@ function CampBoardTent() {
         <Container className="home-content"></Container>
       </Container>
 
-      <h1>Camp Board - Tent</h1>
+      <h1>Camp Board - Glamping</h1>
       <table>
         <thead>
           <tr>
