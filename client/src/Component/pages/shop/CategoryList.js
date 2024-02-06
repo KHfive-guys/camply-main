@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../shop/css/ShopMain.css';
 import { Link } from 'react-router-dom';
+import { Carousel } from 'bootstrap';
+
 
 const CategoryList = () => {
   const [categoryProducts, setCategoryProducts] = useState({});
   const [productCategorys] = useState(["tent", "kitchen", "fireplace","lamp","sleepingbag","chair"]);
+
 
   
 
@@ -36,11 +39,11 @@ const CategoryList = () => {
   return (
     <div className='category-item' style={{ display: 'flex', justifyContent: 'center' }}>
       <section>
-        <h2 style={{ display: 'flex', justifyContent: 'center'}}>카테고리별 상품목록</h2>
+        <h2 style={{ display: 'flex', justifyContent: 'flex-start'}}>카테고리별 상품목록</h2>
         {Object.keys(categoryProducts).map((category) => (
           <div key={category}>
            
-            <ul className='swiper-wrapper1'>
+            <ul className='swiper-wrapper'>
             <h2 style={{marginRight:'50px',textAlign:'match-parent'}}>{category}</h2>
               {categoryProducts[category].map((product) => (
                 <li
@@ -51,7 +54,6 @@ const CategoryList = () => {
                     marginRight: '30px',
                   }}
                 >
-                  
                   <Link to={`/shop/detail/${product.productId}`}>
                     <div className='imgWrap'>
                       <img src={product.productThumbnail} className='imgs' alt={product.productName} />
@@ -76,6 +78,7 @@ const CategoryList = () => {
           </div>
         ))}
       </section>
+     
     </div>
   );
 };

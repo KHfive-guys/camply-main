@@ -63,7 +63,6 @@ const Main = () => {
                   <li className='swiper-slide swiper-slide-active' style={{
                     width: "272.5px",
                     marginright: "30px",
-                    
                   }}>
                     <div className='imgWrap'>
                       
