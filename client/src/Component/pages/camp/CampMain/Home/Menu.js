@@ -14,27 +14,27 @@ function Menu() {
 
   const campingLinks = [
     {
-      href: "/camp/searchList/tent",
+      href: "/camp/board/tent",
       icon: <FaCampground />,
       text: "텐트",
     },
     {
-      href: "/camp/searchList/glamping",
+      href: "/camp/board/glamping",
       icon: <GiHabitatDome />,
       text: "글램핑",
     },
     {
-      href: "/camp/searchList/caravan",
+      href: "/camp/board/caravan",
       icon: <TbCaravan />,
       text: "카라반",
     },
     {
-      href: "/camp/searchList/site",
+      href: "/camp/board/site",
       icon: <TbCampfire />,
       text: "야영장",
     },
     {
-      href: "/camp/searchList/pension",
+      href: "/camp/board/pension",
       icon: <GiWoodCabin />,
       text: "펜션",
     },
@@ -60,6 +60,7 @@ function Menu() {
                 <Col md={10} key={index} className="social-icons">
                   <Card
                     className="border-0 text-center"
+                    href="/camp/searchList"
                     style={{
                       borderRadius: "15px",
                       padding: "10px",
@@ -69,7 +70,7 @@ function Menu() {
                   >
                     <Card.Body>
                       <Card.Link
-                        onClick={() => navigate(searchItem.href)}
+                        href="/camp/searchList"
                         className="icon-colour home-social-icons"
                       >
                         {searchItem.icon}

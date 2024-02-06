@@ -13,6 +13,7 @@ public interface BoardDAO {
 
 	void insertBoard(BoardVO board);
 	List<BoardVO> getAllBoard();
+	List<BoardVO> getBoardCategory(String camp_select);
 	BoardVO getBoardById(Long campId);
 	void deleteBoardById(Long campId);
 	void updateBoardById(BoardVO board);

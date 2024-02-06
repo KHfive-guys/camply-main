@@ -3,15 +3,7 @@ package com.camply.camp.board.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.camply.camp.board.service.BoardService;
@@ -43,6 +35,13 @@ public class BoardController {
 		}
 		
 	}
+
+	@GetMapping("/{camp_select}")
+	public List<BoardVO> getBoardCategory(@PathVariable String camp_select) {
+		// The camp_select variable will now correctly capture the value from the URL path
+		return boardService.getBoardCategory(camp_select);
+	}
+
 
 	@GetMapping("/get/{camp_id}")
 	public ResponseEntity<?> getBoardById(@PathVariable Long camp_id) {
