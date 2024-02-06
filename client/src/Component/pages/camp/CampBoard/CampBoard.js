@@ -165,7 +165,7 @@ function BbsWrite() {
                     type="radio"
                     id="tent"
                     name="campCategory"
-                    value="텐트"
+                    value="tent"
                     checked={newBoard.camp_select === "텐트"}
                     onChange={() =>
                       setNewBoard({ ...newBoard, camp_select: "텐트" })
@@ -178,7 +178,7 @@ function BbsWrite() {
                     type="radio"
                     id="glamping"
                     name="campCategory"
-                    value="글램핑"
+                    value="glamping"
                     checked={newBoard.camp_select === "글램핑"}
                     onChange={() =>
                       setNewBoard({ ...newBoard, camp_select: "글램핑" })
@@ -191,7 +191,7 @@ function BbsWrite() {
                     type="radio"
                     id="caravan"
                     name="campCategory"
-                    value="카라반"
+                    value="caravan"
                     checked={newBoard.camp_select === "카라반"}
                     onChange={() =>
                       setNewBoard({ ...newBoard, camp_select: "카라반" })
@@ -204,10 +204,10 @@ function BbsWrite() {
                     type="radio"
                     id="site"
                     name="campCategory"
-                    value="사이트"
-                    checked={newBoard.camp_select === "사이트"}
+                    value="site"
+                    checked={newBoard.camp_select === "야영장"}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_select: "사이트" })
+                      setNewBoard({ ...newBoard, camp_select: "야영장" })
                     }
                   />
                   <label htmlFor="site">사이트</label>
@@ -217,7 +217,7 @@ function BbsWrite() {
                     type="radio"
                     id="pension"
                     name="campCategory"
-                    value="펜션"
+                    value="pension"
                     checked={newBoard.camp_select === "펜션"}
                     onChange={() =>
                       setNewBoard({ ...newBoard, camp_select: "펜션" })

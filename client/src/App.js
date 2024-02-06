@@ -58,13 +58,13 @@ import campMainImg from "./Component/img/MainImg/메인페이지 이미지2.jpeg
 import OrderCart from "./Component/pages/shop/ShopOrder/Order/OrderCart";
 import MyPage from "./Component/pages/common/MyPage";
 import EditUser from "./Component/pages/common/EditUser"
-
-import CampSearchTent from "./Component/pages/camp/CampSearch/CampSearchTent";
-import CampSearchGlamping from "./Component/pages/camp/CampSearch/CampSearchGlamping";
-import CampSearchCaravan from "./Component/pages/camp/CampSearch/CampSearchCaravan";
-import CampSearchSite from "./Component/pages/camp/CampSearch/CampSearchSite";
-import CampSearchPension from "./Component/pages/camp/CampSearch/CampSearchPension";
 import CampReserve from "./Component/pages/camp/CampReserve/CampReserve";
+
+import CampBoardTent from "./Component/pages/camp/CampBoard/CampBoardTent";
+import CampBoardCaravan from "./Component/pages/camp/CampBoard/CampBoardCaravan";
+import CampBoardGlamping from "./Component/pages/camp/CampBoard/CampBoardGlamping";
+import CampBoardPension from "./Component/pages/camp/CampBoard/CampBoardPension";
+import CampBoardSite from "./Component/pages/camp/CampBoard/CampBoardSite";
 
 import "./Component/pages/camp/CampStyle.css";
 import "./CampApp.css";
@@ -183,13 +183,14 @@ function App() {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage/edit' element={<EditUser />} />
         <Route path='/camp/searchList' element={<CampSearch />} />
-        <Route path='/camp/searchList/tent' element={<CampSearchTent />} />
-        <Route path='/camp/searchList/glamping' element={<CampSearchGlamping />} />
-        <Route path='/camp/searchList/caravan' element={<CampSearchCaravan />} />
-        <Route path='/camp/searchList/site' element={<CampSearchSite />} />
-        <Route path='/camp/searchList/pension' element={<CampSearchPension />} />
         <Route path='/camp/reserve' element={<CampReserve />} />
-
+        
+        <Route path='/camp/board/caravan' element={<CampBoardCaravan />} />
+        <Route path='/camp/board/tent' element={<CampBoardTent />} />
+        <Route path='/camp/board/glamping' element={<CampBoardGlamping />} />
+        <Route path='/camp/board/site' element={<CampBoardSite />} />
+        <Route path='/camp/board/pension' element={<CampBoardPension />} />
+       
         <Route
           path='/shop/*'
           element={

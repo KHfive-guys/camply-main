@@ -27,6 +27,9 @@ public class BoardService {
     public List<BoardVO> getAllBoard() {
         return boardDAO.getAllBoard();
     }
+    public List<BoardVO> getBoardCategory(String camp_location) {
+        return boardDAO.getBoardCategory(camp_location);
+    }
 
     public BoardVO getBoardById(Long campId) {
         return boardDAO.getBoardById(campId);
