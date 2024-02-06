@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { FaCampground } from "react-icons/fa";
 import { TbCampfire } from "react-icons/tb";
@@ -58,26 +59,26 @@ function Menu() {
             <Row className="justify-content-center">
               {campingSearch.map((searchItem, index) => (
                 <Col md={10} key={index} className="social-icons">
-                  <Card
-                    className="border-0 text-center"
-                    href="/camp/searchList"
-                    style={{
-                      borderRadius: "15px",
-                      padding: "10px",
-                      border: "2px solid #fea92a",
-                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                    }}
-                  >
-                    <Card.Body>
-                      <Card.Link
-                        href="/camp/searchList"
-                        className="icon-colour home-social-icons"
-                      >
-                        {searchItem.icon}
-                      </Card.Link>
-                      <p>{searchItem.text}</p>
-                    </Card.Body>
-                  </Card>
+                  <Link to={searchItem.href} className="card-link">
+                    <Card
+                      className="border-0 text-center"
+                      style={{
+                        borderRadius: "15px",
+                        padding: "10px",
+                        border: "2px solid #fea92a",
+                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      <Card.Body>
+                        <Link to={searchItem.href} className="icon-colour home-social-icons">
+                          {searchItem.icon}
+                        </Link>
+                        <p>
+                          <Link to={searchItem.href}>{searchItem.text}</Link>
+                        </p>
+                      </Card.Body>
+                    </Card>
+                  </Link>
                 </Col>
               ))}
             </Row>
@@ -89,6 +90,7 @@ function Menu() {
             <Row className="justify-content-center">
               {campingLinks.map((link, index) => (
                 <Col md={2} key={index} className="social-icons">
+                  <Link to={link.href} className="card-link">
                   <Card
                     className="border-0 text-center"
                     style={{
@@ -108,6 +110,7 @@ function Menu() {
                       <p>{link.text}</p>
                     </Card.Body>
                   </Card>
+                  </Link>
                 </Col>
               ))}
             </Row>
