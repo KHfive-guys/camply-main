@@ -4,6 +4,7 @@ import { Routes,Route,Link } from "react-router-dom"; // Link 추가
 import '../shop/css/ShopMain.css';
 import ShopDetail from "./ShopDetail/ShopDetail";
 import Pagination from "react-js-pagination";
+import img1 from './icons8-새로운-48.png';
 
 
 
@@ -69,7 +70,10 @@ const Main = () => {
                       <img src={product.productThumbnail} className="imgs" alt={product.productName} />
                     </div>
                     <div className="textWrap">
+                      <div style={{display:'flex', justifyContent:'space-between'}}>
                       <p style={{ fontSize: '20px' }} className="companyName"><b>{product.productName}</b></p>
+                      <img src={img1}/>
+                      </div>
                       <p className="itemName1">{product.productDescription}</p>
                       <div className="itemsPrice clearfix">
                         <div className="fr">
