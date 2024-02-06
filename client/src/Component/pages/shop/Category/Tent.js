@@ -7,7 +7,7 @@ import Pagination from "react-js-pagination";
 const Tent = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const itemsPerPage = 3;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,7 +68,7 @@ const Tent = () => {
           activePage={currentPage}
           itemsCountPerPage={itemsPerPage}
           totalItemsCount={products.length}
-          pageRangeDisplayed={2}
+          pageRangeDisplayed={5}
           onChange={(pageNumber) => setCurrentPage(pageNumber)}
         />
       </div>
