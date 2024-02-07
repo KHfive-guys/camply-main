@@ -1,124 +1,117 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import '../css/ShopSell/CreateProduct.css';
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import React from "react";
+import { Container } from "react-bootstrap";
+import "../../camp/CampBoard/css/CampBoard.css";
+import CampNavbar from "../../camp/CampNavbar";
 
-const initialProductState = {
-  productName: '',
-  productDescription: '',
-  productPrice: '',
-  productCategory: 'tent',
-  productColor: '',
-  productThumbnail: '',
-  productMain: '',
-  productMain2: '',
-  productMain3: '',
-  productContent: '',
-  productStock: '',
-  productCreateDate: new Date().toISOString().split('T')[0], // 오늘 날짜로 기본 설정
-  productStatus: '판매중',
-  productCode: '',
-};
-
-const CreateProduct = () => {
-  const [product, setProduct] = useState({ ...initialProductState });
+function BbsWrite() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // 컴포넌트 마운트 시 상품 코드 생성 로직을 실행
-    generateProductCode();
-  }, [product.productCategory]); // 카테고리가 변경될 때마다 상품 코드를 재생성
-
-  const generateProductCode = async () => {
-    // localStorage에서 사용자 ID를 가져옵니다.
-    const userId = localStorage.getItem('userId'); // 사용자 ID를 로컬 스토리지에서 가져옴
-    const token = localStorage.getItem('yourTokenKey');
-
-    if (!token || !userId) {
-      console.error('Token or UserID is not available');
-      return;
-    }
-
-    try {
-      // 백엔드에서 사용자별 상품 등록 수를 조회하는 요청
-      const response = await axios.get(
-        'http://localhost:8080/shop/mypage/getUserProductCount',
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const productCount = response.data + 1; // 다음 등록될 상품의 순번
-
-      const categoryCode = product.productCategory
-        .substring(0, 3)
-        .toUpperCase();
-      const date = new Date().toISOString().split('T')[0].replace(/-/g, '');
-
-      // 상품 코드 설정
-      const newProductCode = `${categoryCode}${date}${userId}${String(
-        productCount
-      ).padStart(5, '0')}`;
-      setProduct((prevProduct) => ({
-        ...prevProduct,
-        productCode: newProductCode,
-      }));
-    } catch (error) {
-      console.error('Error generating product code:', error);
-    }
-  };
+  const [userId, setUserId] = useState("");
+  const [newBoard, setNewBoard] = useState({
+    USER_ID: 0,
+    PRODUCT_ID: 0,
+    PRODUCT_DESCRIPTION: "",
+    PRODUCT_PRICE: 0,
+    PRODUCT_CATEGORY: "",
+    PRODUCT_COLOR: "",
+    PRODUCT_THUMBNAIL: "",
+    PRODUCT_MAIN: "",
+    PRODUCT_MAIN2: "",
+    PRODUCT_MAIN3: "",
+    PRODUCT_CONTENT: "",
+    PRODUCT_CREATE_DATE: "",
+    PRODUCT_STOCK: 0,
+    PRODUCT_STATUS:"",
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log('Input Changed:', name, value); // 로깅 추가
-    setProduct({ ...product, [name]: value });
+    setNewBoard((prevNewBoard) => ({
+      ...prevNewBoard,
+      [name]: value,
+    }));
   };
 
-  //상품등록
-  const handleRegister = async () => {
-    try {
-      // Spring Boot 애플리케이션의 API 엔드포인트에 데이터 전송
-      const response = await axios.post(
-        'http://localhost:8080/shop/mypage/productAdd',
-        product,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('yourTokenKey')}`,
-          },
-        }
-      );
-      console.log(response.data);
-      alert('상품이 성공적으로 등록되었습니다.');
-      navigate('/seller/list');
-    } catch (error) {
-      console.error('Error registering product:', error);
-      alert('상품 등록에 실패했습니다.');
-    }
+  const boardAdd = () => {
+    axios
+      .post("http://localhost:8080/shop/mypage/productAdd", {
+        ...newBoard,
+      })
+      .then((response) => {
+        console.log("성공", response.data);
+        setNewBoard({
+          USER_ID: 0,
+    PRODUCT_ID: 0,
+    PRODUCT_DESCRIPTION: "",
+    PRODUCT_PRICE: 0,
+    PRODUCT_CATEGORY: "",
+    PRODUCT_COLOR: "",
+    PRODUCT_THUMBNAIL: "",
+    PRODUCT_MAIN: "",
+    PRODUCT_MAIN2: "",
+    PRODUCT_MAIN3: "",
+    PRODUCT_CONTENT: "",
+    PRODUCT_CREATE_DATE: "",
+    PRODUCT_STOCK: 0,
+    PRODUCT_STATUS:"",
+        });
+        navigate("/camp/board/all");
+      })
+      .catch((error) => {
+        console.error("실패", error);
+      });
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("yourTokenKey");
+
+    const parseJwt = (token) => {
+      try {
+        return JSON.parse(
+          decodeURIComponent(escape(atob(token.split(".")[1])))
+        );
+      } catch (e) {
+        return null;
+      }
+    };
+
+    const decodeUTF8 = (input) => {
+      try {
+        return decodeURIComponent(escape(input));
+      } catch (e) {
+        return input;
+      }
+    };
+
+    if (token) {
+      try {
+        const decodedToken = parseJwt(token);
+        console.log("Decoded Token:", decodedToken);
+
+        setUserId(decodedToken.user_id || "");
+        setNewBoard((prevNewBoard) => ({
+          ...prevNewBoard,
+          user_id: decodedToken.user_id || "",
+        }));
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    }
+  }, []);
 
   return (
     <div className="create-update-Product">
       <h2>상품등록</h2>
 
       <div className="form-group">
-        <label htmlFor="productCode">상품코드: </label>
-        <input
-          type="text"
-          name="productCode"
-          onChange={handleInputChange}
-          value={product.productCode}
-          readOnly
-          placeholder="등록 시 자동생성"
-          className="form-control"
-        />
-      </div>
-
-      <div className="form-group">
         <label htmlFor="productName">상품명: </label>
         <input
           type="text"
-          name="productName"
+          name="PRODUCT_NAME"
           onChange={handleInputChange}
-          value={product.productName}
+          value={newBoard.PRODUCT_NAME}
           className="form-control"
         />
       </div>
@@ -127,9 +120,9 @@ const CreateProduct = () => {
         <label htmlFor="productDescription">상품설명: </label>
         <input
           type="text"
-          name="productDescription"
+          name="PRODUCT_DESCRIPTION"
           onChange={handleInputChange}
-          value={product.productDescription}
+          value={newBoard.PRODUCT_DESCRIPTION}
           className="form-control"
         />
       </div>
@@ -138,20 +131,20 @@ const CreateProduct = () => {
         <label htmlFor="productPrice">판매가: </label>
         <input
           type="text"
-          name="productPrice"
+          name="PRODUCT_PRICE"
           onChange={handleInputChange}
-          value={product.productPrice}
+          value={newBoard.PRODUCT_PRICE}
           className="form-control"
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="productCategory">카테고리: </label>
+        <label htmlFor="PRODUCT_CATEGORY">카테고리: </label>
         <div className="dropdown">
           <select
-            name="productCategory"
+            name="PRODUCT_CATEGORY"
             onChange={handleInputChange}
-            value={product.productCategory}
+            value={newBoard.PRODUCT_CATEGORY}
             className="form-control"
           >
             <option value="tent">tent</option>
@@ -166,79 +159,79 @@ const CreateProduct = () => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="productColor">색상: </label>
+        <label htmlFor="PRODUCT_COLOR">색상: </label>
         <input
           type="text"
-          name="productColor"
+          name="PRODUCT_COLOR"
           onChange={handleInputChange}
-          value={product.productColor}
+          value={newBoard.PRODUCT_COLOR}
           className="form-control"
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="productThumbnail">썸네일 이미지 URL: </label>
+        <label htmlFor="PRODUCT_THUMBNAIL">썸네일 이미지 URL: </label>
         <input
           type="text"
-          name="productThumbnail"
+          name="PRODUCT_THUMBNAIL"
           onChange={handleInputChange}
-          value={product.productThumbnail}
+          value={newBoard.PRODUCT_THUMBNAIL}
           className="form-control"
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="productMain">메인이미지 URL: </label>
+        <label htmlFor="PRODUCT_MAIN">메인이미지 URL: </label>
         <input
           type="text"
-          name="productMain"
+          name="PRODUCT_MAIN"
           onChange={handleInputChange}
-          value={product.productMain}
+          value={newBoard.PRODUCT_MAIN}
           className="form-control"
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="productContent">컨텐츠 이미지 URL: </label>
+        <label htmlFor="PRODUCT_CONTENT">컨텐츠 이미지 URL: </label>
         <input
           type="text"
-          name="productContent"
+          name="PRODUCT_CONTENT"
           onChange={handleInputChange}
-          value={product.productContent}
+          value={newBoard.PRODUCT_CONTENT}
           className="form-control"
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="productStock">재고: </label>
+        <label htmlFor="PRODUCT_STOCK">재고: </label>
         <input
           type="text"
-          name="productStock"
+          name="PRODUCT_STOCK"
           onChange={handleInputChange}
-          value={product.productStock}
+          value={newBoard.PRODUCT_STOCK}
           className="form-control"
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="productCreateDate">상품등록일: </label>
+        <label htmlFor="PRODUCT_CREATE_DATE">상품등록일: </label>
         <input
           type="text"
-          name="productCreateDate"
+          name="PRODUCT_CREATE_DATE"
           onChange={handleInputChange}
-          value={product.productCreateDate}
+          value={newBoard.PRODUCT_CREATE_DATE}
           readOnly
           className="form-control"
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="productStatus">상품상태: </label>
+        <label htmlFor="PRODUCT_STATUS">상품상태: </label>
         <div className="dropdown">
           <select
-            name="productStatus"
+            name="PRODUCT_STATUS"
             onChange={handleInputChange}
-            value={product.productStatus}
+            value={newBoard.PRODUCT_STATUS}
             className="form-control"
           >
             <option value="판매중">판매중</option>
@@ -249,7 +242,7 @@ const CreateProduct = () => {
         </div>
       </div>
       <div className="form-group">
-        <button type="submit" onClick={handleRegister}>
+        <button type="submit" onClick={boardAdd}>
           등록
         </button>
       </div>
@@ -257,4 +250,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default BbsWrite;
