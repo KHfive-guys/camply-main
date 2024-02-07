@@ -4,7 +4,7 @@ import { Routes,Route,Link } from "react-router-dom"; // Link 추가
 import '../shop/css/ShopMain.css';
 import ShopDetail from "./ShopDetail/ShopDetail";
 import Pagination from "react-js-pagination";
-import img1 from './icons8-새로운-48.png';
+import img1 from '../../img/icons8-새로운-48.png';
 
 
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../shop/css/ShopMain.css';
-import { FaChevronCircleRight, FaChevronCircleLeft } from "react-icons/fa";
+import { FaAngleLeft,FaAngleRight } from "react-icons/fa6";
 
 const CategoryList = () => {
   const [categoryProducts, setCategoryProducts] = useState({});
@@ -54,7 +54,7 @@ const CategoryList = () => {
           <div key={category}>
             <h2>{category}</h2>
             <div className='slide-container'>
-              <button className='btn-arrow' onClick={() => handleSlide(category, 'left')}>{<FaChevronCircleLeft size={30}/>}</button>
+              <button className='btn-arrow' onClick={() => handleSlide(category, 'left')}>{<FaAngleLeft size={30}/>}</button>
 
               {categoryProducts[category].map((product, index) => (
                 <div key={product.productId} className={`slide ${index === 0 ? 'active' : ''}`}>
@@ -76,7 +76,7 @@ const CategoryList = () => {
                 </div>
               ))}
               
-              <button className='btn-arrow' onClick={() => handleSlide(category, 'right')}>{<FaChevronCircleRight size={30}/>}</button>
+              <button className='btn-arrow' onClick={() => handleSlide(category, 'right')}>{<FaAngleRight size={30}/>}</button>
             </div>
           </div>
         ))}
