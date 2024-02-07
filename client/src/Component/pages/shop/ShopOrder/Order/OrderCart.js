@@ -3,6 +3,7 @@ import Layout from "../../../shop/ShopLayout";
 import "../../css/ShopOrder/OrderMain.css";
 import axios from "axios";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import {Button} from '@mui/material';
 
 const OrderCart = () => {
   const [product, setProduct] = useState("");
@@ -184,7 +185,7 @@ const OrderCart = () => {
     fetchUserData();
   }, []);
 
-  // 핸드폰 번호 010-0000-0000 혁식으로 나타내기 위한 함수
+  // 핸드폰 번호 010-0000-0000 형식으로 나타내기 위한 함수
   const getUserPhoneFormatted = (phoneNumber) => {
     if (phoneNumber && phoneNumber.length === 11) {
       return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(
@@ -414,23 +415,70 @@ const OrderCart = () => {
                     </div>
                   </form>
                 </div>
-                <div className='order-price'>
-                  <div className='order-price-info'>
-                    <p>
-                      <span>상품 금액 :</span> {formattedPrice}원
-                    </p>
-                    <p>
-                      <span>배송비 :</span> 무료
-                    </p>
-                    <p className='order-total-price'>
-                      <span>총 금액</span>{" "}
-                      {location.state?.quantity * productPrice}원
-                    </p>
-                    <button onClick={saveOrder}>구매하기</button>
-                    <button onClick={backToList}>취소</button>
-                  </div>
-                </div>
               </section>
+              <div className="order">
+                <h3>주문 금액</h3>
+                  <div className="tbl-pay">
+                    <table>
+                      <colgroup>
+                        <col style={{width: '24%'}}/>
+                        <col style={{width: '18%'}}/>
+                        <col style={{width: '18%'}}/>
+                        <col style={{width: '18%'}}/>
+                        <col style={{width: '18%'}}/>
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th scope="col">상품금액</th>
+                          <th scope="col">배송비</th>
+                          <th scope="col">결제 예정금액</th>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div className="base">
+                              <strong>
+                                <em>
+                                  <span className="op-total"></span>
+                                </em>
+                                원
+                              </strong>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="base">
+                              <strong>
+                                <em>
+                                  <span className="op-total"></span>
+                                </em>
+                                무료
+                              </strong>
+                              <a className="plus">
+                                <img src="https://www.ocamall.com/images/common/bul_h23_plus.png" alt="plus"></img>
+                              </a>
+                              <a className="minus" style={{display:'none'}}>
+                                <img src="https://www.ocamall.com/images/common/bul_h23_minus.png"></img>
+                              </a>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="base">
+                              <a className="equal">
+                                <img src="https://www.ocamall.com/images/common/bul_h23_equal.png"></img>
+                              </a>
+                              <strong>
+                                <em>
+                                  <span className="op-total"></span>
+                                </em>
+                                원
+                              </strong>
+                            </div>
+                          </td>
+                        </tr>
+                      </thead>
+                    </table>
+                    
+                  </div>
+              </div>
             </>
           ) : (
             <p>상품을 찾을 수 없습니다.</p>

@@ -84,10 +84,12 @@ const ShopDetail = () => {
     navigate(`/shop/order/${productId}`, { state: { product, quantity } });
   };
 
+  const isUserLoggedIn = !!userToken;
+
   return (
     <div className='main-shopping'>
       <hr></hr>
-      <Nav />
+      <Nav/>
       <div className='main-section1'>
         <div className='main-section2'>
           <main className='main-section3'>
@@ -116,7 +118,16 @@ const ShopDetail = () => {
                     판매가{product.formattedProductPrice}
                   </span>
                   <div className='right-section-login'>
-                    <Link to='/login'>로그인 후, 적립 혜택이 제공됩니다.</Link>
+                    {isUserLoggedIn && (
+                      <p style={{ display: 'none' }}>
+                        로그인 후, 적립 혜택이 제공됩니다.
+                      </p>
+                    )}
+                    {!isUserLoggedIn && (
+                      <Link to='/login'>
+                        <span>로그인 후, 적립 혜택이 제공됩니다.</span>
+                      </Link>
+                    )}
                   </div>
                   <div>
                     <div className='right-section-img'>
@@ -180,11 +191,16 @@ const ShopDetail = () => {
                           <span className='right-section-footer-div3-div2-span'>
                             적립
                           </span>
-                          <Link to='/login'>
                             <span className='right-section-footer-div3-div2-span2'>
-                              로그인 후, 적립 혜택 제공
+                              {isUserLoggedIn && (
+                                <p style={{ display: 'none' }}>로그인 후, 적립 혜택 제공</p>
+                              )}
+                              {!isUserLoggedIn && (
+                                <Link to='/login'>
+                                  <span>로그인 후, 적립 혜택이 제공됩니다.</span>
+                                </Link>
+                              )}
                             </span>
-                          </Link>
                         </div>
                       </div>
                     </div>

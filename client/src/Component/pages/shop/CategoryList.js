@@ -40,7 +40,7 @@ const CategoryList = () => {
 
         const categoryProductMap = {};
         productData.forEach(({ category, products }) => {
-          categoryProductMap[category] = products.slice(0, 4);
+          categoryProductMap[category] = products.slice(0, 5);
         });
         setCategoryProducts(categoryProductMap);
       } catch (error) {
@@ -73,15 +73,21 @@ const CategoryList = () => {
         <h2>카테고리별 상품목록</h2>
         {Object.keys(categoryProducts).map((category) => (
           <div key={category}>
-            <h2 style={{cursor:'pointer', marginBottom:'30px'}} onClick={() => navigateToCategory(category)}>
+            <h2 style={{cursor:'pointer', marginBottom:'30px',marginTop:'30px'}} onClick={() => navigateToCategory(category)}>
               {category}{<FaAngleRight/>}
             </h2>
             <div className='slide-container'>
               <button className='btn-arrow' onClick={() => handleSlide(category, 'left')}>{<FaAngleLeft size={30}/>}</button>
               {categoryProducts[category].map((product, index) => (
-                <div key={product.productId} className={`slide ${index === 0 ? 'active' : ''}`}>
+                <div key={product.productId} className={`slide ${index === 0 ? 'active' : ''} spaced-slide `}>
                   <Link to={`/shop/detail/${product.productId}`}>
-                    <div className='imgWrap'>
+                    <div style={{
+                      width: '272.5px',
+                      height:'272.5px',
+                      margin: '0.2em',  
+                      padding: '0',
+                      
+                    }} className='imgWrap'>
                       <img src={product.productThumbnail} className='imgs' alt={product.productName} />
                     </div>
                     <div className='textWrap'>
@@ -97,7 +103,6 @@ const CategoryList = () => {
                   </Link>
                 </div>
               ))}
-              
               <button className='btn-arrow' onClick={() => handleSlide(category, 'right')}>{<FaAngleRight size={30}/>}</button>
             </div>
           </div>
