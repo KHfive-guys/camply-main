@@ -38,7 +38,6 @@ public class BoardController {
 
 	@GetMapping("/{camp_select}")
 	public List<BoardVO> getBoardCategory(@PathVariable String camp_select) {
-		// The camp_select variable will now correctly capture the value from the URL path
 		return boardService.getBoardCategory(camp_select);
 	}
 

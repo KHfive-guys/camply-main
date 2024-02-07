@@ -1,11 +1,14 @@
 package com.camply.user.config;
 
+import com.camply.user.security.JwtTokenProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -32,7 +35,6 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class camplyUserSecurityConfig {
 
-
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
@@ -52,9 +54,12 @@ public class camplyUserSecurityConfig {
 		http
 				.cors(cors -> {})
 				.csrf(csrf -> csrf.disable())
+
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
 								.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+
+
 				)
 				.oauth2Login(oauth2Login ->
 						oauth2Login
@@ -77,6 +82,7 @@ public class camplyUserSecurityConfig {
 				)
 				.anonymous(anonymous -> anonymous
 						.authorities("ROLE_ANONYMOUS")
+
 				);
 
 		return http.build();

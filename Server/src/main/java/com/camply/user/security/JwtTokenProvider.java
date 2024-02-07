@@ -63,6 +63,14 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    public Long getUserIdFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(key) // Use the instance variable 'key' instead of 'secretKey.getBytes()'
+                .parseClaimsJws(token)
+                .getBody();
+        return Long.parseLong(claims.get("user_id", String.class));
+    }
+
     private String getEmailFromAuthentication(Authentication authentication) {
         if (authentication.getPrincipal() instanceof UserDetails) {
             return ((UserDetails) authentication.getPrincipal()).getUsername();
@@ -106,5 +114,6 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
 }
 
