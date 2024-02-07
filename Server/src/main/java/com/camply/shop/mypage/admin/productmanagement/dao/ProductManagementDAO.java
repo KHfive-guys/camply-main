@@ -12,11 +12,14 @@ public interface ProductManagementDAO {
 	
 	//상품등록
 	void insertProduct(ProductVO productVO);
-	 // 사용자별 등록된 상품 수 조회
+	// 사용자별 등록된 상품 수 조회
     int getUserProductCount(Long userId);
     
 	//등록 상품 리스트 조회
 	List<ProductVO> getAllProductsByUserId(@Param("userId") Long userId);
+	
+	//단일 상품 조회
+	ProductVO getProductById(int productId);
 	
 	// 단일 상품 조회
     // productId와 userId를 기준으로 단일 상품을 조회

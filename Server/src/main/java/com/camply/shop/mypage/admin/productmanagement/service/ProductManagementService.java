@@ -18,16 +18,48 @@ public class ProductManagementService {
 	
 	@Autowired
 	private ProductManagementDAO productManagementDAO;
-
+	
 	//상품 등록
-	public void insertProduct(ProductVO productVO) {
+	public void insertProduct(ProductVO productVO, Long userId) {
+        // 상품 코드 생성 로직
+        String productCode = generateProductCode(productVO.getProductCategory(), userId);
+        productVO.setProductCode(productCode);
+        
+        productVO.setProductCreateDate(LocalDate.now());
+        
         productManagementDAO.insertProduct(productVO);
     }
-
+    
+    private String generateProductCode(String category, Long userId) {
+        String categoryCode = mapCategoryToCode(category);
+        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String formattedDate = LocalDate.now().format(dtf);
+        
+        int productCount = productManagementDAO.getUserProductCount(userId);
+        long orderNumber = productCount + 1; // 다음 등록될 상품의 순번
+        
+        return categoryCode + formattedDate + userId + String.format("%05d", orderNumber);
+    }
+    
     public int getUserProductCount(Long userId) {
         return productManagementDAO.getUserProductCount(userId);
     }
     
+    private String mapCategoryToCode(String category) {
+        Map<String, String> categoryCodes = new HashMap<>();
+        categoryCodes.put("tent", "TEN");
+        categoryCodes.put("sleepingbag", "SLB");
+        categoryCodes.put("lamp", "LAM");
+        categoryCodes.put("fireplace", "FIR");
+        categoryCodes.put("chair", "CHA");
+        categoryCodes.put("kitchen", "KIT");
+        return categoryCodes.getOrDefault(category, "OTH");
+    }
+
+
+	
+	
 	//등록 상품 리스트 조회
 	public List<ProductVO> getAllProductsByUserId(@Param("userId") Long userId) {
         return productManagementDAO.getAllProductsByUserId(userId);
