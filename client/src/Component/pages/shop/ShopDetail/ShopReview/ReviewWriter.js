@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import '../../css/ShopDetail/ShopReview/ReviewWriter.css';
+import Nav from '../../../camp/CampNavbar';
+import {Button} from '@mui/material';
+import { FaCheck } from "react-icons/fa";
+import { IoIosArrowBack } from "react-icons/io";
+
 
 const ReviewPost = () => {
   const [reviewData, setReviewData] = useState({
@@ -28,6 +34,10 @@ const ReviewPost = () => {
       [name]: value,
     });
   };
+  // 클릭시 뒤로 가기
+  const handleback = () => {
+    navigate(-1);
+  }
 
   // 리뷰 작성 핸들러
   const handleSubmit = async (e) => {
@@ -57,9 +67,17 @@ const ReviewPost = () => {
   };
 
   return (
+    <>
+    <Nav/>
     <form onSubmit={handleSubmit}>
+    <h2 style={{textAlign:'center',marginTop:'60px'}}>리뷰작성</h2>
       {/* productId 필드는 hidden 유형으로 유지 */}
       <input type='hidden' name='productId' value={reviewData.productId} />
+      <div className="writer-container">
+        <div className="inquiry-title">
+        
+        제목  
+        <br/>
       <input
         type='text'
         name='reviewTitle'
@@ -67,14 +85,29 @@ const ReviewPost = () => {
         value={reviewData.reviewTitle}
         onChange={handleChange}
       />
+      </div>
+      <br/>
+
+      <div className="inquiry-content">
+
+        내용
+        <br/>
       <textarea
         name='reviewText'
         placeholder='리뷰 내용'
         value={reviewData.reviewText}
         onChange={handleChange}
       />
-      <button type='submit'>리뷰 작성</button>
+      </div>
+      <div className="writer-btn">
+                <Button color="success" variant="contained" type="submit">작성하기 <FaCheck/></Button>
+                <Button variant="outlined" color="error" onClick={handleback}>
+                <IoIosArrowBack/> 목록보기
+                </Button>
+            </div> 
+    </div>
     </form>
+    </>
   );
 };
 

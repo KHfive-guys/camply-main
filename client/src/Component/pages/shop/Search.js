@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
-import './css/ShopMain.css';
+import '../shop/css/ShopMain.css';
 
 const Search = () => {
   const [productName, setProductName] = useState("");
@@ -24,7 +23,7 @@ const Search = () => {
   return (
     <>
     <div className='container1'>
-    <div className='search-btn' style={{ display: 'flex', alignItems: 'center' }}>
+    <div className='search-btn' style={{ display: 'flex', alignItems: 'center'}}>
       <input
         type="text"
         value={productName}
@@ -53,17 +52,27 @@ const Search = () => {
       </button>
     </div> 
   
-    {/* 여기서 검색 결과를 표시하거나 활용할 수 있습니다. */}
-    <div style={{display:'flex', justifyContent:'center'}} className='searchResult'>
+   
+       
+    <div className='searchResult'>
+    
+      
       {searchResults.length > 0 && (
+        <>
+        <div style={{paddingTop:'20px', marginBottom:'50px', textAlign:'center', display:'flex', justifyContent:'flex-end'}}>
+        <h2 style={{color:'#FEA92A'}}>{searchResults.length}<span style={{color:'black'}}>개의 상품검색</span></h2>
+        </div>
         
         <ul className='swiper-wrapper'>
-          <h2 style={{paddingBottom:'30px', marginBottom:'50px'}}>검색결과{searchResults.length}</h2>
+          <p><b>총{searchResults.length}개</b></p>
           {searchResults.map((product) => (
+            
             <li className='swiper-slide swiper-slide-active' style={{
               width: "272.5px",
               marginRight: "30px",
+              marginTop:'30px',
             }}>
+            
               <div className='imgWrap'>
                 <img src={product.productThumbnail} className="imgs" alt={product.productName} onClick={() => handleDetailClick(product.productId)} />
               </div>
@@ -77,9 +86,12 @@ const Search = () => {
                 </div>
               </div>
             </li>
+            
           ))}
         </ul>
+        </>
       )}
+      
       {searchResults.length === 0 && (
         <p>검색 결과가 없습니다.</p>
       )}

@@ -3,25 +3,31 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import '../../shop/css/ShopMain.css';
+import Pagination from "react-js-pagination";
 
 
 const Tent = () => {
   const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 2;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
         const response = await axios.get("http://localhost:8080/shop/category/main/lamp");
-        setProducts(response.data);
+        setProducts(response.data.slice(startIndex, endIndex));
       } catch (error) {
         console.error("상품을 불러오는 중 에러 발생", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   return (
+    <>
     <div className='category-item' style={{ display: 'flex', justifyContent: 'center' }}>
       {products.length > 0 ? (
         <div>
@@ -59,6 +65,16 @@ const Tent = () => {
         <p>상품을 찾을 수 없습니다.</p>
       )}
     </div>
+    <div className="pagination" style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+        <Pagination
+          activePage={currentPage}
+          itemsCountPerPage={itemsPerPage}
+          totalItemsCount={products.length}
+          pageRangeDisplayed={2}
+          onChange={(pageNumber) => setCurrentPage(pageNumber)}
+        />
+      </div>
+    </>
   );
 };
 

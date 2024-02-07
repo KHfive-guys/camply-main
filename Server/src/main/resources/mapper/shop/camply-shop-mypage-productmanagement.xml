@@ -26,11 +26,9 @@
 		INSERT INTO SHOP_PRODUCT (PRODUCT_ID, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_THUMBNAIL, PRODUCT_MAIN, PRODUCT_CONTENT, PRODUCT_CREATE_DATE, PRODUCT_STOCK, USER_ID, PRODUCT_STATUS, PRODUCT_CODE)
 		VALUES (product_id_seq.NEXTVAL, #{productName}, #{productDescription}, #{productPrice}, #{productCategory}, #{productColor}, #{productThumbnail}, #{productMain}, #{productContent}, #{productCreateDate}, #{productStock}, #{userId}, #{productStatus}, #{productCode})
 	</insert>
-	
-	
 	<!-- 사용자별 등록된 상품 수 가져오기 -->
 	<select id="getUserProductCount" resultType="int">
-	    SELECT COUNT(*) FROM shop_product WHERE user_id = #{userId} 
+	    SELECT COUNT(*) FROM shop_product WHERE user_id = #{userId}
 	</select>
 
 	<!-- 등록 상품 리스트 조회 -->

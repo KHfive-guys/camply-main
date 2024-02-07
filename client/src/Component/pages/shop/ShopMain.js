@@ -1,7 +1,8 @@
 import React from 'react';
-import CategoryList from './CategoryList';
 import Main from '../shop/Main';
 import Search from './Search';
+import ButtonUp from './ButtonUp';
+import CategoryList from './CategoryList';
 
 const ShopMain = () => 
 {
@@ -27,6 +28,7 @@ const ShopMain = () =>
         <Main/>
         <CategoryList/>
       </div>
+      <ButtonUp/>
     </div>
   );
 };

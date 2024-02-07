@@ -23,21 +23,21 @@ const MainPageCarousel = () => {
           <img
             src={img1}
             alt='Slide 1'
-            style={{ width: '100%', height: 'auto', maxHeight: '600px', margin: '0 auto' }}
+            style={{ width: '70%', height: 'auto', maxHeight: '600px', margin: '0 auto' }}
           />
         </div>
         <div>
           <img
             src={img2}
             alt='Slide 2'
-            style={{ width: '100%', height: 'auto', maxHeight: '600px', margin: '0 auto' }}
+            style={{ width: '70%', height: 'auto', maxHeight: '600px', margin: '0 auto' }}
           />
         </div>
         <div>
           <img
             src={img1}
             alt='Slide 3'
-            style={{ width: '100%', height: 'auto', maxHeight: '600px', margin: '0 auto' }}
+            style={{ width: '70%', height: 'auto', maxHeight: '600px', margin: '0 auto' }}
           />
         </div>
       </Slider>

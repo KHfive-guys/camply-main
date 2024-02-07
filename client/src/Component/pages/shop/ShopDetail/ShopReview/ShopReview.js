@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
-import "../../css/ShopDetail/ShopReview/ShopReview.css"; // 경로 변경 필요 없음
-import ReviewDetail from "./ReviewDetail"; // 이 컴포넌트의 이름과 경로도 변경이 필요할 수 있으나, 여기서는 그대로 둠
+import "../../css/ShopDetail/ShopReview/ShopReview.css"; 
+import ReviewDetail from "./ReviewDetail"; 
+import {Button} from '@mui/material';
+import { FaCheck } from "react-icons/fa";
 
 const ShopReview = () => {
   // 컴포넌트 이름 변경: ShopInquiry -> ShopReview
@@ -64,12 +66,14 @@ const ShopReview = () => {
             )
           )}
           <div className='inquiry-btn'>
-            <button type='button' onClick={handleWriteClick}>
-              작성하기
-            </button>
+            <Button type='button' variant="contained" color="success" onClick={handleWriteClick}>
+              작성하기<FaCheck/>
+            </Button>
           </div>
         </ul>
       </section>
+
+      
     </div>
   );
 };

@@ -571,9 +571,97 @@ select:not(:-internal-list-box) {
     cursor: pointer;
 }
 
-button {
-    border: none;
-    font-size: 16px;
+
+.order h3 {
+    position: relative;
+    margin-top: 40px;
+    padding-bottom: 10px;
+    font-size: 18px;
+    color: #202020;
+    font-weight: bold;
+    line-height: 18px;
 }
+
+.order .tbl-pay{
+    margin-top: 10px;
+    border-top: 1px solid #000;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+    word-wrap: break-word;
+    word-break: keep-all;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.order .tbl-pay thead th {
+    padding: 15px;
+    background: #ececec;
+    border-bottom: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.order .tbl-pay th {
+    color: #444;
+}
+
+
+.order .tbl-pay thead td {
+    padding: 25px 0 25px;
+    font-size: 16px;
+    text-align: center;
+}
+
+
+.order .tbl-pay td {
+    border-bottom: 1px solid #ccc;
+    color: #444;
+    background: #f7f7f7;
+}
+
+.order .tbl-pay thead td .base {
+    z-index: 1;
+    position: relative;
+}
+
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: normal;
+}
+
+.order .tbl-pay thead td strong em {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 26px;
+    font-weight: normal;
+    letter-spacing: -1px;
+}
+
+
+
+.order .tbl-pay thead td .base .plus {
+    position: absolute;
+    top: 9px;
+    width: 23px;
+    height: 23px;
+    right: 90%;
+}
+
+
+table img {
+    vertical-align: middle;
+
+}
+
 
 
