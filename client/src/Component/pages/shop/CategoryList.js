@@ -3,10 +3,30 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../shop/css/ShopMain.css';
 import { FaAngleLeft,FaAngleRight } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
 
 const CategoryList = () => {
   const [categoryProducts, setCategoryProducts] = useState({});
   const [productCategorys] = useState(["tent", "kitchen", "fireplace", "lamp", "sleepingbag", "chair"]);
+  const navigate = useNavigate();
+
+  const navigateToCategory = (category) => {
+    if(category === "tent") {
+      navigate('/shop/tent');
+    } else if(category === "kitchen") {
+      navigate('/shop/kitchen');
+    } else if(category === "fireplace"){
+      navigate('/shop/fireplace');
+    } else if (category === "lamp") {
+      navigate('/shop/lamp');
+    } else if (category === "sleepingbag") {
+      navigate('/shop/sleeping');
+    } else if (category === "chair"){
+      navigate('/shop/chair');
+    } else {
+      navigate('/');
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +37,7 @@ const CategoryList = () => {
             return { category: productCategory, products: response.data };
           })
         );
+
         const categoryProductMap = {};
         productData.forEach(({ category, products }) => {
           categoryProductMap[category] = products.slice(0, 4);
@@ -52,10 +73,11 @@ const CategoryList = () => {
         <h2>카테고리별 상품목록</h2>
         {Object.keys(categoryProducts).map((category) => (
           <div key={category}>
-            <h2>{category}</h2>
+            <h2 style={{cursor:'pointer', marginBottom:'30px'}} onClick={() => navigateToCategory(category)}>
+              {category}{<FaAngleRight/>}
+            </h2>
             <div className='slide-container'>
               <button className='btn-arrow' onClick={() => handleSlide(category, 'left')}>{<FaAngleLeft size={30}/>}</button>
-
               {categoryProducts[category].map((product, index) => (
                 <div key={product.productId} className={`slide ${index === 0 ? 'active' : ''}`}>
                   <Link to={`/shop/detail/${product.productId}`}>
