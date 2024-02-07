@@ -216,9 +216,10 @@ div {
     position: fixed;
     right: .4rem;
     bottom: .4rem;
-    justify-content: flex-end;
+    justify-content: end;
     margin-right: 50px;
     color: black;
+
 }
 
 .new-item {

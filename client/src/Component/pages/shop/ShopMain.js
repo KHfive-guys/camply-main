@@ -1,12 +1,7 @@
 import React from 'react';
 import Main from '../shop/Main';
 import Search from './Search';
-import Tent from './Category/Tent';
-import Table from './Category/Table';
-import Sleeping from './Category/Sleeping';
-import BBQ from './Category/BBQ';
-import Kitchen from './Category/Kitchen';
-import Lamp from './Category/Lamp';
+import ButtonUp from './ButtonUp';
 import CategoryList from './CategoryList';
 
 const ShopMain = () => 
@@ -33,6 +28,7 @@ const ShopMain = () =>
         <Main/>
         <CategoryList/>
       </div>
+      <ButtonUp/>
     </div>
   );
 };
