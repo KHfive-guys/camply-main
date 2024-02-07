@@ -175,6 +175,7 @@ ul li .textWrap .itemsPrice {
 
 .newItem-section {
     margin-top: 40px;
+    
 }
 
 ul li .textWrap .itemsPrice .customerPrice{
@@ -378,3 +379,23 @@ div {
   }
   
 
+
+  .spaced-slide {
+    margin-right: 80px;
+  }
+
+
+  .button-up-img {
+    border: 1px solid #929292;
+    border-radius: 50%; 
+    background-color: #ffffff;
+    box-shadow: 2px 2px 2px gray;
+  }
+
+  .button-up-cart {
+    margin-top: 10px;
+    border: 1px solid #929292;
+    border-radius: 50%; 
+    background-color: #ffffff;
+    box-shadow: 2px 2px 2px gray;
+  }

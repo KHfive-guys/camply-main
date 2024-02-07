@@ -33,7 +33,7 @@ const QuestionPost = () => {
       });
   };
 
-
+    // 클릭시 뒤로 가기
     const handleback = () => {
       navigate(-1);
     }

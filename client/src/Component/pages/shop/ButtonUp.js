@@ -13,10 +13,14 @@ function SideButton({opacity}){
     return (
         <div style={{cursor:'pointer'}} className='btn-up'>
             <div opacity={opacity} className="scroll__container">
+            <div className='button-up-img'>
             <img src={img1}  onClick={MoveToTop} type="button"/> <br/>
-            <Link to ="/shop/cart" element="{<ShopCart>}">
-                <img src={img2}  type="button"/> 
-            </Link> 
+            </div>
+            <div className='button-up-cart'>
+                <Link to ="/shop/cart" element="{<ShopCart>}">
+                    <img src={img2}  type="button"/> 
+                </Link>
+            </div> 
             </div>
         </div>
     );
