@@ -25,8 +25,18 @@ function CampBoardDetail() {
 
   const handleHeart = () => {
     setLike(!like);
-    alert("좋아요");
+    const userId = parseJwt(userToken)?.user_id;
+    axios
+      .post(`http://localhost:8080/camp/board/add/dips`, { camp_id: camp_id, user_id: userId })
+      .then((response) => {
+        alert("좋아요!.");
+      })
+      .catch((error) => {
+        alert("좋아요 실패: " + error.response.data.message);
+      });
   };
+  
+  
   const [like, setLike] = useState(false);
 
   const initializeMap = useCallback(() => {
