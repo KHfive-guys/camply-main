@@ -28,8 +28,13 @@ public class JwtTokenProvider {
 
     private final Key key;
 
+//    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+//        this.key = Keys.hmacShaKeyFor(Keys.secretKeyFor(SignatureAlgorithm.HS256).getEncoded());
+//    }
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
-        this.key = Keys.hmacShaKeyFor(Keys.secretKeyFor(SignatureAlgorithm.HS256).getEncoded());
+    	byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        this.key = Keys.hmacShaKeyFor(keyBytes);
+        System.out.println("디코딩값 : " + keyBytes);
     }
 
     public String generateToken(Authentication authentication) {
@@ -52,7 +57,6 @@ public class JwtTokenProvider {
                 .claim("user_id", userId)
                 .claim("auth", roles.toString())
                 .claim("USER_NAME", userVO.getUSER_NAME())
-                .claim("USER_PASSWORD", userVO.getUSER_PASSWORD())
                 .claim("USER_NICKNAME", userVO.getUSER_NICKNAME())
                 .claim("USER_ADDRESS", userVO.getUSER_ADDRESS())
                 .claim("USER_BUSINESSADDRESS", userVO.getUSER_BUSINESSADDRESS())
@@ -62,7 +66,16 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
-
+    
+    public Long getUserIdFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+        return claims.get("user_id", Long.class); // 클레임에서 "user_id"를 Long 타입으로 추출
+    }
+    
     private String getEmailFromAuthentication(Authentication authentication) {
         if (authentication.getPrincipal() instanceof UserDetails) {
             return ((UserDetails) authentication.getPrincipal()).getUsername();
