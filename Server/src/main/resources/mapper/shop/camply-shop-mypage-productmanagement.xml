@@ -4,27 +4,26 @@
 <mapper namespace="com.camply.shop.mypage.admin.productmanagement.dao.ProductManagementDAO">
 	<resultMap id="ProductResultMap" type="com.camply.shop.common.vo.ProductVO">
     <id property="productId" column="PRODUCT_ID"/>
-	    <result property="productName" column="PRODUCT_NAME"/>
-	    <result property="productDescription" column="PRODUCT_DESCRIPTION"/>
-		<result property="productPrice" column="PRODUCT_PRICE"/>
-		<result property="productCategory" column="PRODUCT_CATEGORY"/>
-		<result property="productColor" column="PRODUCT_COLOR"/>
-		<result property="productThumbnail" column="PRODUCT_THUMBNAIL"/>
-		<result property="productMain" column="PRODUCT_MAIN"/>
-		<result property="productMain2" column="PRODUCT_MAIN2"/>
-		<result property="productMain3" column="PRODUCT_MAIN3"/>
-		<result property="productContent" column="PRODUCT_CONTENT"/>
-		<result property="productCreateDate" column="PRODUCT_CREATE_DATE"/>
-		<result property="productStock" column="PRODUCT_STOCK"/>
-		<result property="userId" column="USER_ID"/>
-		<result property="productStatus" column="PRODUCT_STATUS"/>
-		<result property="productCode" column="PRODUCT_CODE"/>
+	    <result property="PRODUCT_NAME" column="PRODUCT_NAME"/>
+	    <result property="PRODUCT_DESCRIPTION" column="PRODUCT_DESCRIPTION"/>
+		<result property="PRODUCT_PRICE" column="PRODUCT_PRICE"/>
+		<result property="PRODUCT_CATEGORY" column="PRODUCT_CATEGORY"/>
+		<result property="PRODUCT_COLOR" column="PRODUCT_COLOR"/>
+		<result property="PRODUCT_THUMBNAIL" column="PRODUCT_THUMBNAIL"/>
+		<result property="PRODUCT_MAIN" column="PRODUCT_MAIN"/>
+		<result property="PRODUCT_MAIN2" column="PRODUCT_MAIN2"/>
+		<result property="PRODUCT_MAIN3" column="PRODUCT_MAIN3"/>
+		<result property="PRODUCT_CONTENT" column="PRODUCT_CONTENT"/>
+		<result property="PRODUCT_CREATE_DATE" column="PRODUCT_CREATE_DATE"/>
+		<result property="PRODUCT_STOCK" column="PRODUCT_STOCK"/>
+		<result property="USER_ID" column="USER_ID"/>
+		<result property="PRODUCT_STATUS" column="PRODUCT_STATUS"/>
 </resultMap>
 		
 	<!-- 상품등록 -->
 	<insert id="insertProduct" parameterType="com.camply.shop.common.vo.ProductVO">
-		INSERT INTO SHOP_PRODUCT (PRODUCT_ID, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_THUMBNAIL, PRODUCT_MAIN, PRODUCT_CONTENT, PRODUCT_CREATE_DATE, PRODUCT_STOCK, USER_ID, PRODUCT_STATUS, PRODUCT_CODE)
-		VALUES (product_id_seq.NEXTVAL, #{productName}, #{productDescription}, #{productPrice}, #{productCategory}, #{productColor}, #{productThumbnail}, #{productMain}, #{productContent}, #{productCreateDate}, #{productStock}, #{userId}, #{productStatus}, #{productCode})
+		INSERT INTO SHOP_PRODUCT (PRODUCT_ID, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE, PRODUCT_CATEGORY, PRODUCT_COLOR, PRODUCT_THUMBNAIL, PRODUCT_MAIN, PRODUCT_CONTENT, PRODUCT_CREATE_DATE, PRODUCT_STOCK, USER_ID, PRODUCT_STATUS)
+		VALUES (PRODUCT_ID.NEXTVAL, #{PRODUCT_NAME}, #{PRODUCT_DESCRIPTION}, #{PRODUCT_PRICE}, #{PRODUCT_CATEGORY}, #{PRODUCT_COLOR}, #{PRODUCT_THUMBNAIL}, #{PRODUCT_CONTENT}, #{PRODUCT_CREATE_DATE}, #{PRODUCT_STOCK}, #{USER_ID}, #{PRODUCT_STATUS})
 	</insert>
 	
 	
@@ -47,8 +46,8 @@
 	<update id="updateProduct" parameterType="com.camply.shop.common.vo.ProductVO">
 	   UPDATE SHOP_PRODUCT 
 	    SET USER_ID = #{userId}, 
-	        PRODUCT_CODE = #{productVO.productCode}, 
-	        PRODUCT_NAME = #{productVO.productName}, 
+	        PRODUCT_CODE = #{productVO.productCode},
+	        PRODUCT_NAME = #{productVO.productName},
 	        PRODUCT_DESCRIPTION = #{productVO.productDescription}, 
 	        PRODUCT_PRICE = #{productVO.productPrice}, 
 	        PRODUCT_CATEGORY = #{productVO.productCategory}, 

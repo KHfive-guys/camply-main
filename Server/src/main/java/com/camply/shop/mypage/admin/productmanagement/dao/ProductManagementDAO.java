@@ -18,9 +18,6 @@ public interface ProductManagementDAO {
 	//등록 상품 리스트 조회
 	List<ProductVO> getAllProductsByUserId(@Param("userId") Long userId);
 	
-	//단일 상품 조회
-	ProductVO getProductById(int productId);
-	
 	// 단일 상품 조회
     // productId와 userId를 기준으로 단일 상품을 조회
     ProductVO getProductById(@Param("productId") Long productId, @Param("userId") Long userId);
