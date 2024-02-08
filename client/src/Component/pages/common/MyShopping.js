@@ -152,7 +152,7 @@ function MyPage() {
         </Row>
       </Container>
 
-      <h1 className="text-center mb-4">마이페이지</h1>
+      <h1 className="text-center mb-4">나의 쇼핑</h1>
       <Container>
         <div>
           <p>이메일: {userData.USER_EMAIL}</p>
