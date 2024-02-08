@@ -13,7 +13,7 @@ const parseJwt = (token) => {
 function CampBoardDetail() {
 
   const location = useLocation();
-  const [boardData, setBoardData] = useState({});
+  const [boardData, setBoardData] = useState({ camp_images: [] });
   const { camp_id } = useParams();
   const navigate = useNavigate();
   const [userToken, setUserToken] = useState(
@@ -21,11 +21,22 @@ function CampBoardDetail() {
   );
   const [isCurrentUser, setIsCurrentUser] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const handleHeart = () => {
     setLike(!like);
-    alert("좋아요");
+    const userId = parseJwt(userToken)?.user_id;
+    axios
+      .post(`http://localhost:8080/camp/board/add/dips`, { camp_id: camp_id, user_id: userId })
+      .then((response) => {
+        alert("좋아요!.");
+      })
+      .catch((error) => {
+        alert("좋아요 실패: " + error.response.data.message);
+      });
   };
+  
+  
   const [like, setLike] = useState(false);
 
   const initializeMap = useCallback(() => {
@@ -98,7 +109,8 @@ function CampBoardDetail() {
         },
       })
       .then((response) => {
-        setBoardData(response.data);
+        const camp_images = response.data.camp_images.split(";");
+        setBoardData({ ...response.data, camp_images });
 
         try {
           const base64Url = userToken.split(".")[1];
@@ -139,6 +151,7 @@ function CampBoardDetail() {
     const confirmDelete = window.confirm(
       "게시글이 삭제됩니다. 계속하시겠습니까?"
     );
+  
 
     if (confirmDelete) {
       axios
@@ -181,6 +194,18 @@ function CampBoardDetail() {
     })
   }
 
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) =>
+      prevPage === boardData.camp_images.length - 1 ? 0 : prevPage + 1
+    );
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) =>
+      prevPage === 0 ? boardData.camp_images.length - 1 : prevPage - 1
+    );
+  };
+
   return (
     <section>
       <CampNavbar />
@@ -202,12 +227,12 @@ function CampBoardDetail() {
             <th>성인 인원</th>
             <th>아동 인원</th>
             <th>1박 가격</th>
-            <th>사진</th>
             <th>부대 시설</th>
             <th>상세설명</th>
             {isCurrentUser && <th>수정</th>}
             {isCurrentUser && <th>삭제</th>}
             <th>찜하기</th>
+            <th>예약하기</th>
           </tr>
         </thead>
         <tbody>
@@ -222,7 +247,6 @@ function CampBoardDetail() {
             <td>{boardData.camp_adult}</td>
             <td>{boardData.camp_child}</td>
             <td>{boardData.camp_price}</td>
-            <td>{boardData.camp_image}</td>
             <td>{boardData.camp_facility}</td>
             <td>{boardData.camp_description}</td>
             {isCurrentUser && (
@@ -251,12 +275,30 @@ function CampBoardDetail() {
                 )}
               </div>
             </td>
+            <td><Button variant="primary"  onClick={reserveMove}className="mt-3">
+            예약하기
+      </Button></td>
           </tr>
         </tbody>
       </table>
-      <Button variant="primary"  onClick={reserveMove}className="mt-3">
-            예약하기
-      </Button>
+
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+  <Button onClick={handlePrevPage}>이전</Button>
+  {boardData.camp_images && boardData.camp_images.length > 0 && boardData.camp_images[currentPage] ? (
+    <img
+      style={{ width: "500px", height: "400px", objectFit: "cover" }}
+      src={boardData.camp_images[currentPage]}
+      alt={`상품 이미지 ${currentPage + 1}`}
+      onError={(e) => {
+        e.target.onerror = null;
+      }}
+    />
+  ) : (
+    <p>이미지가 없습니다.</p>
+  )}
+  <Button onClick={handleNextPage}>다음</Button>
+</div>
+
 
       <h1>지도</h1>
       <div id="map" style={{ width: "100%", height: "400px" }}></div>

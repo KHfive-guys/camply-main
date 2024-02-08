@@ -9,9 +9,9 @@ function RemoveToken() {
   //   };
   // }, []); 
 
-  const handleBeforeUnload = () => {
-    localStorage.removeItem('yourTokenKey');
-  };
+  // const handleBeforeUnload = () => {
+  //   localStorage.removeItem('yourTokenKey');
+  // };
 
   return (
     <div>

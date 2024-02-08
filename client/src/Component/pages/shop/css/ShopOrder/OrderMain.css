@@ -66,10 +66,22 @@ thead {
 
 tr {
     display: table-row;
-    vertical-align: initial;
-    border-color: initial;
+    vertical-align: inherit;
+    border-color: inherit;
 }
 
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}
+
+table, a{
+    font-size: 12px;
+    line-height: 1.25;
+    font-family: sans-serif;
+}
 .tbl-order thead th {
     padding: 15px 5px;
     font-size: 13px;
@@ -664,4 +676,210 @@ table img {
 }
 
 
+thead td .base .equal {
+    position: absolute;
+    top: 9px;
+    width: 23px;
+    height: 23px;
+    right: 90%;
+}
+
+
+
+.order .tbl-pay thead td strong em {
+    position: relative;
+    top: 3px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 26px;
+    font-weight: normal;
+    letter-spacing: -1px;
+}
+
+.order .fc-red {
+    color: #FEA92A;
+}
+
+
+.order h3 {
+    position: relative;
+    margin-top: 40px;
+    padding-bottom: 10px;
+    font-size: 18px;
+    color: #202020;
+    font-weight: bold;
+    line-height: 18px;
+}
+
+
+
+.order .tbl-order {
+    position: relative;
+    border-top: 1px solid #000;
+}
+
+.order .tbl-order .text-l {
+    padding: 0 15px;
+}
+
+.order .tbl-order tbody th {
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.order .tbl-order .payment li {
+    margin: 10px 0;
+    padding-left: 18px;
+}
+
+.chk-rdo {
+    width: 13px;
+    height: 13px;
+    vertical-align: middle;
+}
+
+.order .tbl-order .payment li em {
+    color: #FEA92A;
+}
+
+.order .fc-red {
+    color: #FEA92A;
+}
+
+.order .policy {
+    border: 1px solid #ccc;
+    margin-bottom: -1px;
+
+}
+
+.order .policy .tbl-order tbody th {
+    background: #f8f8f8;
+}
+
+.order .tbl-order .text-l {
+    padding: 0 15px;
+
+}
+
+.order .text-l {
+    text-align: left;
+}
+
+
+.order .policy .tbl-order tbody td {
+    padding: 16px;
+}
+
+.order  .tbl-order tbody td {
+    border-bottom: 1px solid #e9e9e9;
+
+}
+
+.order .order-agree-all {
+    padding: 5px 0;
+}
+
+
+.order .tot-order {
+    margin: 10px 0;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+.order .tbl-order {
+    position: relative;
+}
+
+.order .tot-order td {
+    color: #777;
+
+}
+
+
+.order .tot-order td .totalprice {
+    color: #000;
+    font-size: 16px;
+    letter-spacing: -1px;
+}
+
+.order .tot-order td .totalprice em {
+    color: #FEA92A;
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+
+
+.order .paybutton {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.order .paybutton button {
+    width: 162px;
+    height: 48px;
+    font-size: 16px;
+    line-height: 48px;
+    margin-bottom: 50px;
+}
+
+.CSSbuttonBlack {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    border: 1px solid #231f20;
+    background: #FEA92A;
+    transition: all 0.3s ease;
+}
+
+.CSSbuttonWhite {
+    margin-left: 10px;
+    display: inline-block;
+    color: #FEA92A;
+    text-align: center;
+    border: 1px solid #231f20;
+    background: #fff;
+    transition: all 0.3s ease;
+
+}
+
+.tbl-order-cart {
+    position: relative;
+    border-top: 1px solid #000;
+}
+
+.order .tbl-order-cart thead th {
+    padding: 15px 5px;
+    font-size: 13px;
+    color: #101010;
+    border-bottom: 1px solid #e9e9e9;
+    background: #f7f7f7;
+}
+
+.order .tbl-order-cart tbody td {
+    padding: 10px 0;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.tb-center {
+    text-align: center;
+}
+
+
+.tb-left {
+    text-align: left;
+}
+
+.order .tbl-order-cart tbody td {
+    padding: 10px 0;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.order .tbl-order-cart tbody .total div {
+    padding: 10px 20px;
+
+}
+
+
+.tb-right {
+    text-align: right;
+}
 

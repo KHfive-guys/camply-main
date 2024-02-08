@@ -11,19 +11,21 @@ import img1 from '../../img/icons8-new-48.png';
 const Main = () => {
   const [products, setProducts] = useState([]);
   const [productIds] = useState([
-    196, 
-    190,
-    182,
-    186,
-    192,
-    194,
-    200,
-    188,
-    198,
-    184,
+    206,
+    207,
+    208,
+    209,
+    210,
+    211,
+    212,
+    213,
+    214,
+    203,
+    204,
+    205,
   ]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 1부터 시작
-  const itemsPerPage = 5;
+  const itemsPerPage = 4;
 
 
   useEffect(() => {

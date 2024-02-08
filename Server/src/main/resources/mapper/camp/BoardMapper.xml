@@ -14,7 +14,7 @@
         <result column="CAMP_CHILD" property="camp_child"/>
         <result column="CAMP_PRICE" property="camp_price"/>
         <result column="CAMP_DESCRIPTION" property="camp_description"/>
-        <result column="CAMP_IMAGE" property="camp_image"/>
+        <result column="CAMP_IMAGES" property="camp_images"/>
         <result column="CAMP_FACILITY" property="camp_facility"/>
     </resultMap>
 
@@ -29,7 +29,7 @@
             CAMP_ADULT,
             CAMP_CHILD,
             CAMP_PRICE,
-            CAMP_IMAGE,
+            CAMP_IMAGES,
             CAMP_DESCRIPTION,
             CAMP_FACILITY
         )
@@ -43,7 +43,7 @@
                    #{camp_adult},
                    #{camp_child},
                    #{camp_price},
-                   #{camp_image},
+                   #{camp_images},
                    #{camp_description},
                    #{camp_facility}
                )
@@ -78,7 +78,7 @@
             CAMP_CHILD = #{camp_child},
             CAMP_PRICE = #{camp_price},
             CAMP_DESCRIPTION = #{camp_description},
-            CAMP_IMAGE = #{camp_image},
+            CAMP_IMAGES = #{camp_images},
             CAMP_FACILITY = #{camp_facility}
         WHERE CAMP_ID = #{camp_id}
     </update>

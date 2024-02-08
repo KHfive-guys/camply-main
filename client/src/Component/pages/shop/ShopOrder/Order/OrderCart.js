@@ -3,7 +3,9 @@ import Layout from "../../../shop/ShopLayout";
 import "../../css/ShopOrder/OrderMain.css";
 import axios from "axios";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import {Button} from '@mui/material';
+import { Button } from '@mui/material';
+import { MdOutlineClosedCaptionDisabled } from "react-icons/md";
+import { TbCamper } from "react-icons/tb";
 
 const OrderCart = () => {
   const [product, setProduct] = useState("");
@@ -247,22 +249,71 @@ const OrderCart = () => {
         <main className='main-container'>
           {product && Object.keys(product).length > 0 ? (
             <>
-              <section className='product-list'>
-                <ul>
-                  <li>
-                    <div>
-                      <img src={product.productThumbnail} alt='제품 이미지' />
-                      <p className='item-title'>{product.productName}</p>
-                    </div>
-                    <p>
-                      수량 : <span>{location.state?.quantity || "0"}</span>
-                    </p>
-                    <p>
-                      <span>상품 금액 :</span> {formattedPrice}원
-                    </p>
-                  </li>
-                </ul>
-              </section>
+            <h3><TbCamper/>Camply</h3>
+              <div className="tbl-order-cart">
+               <table>
+                  <colgroup>
+                    <col style={{width:'150px'}}/>
+                    <col/>
+                    <col style={{width:'150px'}}/>
+                    <col style={{width:'300px'}}/>
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th scope="col">&nbsp;</th>
+                      <th scope="col">상품정보</th>
+                      <th scope="col" style={{textAlign:'center'}}>수량</th>
+                      <th scope="col" style={{textAlign:'center'}}>주문금액</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="nbg">
+                      <td>
+                        <div className="tb-center">
+                          <div className="thumb">
+                          <img src={product.productThumbnail} style={{width:'100px'}} alt='제품 이미지' />
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="tb-left">
+                        <p className='item-title' style={{fontSize:'15px', fontWeight:'bold'}}>{product.productName}</p>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="tb-center">
+                        <p>
+                          수량:<span>{location.state?.quantity || "0"}</span>
+                        </p>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="tb-center tb-bold">
+                          {formattedPrice}원
+                        </div>
+                      </td>
+                    </tr>
+                    <tr className="total">
+                      <td colSpan={6}>
+                        <div className="tb-right">
+                          주문 금액
+                          <span id="pvd-total-discount-block-etc-0" className="fc-red"></span>
+                          <strong>{formattedPrice}원</strong>
+                          + 배송비
+                          <span id="pvd-total-delivery-0" className="delprice"></span>
+                          <strong>무료</strong>
+                          =
+                          <strong>
+                            주문금액
+                            <span>{location.state?.quantity * productPrice}원
+                          </span>
+                          </strong>
+                        </div>    
+                      </td>
+                    </tr>
+                  </tbody>
+               </table>
+              </div>
               <section className='order-info'>
                 <div className='order-form'>
                   <p className='eEOGCf'>주문 정보</p>
@@ -418,66 +469,150 @@ const OrderCart = () => {
               </section>
               <div className="order">
                 <h3>주문 금액</h3>
-                  <div className="tbl-pay">
-                    <table>
-                      <colgroup>
-                        <col style={{width: '24%'}}/>
-                        <col style={{width: '18%'}}/>
-                        <col style={{width: '18%'}}/>
-                        <col style={{width: '18%'}}/>
-                        <col style={{width: '18%'}}/>
-                      </colgroup>
-                      <thead>
-                        <tr>
-                          <th scope="col">상품금액</th>
-                          <th scope="col">배송비</th>
-                          <th scope="col">결제 예정금액</th>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div className="base">
-                              <strong>
-                                <em>
-                                  <span className="op-total"></span>
-                                </em>
-                                원
-                              </strong>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="base">
-                              <strong>
-                                <em>
-                                  <span className="op-total"></span>
-                                </em>
-                                무료
-                              </strong>
-                              <a className="plus">
-                                <img src="https://www.ocamall.com/images/common/bul_h23_plus.png" alt="plus"></img>
-                              </a>
-                              <a className="minus" style={{display:'none'}}>
-                                <img src="https://www.ocamall.com/images/common/bul_h23_minus.png"></img>
-                              </a>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="base">
-                              <a className="equal">
-                                <img src="https://www.ocamall.com/images/common/bul_h23_equal.png"></img>
-                              </a>
-                              <strong>
-                                <em>
-                                  <span className="op-total"></span>
-                                </em>
-                                원
-                              </strong>
-                            </div>
-                          </td>
-                        </tr>
-                      </thead>
-                    </table>
-                    
-                  </div>
+                <div className="tbl-pay">
+                  <table>
+                    <colgroup>
+                      <col style={{ width: '24%' }} />
+                      <col style={{ width: '18%' }} />
+                      <col style={{ width: '22%' }} />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope ="col" style={{textAlign:'center'}}>상품금액</th>
+                        <th scope ="col" style={{textAlign:'center'}}>배송비</th>
+                        <th scope ="col" style={{textAlign:'center'}}>결제 예정금액</th>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div className="base">
+                            <strong>
+                              <em>
+                                <span className="op-total">{formattedPrice}</span>
+                              </em>
+                              원
+                            </strong>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="base">
+                            <strong>
+                              <em>
+                                <span className="op-total">무료</span>
+                              </em>
+                            </strong>
+                            <a className="plus" style={{marginRight:'50px'}}>
+                              <img src="https://www.ocamall.com/images/common/bul_h23_plus.png" alt="plus" />
+                            </a>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="base">
+                            <a className="equal">
+                              <img src="https://www.ocamall.com/images/common/bul_h23_equal.png" alt="equal" />
+                            </a>
+                            <strong> 
+                              <em className="fc-red">
+                                <span className="op-total">{formattedPrice}</span>
+                              </em>
+                              원
+                            </strong>
+                          </div>
+                        </td>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+                <h3>결제 정보</h3>
+                <div className="tbl-order">
+                  <table>
+                    <colgroup>
+                      <col style={{width:'110px'}}/>
+                    </colgroup>
+                    <tbody>
+                      <tr>
+                        <th scope="row">
+                          <div className="text-l">결제방법</div>
+                        </th>
+                        <td>
+                          <ul className="payment">
+                            <li>
+                              <input type="radio" className="chk-rdo" name="radio_payment"/>
+
+                              신용카드
+                              <em>
+                                <span className="op-card-dc-price fc-red"></span>
+                              </em>
+                              <em>
+                                <span className="op-c-dc-price fc-red"></span>
+                              </em>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <p style={{fontSize:'13px'}}>
+                  · 안심클릭 및 인터넷안전결제(ISP)서비스로
+                  <font color='blue'>128bit SSL</font>
+                  로 암호화된 결제 창이 새로 뜹니다.
+                  </p>
+                  <p style={{fontSize:'13px'}}>
+                  · 결제후, 카드명세서에 [
+                    <font color="red">KG모빌리언스(Mobilians)</font>
+                    ]로 표시되며, 카드 정보는 상점에 남지 않습니다.
+                  </p>
+                </div>
+                <h3>주문자 동의</h3>
+                <div className="tbl-order policy">
+                  <table>
+                    <colgroup>
+                    <col style={{width:'130px'}}/>
+                    </colgroup>
+                    <tbody>
+                      <tr>
+                        <th scope="row">
+                          <div className="text-l">주문자동의</div>
+                        </th>
+                        <td>
+                          <div className="order-agree-each">
+                            <label className="label">
+                              <input className="order-input" type="checkbox"/>
+                              <span className="text"> 주문 / 결제 정보를 확인하여 구매 진행에 동의합니다.</span>
+                            </label>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="tbl-order tot-order">
+                  <table>
+                    <colgroup>
+                      <col style={{width:'100px'}}></col>
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>총 결제금액</th>
+                      <td>
+                        <strong className="totalprice">
+                          <em>
+                            <span className="op=total-price">{location.state?.quantity * productPrice}</span>
+                          </em>
+                          <span className="block-unit-won">원</span>
+                        </strong>
+                        &nbsp; 
+                      </td>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+                <div className="paybutton">
+                <button className="CSSbuttonBlack" onClick={saveOrder}>주문하기</button>
+                <button className="CSSbuttonWhite" onClick={backToList}>주문취소</button>
+
+                </div>
               </div>
             </>
           ) : (

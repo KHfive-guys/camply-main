@@ -22,7 +22,7 @@ function BbsWrite() {
     camp_adult: 0,
     camp_child: 0,
     camp_price: 0,
-    camp_image: "",
+    camp_images: [],
     camp_description: "",
     camp_facility: "",
   });
@@ -33,10 +33,25 @@ function BbsWrite() {
       .map(([facility]) => facility)
       .join(", ");
 
+  const campImagesString = newBoard.camp_images.join(";");
+
+  if (
+    newBoard.camp_select === "" ||
+    newBoard.camp_location === "" ||
+    newBoard.camp_name === "" ||
+    newBoard.camp_adult === 0 ||
+    newBoard.camp_price === 0 ||
+    newBoard.camp_images.length === 0
+  ) {
+    alert("모든 필수 입력 항목을 채워주세요.");
+    return;
+  }
+
     axios
       .post("http://localhost:8080/camp/board/add", {
         ...newBoard,
         camp_facility: selectedFacilities,
+        camp_images: campImagesString,
       })
       .then((response) => {
         console.log("성공", response.data);
@@ -51,7 +66,7 @@ function BbsWrite() {
           camp_adult: 0,
           camp_child: 0,
           camp_price: 0,
-          camp_image: "",
+          camp_images: [],
           camp_description: "",
           camp_facility: "",
         });
@@ -92,6 +107,20 @@ function BbsWrite() {
       ...prevFacilities,
       [facility]: !prevFacilities[facility],
     }));
+  };
+
+  const handleImageChange = (index, value) => {
+    const updatedImages = [...newBoard.camp_images];
+    updatedImages[index] = value;
+    setNewBoard({ ...newBoard, camp_images: updatedImages });
+  };
+
+  const addImageInputField = () => {
+    if (newBoard.camp_images.length < 5) {
+      setNewBoard({ ...newBoard, camp_images: [...newBoard.camp_images, ""] });
+    } else {
+      alert("이미지는 최대 5장까지 저장 가능합니다.");
+    }
   };
 
   useEffect(() => {
@@ -146,19 +175,7 @@ function BbsWrite() {
         <table className="table">
           <tbody>
             <tr>
-              <th className="table-primary">유저 아이디</th>
-              <td>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={userId || ""}
-                  readOnly
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <th className="table-primary">캠핑장 카테고리</th>
+              <th className="table-primary">캠핑장 카테고리<span className="required"> *필수 입력</span></th>
               <td className="radio-buttons-container">
                 <div>
                   <input
@@ -229,7 +246,7 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 위치</th>
+              <th className="table-primary">캠핑장 위치 <span className="required"> *필수 입력</span></th>
               <td className="radio-buttons-container">
                 <div>
                   <input
@@ -326,7 +343,7 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 주소</th>
+              <th className="table-primary">캠핑장 주소 <span className="required"> *필수 입력</span></th>
               <td>
                 <input
                   type="text"
@@ -338,7 +355,7 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 이름</th>
+              <th className="table-primary">캠핑장 이름 <span className="required"> *필수 입력</span></th>
               <td>
                 <input
                   type="text"
@@ -352,7 +369,7 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 전화번호</th>
+              <th className="table-primary">캠핑장 전화번호 <span className="required"> *필수 입력</span></th>
               <td>
                 <input
                   type="text"
@@ -364,7 +381,7 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">성인 인원</th>
+              <th className="table-primary">성인 인원 <span className="required"> *필수 입력</span></th>
               <td>
                 <input
                   type="number"
@@ -384,7 +401,7 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">아동 인원</th>
+              <th className="table-primary">아동 인원 <span className="required"> *필수 입력</span></th>
               <td>
                 <input
                   type="number"
@@ -404,7 +421,7 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">1박 가격</th>
+              <th className="table-primary">1박 가격 <span className="required"> *필수 입력</span></th>
               <td>
                 <input
                   type="number"
@@ -417,19 +434,32 @@ function BbsWrite() {
               </td>
             </tr>
 
+            
             <tr>
-              <th className="table-primary">캠핑장 사진</th>
+              <th className="table-primary">캠핑장 사진 추가 <span className="required"> *필수 입력</span></th>
               <td>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={newBoard.camp_image}
-                  onChange={(e) =>
-                    setNewBoard({ ...newBoard, camp_image: e.target.value })
-                  }
-                />
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={addImageInputField}
+                >
+                  사진 추가하기
+                </button>
               </td>
             </tr>
+
+            {newBoard.camp_images.map((image, index) => (
+              <tr key={index}>
+                <th className="table-primary">{`캠핑장 사진 ${index + 1}`}</th>
+                <td>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={image}
+                    onChange={(e) => handleImageChange(index, e.target.value)}
+                  />
+                </td>
+              </tr>
+              ))}
 
             <tr>
               <th className="table-primary">부대 시설</th>
