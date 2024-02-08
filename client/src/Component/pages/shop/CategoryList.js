@@ -11,7 +11,20 @@ const CategoryList = () => {
   const navigate = useNavigate();
 
   const navigateToCategory = (category) => {
-    // ... (변경 없음)
+    if(category === "tent"){
+      navigate(`/shop/tent`);
+    }else if(category === "kitchen"){
+      navigate(`/shop/kitchen`);
+    }else if(category === "fireplace"){
+      navigate(`/shop/fireplace`);
+    }else if(category === "lamp"){
+      navigate(`/shop/lamp`);
+    }else if(category === "sleepingbag"){
+      navigate(`/shop/sleeping`);
+    }else if(category === "chair"){
+      navigate(`/shop/chair`);
+    }
+
   }
 
   useEffect(() => {
