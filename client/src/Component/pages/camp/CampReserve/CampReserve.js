@@ -8,31 +8,41 @@ import { Button,Alert} from '@mui/material';
 import { FaAngleRight,FaBackspace } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
 import { CiCircleCheck } from "react-icons/ci";
-
+import axios from 'axios';
 const CampReserve = () => {
-
+    useEffect(() => {
+        // Add script tags dynamically to the document head
+        const iamportScript = document.createElement('script');
+        iamportScript.src = 'https://cdn.iamport.kr/v1/iamport.js';
+        document.head.appendChild(iamportScript);
+        const jqueryScript = document.createElement('script');
+        jqueryScript.src = 'https://code.jquery.com/jquery-1.12.4.min.js';
+        jqueryScript.type = 'text/javascript';
+        document.head.appendChild(jqueryScript);
+        const iamportPaymentScript = document.createElement('script');
+        iamportPaymentScript.src = 'https://cdn.iamport.kr/js/iamport.payment-1.2.0.js';
+        iamportPaymentScript.type = 'text/javascript';
+        document.head.appendChild(iamportPaymentScript);
+        // Clean up function to remove dynamically added scripts on unmount
+        return () => {
+            document.head.removeChild(iamportScript);
+            document.head.removeChild(jqueryScript);
+            document.head.removeChild(iamportPaymentScript);
+        };
+    }, []);
     const location = useLocation();
-
-
     const [CAMP_USER_PHONE, setUserPhone] = useState("");
     const [CAMP_USER_EMAIL, setUserEmail] = useState("");
     const [CAMP_USER_NAME, setUserName] = useState("");
-
     const [reserve, setReserve] = useState();
     const navigate = useNavigate();
-
-
     const handlemarketing = () => {
         alert('마케팅 정보 동의');
     }
-
-
     const handlebackbtn = () => {
         const confirmCancellation = window.confirm("예약을 취소하시겠습니까?");
-
     if (confirmCancellation) {
      
-
       alert("예약이 취소되었습니다.");
       navigate(`/camp`)
     } else {
@@ -42,29 +52,35 @@ const CampReserve = () => {
     }
   };
   const token = localStorage.getItem("yourTokenKey");
-
   const parseUserIdFromToken = (token) => {
     const payloadBase64 = token.split(".")[1];
     const payload = JSON.parse(atob(payloadBase64));
     return payload.user_id;
   };
-
   const nowDate = new Date();
-
   const handleOrderbtn = async () => {
     const confirmOrder = window.confirm("결제를 진행 하시겠습니까?");
-
     if(confirmOrder) {
+        const USER_ID = parseUserIdFromToken(token);
         if (token) {
-            const USER_ID = parseUserIdFromToken(token);
-
-            try {
-                const response = await fetch("http://localhost:8080/camp/reserve", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
+            // 테스트때마다 중복되면 안되는 값이 여야 함
+            const uid = USER_ID + "_" + nowDate;
+            const IMP = window.IMP; 
+            
+            IMP.init('imp47518323');
+            
+            IMP.request_pay({ // param
+                pg: 'mobilians.170622040674',
+                pay_method: "card",
+                merchant_uid: uid, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
+                name: "안녕", //결제창에 노출될 상품명
+                amount: "12", //금액
+                buyer_email : "adsf" , 
+                buyer_name : "asdf" ,
+                buyer_tel : "123" ,
+            }, rsp => { 
+                try {
+                    axios.post("http://localhost:8080/camp/reserve", {
                         USER_ID: USER_ID,
                         CAMP_CHECKIN: reserveInfo.CAMP_CHECKIN,
                         CAMP_CHECKOUT: reserveInfo.CAMP_CHECKOUT,
@@ -74,23 +90,28 @@ const CampReserve = () => {
                         CAMP_USER_PHONE: CAMP_USER_PHONE,
                         CAMP_USER_EMAIL: CAMP_USER_EMAIL,
                         CAMP_ID: reserveInfo.CAMP_ID,
-                    }),
-                });
-
-                console.log("code check : 2" );
-                if (response.ok) {
-
-                    navigate("/camp");
-                    
-                    // <Alert icon={<CiCircleCheck fontSize="inherit" />} severity="success">
-                    //     예약이 완료되었습니다. 예약확인은 마이페이지에서 가능합니다.
-                    // </Alert>
-                } else {
-                    console.error("Reserve failed");
+                    }, {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                    .then(response => {
+                        if (response.status === 200) {
+                            navigate("/camp");
+                            // <Alert icon={<CiCircleCheck fontSize="inherit" />} severity="success">
+                            //     예약이 완료되었습니다. 예약확인은 마이페이지에서 가능합니다.
+                            // </Alert>
+                        } else {
+                            console.error("Reserve failed");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error during registration:", error);
+                    });
+                } catch (error) {
+                    console.error("Error during registration:", error);
                 }
-            } catch (error) {
-                console.error("Error during registration:", error);
-            }
+            });
         } else {
             console.error("Reserve failed");
         }
@@ -100,8 +121,6 @@ const CampReserve = () => {
         </Alert>
     }
   };
-
-
 
 
   // 상세페이지에서 데이터 받기
