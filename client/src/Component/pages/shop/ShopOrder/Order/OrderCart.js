@@ -11,6 +11,8 @@ const OrderCart = () => {
   const [map, setMap] = useState({});
   const [marker, setMarker] = useState(null);
   const [userIds, setUserIds] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
   const [order, setOrder] = useState({
     userId: "", // userId로 변경
     orderOrdererName: "",
@@ -22,6 +24,7 @@ const OrderCart = () => {
     orderReceiverPhone: "",
     orderReceiverMessage: "",
     orderReceiverDeleveryMsg: "",
+
   });
   const [quantity, setQuantity] = useState(() => {
     const savedQuantity = sessionStorage.getItem('selectedQuantity');
@@ -29,7 +32,6 @@ const OrderCart = () => {
   });
   const navigate = useNavigate();
   const { productId } = useParams();
-  const location = useLocation(); // useLocation을 여기로 이동
   const [userName, setUserName] = useState("");
   const [userAddress, setUserAddress] = useState("");
   const [userPhone, setUserPhone] = useState("");
@@ -63,12 +65,12 @@ const OrderCart = () => {
   } = order;
 
   const onChange = (event) => {
-    const { value, name } = event.target;
+    const { name, value } = event.target;
     setOrder((prevOrder) => ({
-      ...prevOrder,
-      [name]: value,
+        ...prevOrder,
+        [name]: value,
     }));
-  };
+};
 
   const [orderReceiverPhoneParts, setOrderReceiverPhoneParts] = useState({
     part1: "",
@@ -76,7 +78,7 @@ const OrderCart = () => {
     part3: "",
   });
 
-  const onChangeReceiverPhone = (event) => {
+  const onChangePhoneNumber = (event) => {
     const { value, name } = event.target;
 
     setOrderReceiverPhoneParts((prevPhoneParts) => ({
@@ -262,6 +264,7 @@ const OrderCart = () => {
   
   return (
     <div className='root'>
+
       <div className='order-main'>
         <main className='main-container'>
           {product && Object.keys(product).length > 0 ? (
@@ -340,6 +343,7 @@ const OrderCart = () => {
                   </tbody>
                </table>
               </div>
+
               <section className='order-info'>
                 <div className='order-form'>
                   <p className='eEOGCf'>주문 정보</p>
