@@ -72,11 +72,11 @@ const ShopDetail = () => {
       const cartData = {
         productId: parseInt(productId, 10),
         userId: userId,
-        cartCategory: product.productCategory,
-        cartAmount: quantity,
-        cartImg: product.productThumbnail,
-        cartName: product.productName,
-        cartPrice: product.productPrice,
+        productCategory: product.productCategory,
+        productAmount: quantity,
+        productThumbnail: product.productThumbnail,
+        productName: product.productName,
+        productPrice: product.productPrice,
       };
 
       const response = await axios.post(

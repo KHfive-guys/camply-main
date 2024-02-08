@@ -26,11 +26,11 @@
 		   <id property="cartId" column="CART_ID"/>
 		        	<result property="productId" column="PRODUCT_ID"/>
 		        	<result property="userId" column="USER_ID"/>
-		        	<result property="cartCategory" column="CART_CATEGORY"/>
-		        	<result property="cartImg" column="CART_IMG"/>
-		        	<result property="cartName" column="CART_NAME"/>
-		        	<result property="cartPrice" column="CART_PRICE"/>
-		        	<result property="cartAmount" column="CART_AMOUNT"/>
+		        	<result property="productCategory" column="PRODUCT_CATEGORY"/>
+		        	<result property="productThumbnail" column="PRODUCT_THUMBNAIL"/>
+		        	<result property="productName" column="PRODUCT_NAME"/>
+		        	<result property="productPrice" column="PRODUCT_PRICE"/>
+		        	<result property="productAmount" column="PRODUCT_AMOUNT"/>
 		   </resultMap>
 
 	<select id="getProduct" resultMap="ShopCart" parameterType="int">
@@ -40,10 +40,10 @@
 	<!--장바구니 정보 저장 -->
 	<insert id="insertCart"
 		parameterType="com.camply.shop.cart.vo.CartVO">
-		INSERT INTO SHOP_CART (PRODUCT_ID, CART_CATEGORY,
-		CART_IMG,CART_NAME,CART_PRICE,CART_AMOUNT,USER_ID)
+		INSERT INTO SHOP_CART (PRODUCT_ID, PRODUCT_CATEGORY,
+		PRODUCT_THUMBNAIL,PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_AMOUNT,USER_ID)
 		VALUES
-		(#{productId},#{cartCategory},#{cartImg},#{cartName},#{cartPrice},#{cartAmount},#{userId})
+		(#{productId},#{productCategory},#{productThumbnail},#{productName},#{productPrice},#{productAmount},#{userId})
 	</insert>
 	
 	<!--내 장바구니 정보 가져오기  -->

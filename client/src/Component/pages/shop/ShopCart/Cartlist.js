@@ -44,9 +44,14 @@ const CartList = () => {
         <ul>
           {cartItems.map((item, index) => (
             <li key={index}>
+              <img
+                style={{ width: "50px", height: "50px" }}
+                src={item.productThumbnail}
+                alt='상품 이미지'
+              />
               <p>상품명: {item.productName}</p>
               <p>가격: {item.productPrice}</p>
-              <p>수량: {item.cartAmount}</p>
+              <p>수량: {item.productAmount}</p>
               {/* 추가적인 상품 정보 표시 */}
             </li>
           ))}
