@@ -119,7 +119,8 @@ function App() {
           path='/seller'
           element={
             <div>
-              <h1>상품관리 페이지.</h1>
+              <Navbar/>
+              <h1 style={{marginTop:'100px'}}>상품관리 페이지.</h1>
               <Link to='/seller/sell'>상품등록</Link>
               <Link to='/seller/list'>상품리스트</Link>
             </div>
