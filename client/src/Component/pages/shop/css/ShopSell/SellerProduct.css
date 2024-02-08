@@ -62,8 +62,15 @@ tbody tr:hover {
   }
 }
 
+.sellerProduct h2 {
+  margin-left: 10%;
+}
+
 /* 선택 입력창 꾸미기 */
 /************************* 선택 입력창 수정 ***********************/
+.sellerProduct {
+  margin-top: 70px;
+}
 .sellerProduct .product-registration-form {
   max-width: 600px;
   margin: auto;
