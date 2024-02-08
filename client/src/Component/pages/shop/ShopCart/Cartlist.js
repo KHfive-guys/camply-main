@@ -22,7 +22,7 @@ const CartList = () => {
     if (userId) {
       try {
         const response = await axios.get(
-          `http://localhost:8080/shop/mycart/${userId}`
+          `http://localhost:8080/shop/cart/mycart/${userId}`
         );
         setCartItems(response.data);
       } catch (error) {

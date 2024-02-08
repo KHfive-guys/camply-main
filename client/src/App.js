@@ -1,13 +1,12 @@
-import React, { useState, useEffect, Component } from 'react';
-import ShopDetail from './Component/pages/shop/ShopDetail/ShopDetail';
+import React, { useState, useEffect, Component } from "react";
+import ShopDetail from "./Component/pages/shop/ShopDetail/ShopDetail";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
   Link,
-} from 'react-router-dom';
-
+} from "react-router-dom";
 
 import Register from "./Component/pages/common/Register";
 import GeneralRegister from "./Component/pages/common/GeneralRegister";
@@ -53,7 +52,7 @@ import ReviewWriter from "./Component/pages/shop/ShopDetail/ShopReview/ReviewWri
 import ShopCart from "./Component/pages/shop/ShopCart";
 import OrderCart from "./Component/pages/shop/ShopOrder/Order/OrderCart";
 import MyPage from "./Component/pages/common/MyPage";
-import EditUser from "./Component/pages/common/EditUser"
+import EditUser from "./Component/pages/common/EditUser";
 import campMainImg from "./Component/img/MainImg/메인페이지 이미지2.jpeg";
 import CampBoard from "./Component/pages/camp/CampBoard/CampBoard";
 import CampBoardAll from "./Component/pages/camp/CampBoard/CampBoardAll";
@@ -67,10 +66,10 @@ import CampBoardPension from "./Component/pages/camp/CampBoard/CampBoardPension"
 import CampBoardSite from "./Component/pages/camp/CampBoard/CampBoardSite";
 import MyShopping from "./Component/pages/common/MyShopping";
 import MyCamping from "./Component/pages/common/MyCamping";
-
-import './Component/pages/camp/CampStyle.css';
-import './CampApp.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import CartList from "./Component/pages/shop/ShopCart/Cartlist";
+import "./Component/pages/camp/CampStyle.css";
+import "./CampApp.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [load, upadateLoad] = useState(true);
@@ -87,30 +86,30 @@ function App() {
     <Router>
       <Routes>
         <Route
-          path="/"
+          path='/'
           element={
-            <div className="container text-center mt-5">
-              <h1 className="display-4">
+            <div className='container text-center mt-5'>
+              <h1 className='display-4'>
                 안녕하세요. 캠플리에 오신걸 환영합니다.
               </h1>
-              <p className="lead">캠핑 예약 또는 쇼핑 몰로 이동하세요.</p>
-              <div className="d-flex justify-content-center">
-                <Link to="/camp" className="btn btn-primary m-2">
+              <p className='lead'>캠핑 예약 또는 쇼핑 몰로 이동하세요.</p>
+              <div className='d-flex justify-content-center'>
+                <Link to='/camp' className='btn btn-primary m-2'>
                   <img
                     src={campMainImg}
-                    alt="Camping Image"
-                    className="img-thumbnail"
-                    style={{ width: '200px', height: '200px' }}
+                    alt='Camping Image'
+                    className='img-thumbnail'
+                    style={{ width: "200px", height: "200px" }}
                   />
                   <p>캠핑 예약</p>
                 </Link>
 
-                <Link to="/shop/main" className="btn btn-success m-2">
+                <Link to='/shop/main' className='btn btn-success m-2'>
                   <img
                     src={campMainImg}
-                    alt="Shopping Image"
-                    className="img-thumbnail"
-                    style={{ width: '200px', height: '200px' }}
+                    alt='Shopping Image'
+                    className='img-thumbnail'
+                    style={{ width: "200px", height: "200px" }}
                   />
                   <p>쇼핑몰</p>
                 </Link>
@@ -119,28 +118,28 @@ function App() {
           }
         />
         <Route
-          path="/seller"
+          path='/seller'
           element={
             <div>
               <Navbar />
-              <h1 style={{ marginTop: '100px' }}>상품관리 페이지.</h1>
-              <Link to="/seller/sell">상품등록</Link>
-              <Link to="/seller/list">상품리스트</Link>
+              <h1 style={{ marginTop: "100px" }}>상품관리 페이지.</h1>
+              <Link to='/seller/sell'>상품등록</Link>
+              <Link to='/seller/list'>상품리스트</Link>
             </div>
           }
         />
 
         <Route
-          path="/seller/*"
+          path='/seller/*'
           element={
             <>
               <Preloader load={load} />
-              <div className="App" id={load ? 'no-scroll' : 'scroll'}>
+              <div className='App' id={load ? "no-scroll" : "scroll"}>
                 <Routes>
-                  <Route path="/sell" element={<CreateProduct />} />
-                  <Route path="/list" element={<SellerProduct />} />
+                  <Route path='/sell' element={<CreateProduct />} />
+                  <Route path='/list' element={<SellerProduct />} />
                   <Route
-                    path="/product/edit/:productId"
+                    path='/product/edit/:productId'
                     element={<UpdateProduct />}
                   />
                 </Routes>
@@ -150,32 +149,32 @@ function App() {
         />
 
         <Route
-          path="/camp/*"
+          path='/camp/*'
           element={
             <>
               <Preloader load={load} />
-              <div className="App" id={load ? 'no-scroll' : 'scroll'}>
+              <div className='App' id={load ? "no-scroll" : "scroll"}>
                 <Navbar />
                 <ScrollToTop />
                 <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/reservation" element={<Reservations />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/inquiry" element={<Inquiry />} />
+                  <Route path='/' element={<Home />} />
+                  <Route path='/reservation' element={<Reservations />} />
+                  <Route path='/about' element={<About />} />
+                  <Route path='/inquiry' element={<Inquiry />} />
                 </Routes>
               </div>
             </>
           }
         />
-        <Route path="/register" element={<Register />} />
-        <Route path="/register/general" element={<GeneralRegister />} />
-        <Route path="/register/manager" element={<ManagerRegister />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/register/general' element={<GeneralRegister />} />
+        <Route path='/register/manager' element={<ManagerRegister />} />
         <Route
-          path="/register/general/email"
+          path='/register/general/email'
           element={<GeneralEmailRegister />}
         />
         <Route
-          path="/register/manager/email"
+          path='/register/manager/email'
           element={<ManagerEmailRegister />}
         />
 
@@ -190,49 +189,50 @@ function App() {
         <Route path='/mypage/edit' element={<EditUser />} />
         <Route path='/camp/searchList' element={<CampSearch />} />
         <Route path='/camp/reserve' element={<CampReserve />} />
-        
+
         <Route path='/camp/board/caravan' element={<CampBoardCaravan />} />
         <Route path='/camp/board/tent' element={<CampBoardTent />} />
         <Route path='/camp/board/glamping' element={<CampBoardGlamping />} />
         <Route path='/camp/board/site' element={<CampBoardSite />} />
         <Route path='/camp/board/pension' element={<CampBoardPension />} />
-       
+
         <Route
-          path="/shop/*"
+          path='/shop/*'
           element={
             <ShopLayout>
               <Routes>
-                <Route path="/main" element={<ShopMain />} />
-                <Route path="/order/:productId" element={<OrderCart />} />
-                <Route path="/mypage" element={<ShopMyPage />} />
-                <Route path="/cart" element={<ShopCart />} />
-                <Route path="/tent" element={<Tent />} />
-                <Route path="/chair" element={<Chair />} />
-                <Route path="/sleeping" element={<Sleeping />} />
-                <Route path="/kitchen" element={<Kitchen />} />
-                <Route path="/lamp" element={<Lamp />} />
-                <Route path="/fireplace" element={<BBQ />} />
+                <Route path='/main' element={<ShopMain />} />
+                <Route path='/order/:productId' element={<OrderCart />} />
+                <Route path='/mypage' element={<ShopMyPage />} />
+                <Route path='/cart' element={<ShopCart />} />
+                <Route path='/tent' element={<Tent />} />
+                <Route path='/chair' element={<Chair />} />
+                <Route path='/sleeping' element={<Sleeping />} />
+                <Route path='/kitchen' element={<Kitchen />} />
+                <Route path='/lamp' element={<Lamp />} />
+                <Route path='/fireplace' element={<BBQ />} />
               </Routes>
             </ShopLayout>
           }
         />
+        <Route path='/shop/mycart/:userId' element={<CartList />} />
+        <Route path='/shop/detail/:productId' element={<ShopDetail />} />
+        <Route path='/shop/detail/:productId/more' element={<ShopMore />} />
+        <Route path='/shop/detail/:productId/review' element={<ShopReview />} />
 
-        <Route path="/shop/detail/:productId" element={<ShopDetail />} />
-        <Route path="/shop/detail/:productId/more" element={<ShopMore />} />
-        <Route path="/shop/detail/:productId/review" element={<ShopReview />} />
-        <Route path="/shop/review/view/:reviewNo" element={<ReviewDetail />} />
-        <Route path="/review/update/:reviewNo" element={<ReviewUpdate />} />
+        <Route path='/shop/review/view/:reviewNo' element={<ReviewDetail />} />
+        <Route path='/review/update/:reviewNo' element={<ReviewUpdate />} />
         <Route
-          parh="/shop/detail/:productId/inquiry"
+          parh='/shop/detail/:productId/inquiry'
           element={<ShopInquiry />}
         />
         <Route
-          path="/shop/question/view/:questionNo"
+          path='/shop/question/view/:questionNo'
           element={<InquiryDetail />}
         />
-        <Route path="/inquiry/update/:questionNo" element={<InquiryUpdate />} />
-        <Route path="/inquiry/writer" element={<InquiryWriter />} />
-        <Route path="/review/writer" element={<ReviewWriter />} />
+        <Route path='/inquiry/update/:questionNo' element={<InquiryUpdate />} />
+        <Route path='/inquiry/writer' element={<InquiryWriter />} />
+        <Route path='/review/writer' element={<ReviewWriter />} />
       </Routes>
 
       <Footer />
