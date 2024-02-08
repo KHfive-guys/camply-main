@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { useParams, useNavigate, useLocation} from "react-router-dom";
-import { Container ,Button } from "react-bootstrap";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { Container, Button } from "react-bootstrap";
 import Reply from "./Board/Reply";
 import CampNavbar from "../CampNavbar";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
@@ -11,7 +11,6 @@ const parseJwt = (token) => {
 };
 
 function CampBoardDetail() {
-
   const location = useLocation();
   const [boardData, setBoardData] = useState({ camp_images: [] });
   const { camp_id } = useParams();
@@ -176,23 +175,23 @@ function CampBoardDetail() {
 
   // 예약페이지 이동
   const reserveMove = ({}) => {
-    navigate('/camp/reserve',  {
+    navigate("/camp/reserve", {
       state: {
         // 캠핑장 번호
-        CAMP_ID : `${boardData.camp_id}`,
+        CAMP_ID: `${boardData.camp_id}`,
         // 캠핑유형
-        CAMP_SELECT : `${searchInfo.CAMP_SELECT}`,
+        CAMP_SELECT: `${searchInfo.CAMP_SELECT}`,
         // 선택인원 (성인)
-        CAMP_ADULT : `${searchInfo.CAMP_ADULT}`,
+        CAMP_ADULT: `${searchInfo.CAMP_ADULT}`,
         // 선택인원 (아이)
-        CAMP_CHILD : `${searchInfo.CAMP_CHILD}`,
+        CAMP_CHILD: `${searchInfo.CAMP_CHILD}`,
         // 체크인 시간
-        CAMP_CHECKIN : `${searchInfo.CAMP_CHECKIN}`,
+        CAMP_CHECKIN: `${searchInfo.CAMP_CHECKIN}`,
         // 체크아웃 시간
-        CAMP_CHECKOUT : `${searchInfo.CAMP_CHECKOUT}`,
-      }
-    })
-  }
+        CAMP_CHECKOUT: `${searchInfo.CAMP_CHECKOUT}`,
+      },
+    });
+  };
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) =>
@@ -211,7 +210,6 @@ function CampBoardDetail() {
       <CampNavbar />
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
-
       </Container>
       <h1>Camp Board - Camp Details</h1>
       <table>
@@ -297,9 +295,8 @@ function CampBoardDetail() {
     <p>이미지가 없습니다.</p>
   )}
   <Button onClick={handleNextPage}>다음</Button>
+
 </div>
-
-
       <h1>지도</h1>
       <div id="map" style={{ width: "100%", height: "400px" }}></div>
 
