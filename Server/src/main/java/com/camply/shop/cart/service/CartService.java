@@ -29,4 +29,9 @@ public class CartService {
 	public List<CartVO> getCart(Long userId){
 		return cartDao.getCart(userId);
 	}
+	
+	//내 장바구니 삭제
+	public void deleteCart(int cartId) {
+		cartDao.deleteCart(cartId);
+	}
 }

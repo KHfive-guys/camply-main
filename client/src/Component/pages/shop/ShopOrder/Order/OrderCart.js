@@ -1,51 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import Layout from '../../../shop/ShopLayout';
-import '../../css/ShopOrder/OrderMain.css';
-import axios from 'axios';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { Button } from '@mui/material';
-import { TbCamper } from 'react-icons/tb';
+import React, { useState, useEffect } from "react";
+import Layout from "../../../shop/ShopLayout";
+import "../../css/ShopOrder/OrderMain.css";
+import axios from "axios";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { Button } from "@mui/material";
+import { TbCamper } from "react-icons/tb";
 
 const OrderCart = () => {
-  const [product, setProduct] = useState('');
+  const [product, setProduct] = useState("");
   const [map, setMap] = useState({});
   const [marker, setMarker] = useState(null);
   const [userIds, setUserIds] = useState(null);
   const [order, setOrder] = useState({
-    userId: '', // userId로 변경
-    orderOrdererName: '',
-    orderOrderEmail: '',
-    orderOrderPhone: '',
-    orderReceiverName: '',
-    orderReceiverAddress: '',
-    orderReceiverAddressDetail: '',
-    orderReceiverPhone: '',
-    orderReceiverMessage: '',
-    orderReceiverDeleveryMsg: '',
+    userId: "", // userId로 변경
+    orderOrdererName: "",
+    orderOrderEmail: "",
+    orderOrderPhone: "",
+    orderReceiverName: "",
+    orderReceiverAddress: "",
+    orderReceiverAddressDetail: "",
+    orderReceiverPhone: "",
+    orderReceiverMessage: "",
+    orderReceiverDeleveryMsg: "",
   });
   const [quantity, setQuantity] = useState(() => {
-    const savedQuantity = sessionStorage.getItem('selectedQuantity');
+    const savedQuantity = sessionStorage.getItem("selectedQuantity");
     return savedQuantity ? JSON.parse(savedQuantity) : 0;
   });
   const navigate = useNavigate();
   const { productId } = useParams();
   const location = useLocation(); // useLocation을 여기로 이동
-  const [userName, setUserName] = useState('');
-  const [userAddress, setUserAddress] = useState('');
-  const [userPhone, setUserPhone] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [zipCode, setZipcode] = useState('');
+  const [userName, setUserName] = useState("");
+  const [userAddress, setUserAddress] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [zipCode, setZipcode] = useState("");
 
   useEffect(() => {
     if (location.state?.quantity && location.state?.product) {
       // 상태가 제대로 전달되었는지 확인
-      console.log('Quantity from location state:', location.state.quantity);
-      console.log('Product from location state:', location.state.product);
+      console.log("Quantity from location state:", location.state.quantity);
+      console.log("Product from location state:", location.state.product);
       setProduct(location.state.product); // 상품 정보 상태 업데이트
       // 여기에서는 location.state.product를 직접 사용하거나,
       // 필요한 경우 상품 ID를 사용하여 추가적인 상품 정보를 서버에서 불러올 수 있습니다.
     } else {
-      console.log('No product or quantity info passed from previous page');
+      console.log("No product or quantity info passed from previous page");
       // 필요한 정보가 없는 경우 사용자에게 알림 또는 기본값 설정
     }
   }, [location, location.state]);
@@ -71,9 +71,9 @@ const OrderCart = () => {
   };
 
   const [orderReceiverPhoneParts, setOrderReceiverPhoneParts] = useState({
-    part1: '',
-    part2: '',
-    part3: '',
+    part1: "",
+    part2: "",
+    part3: "",
   });
 
   const onChangeReceiverPhone = (event) => {
@@ -103,10 +103,10 @@ const OrderCart = () => {
           );
           setProduct(response.data);
         } else {
-          console.error('Invalid productId');
+          console.error("Invalid productId");
         }
       } catch (error) {
-        console.error('상품 정보를 가져오는 중 오류 발생', error);
+        console.error("상품 정보를 가져오는 중 오류 발생", error);
       }
     };
 
@@ -116,7 +116,7 @@ const OrderCart = () => {
     if (location.state?.quantity) {
       setQuantity(location.state.quantity);
       sessionStorage.setItem(
-        'selectedQuantity',
+        "selectedQuantity",
         JSON.stringify(location.state.quantity)
       );
     }
@@ -124,7 +124,7 @@ const OrderCart = () => {
   useEffect(() => {
     const initializeMap = () => {
       window.kakao.maps.load(() => {
-        const container = document.getElementById('map');
+        const container = document.getElementById("map");
         const options = {
           center: new window.kakao.maps.LatLng(33.450701, 126.570667),
           level: 3,
@@ -148,7 +148,7 @@ const OrderCart = () => {
           setUserAddress(addrData.address);
           setOrder((prevOrder) => ({
             ...prevOrder,
-            orderReceiverAddress: addrData.address || '',
+            orderReceiverAddress: addrData.address || "",
           }));
         });
       },
@@ -158,16 +158,16 @@ const OrderCart = () => {
     product && product.productPrice ? product.productPrice : 0;
   const formattedPrice = productPrice
     .toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const token = localStorage.getItem('yourTokenKey');
+      const token = localStorage.getItem("yourTokenKey");
 
       const parseJwt = (token) => {
         try {
           return JSON.parse(
-            decodeURIComponent(escape(atob(token.split('.')[1])))
+            decodeURIComponent(escape(atob(token.split(".")[1])))
           );
         } catch (e) {
           return null;
@@ -176,25 +176,25 @@ const OrderCart = () => {
 
       if (token) {
         const decodedToken = parseJwt(token);
-        console.log('Decoded Token:', decodedToken);
+        console.log("Decoded Token:", decodedToken);
 
-        setUserIds(decodedToken.user_id || '');
-        setUserName(decodedToken.USER_NAME || '');
-        setUserEmail(decodedToken.email || '');
+        setUserIds(decodedToken.user_id || "");
+        setUserName(decodedToken.USER_NAME || "");
+        setUserEmail(decodedToken.email || "");
         // getUserPhoneFormatted 함수를 호출하여 형식화된 전화번호를 설정
         setUserPhone(
-          getUserPhoneFormatted(decodedToken.USER_BUSINESSPHONE) || ''
+          getUserPhoneFormatted(decodedToken.USER_BUSINESSPHONE) || ""
         );
-        setUserAddress(decodedToken.userAddress || '');
+        setUserAddress(decodedToken.userAddress || "");
 
         setOrder((prevOrder) => ({
           ...prevOrder,
-          userId: decodedToken.user_id || '',
-          orderOrdererName: decodedToken.USER_NAME || '',
-          orderOrderEmail: decodedToken.email || '',
+          userId: decodedToken.user_id || "",
+          orderOrdererName: decodedToken.USER_NAME || "",
+          orderOrderEmail: decodedToken.email || "",
           orderOrderPhone:
-            getUserPhoneFormatted(decodedToken.USER_BUSINESSPHONE) || '',
-          orderReceiverAddress: decodedToken.userAddress || '',
+            getUserPhoneFormatted(decodedToken.USER_BUSINESSPHONE) || "",
+          orderReceiverAddress: decodedToken.userAddress || "",
           // 나머지 필요한 정보들 추가
         }));
       }
@@ -222,7 +222,7 @@ const OrderCart = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const savedQuantity = JSON.parse(
-        sessionStorage.getItem('selectedQuantity') || '0'
+        sessionStorage.getItem("selectedQuantity") || "0"
       );
       const numericProductId = parseInt(productId, 10);
       // 세션 스토리지 또는 location.state에서 수량 정보를 안전하게 읽어옴
@@ -240,87 +240,96 @@ const OrderCart = () => {
         orderReceiverPhone: order.orderReceiverPhone,
         orderReceiverMessage: order.orderReceiverMessage,
         orderReceiverDeleveryMsg: order.orderReceiverDeleveryMsg,
-        productName: product.productName || '',
+        productName: product.productName || "",
         orderProductAmount: quantity,
         productPrice: productPrice, // 상품 단가 추가
         productId: numericProductId,
-        productThumbnail: product.productThumbnail || '',
+        productThumbnail: product.productThumbnail || "",
         totalPrice: totalPrice,
       };
-      console.log('orderData:', orderData);
+      console.log("orderData:", orderData);
 
       const response = await axios.post(
-        'http://localhost:8080/shop/order/post',
+        "http://localhost:8080/shop/order/post",
         orderData
       );
 
-      console.log('Response:', response);
+      console.log("Response:", response);
 
       // 주문 완료 후 추가한 부분
-      alert('주문이 성공적으로 완료되었습니다.');
-      navigate('/shop/main');
+      alert("주문이 성공적으로 완료되었습니다.");
+      if (location.state?.product) {
+        const { cartId } = location.state.product;
+        await axios.delete(`http://localhost:8080/shop/cart/delete/${cartId}`);
+        alert("장바구니 항목이 삭제되었습니다.");
+      }
+
+      navigate("/shop/main");
     } catch (error) {
-      console.error('주문을 저장하는 중 오류 발생', error);
+      console.error(
+        "주문을 저장하거나 장바구니 항목을 삭제하는 중 오류 발생",
+        error
+      );
     }
   };
   const backToList = () => {
-    navigate('/shop/main');
+    navigate("/shop/main");
   };
 
   return (
-    <div className="root">
-      <div className="order-main">
-        <main className="main-container">
+    <div className='root'>
+      <div className='order-main'>
+        <main className='main-container'>
           {product && Object.keys(product).length > 0 ? (
             <>
               <h3>
                 <TbCamper />
                 Camply
               </h3>
-              <div className="tbl-order-cart">
+              <div className='tbl-order-cart'>
                 <table>
                   <colgroup>
-                    <col style={{ width: '300px' }} />
+                    <col style={{ width: "300px" }} />
                     <col />
-                    <col style={{ width: '300px' }} />
-                    <col style={{ width: '100px' }} />
+                    <col style={{ width: "300px" }} />
+                    <col style={{ width: "100px" }} />
                   </colgroup>
                   <thead>
-                    <tr className="nbg">
+                    <tr className='nbg'>
                       <td>&nbsp;</td>
-                      <td style={{ textAlign: 'center' }}>상품정보</td>
-                      <td style={{ textAlign: 'center' }}>수량</td>
+                      <td style={{ textAlign: "center" }}>상품정보</td>
+                      <td style={{ textAlign: "center" }}>수량</td>
                       <td>&nbsp;</td>
-                      <td style={{ textAlign: 'center' }}>주문금액</td>
+                      <td style={{ textAlign: "center" }}>주문금액</td>
 
                       <td>&nbsp;</td>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="nbg">
+                    <tr className='nbg'>
                       <td>
-                        <div className="tb-center">
-                          <div className="thumb">
+                        <div className='tb-center'>
+                          <div className='thumb'>
                             <img
                               src={product.productThumbnail}
-                              style={{ width: '150px' }}
-                              alt="제품 이미지"
+                              style={{ width: "150px" }}
+                              alt='제품 이미지'
                             />
                           </div>
                         </div>
                       </td>
                       <td>
-                        <div className="tb-center">
+                        <div className='tb-center'>
                           <p
-                            className="item-title"
-                            style={{ fontSize: '15px', fontWeight: 'bold' }}
+                            className='item-title'
+                            style={{ fontSize: "15px", fontWeight: "bold" }}
                           >
                             {product.productName}
                           </p>
                         </div>
                       </td>
                       <td>
-                        <div className="tb-center">
+                        <div className='tb-center'>
                           <p>
                             <span>{quantity}</span>
                           </p>
@@ -328,19 +337,19 @@ const OrderCart = () => {
                       </td>
                       <td></td>
                       <td>
-                        <div className="tb-right tb-bold">
+                        <div className='tb-right tb-bold'>
                           {formattedPrice}원
                         </div>
                       </td>
                       <td></td>
                     </tr>
-                    <tr className="total">
+                    <tr className='total'>
                       <td colSpan={6}>
-                        <div className="tb-right">
+                        <div className='tb-right'>
                           주문 금액
                           <span
-                            id="pvd-total-discount-block-etc-0"
-                            className="fc-red"
+                            id='pvd-total-discount-block-etc-0'
+                            className='fc-red'
                           ></span>
                           <strong>
                             {(
@@ -351,8 +360,8 @@ const OrderCart = () => {
                           </strong>
                           + 배송비
                           <span
-                            id="pvd-total-delivery-0"
-                            className="delprice"
+                            id='pvd-total-delivery-0'
+                            className='delprice'
                           ></span>
                           <strong>무료</strong>=
                           <strong>
@@ -369,22 +378,23 @@ const OrderCart = () => {
                           </strong>
                         </div>
                       </td>
+                      s
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <section className="order-info">
-                <div className="order-form">
-                  <p className="eEOGCf">주문 정보</p>
-                  <form className="form">
+              <section className='order-info'>
+                <div className='order-form'>
+                  <p className='eEOGCf'>주문 정보</p>
+                  <form className='form'>
                     <div>
                       <p>주문자</p>
                       <div>
                         <input
-                          type="text"
-                          name="userName"
-                          className="input"
-                          value={userName || ''}
+                          type='text'
+                          name='userName'
+                          className='input'
+                          value={userName || ""}
                           onChange={onChange}
                         />
                       </div>
@@ -393,10 +403,10 @@ const OrderCart = () => {
                       <p>이메일</p>
                       <div>
                         <input
-                          type="email"
-                          name="userEmail"
-                          className="input"
-                          value={userEmail || ''}
+                          type='email'
+                          name='userEmail'
+                          className='input'
+                          value={userEmail || ""}
                           onChange={onChange}
                         />
                       </div>
@@ -405,60 +415,60 @@ const OrderCart = () => {
                       <p>연락처</p>
                       <div>
                         <input
-                          type="tel"
-                          value={userPhone || ''}
-                          name="userPhone"
-                          className="form"
+                          type='tel'
+                          value={userPhone || ""}
+                          name='userPhone'
+                          className='form'
                           maxLength={13}
-                          placeholder="010-0000-0000"
+                          placeholder='010-0000-0000'
                         />
                       </div>
                     </div>
                   </form>
-                  <form className="form">
-                    <p className="eEOGCf">배송지</p>
+                  <form className='form'>
+                    <p className='eEOGCf'>배송지</p>
                     <div>
                       <p>받는사람</p>
                       <div>
                         <input
-                          type="text"
-                          value={orderReceiverName || ''}
-                          name="orderReceiverName"
+                          type='text'
+                          value={orderReceiverName || ""}
+                          name='orderReceiverName'
                           onChange={onChange}
                         />
                       </div>
                     </div>
-                    <div className="address-form">
+                    <div className='address-form'>
                       <p>주소</p>
-                      <div className="address-search">
-                        <div className="address-num">
+                      <div className='address-search'>
+                        <div className='address-num'>
                           <input
-                            type="text"
-                            placeholder="우편번호"
-                            id="companyAddress"
+                            type='text'
+                            placeholder='우편번호'
+                            id='companyAddress'
                             value={zipCode}
                             required
-                            className="address-number-01 from"
+                            className='address-number-01 from'
                           />
-                          <button type="button" onClick={onClickAddr}>
+                          <button type='button' onClick={onClickAddr}>
                             주소검색
                           </button>
                         </div>
                         <input
-                          type="text"
-                          placeholder="기본주소"
+                          type='text'
+                          placeholder='기본주소'
                           value={userAddress}
-                          name="orderReceiverAddress"
+                          name='orderReceiverAddress'
                           onChange={onChange}
-                          className="default-address-01 form"
+                          className='default-address-01 form'
                         ></input>
                         <input
-                          type="text"
-                          placeholder="상세주소"
+                          type='text'
+                          placeholder='상세주소'
                           value={orderReceiverAddressDetail}
-                          name="orderReceiverAddressDetail"
+                          name='orderReceiverAddressDetail'
                           onChange={onChange}
-                          className="default-address-01 form"
+                          className='default-address-01 form'
                         ></input>
                       </div>
                     </div>
@@ -466,101 +476,101 @@ const OrderCart = () => {
                       <p>휴대전화</p>
                       <div
                         value={orderReceiverPhone}
-                        name="orderReceiverPhone"
+                        name='orderReceiverPhone'
                         onChange={onChange}
                       >
                         <input
-                          type="tel"
+                          type='tel'
                           value={orderReceiverPhoneParts.part1}
-                          name="part1"
+                          name='part1'
                           onChange={onChangeReceiverPhone}
-                          className="form"
+                          className='form'
                           maxLength={3}
                         />
                         <input
-                          type="tel"
+                          type='tel'
                           value={orderReceiverPhoneParts.part2}
-                          name="part2"
+                          name='part2'
                           onChange={onChangeReceiverPhone}
-                          className="form"
+                          className='form'
                           maxLength={4}
                         />
                         <input
-                          type="tel"
+                          type='tel'
                           value={orderReceiverPhoneParts.part3}
-                          name="part3"
+                          name='part3'
                           onChange={onChangeReceiverPhone}
-                          className="form"
+                          className='form'
                           maxLength={4}
                         />
                       </div>
                     </div>
                     <hr></hr>
                     <div>
-                      <section className="order-msg">
+                      <section className='order-msg'>
                         <p>주문메세지</p>
                         <textarea
-                          className="order-text"
-                          rows="6"
-                          cols="50"
-                          name="orderReceiverMessage"
+                          className='order-text'
+                          rows='6'
+                          cols='50'
+                          name='orderReceiverMessage'
                           value={orderReceiverMessage}
                           onChange={onChange}
-                          placeholder="주문메세지를 입력해주세요."
+                          placeholder='주문메세지를 입력해주세요.'
                         />
                       </section>
                     </div>
                     <hr></hr>
                     <div>
-                      <section className="delivery-msg">
+                      <section className='delivery-msg'>
                         <p>배송메시지</p>
                         <textarea
-                          className="deli-text"
-                          rows="6"
-                          cols="50"
-                          name="orderReceiverDeleveryMsg"
+                          className='deli-text'
+                          rows='6'
+                          cols='50'
+                          name='orderReceiverDeleveryMsg'
                           value={orderReceiverDeleveryMsg}
                           onChange={onChange}
-                          placeholder="배송메시지 입력해주세요."
+                          placeholder='배송메시지 입력해주세요.'
                         />
                       </section>
                     </div>
                   </form>
                 </div>
               </section>
-              <div className="order">
+              <div className='order'>
                 <h3>주문 금액</h3>
-                <div className="tbl-pay">
+                <div className='tbl-pay'>
                   <table>
                     <colgroup>
-                      <col style={{ width: '24%' }} />
-                      <col style={{ width: '18%' }} />
-                      <col style={{ width: '22%' }} />
+                      <col style={{ width: "24%" }} />
+                      <col style={{ width: "18%" }} />
+                      <col style={{ width: "22%" }} />
                     </colgroup>
                     <thead>
                       <tr>
-                        <th scope="col" style={{ textAlign: 'center' }}>
+                        <th scope='col' style={{ textAlign: "center" }}>
                           상품금액
                         </th>
-                        <th scope="col" style={{ textAlign: 'center' }}>
+                        <th scope='col' style={{ textAlign: "center" }}>
                           배송비
                         </th>
-                        <th scope="col" style={{ textAlign: 'center' }}>
+                        <th scope='col' style={{ textAlign: "center" }}>
                           결제 예정금액
                         </th>
                       </tr>
                       <tr>
                         <td>
-                          <div className="base">
+                          <div className='base'>
                             <strong>
                               <em>
-                                <span className="op-total">
+                                <span className='op-total'>
                                   {(
                                     quantity *
                                     (product.productPrice
                                       ? product.productPrice
                                       : 0)
-                                  ).toLocaleString()}{' '}
+                                  ).toLocaleString()}{" "}
                                 </span>
                               </em>
                               원
@@ -568,31 +578,31 @@ const OrderCart = () => {
                           </div>
                         </td>
                         <td>
-                          <div className="base">
+                          <div className='base'>
                             <strong>
                               <em>
-                                <span className="op-total">무료</span>
+                                <span className='op-total'>무료</span>
                               </em>
                             </strong>
-                            <a className="plus" style={{ marginRight: '50px' }}>
+                            <a className='plus' style={{ marginRight: "50px" }}>
                               <img
-                                src="https://www.ocamall.com/images/common/bul_h23_plus.png"
-                                alt="plus"
+                                src='https://www.ocamall.com/images/common/bul_h23_plus.png'
+                                alt='plus'
                               />
                             </a>
                           </div>
                         </td>
                         <td>
-                          <div className="base">
-                            <a className="equal">
+                          <div className='base'>
+                            <a className='equal'>
                               <img
-                                src="https://www.ocamall.com/images/common/bul_h23_equal.png"
-                                alt="equal"
+                                src='https://www.ocamall.com/images/common/bul_h23_equal.png'
+                                alt='equal'
                               />
                             </a>
                             <strong>
-                              <em className="fc-red">
-                                <span className="op-total">
+                              <em className='fc-red'>
+                                <span className='op-total'>
                                   {(
                                     quantity *
                                     (product.productPrice
@@ -610,30 +620,30 @@ const OrderCart = () => {
                   </table>
                 </div>
                 <h3>결제 정보</h3>
-                <div className="tbl-order">
+                <div className='tbl-order'>
                   <table>
                     <colgroup>
-                      <col style={{ width: '110px' }} />
+                      <col style={{ width: "110px" }} />
                     </colgroup>
                     <tbody>
                       <tr>
-                        <th scope="row">
-                          <div className="text-l">결제방법</div>
+                        <th scope='row'>
+                          <div className='text-l'>결제방법</div>
                         </th>
                         <td>
-                          <ul className="payment">
+                          <ul className='payment'>
                             <li>
                               <input
-                                type="radio"
-                                className="chk-rdo"
-                                name="radio_payment"
+                                type='radio'
+                                className='chk-rdo'
+                                name='radio_payment'
                               />
                               신용카드
                               <em>
-                                <span className="op-card-dc-price fc-red"></span>
+                                <span className='op-card-dc-price fc-red'></span>
                               </em>
                               <em>
-                                <span className="op-c-dc-price fc-red"></span>
+                                <span className='op-c-dc-price fc-red'></span>
                               </em>
                             </li>
                           </ul>
@@ -643,34 +653,34 @@ const OrderCart = () => {
                   </table>
                 </div>
                 <div>
-                  <p style={{ fontSize: '13px' }}>
+                  <p style={{ fontSize: "13px" }}>
                     · 안심클릭 및 인터넷안전결제(ISP)서비스로
-                    <font color="blue">128bit SSL</font>로 암호화된 결제 창이
+                    <font color='blue'>128bit SSL</font>로 암호화된 결제 창이
                     새로 뜹니다.
                   </p>
-                  <p style={{ fontSize: '13px' }}>
+                  <p style={{ fontSize: "13px" }}>
                     · 결제후, 카드명세서에 [
-                    <font color="red">KG모빌리언스(Mobilians)</font>
+                    <font color='red'>KG모빌리언스(Mobilians)</font>
                     ]로 표시되며, 카드 정보는 상점에 남지 않습니다.
                   </p>
                 </div>
                 <h3>주문자 동의</h3>
-                <div className="tbl-order policy">
+                <div className='tbl-order policy'>
                   <table>
                     <colgroup>
-                      <col style={{ width: '130px' }} />
+                      <col style={{ width: "130px" }} />
                     </colgroup>
                     <tbody>
                       <tr>
-                        <th scope="row">
-                          <div className="text-l">주문자동의</div>
+                        <th scope='row'>
+                          <div className='text-l'>주문자동의</div>
                         </th>
                         <td>
-                          <div className="order-agree-each">
-                            <label className="label">
-                              <input className="order-input" type="checkbox" />
-                              <span className="text">
-                                {' '}
+                          <div className='order-agree-each'>
+                            <label className='label'>
+                              <input className='order-input' type='checkbox' />
+                              <span className='text'>
+                                {" "}
                                 주문 / 결제 정보를 확인하여 구매 진행에
                                 동의합니다.
                               </span>
@@ -681,18 +691,18 @@ const OrderCart = () => {
                     </tbody>
                   </table>
                 </div>
-                <div className="tbl-order tot-order">
+                <div className='tbl-order tot-order'>
                   <table>
                     <colgroup>
-                      <col style={{ width: '100px' }}></col>
+                      <col style={{ width: "100px" }}></col>
                     </colgroup>
                     <thead>
                       <tr>
                         <th>총 결제금액</th>
                         <td>
-                          <strong className="totalprice">
+                          <strong className='totalprice'>
                             <em>
-                              <span className="op=total-price">
+                              <span className='op=total-price'>
                                 {(
                                   quantity *
                                   (product.productPrice
@@ -701,7 +711,7 @@ const OrderCart = () => {
                                 ).toLocaleString()}
                               </span>
                             </em>
-                            <span className="block-unit-won">원</span>
+                            <span className='block-unit-won'>원</span>
                           </strong>
                           &nbsp;
                         </td>
@@ -709,11 +719,11 @@ const OrderCart = () => {
                     </thead>
                   </table>
                 </div>
-                <div className="paybutton">
-                  <button className="CSSbuttonBlack" onClick={saveOrder}>
+                <div className='paybutton'>
+                  <button className='CSSbuttonBlack' onClick={saveOrder}>
                     주문하기
                   </button>
-                  <button className="CSSbuttonWhite" onClick={backToList}>
+                  <button className='CSSbuttonWhite' onClick={backToList}>
                     주문취소
                   </button>
                 </div>
