@@ -72,7 +72,6 @@ const ShopDetail = () => {
       const cartData = {
         productId: parseInt(productId, 10),
         userId: userId,
-        productCategory: product.productCategory,
         productAmount: quantity,
         productThumbnail: product.productThumbnail,
         productName: product.productName,

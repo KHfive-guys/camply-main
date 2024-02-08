@@ -40,14 +40,20 @@
 	<!--장바구니 정보 저장 -->
 	<insert id="insertCart"
 		parameterType="com.camply.shop.cart.vo.CartVO">
-		INSERT INTO SHOP_CART (PRODUCT_ID, PRODUCT_CATEGORY,
+		INSERT INTO SHOP_CART (PRODUCT_ID,
 		PRODUCT_THUMBNAIL,PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_AMOUNT,USER_ID)
 		VALUES
-		(#{productId},#{productCategory},#{productThumbnail},#{productName},#{productPrice},#{productAmount},#{userId})
+		(#{productId},#{productThumbnail},#{productName},#{productPrice},#{productAmount},#{userId})
 	</insert>
 	
 	<!--내 장바구니 정보 가져오기  -->
     <select id="getCart" resultMap="selectCart" parameterType="Long">
     	SELECT * FROM Shop_Cart WHERE USER_ID = #{userId} ORDER BY CART_ID DESC
     </select>
+    
+    <!--장바구니 정보 삭제  -->
+    <delete id="deleteCart" parameterType="int">
+    DELETE FROM Shop_Cart WHERE CART_ID = #{cartId}
+    </delete>
+    
 </mapper>	

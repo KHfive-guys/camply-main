@@ -18,4 +18,7 @@ public interface CartDao {
 
 	// 내 장바구니 리스트
 	List<CartVO> getCart(Long userId);
+	
+	// 내 장바구니 삭제
+	void deleteCart(int cartId);
 }
