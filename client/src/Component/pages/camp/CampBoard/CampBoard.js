@@ -419,7 +419,7 @@ function BbsWrite() {
                 />
               </td>
             </tr>
-
+   
             <tr>
               <th className="table-primary">1박 가격 <span className="required"> *필수 입력</span></th>
               <td>
