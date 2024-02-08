@@ -60,5 +60,6 @@ public class OrderVO {
 	private int productPrice;
 	private String orderStatus;
 	private int productId;
+	private int totalPrice;
 
 }

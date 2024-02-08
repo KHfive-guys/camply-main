@@ -81,6 +81,9 @@ const ShopDetail = () => {
   };
 
   const handleOrderClick = () => {
+    // 선택된 수량을 세션 스토리지에 저장
+    sessionStorage.setItem('selectedQuantity', JSON.stringify(quantity));
+    // 주문 페이지로 이동
     navigate(`/shop/order/${productId}`, { state: { product, quantity } });
   };
 
