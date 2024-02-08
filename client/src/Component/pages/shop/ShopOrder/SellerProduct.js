@@ -218,135 +218,138 @@ const ProductMyPage = () => {
 
   return (
     <>
-    <Nav/>
-    <div style={{marginTop:'100px'}}  className="sellerProduct">
-      <h2 style={{ display: 'inline-block'  }}>등록상품 조회</h2>
+      <Nav />
+      <div className="sellerProduct">
+        <h2 style={{ display: 'inline-block' }}>등록상품 조회</h2>
 
-      <span className="itemsPerPage-position">
-        <button
-          type="button"
-          onClick={handleSaveChanges}
-          className="savebutton"
-        >
-          저장
-        </button>
-        &nbsp;
-        <button
-          type="button"
-          onClick={handleDeleteSelected}
-          className="savebutton"
-        >
-          삭제
-        </button>
-        &nbsp;
-        <select value={itemsPerPage} onChange={handleItemsPerPageChange}>
-          <option value={10}>10개씩 보기</option>
-          <option value={20}>20개씩 보기</option>
-          <option value={50}>50개씩 보기</option>
-          <option value={100}>100개씩 보기</option>
-        </select>
-      </span>
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                checked={selectAll}
-                onChange={handleSelectAllChange}
-              />
-            </th>
-            <th>No</th>
-            <th>상품명</th>
-            <th>판매가</th>
-            <th>카테고리</th>
-            <th>상태</th>
-            <th>재고</th>
-            <th>등록일</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems
-            .filter(
-              (ShopProduct) => ShopProduct !== null && ShopProduct !== undefined
-            )
-            .map((ShopProduct, index) => (
-              <tr key={ShopProduct.productId || index}>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={selectedProducts.includes(ShopProduct.productId)}
-                    onChange={() => handleCheckboxChange(ShopProduct.productId)}
-                  />
-                </td>
-                {/* 고유 식별자 product_id는 유지하되 프론트에 보여지기 위한 No 값 */}
-                <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
-                <td>
-                  <img
-                    src={ShopProduct.productThumbnail}
-                    alt={`Thumbnail for ${ShopProduct.productName}`}
-                    width="60"
-                    height="60"
-                  />
-                  {ShopProduct.productName}
-                </td>
-                <td>{ShopProduct.formattedProductPrice}</td>
-                <td>{ShopProduct.productCategory}</td>
-                <td htmlFor="productStatus">
-                  <div className="form-group">
-                    <div className="dropdown">
-                      <select
-                        name="productStatus"
-                        onChange={(e) =>
-                          handleInputChange(
-                            ShopProduct.productId,
-                            e.target.value
-                          )
-                        }
-                        value={ShopProduct.productStatus}
-                        className="form-control"
-                      >
-                        <option value="판매중">판매중</option>
-                        <option value="판매중지">판매중지</option>
-                        <option value="품절">품절</option>
-                      </select>
-                      <div className="dropdown-icon">&#9660;</div>
+        <span className="itemsPerPage-position">
+          <button
+            type="button"
+            onClick={handleSaveChanges}
+            className="savebutton"
+          >
+            저장
+          </button>
+          &nbsp;
+          <button
+            type="button"
+            onClick={handleDeleteSelected}
+            className="savebutton"
+          >
+            삭제
+          </button>
+          &nbsp;
+          <select value={itemsPerPage} onChange={handleItemsPerPageChange}>
+            <option value={10}>10개씩 보기</option>
+            <option value={20}>20개씩 보기</option>
+            <option value={50}>50개씩 보기</option>
+            <option value={100}>100개씩 보기</option>
+          </select>
+        </span>
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  checked={selectAll}
+                  onChange={handleSelectAllChange}
+                />
+              </th>
+              <th>No</th>
+              <th>상품명</th>
+              <th>판매가</th>
+              <th>카테고리</th>
+              <th>상태</th>
+              <th>재고</th>
+              <th>등록일</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems
+              .filter(
+                (ShopProduct) =>
+                  ShopProduct !== null && ShopProduct !== undefined
+              )
+              .map((ShopProduct, index) => (
+                <tr key={ShopProduct.productId || index}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedProducts.includes(ShopProduct.productId)}
+                      onChange={() =>
+                        handleCheckboxChange(ShopProduct.productId)
+                      }
+                    />
+                  </td>
+                  {/* 고유 식별자 product_id는 유지하되 프론트에 보여지기 위한 No 값 */}
+                  <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
+                  <td>
+                    <img
+                      src={ShopProduct.productThumbnail}
+                      alt={`Thumbnail for ${ShopProduct.productName}`}
+                      width="60"
+                      height="60"
+                    />
+                    {ShopProduct.productName}
+                  </td>
+                  <td>{ShopProduct.formattedProductPrice}</td>
+                  <td>{ShopProduct.productCategory}</td>
+                  <td htmlFor="productStatus">
+                    <div className="form-group">
+                      <div className="dropdown">
+                        <select
+                          name="productStatus"
+                          onChange={(e) =>
+                            handleInputChange(
+                              ShopProduct.productId,
+                              e.target.value
+                            )
+                          }
+                          value={ShopProduct.productStatus}
+                          className="form-control"
+                        >
+                          <option value="판매중">판매중</option>
+                          <option value="판매중지">판매중지</option>
+                          <option value="품절">품절</option>
+                        </select>
+                        <div className="dropdown-icon">&#9660;</div>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>{ShopProduct.productStock}</td>
-                <td>{ShopProduct.productCreateDate}</td>
-                <td>
-                  <NavDropdown title="···" id="basic-nav-dropdown">
-                    <NavDropdown.Item
-                      as={Link}
-                      to={`/seller/product/edit/${ShopProduct.productId}`}
-                    >
-                      수정
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                      onClick={() => handleDeleteClick(ShopProduct.productId)}
-                    >
-                      삭제
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-      <ReactPaginate
-        previousLabel={'이전'}
-        nextLabel={'다음'}
-        breakLabel={'...'}
-        pageCount={pageCount}
-        onPageChange={handlePageClick}
-        containerClassName={'pagination'}
-        activeClassName={'active'}
-        forcePage={currentPage - 1} // 현재 페이지를 강제로 설정
-      />
-    </div>
+                  </td>
+                  <td>{ShopProduct.productStock}</td>
+                  <td>{ShopProduct.productCreateDate}</td>
+                  <td>
+                    <NavDropdown title="···" id="basic-nav-dropdown">
+                      <NavDropdown.Item
+                        as={Link}
+                        to={`/seller/product/edit/${ShopProduct.productId}`}
+                      >
+                        수정
+                      </NavDropdown.Item>
+                      <NavDropdown.Item
+                        onClick={() => handleDeleteClick(ShopProduct.productId)}
+                      >
+                        삭제
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+        <ReactPaginate
+          previousLabel={'이전'}
+          nextLabel={'다음'}
+          breakLabel={'...'}
+          pageCount={pageCount}
+          onPageChange={handlePageClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+          forcePage={currentPage - 1} // 현재 페이지를 강제로 설정
+        />
+      </div>
     </>
   );
 };

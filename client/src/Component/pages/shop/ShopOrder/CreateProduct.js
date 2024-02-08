@@ -162,171 +162,171 @@ const CreateProduct = () => {
 
   return (
     <>
-    <Nav/>
-    <div style={{margintop:"100px"}} className="create-update-Product">
-      <h2 style={{margintop:'100px'}}>상품등록</h2>
+      <Nav />
+      <div className="create-update-Product">
+        <h2>상품등록</h2>
 
-      <div className="form-group">
-        <label htmlFor="productCode">상품코드 </label>
-        <input
-          type="text"
-          name="productCode"
-          onChange={handleInputChange}
-          value={product.productCode}
-          readOnly
-          placeholder="등록 시 자동생성"
-          className="form-control"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="productName">상품명 </label>
-        <input
-          type="text"
-          name="productName"
-          onChange={handleInputChange}
-          value={product.productName}
-          placeholder="필수 입력사항"
-          className="form-control"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="productDescription">상품설명 </label>
-        <input
-          type="text"
-          name="productDescription"
-          onChange={handleInputChange}
-          value={product.productDescription}
-          className="form-control"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="productPrice">판매가 </label>
-        <input
-          type="text"
-          name="productPrice"
-          onChange={handleInputChange}
-          value={product.productPrice}
-          placeholder="필수 입력사항"
-          className="form-control"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="productCategory">카테고리</label>
-        <div className="dropdown">
-          <select
-            name="productCategory"
+        <div className="form-group">
+          <label htmlFor="productCode">상품코드 </label>
+          <input
+            type="text"
+            name="productCode"
             onChange={handleInputChange}
-            value={product.productCategory}
+            value={product.productCode}
+            readOnly
+            placeholder="등록 시 자동생성"
             className="form-control"
-          >
-            <option value="tent">tent</option>
-            <option value="sleepingbag">sleepingbag</option>
-            <option value="lamp">lamp</option>
-            <option value="fireplace">fireplace</option>
-            <option value="chair">chair</option>
-            <option value="kitchen">kitchen</option>
-          </select>
-          <div className="dropdown-icon">&#9660;</div>
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productName">상품명 </label>
+          <input
+            type="text"
+            name="productName"
+            onChange={handleInputChange}
+            value={product.productName}
+            placeholder="필수 입력사항"
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productDescription">상품설명 </label>
+          <input
+            type="text"
+            name="productDescription"
+            onChange={handleInputChange}
+            value={product.productDescription}
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productPrice">판매가 </label>
+          <input
+            type="text"
+            name="productPrice"
+            onChange={handleInputChange}
+            value={product.productPrice}
+            placeholder="필수 입력사항"
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productCategory">카테고리</label>
+          <div className="dropdown">
+            <select
+              name="productCategory"
+              onChange={handleInputChange}
+              value={product.productCategory}
+              className="form-control"
+            >
+              <option value="tent">tent</option>
+              <option value="sleepingbag">sleepingbag</option>
+              <option value="lamp">lamp</option>
+              <option value="fireplace">fireplace</option>
+              <option value="chair">chair</option>
+              <option value="kitchen">kitchen</option>
+            </select>
+            <div className="dropdown-icon">&#9660;</div>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productColor">색상 </label>
+          <input
+            type="text"
+            name="productColor"
+            onChange={handleInputChange}
+            value={product.productColor}
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productThumbnail">썸네일 이미지(url) </label>
+          <input
+            type="text"
+            name="productThumbnail"
+            onChange={handleInputChange}
+            value={product.productThumbnail}
+            placeholder="필수 입력사항"
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productMain">메인이미지(url) </label>
+          <input
+            type="text"
+            name="productMain"
+            onChange={handleInputChange}
+            value={product.productMain}
+            placeholder="필수 입력사항"
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productContent">컨텐츠 이미지(url)</label>
+          <input
+            type="text"
+            name="productContent"
+            onChange={handleInputChange}
+            value={product.productContent}
+            placeholder="필수 입력사항"
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productStock">재고 </label>
+          <input
+            type="text"
+            name="productStock"
+            onChange={handleInputChange}
+            value={product.productStock}
+            className="form-control"
+            placeholder="필수 입력사항"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productCreateDate">상품등록일 </label>
+          <input
+            type="text"
+            name="productCreateDate"
+            onChange={handleInputChange}
+            value={product.productCreateDate}
+            readOnly
+            className="form-control"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="productStatus">상품상태 </label>
+          <div className="dropdown">
+            <select
+              name="productStatus"
+              onChange={handleInputChange}
+              value={product.productStatus}
+              className="form-control"
+            >
+              <option value="판매중">판매중</option>
+              <option value="판매중지">판매중지</option>
+              <option value="판매종료">품절</option>
+            </select>
+            <div className="dropdown-icon">&#9660;</div>
+          </div>
+        </div>
+        <div className="form-group">
+          <button type="submit" onClick={handleRegister}>
+            등 록
+          </button>
         </div>
       </div>
-
-      <div className="form-group">
-        <label htmlFor="productColor">색상 </label>
-        <input
-          type="text"
-          name="productColor"
-          onChange={handleInputChange}
-          value={product.productColor}
-          className="form-control"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="productThumbnail">썸네일 이미지(url) </label>
-        <input
-          type="text"
-          name="productThumbnail"
-          onChange={handleInputChange}
-          value={product.productThumbnail}
-          placeholder="필수 입력사항"
-          className="form-control"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="productMain">메인이미지(url) </label>
-        <input
-          type="text"
-          name="productMain"
-          onChange={handleInputChange}
-          value={product.productMain}
-          placeholder="필수 입력사항"
-          className="form-control"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="productContent">컨텐츠 이미지(url)</label>
-        <input
-          type="text"
-          name="productContent"
-          onChange={handleInputChange}
-          value={product.productContent}
-          placeholder="필수 입력사항"
-          className="form-control"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="productStock">재고 </label>
-        <input
-          type="text"
-          name="productStock"
-          onChange={handleInputChange}
-          value={product.productStock}
-          className="form-control"
-          placeholder="필수 입력사항"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="productCreateDate">상품등록일 </label>
-        <input
-          type="text"
-          name="productCreateDate"
-          onChange={handleInputChange}
-          value={product.productCreateDate}
-          readOnly
-          className="form-control"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="productStatus">상품상태 </label>
-        <div className="dropdown">
-          <select
-            name="productStatus"
-            onChange={handleInputChange}
-            value={product.productStatus}
-            className="form-control"
-          >
-            <option value="판매중">판매중</option>
-            <option value="판매중지">판매중지</option>
-            <option value="판매종료">품절</option>
-          </select>
-          <div className="dropdown-icon">&#9660;</div>
-        </div>
-      </div>
-      <div className="form-group">
-        <button type="submit" onClick={handleRegister}>
-          등 록
-        </button>
-      </div>
-    </div>
     </>
   );
 };
