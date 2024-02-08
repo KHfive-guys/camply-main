@@ -11,9 +11,8 @@ const OrderCart = () => {
   const [map, setMap] = useState({});
   const [marker, setMarker] = useState(null);
   const [userIds, setUserIds] = useState(null);
-  const navigate = useNavigate();
-  const location = useLocation();
   const [order, setOrder] = useState({
+<<<<<<< HEAD
     userId: '', // userId로 변경
     orderOrdererName: '',
     orderOrderEmail: '',
@@ -24,6 +23,18 @@ const OrderCart = () => {
     orderReceiverPhone: '',
     orderReceiverMessage: '',
     orderReceiverDeleveryMsg: '',
+=======
+    userId: "", // userId로 변경
+    orderOrdererName: "",
+    orderOrderEmail: "",
+    orderOrderPhone: "",
+    orderReceiverName: "",
+    orderReceiverAddress: "",
+    orderReceiverAddressDetail: "",
+    orderReceiverPhone: "",
+    orderReceiverMessage: "",
+    orderReceiverDeleveryMsg: "",
+>>>>>>> 75506986ebb1cee5f78238b7fd81151ee5f982a4
   });
   const [quantity, setQuantity] = useState(() => {
     const savedQuantity = sessionStorage.getItem('selectedQuantity');
@@ -31,11 +42,20 @@ const OrderCart = () => {
   });
 
   const { productId } = useParams();
+<<<<<<< HEAD
   const [userName, setUserName] = useState('');
   const [userAddress, setUserAddress] = useState('');
   const [userPhone, setUserPhone] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [zipCode, setZipcode] = useState('');
+=======
+  const location = useLocation(); // useLocation을 여기로 이동
+  const [userName, setUserName] = useState("");
+  const [userAddress, setUserAddress] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [zipCode, setZipcode] = useState("");
+>>>>>>> 75506986ebb1cee5f78238b7fd81151ee5f982a4
 
   useEffect(() => {
     if (location.state?.quantity && location.state?.product) {
@@ -64,7 +84,7 @@ const OrderCart = () => {
   } = order;
 
   const onChange = (event) => {
-    const { name, value } = event.target;
+    const { value, name } = event.target;
     setOrder((prevOrder) => ({
       ...prevOrder,
       [name]: value,
@@ -77,7 +97,7 @@ const OrderCart = () => {
     part3: '',
   });
 
-  const onChangePhoneNumber = (event) => {
+  const onChangeReceiverPhone = (event) => {
     const { value, name } = event.target;
 
     setOrderReceiverPhoneParts((prevPhoneParts) => ({
@@ -267,11 +287,19 @@ const OrderCart = () => {
   const backToList = () => {
     navigate('/shop/main');
   };
+<<<<<<< HEAD
 
   return (
     <div className="root">
       <div className="order-main">
         <main className="main-container">
+=======
+  
+  return (
+    <div className='root'>
+      <div className='order-main'>
+        <main className='main-container'>
+>>>>>>> 75506986ebb1cee5f78238b7fd81151ee5f982a4
           {product && Object.keys(product).length > 0 ? (
             <>
               <h3>
@@ -327,10 +355,25 @@ const OrderCart = () => {
                           </p>
                         </div>
                       </td>
+<<<<<<< HEAD
                       <td></td>
                       <td>
                         <div className="tb-center tb-bold">
                           {formattedPrice}원
+=======
+                      <td>
+<<<<<<< HEAD
+                        
+                      </td>
+                      <td>
+                        <div className="tb-right tb-bold">
+=======
+                      </td>
+                      <td>
+                        <div className="tb-center tb-bold">
+>>>>>>> 1da4d5bc2026191f4edc5324afe8947538ad88c3
+                        {formattedPrice}원
+>>>>>>> 75506986ebb1cee5f78238b7fd81151ee5f982a4
                         </div>
                       </td>
                       <td></td>
@@ -374,11 +417,18 @@ const OrderCart = () => {
                   </tbody>
                 </table>
               </div>
+<<<<<<< HEAD
 
               <section className="order-info">
                 <div className="order-form">
                   <p className="eEOGCf">주문 정보</p>
                   <form className="form">
+=======
+              <section className='order-info'>
+                <div className='order-form'>
+                  <p className='eEOGCf'>주문 정보</p>
+                  <form className='form'>
+>>>>>>> 75506986ebb1cee5f78238b7fd81151ee5f982a4
                     <div>
                       <p>주문자</p>
                       <div>
@@ -712,12 +762,17 @@ const OrderCart = () => {
                   </table>
                 </div>
                 <div className="paybutton">
+<<<<<<< HEAD
                   <button className="CSSbuttonBlack" onClick={saveOrder}>
                     주문하기
                   </button>
                   <button className="CSSbuttonWhite" onClick={backToList}>
                     주문취소
                   </button>
+=======
+                <button className="CSSbuttonBlack" onClick={saveOrder}>주문하기</button>
+                <button className="CSSbuttonWhite" onClick={backToList}>주문취소</button>
+>>>>>>> 75506986ebb1cee5f78238b7fd81151ee5f982a4
                 </div>
               </div>
             </>
@@ -729,5 +784,12 @@ const OrderCart = () => {
     </div>
   );
 };
+<<<<<<< HEAD
+=======
 
+<<<<<<< HEAD
 export default OrderCart;
+=======
+>>>>>>> 1da4d5bc2026191f4edc5324afe8947538ad88c3
+export default OrderCart;
+>>>>>>> 75506986ebb1cee5f78238b7fd81151ee5f982a4

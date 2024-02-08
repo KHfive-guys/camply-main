@@ -444,6 +444,7 @@ function BbsWrite() {
                 >
                   사진 추가하기
                 </button>
+
               </td>
             </tr>
 
