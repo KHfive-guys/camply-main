@@ -13,10 +13,10 @@ public class CartVO {
 	private int cartId;
 	private int productId;
 	private Long userId;
-	private String cartCategory;
-	private String cartImg;
-	private String cartName;
-	private int cartPrice;
-	private int cartAmount;
+	private String productCategory;
+	private String productThumbnail;
+	private String productName;
+	private int productPrice;
+	private int productAmount;
 
 }
