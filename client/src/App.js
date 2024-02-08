@@ -65,7 +65,7 @@ import CampBoardCaravan from "./Component/pages/camp/CampBoard/CampBoardCaravan"
 import CampBoardGlamping from "./Component/pages/camp/CampBoard/CampBoardGlamping";
 import CampBoardPension from "./Component/pages/camp/CampBoard/CampBoardPension";
 import CampBoardSite from "./Component/pages/camp/CampBoard/CampBoardSite";
-import MyShopping from "./Component/pages/common/MyShopping";
+import MyShopping from "./Component/pages/common/MyShopping";
 import MyCamping from "./Component/pages/common/MyCamping";
 
 import './Component/pages/camp/CampStyle.css';
