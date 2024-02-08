@@ -310,12 +310,20 @@ const OrderCart = () => {
                         </div>
                       </td>
                       <td>
+<<<<<<< HEAD
                         
                       </td>
                       <td>
                         <div className="tb-right tb-bold">
+=======
+                      </td>
+                      <td>
+                        <div className="tb-center tb-bold">
+>>>>>>> 1da4d5bc2026191f4edc5324afe8947538ad88c3
                         {formattedPrice}원
                         </div>
+                      </td>
+                      <td>
                       </td>
                     </tr>
                     <tr className="total">
@@ -649,4 +657,8 @@ const OrderCart = () => {
     </div>
   );
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1da4d5bc2026191f4edc5324afe8947538ad88c3
 export default OrderCart;
