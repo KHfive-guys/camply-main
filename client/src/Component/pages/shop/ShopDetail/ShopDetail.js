@@ -13,11 +13,21 @@ const ShopDetail = () => {
   const [product, setProduct] = useState(null);
   const [like, setLike] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [cartId, setCartId] = useState(null);
+
   const [userToken, setUserToken] = useState("");
   const [isCurrentUser, setIsCurrentUser] = useState(false);
   const navigate = useNavigate();
-
+  // 토큰에서 사용자 ID 추출하는 함수
+  const extractUserIdFromToken = () => {
+    const token = localStorage.getItem("yourTokenKey");
+    if (token) {
+      const base64Url = token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const decodedToken = JSON.parse(window.atob(base64));
+      return decodedToken.user_id; // 사용자 ID 반환
+    }
+    return null;
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,10 +68,10 @@ const ShopDetail = () => {
         console.error("상품 정보가 없습니다.");
         return;
       }
-
+      const userId = extractUserIdFromToken();
       const cartData = {
-        cartId: cartId,
-        productId: productId,
+        productId: parseInt(productId, 10),
+        userId: userId,
         cartCategory: product.productCategory,
         cartAmount: quantity,
         cartImg: product.productThumbnail,
@@ -74,7 +84,7 @@ const ShopDetail = () => {
         cartData
       );
       alert("상품이 장바구니에 추가되었습니다.");
-      navigate(`/shop/cart/`);
+      navigate(`/shop/mycart/${userId}`);
     } catch (error) {
       console.error("상품을 장바구니에 추가하는 중 오류 발생", error);
     }
@@ -82,7 +92,7 @@ const ShopDetail = () => {
 
   const handleOrderClick = () => {
     // 선택된 수량을 세션 스토리지에 저장
-    sessionStorage.setItem('selectedQuantity', JSON.stringify(quantity));
+    sessionStorage.setItem("selectedQuantity", JSON.stringify(quantity));
     // 주문 페이지로 이동
     navigate(`/shop/order/${productId}`, { state: { product, quantity } });
   };
@@ -92,7 +102,7 @@ const ShopDetail = () => {
   return (
     <div className='main-shopping'>
       <hr></hr>
-      <Nav/>
+      <Nav />
       <div className='main-section1'>
         <div className='main-section2'>
           <main className='main-section3'>
@@ -122,7 +132,7 @@ const ShopDetail = () => {
                   </span>
                   <div className='right-section-login'>
                     {isUserLoggedIn && (
-                      <p style={{ display: 'none' }}>
+                      <p style={{ display: "none" }}>
                         로그인 후, 적립 혜택이 제공됩니다.
                       </p>
                     )}
@@ -142,8 +152,7 @@ const ShopDetail = () => {
                     </div>
                   </div>
                   <ul className='right-section-ul'>
-
-                  <li className='right-section-li'>
+                    <li className='right-section-li'>
                       <dt className='right-section-dt'>배송</dt>
                       <dd className='right-section-dd'>
                         <p className='right-section-dd-p'>무료</p>
@@ -167,43 +176,41 @@ const ShopDetail = () => {
                       <button
                         onClick={handleDecreaseQuantity}
                         className='right-section-article-img'
-                      >
-                        
-                      </button>
+                      ></button>
                       <div>{quantity}</div>
                       <button
                         onClick={handleIncreaseQuantity}
                         className='right-section-article-img2'
-                      >
-                       
-                      </button>
+                      ></button>
                     </article>
 
                     <div className='right-section-footer-div3'>
                       <div className='right-section-footer-div3-div'>
                         <div className='right-section-footer-div3-div-div1'>
                           <span className='right-section-footer-div3-span'>
-                              총 상품금액:{" "}
-                              {new Intl.NumberFormat("ko-KR", {
-                                style: "currency",
-                                currency: "KRW",
-                              }).format(quantity * product.productPrice)}
+                            총 상품금액:{" "}
+                            {new Intl.NumberFormat("ko-KR", {
+                              style: "currency",
+                              currency: "KRW",
+                            }).format(quantity * product.productPrice)}
                           </span>
                         </div>
                         <div className='right-section-footer-div3-div2'>
                           <span className='right-section-footer-div3-div2-span'>
                             적립
                           </span>
-                            <span className='right-section-footer-div3-div2-span2'>
-                              {isUserLoggedIn && (
-                                <p style={{ display: 'none' }}>로그인 후, 적립 혜택 제공</p>
-                              )}
-                              {!isUserLoggedIn && (
-                                <Link to='/login'>
-                                  <span>로그인 후, 적립 혜택이 제공됩니다.</span>
-                                </Link>
-                              )}
-                            </span>
+                          <span className='right-section-footer-div3-div2-span2'>
+                            {isUserLoggedIn && (
+                              <p style={{ display: "none" }}>
+                                로그인 후, 적립 혜택 제공
+                              </p>
+                            )}
+                            {!isUserLoggedIn && (
+                              <Link to='/login'>
+                                <span>로그인 후, 적립 혜택이 제공됩니다.</span>
+                              </Link>
+                            )}
+                          </span>
                         </div>
                       </div>
                     </div>
