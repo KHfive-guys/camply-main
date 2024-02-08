@@ -4,6 +4,7 @@ import { NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import '../css/ShopSell/SellerProduct.css';
+import Nav from '../../camp/CampNavbar';
 
 const ProductMyPage = () => {
   const [products, setProducts] = useState([]);
@@ -216,8 +217,10 @@ const ProductMyPage = () => {
   console.log(products);
 
   return (
-    <div className="sellerProduct">
-      <h2 style={{ display: 'inline-block' }}>등록상품 조회</h2>
+    <>
+    <Nav/>
+    <div style={{marginTop:'100px'}}  className="sellerProduct">
+      <h2 style={{ display: 'inline-block'  }}>등록상품 조회</h2>
 
       <span className="itemsPerPage-position">
         <button
@@ -344,6 +347,7 @@ const ProductMyPage = () => {
         forcePage={currentPage - 1} // 현재 페이지를 강제로 설정
       />
     </div>
+    </>
   );
 };
 

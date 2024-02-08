@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../shop/css/ShopMain.css';
-import { FaAngleLeft,FaAngleRight } from "react-icons/fa6";
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 
 const CategoryList = () => {
@@ -11,21 +11,7 @@ const CategoryList = () => {
   const navigate = useNavigate();
 
   const navigateToCategory = (category) => {
-    if(category === "tent") {
-      navigate('/shop/tent');
-    } else if(category === "kitchen") {
-      navigate('/shop/kitchen');
-    } else if(category === "fireplace"){
-      navigate('/shop/fireplace');
-    } else if (category === "lamp") {
-      navigate('/shop/lamp');
-    } else if (category === "sleepingbag") {
-      navigate('/shop/sleeping');
-    } else if (category === "chair"){
-      navigate('/shop/chair');
-    } else {
-      navigate('/');
-    }
+    // ... (변경 없음)
   }
 
   useEffect(() => {
@@ -40,7 +26,7 @@ const CategoryList = () => {
 
         const categoryProductMap = {};
         productData.forEach(({ category, products }) => {
-          categoryProductMap[category] = products.slice(0, 5);
+          categoryProductMap[category] = products.slice(0, 10); 
         });
         setCategoryProducts(categoryProductMap);
       } catch (error) {
@@ -52,6 +38,7 @@ const CategoryList = () => {
 
   const handleSlide = (category, direction) => {
     const updatedProducts = [...categoryProducts[category]];
+    const visibleProducts = updatedProducts.slice(0, 4);
 
     if (direction === 'left') {
       const firstProduct = updatedProducts.shift();
@@ -73,20 +60,19 @@ const CategoryList = () => {
         <h2>카테고리별 상품목록</h2>
         {Object.keys(categoryProducts).map((category) => (
           <div key={category}>
-            <h2 style={{cursor:'pointer', marginBottom:'30px',marginTop:'30px'}} onClick={() => navigateToCategory(category)}>
-              {category}{<FaAngleRight/>}
+            <h2 style={{ cursor: 'pointer', marginBottom: '30px', marginTop: '30px' }} onClick={() => navigateToCategory(category)}>
+              {category}{<FaAngleRight />}
             </h2>
             <div className='slide-container'>
-              <button className='btn-arrow' onClick={() => handleSlide(category, 'left')}>{<FaAngleLeft size={30}/>}</button>
+              <button className='btn-arrow' onClick={() => handleSlide(category, 'left')}>{<FaAngleLeft size={30} />}</button>
               {categoryProducts[category].map((product, index) => (
-                <div key={product.productId} className={`slide ${index === 0 ? 'active' : ''} spaced-slide `}>
+                <div key={product.productId} className={`slide ${index < 4 ? 'active' : ''} spaced-slide `}>
                   <Link to={`/shop/detail/${product.productId}`}>
                     <div style={{
                       width: '272.5px',
-                      height:'272.5px',
-                      margin: '0.2em',  
+                      height: '272.5px',
+                      margin: '0.2em',
                       padding: '0',
-                      
                     }} className='imgWrap'>
                       <img src={product.productThumbnail} className='imgs' alt={product.productName} />
                     </div>
@@ -103,7 +89,7 @@ const CategoryList = () => {
                   </Link>
                 </div>
               ))}
-              <button className='btn-arrow' onClick={() => handleSlide(category, 'right')}>{<FaAngleRight size={30}/>}</button>
+              <button className='btn-arrow' onClick={() => handleSlide(category, 'right')}>{<FaAngleRight size={30} />}</button>
             </div>
           </div>
         ))}

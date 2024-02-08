@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/ShopSell/CreateProduct.css';
+import Nav from '../../camp/CampNavbar';
 
 const initialProductState = {
   productName: '',
@@ -96,8 +97,10 @@ const CreateProduct = () => {
   };
 
   return (
-    <div className="create-update-Product">
-      <h2>상품등록</h2>
+    <>
+    <Nav/>
+    <div style={{margintop:"100px"}} className="create-update-Product">
+      <h2 style={{margintop:'100px'}}>상품등록</h2>
 
       <div className="form-group">
         <label htmlFor="productCode">상품코드: </label>
@@ -254,6 +257,7 @@ const CreateProduct = () => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 
