@@ -12,6 +12,15 @@ const UpdateProduct = () => {
   // 토큰을 로컬 스토리지에서 가져옵니다.
   const token = localStorage.getItem('yourTokenKey');
 
+  const [validity, setValidity] = useState({
+    productName: true,
+    productPrice: true,
+    productThumbnail: true,
+    productMain: true,
+    productContent: true,
+    productStock: true,
+  });
+
   //수정할 페이지 불러옴
   useEffect(() => {
     const fetchProduct = async () => {
@@ -29,8 +38,17 @@ const UpdateProduct = () => {
           }
         );
         console.log('Fetched product data:', response.data); // 데이터 로깅
-        setOriginalProduct(response.data); // 원본 데이터 상태 설정
-        setProduct(response.data); // 수정 가능한 데이터 상태 설정
+
+        // 서버로부터 받아온 상품 데이터를 문자열로 변환
+        const stringifiedProduct = Object.fromEntries(
+          Object.entries(response.data).map(([key, value]) => [
+            key,
+            String(value),
+          ])
+        );
+
+        setOriginalProduct(stringifiedProduct); // 원본 데이터 상태 설정
+        setProduct(stringifiedProduct); // 수정 가능한 데이터 상태 설정
       } catch (error) {
         console.error('Error fetching product data:', error);
       }
@@ -43,6 +61,33 @@ const UpdateProduct = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setProduct({ ...product, [name]: value });
+    // 유효성 검사
+    const isInputValid = value.trim() !== ''; // 공백만 있는 경우를 무효로 처리
+    setValidity({ ...validity, [name]: isInputValid });
+  };
+  const validateForm = () => {
+    const fields = [
+      'productName',
+      'productPrice',
+      'productThumbnail',
+      'productMain',
+      'productContent',
+      'productStock',
+    ];
+    let isFormValid = true;
+    const newValidity = { ...validity };
+
+    fields.forEach((field) => {
+      if (product[field].trim() === '') {
+        newValidity[field] = false;
+        isFormValid = false;
+      } else {
+        newValidity[field] = true;
+      }
+    });
+
+    setValidity(newValidity);
+    return isFormValid;
   };
 
   //변경사항이 없을 경우 처리하는 함수
@@ -56,6 +101,33 @@ const UpdateProduct = () => {
     if (!hasChanges()) {
       alert('변경된 사항이 없습니다.');
       return; // 변경사항이 없으므로 여기서 함수 실행을 종료
+    }
+
+    // 판매가와 재고를 숫자로 변환
+    const price = Number(product.productPrice);
+    const stock = Number(product.productStock);
+
+    // 1. 판매가와 재고가 음수인지 검사
+    if (price < 0 || stock < 0) {
+      alert('숫자는 양수만 입력해주시기 바랍니다.');
+      return; // 함수 실행을 여기서 중단
+    }
+
+    // 2. 판매가 범위 검사 (0 ~ 99999999)
+    if (price > 99999999) {
+      alert('입력 가능한 숫자를 초과하였습니다.');
+      return; // 함수 실행을 여기서 중단
+    }
+
+    // 3. 재고 범위 검사 (0 ~ 99999)
+    if (stock > 99999) {
+      alert('입력 가능한 숫자를 초과하였습니다.');
+      return; // 함수 실행을 여기서 중단
+    }
+
+    if (!validateForm()) {
+      alert('필수 입력사항을 모두 채워주세요.');
+      return; // 필수 입력사항이 모두 채워지지 않았으므로 함수 실행 중단
     }
 
     try {
@@ -112,6 +184,7 @@ const UpdateProduct = () => {
             name="productName"
             value={product.productName || ''}
             onChange={handleInputChange}
+            placeholder="필수 입력사항"
             className="form-control"
           />
         </div>
@@ -136,6 +209,7 @@ const UpdateProduct = () => {
             name="productPrice"
             value={product.productPrice || ''}
             onChange={handleInputChange}
+            placeholder="필수 입력사항"
             className="form-control"
           />
         </div>
@@ -181,6 +255,7 @@ const UpdateProduct = () => {
             name="productThumbnail"
             value={product.productThumbnail || ''}
             onChange={handleInputChange}
+            placeholder="필수 입력사항"
             className="form-control"
           />
         </div>
@@ -193,6 +268,7 @@ const UpdateProduct = () => {
             name="productMain"
             value={product.productMain || ''}
             onChange={handleInputChange}
+            placeholder="필수 입력사항"
             className="form-control"
           />
         </div>
@@ -205,6 +281,7 @@ const UpdateProduct = () => {
             name="productContent"
             value={product.productContent || ''}
             onChange={handleInputChange}
+            placeholder="필수 입력사항"
             className="form-control"
           />
         </div>
@@ -217,6 +294,7 @@ const UpdateProduct = () => {
             name="productStock"
             value={product.productStock || ''}
             onChange={handleInputChange}
+            placeholder="필수 입력사항"
             className="form-control"
           />
         </div>
