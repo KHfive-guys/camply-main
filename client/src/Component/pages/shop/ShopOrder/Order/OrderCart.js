@@ -12,6 +12,8 @@ const OrderCart = () => {
   const [map, setMap] = useState({});
   const [marker, setMarker] = useState(null);
   const [userIds, setUserIds] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
   const [order, setOrder] = useState({
     userId: "", // userId로 변경
     orderOrdererName: "",
@@ -23,10 +25,28 @@ const OrderCart = () => {
     orderReceiverPhone: "",
     orderReceiverMessage: "",
     orderReceiverDeleveryMsg: "",
+
   });
-  const navigate = useNavigate();
+  const { product: productInfo, quantity } = location.state || { product: null, quantity: 0 };
+  const formattedPrice = product
+    ? new Intl.NumberFormat("ko-KR", {
+        style: "currency",
+        currency: "KRW",
+      }).format(quantity * product.productPrice)
+    : "0원";
+    const saveOrder = async () => {
+        // 주문 데이터 준비 및 API 호출 로직 (생략)
+        alert("주문 처리 로직 구현 필요");
+        // navigate('/some-success-page'); // 주문 성공 페이지로 이동
+      };
+    const onChange = (event) => {
+        const { name, value } = event.target;
+        setOrder((prevOrder) => ({
+          ...prevOrder,
+          [name]: value,
+        }));
+      };
   const { productId } = useParams();
-  const location = useLocation(); // useLocation을 여기로 이동
   const [userName, setUserName] = useState("");
   const [userAddress, setUserAddress] = useState("");
   const [userPhone, setUserPhone] = useState("");
@@ -54,12 +74,12 @@ const OrderCart = () => {
   } = order;
 
   const onChange = (event) => {
-    const { value, name } = event.target;
+    const { name, value } = event.target;
     setOrder((prevOrder) => ({
-      ...prevOrder,
-      [name]: value,
+        ...prevOrder,
+        [name]: value,
     }));
-  };
+};
 
   const [orderReceiverPhoneParts, setOrderReceiverPhoneParts] = useState({
     part1: "",
@@ -67,7 +87,7 @@ const OrderCart = () => {
     part3: "",
   });
 
-  const onChangeReceiverPhone = (event) => {
+  const onChangePhoneNumber = (event) => {
     const { value, name } = event.target;
 
     setOrderReceiverPhoneParts((prevPhoneParts) => ({
@@ -245,6 +265,7 @@ const OrderCart = () => {
   };
   return (
     <div className='root'>
+
       <div className='order-main'>
         <main className='main-container'>
           {product && Object.keys(product).length > 0 ? (
@@ -314,6 +335,7 @@ const OrderCart = () => {
                   </tbody>
                </table>
               </div>
+
               <section className='order-info'>
                 <div className='order-form'>
                   <p className='eEOGCf'>주문 정보</p>
