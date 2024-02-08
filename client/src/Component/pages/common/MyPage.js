@@ -13,7 +13,7 @@ function MyPage() {
   const [passwordVerified, setPasswordVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
 
