@@ -3,8 +3,7 @@ import Layout from "../../../shop/ShopLayout";
 import "../../css/ShopOrder/OrderMain.css";
 import axios from "axios";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { Button } from '@mui/material';
-import { MdOutlineClosedCaptionDisabled } from "react-icons/md";
+import {Button} from '@mui/material';
 import { TbCamper } from "react-icons/tb";
 
 const OrderCart = () => {
@@ -12,8 +11,6 @@ const OrderCart = () => {
   const [map, setMap] = useState({});
   const [marker, setMarker] = useState(null);
   const [userIds, setUserIds] = useState(null);
-  const navigate = useNavigate();
-  const location = useLocation();
   const [order, setOrder] = useState({
     userId: "", // userId로 변경
     orderOrdererName: "",
@@ -25,28 +22,14 @@ const OrderCart = () => {
     orderReceiverPhone: "",
     orderReceiverMessage: "",
     orderReceiverDeleveryMsg: "",
-
   });
-  const { product: productInfo, quantity } = location.state || { product: null, quantity: 0 };
-  const formattedPrice = product
-    ? new Intl.NumberFormat("ko-KR", {
-        style: "currency",
-        currency: "KRW",
-      }).format(quantity * product.productPrice)
-    : "0원";
-    const saveOrder = async () => {
-        // 주문 데이터 준비 및 API 호출 로직 (생략)
-        alert("주문 처리 로직 구현 필요");
-        // navigate('/some-success-page'); // 주문 성공 페이지로 이동
-      };
-    const onChange = (event) => {
-        const { name, value } = event.target;
-        setOrder((prevOrder) => ({
-          ...prevOrder,
-          [name]: value,
-        }));
-      };
+  const [quantity, setQuantity] = useState(() => {
+    const savedQuantity = sessionStorage.getItem('selectedQuantity');
+    return savedQuantity ? JSON.parse(savedQuantity) : 0;
+  });
+  const navigate = useNavigate();
   const { productId } = useParams();
+  const location = useLocation(); // useLocation을 여기로 이동
   const [userName, setUserName] = useState("");
   const [userAddress, setUserAddress] = useState("");
   const [userPhone, setUserPhone] = useState("");
@@ -54,12 +37,18 @@ const OrderCart = () => {
   const [zipCode, setZipcode] = useState("");
 
   useEffect(() => {
-    if (location && location.state && location.state.quantity) {
-      // location이 존재하고 state도 존재하며 quantity도 존재할 때만 실행
-      // 필요에 따라 추가적인 로직을 수행할 수 있습니다.
-      console.log("Quantity:", location.state.quantity);
+    if (location.state?.quantity && location.state?.product) {
+      // 상태가 제대로 전달되었는지 확인
+      console.log("Quantity from location state:", location.state.quantity);
+      console.log("Product from location state:", location.state.product);
+      setProduct(location.state.product); // 상품 정보 상태 업데이트
+      // 여기에서는 location.state.product를 직접 사용하거나,
+      // 필요한 경우 상품 ID를 사용하여 추가적인 상품 정보를 서버에서 불러올 수 있습니다.
+    } else {
+      console.log("No product or quantity info passed from previous page");
+      // 필요한 정보가 없는 경우 사용자에게 알림 또는 기본값 설정
     }
-  }, [location]);
+  }, [location, location.state]);
 
   const {
     userId,
@@ -74,12 +63,12 @@ const OrderCart = () => {
   } = order;
 
   const onChange = (event) => {
-    const { name, value } = event.target;
+    const { value, name } = event.target;
     setOrder((prevOrder) => ({
-        ...prevOrder,
-        [name]: value,
+      ...prevOrder,
+      [name]: value,
     }));
-};
+  };
 
   const [orderReceiverPhoneParts, setOrderReceiverPhoneParts] = useState({
     part1: "",
@@ -87,7 +76,7 @@ const OrderCart = () => {
     part3: "",
   });
 
-  const onChangePhoneNumber = (event) => {
+  const onChangeReceiverPhone = (event) => {
     const { value, name } = event.target;
 
     setOrderReceiverPhoneParts((prevPhoneParts) => ({
@@ -107,13 +96,9 @@ const OrderCart = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        // useParams로 받아온 productId를 숫자로 변환
-        const numericProductId = parseInt(productId, 10); // 10진수로 변환
+        const numericProductId = parseInt(productId, 10);
         if (!isNaN(numericProductId)) {
-          // API 호출 시 변환된 numericProductId 사용
-          const response = await axios.get(
-            `http://localhost:8080/shop/detail/${numericProductId}`
-          );
+          const response = await axios.get(`http://localhost:8080/shop/detail/${numericProductId}`);
           setProduct(response.data);
         } else {
           console.error("Invalid productId");
@@ -125,7 +110,12 @@ const OrderCart = () => {
 
     fetchProduct();
   }, [productId]);
-
+  useEffect(() => {
+    if (location.state?.quantity) {
+      setQuantity(location.state.quantity);
+      sessionStorage.setItem('selectedQuantity', JSON.stringify(location.state.quantity));
+    }
+  }, [location.state]);
   useEffect(() => {
     const initializeMap = () => {
       window.kakao.maps.load(() => {
@@ -226,7 +216,12 @@ const OrderCart = () => {
   const saveOrder = async () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      const numericProductId = parseInt(productId, 10);
+      const savedQuantity = JSON.parse(sessionStorage.getItem('selectedQuantity') || "0");
+    const numericProductId = parseInt(productId, 10);
+    // 세션 스토리지 또는 location.state에서 수량 정보를 안전하게 읽어옴
+    const quantity = location.state?.quantity || savedQuantity;
+    const productPrice = product.productPrice; // 상품 단가
+    const totalPrice = quantity * productPrice; // 총 상품 금액 계산
       const orderData = {
         userId: order.userId,
         orderOrdererName: order.orderOrdererName,
@@ -238,11 +233,12 @@ const OrderCart = () => {
         orderReceiverPhone: order.orderReceiverPhone,
         orderReceiverMessage: order.orderReceiverMessage,
         orderReceiverDeleveryMsg: order.orderReceiverDeleveryMsg,
-        productId: numericProductId,
-        orderProductAmount: location.state.quantity,
-        productPrice: product.productPrice || 0,
-        productThumbnail: product.productThumbnail || "",
         productName: product.productName || "",
+        orderProductAmount: quantity,
+        productPrice: productPrice, // 상품 단가 추가
+        productId: numericProductId,
+        productThumbnail: product.productThumbnail || "",
+        totalPrice: totalPrice
       };
       console.log("orderData:", orderData);
 
@@ -263,9 +259,9 @@ const OrderCart = () => {
   const backToList = () => {
     navigate("/shop/main");
   };
+  
   return (
     <div className='root'>
-
       <div className='order-main'>
         <main className='main-container'>
           {product && Object.keys(product).length > 0 ? (
@@ -274,43 +270,51 @@ const OrderCart = () => {
               <div className="tbl-order-cart">
                <table>
                   <colgroup>
-                    <col style={{width:'150px'}}/>
-                    <col/>
-                    <col style={{width:'150px'}}/>
+                  
                     <col style={{width:'300px'}}/>
+                    <col/>
+                    <col style={{width:'300px'}}/>
+                    <col style={{width:'100px'}}/>
                   </colgroup>
                   <thead>
-                    <tr>
-                      <th scope="col">&nbsp;</th>
-                      <th scope="col">상품정보</th>
-                      <th scope="col" style={{textAlign:'center'}}>수량</th>
-                      <th scope="col" style={{textAlign:'center'}}>주문금액</th>
-                    </tr>
+                  <tr className="nbg">
+                    <td>&nbsp;</td>
+                    <td style={{ textAlign: 'center' }}>상품정보</td>
+                    <td style={{ textAlign: 'center' }}>수량</td>
+                    <td>&nbsp;</td>
+                    <td style={{ textAlign: 'center' }}>주문금액</td>
+                    
+                    <td>&nbsp;</td>
+
+                  </tr>
                   </thead>
                   <tbody>
                     <tr className="nbg">
                       <td>
                         <div className="tb-center">
                           <div className="thumb">
-                          <img src={product.productThumbnail} style={{width:'100px'}} alt='제품 이미지' />
+                          <img src={product.productThumbnail} style={{width:'150px'}} alt='제품 이미지' />
                           </div>
                         </div>
                       </td>
                       <td>
-                        <div className="tb-left">
+                        <div className="tb-center">
                         <p className='item-title' style={{fontSize:'15px', fontWeight:'bold'}}>{product.productName}</p>
                         </div>
                       </td>
                       <td>
                         <div className="tb-center">
                         <p>
-                          수량:<span>{location.state?.quantity || "0"}</span>
+                        <span>{quantity}</span>
                         </p>
                         </div>
                       </td>
                       <td>
-                        <div className="tb-center tb-bold">
-                          {formattedPrice}원
+                        
+                      </td>
+                      <td>
+                        <div className="tb-right tb-bold">
+                        {formattedPrice}원
                         </div>
                       </td>
                     </tr>
@@ -319,14 +323,14 @@ const OrderCart = () => {
                         <div className="tb-right">
                           주문 금액
                           <span id="pvd-total-discount-block-etc-0" className="fc-red"></span>
-                          <strong>{formattedPrice}원</strong>
+                          <strong>{(quantity * (product.productPrice ? product.productPrice : 0)).toLocaleString()}원</strong>
                           + 배송비
                           <span id="pvd-total-delivery-0" className="delprice"></span>
                           <strong>무료</strong>
                           =
                           <strong>
                             주문금액
-                            <span>{location.state?.quantity * productPrice}원
+                            <span>{(quantity * (product.productPrice ? product.productPrice : 0)).toLocaleString()}원
                           </span>
                           </strong>
                         </div>    
@@ -335,7 +339,6 @@ const OrderCart = () => {
                   </tbody>
                </table>
               </div>
-
               <section className='order-info'>
                 <div className='order-form'>
                   <p className='eEOGCf'>주문 정보</p>
@@ -463,6 +466,7 @@ const OrderCart = () => {
                       <section className='order-msg'>
                         <p>주문메세지</p>
                         <textarea
+                          className="order-text"
                           rows='6'
                           cols='50'
                           name='orderReceiverMessage'
@@ -477,6 +481,7 @@ const OrderCart = () => {
                       <section className='delivery-msg'>
                         <p>배송메시지</p>
                         <textarea
+                          className="deli-text"
                           rows='6'
                           cols='50'
                           name='orderReceiverDeleveryMsg'
@@ -509,7 +514,7 @@ const OrderCart = () => {
                           <div className="base">
                             <strong>
                               <em>
-                                <span className="op-total">{formattedPrice}</span>
+                                <span className="op-total">{(quantity * (product.productPrice ? product.productPrice : 0)).toLocaleString()} </span>
                               </em>
                               원
                             </strong>
@@ -534,7 +539,7 @@ const OrderCart = () => {
                             </a>
                             <strong> 
                               <em className="fc-red">
-                                <span className="op-total">{formattedPrice}</span>
+                                <span className="op-total">{(quantity * (product.productPrice ? product.productPrice : 0)).toLocaleString()}</span>
                               </em>
                               원
                             </strong>
@@ -620,7 +625,7 @@ const OrderCart = () => {
                       <td>
                         <strong className="totalprice">
                           <em>
-                            <span className="op=total-price">{location.state?.quantity * productPrice}</span>
+                            <span className="op=total-price">{(quantity * (product.productPrice ? product.productPrice : 0)).toLocaleString()}</span>
                           </em>
                           <span className="block-unit-won">원</span>
                         </strong>
@@ -633,7 +638,6 @@ const OrderCart = () => {
                 <div className="paybutton">
                 <button className="CSSbuttonBlack" onClick={saveOrder}>주문하기</button>
                 <button className="CSSbuttonWhite" onClick={backToList}>주문취소</button>
-
                 </div>
               </div>
             </>
@@ -645,5 +649,4 @@ const OrderCart = () => {
     </div>
   );
 };
-
 export default OrderCart;
