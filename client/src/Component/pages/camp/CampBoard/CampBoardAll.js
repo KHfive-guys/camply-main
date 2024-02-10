@@ -97,11 +97,6 @@ function CampBoardAll() {
             ) : null
           )}
           </div>
-      {userType === "Admin" && (
-        <Link to="/camp/board/add">
-          <button>게시글 작성하기</button>
-        </Link>
-      )}
     </section>
   );
 }
