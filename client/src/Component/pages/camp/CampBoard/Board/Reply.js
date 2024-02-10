@@ -25,6 +25,33 @@ function ReplyComponent() {
       });
   }, [camp_id]);
 
+  useEffect(() => {
+    const token = localStorage.getItem("yourTokenKey");
+
+    const parseJwt = (token) => {
+      try {
+        return JSON.parse(
+          decodeURIComponent(escape(atob(token.split(".")[1])))
+        );
+      } catch (e) {
+        return null;
+      }
+    };
+
+    if (token) {
+      try {
+        const decodedToken = parseJwt(token);
+        setUserId(decodedToken.user_id || "");
+        setNewReply((prevNewReply) => ({
+          ...prevNewReply,
+          user_id: decodedToken.user_id || "",
+        }));
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    }
+  }, []);
+
   const handleAddReply = () => {
     axios
       .post(`http://localhost:8080/board/reply/add/${camp_id}`, newReply)
@@ -38,32 +65,6 @@ function ReplyComponent() {
       })
       .catch((error) => {
         console.error("리뷰 추가 실패:", error);
-      })
-      .finally(() => {
-        axios
-          .get(`http://localhost:8080/board/reply/${camp_id}`)
-          .then((response) => {
-            setReplyData(response.data);
-            window.location.reload();
-          })
-          .catch((error) => {
-            console.error("리뷰 목록 가져오기 실패:", error);
-          });
-      });
-  };
-
-  const handleUpdateReply = (replyId) => {
-    const selectedReply = replyData.find(
-      (reply) => reply.camp_reviewnumber === replyId
-    );
-
-    axios
-      .put(`http://localhost:8080/board/reply/update`, selectedReply)
-      .then(() => {
-        console.log("리뷰 수정 성공");
-      })
-      .catch((error) => {
-        console.error("리뷰 수정 실패:", error);
       });
   };
 
@@ -81,112 +82,70 @@ function ReplyComponent() {
       });
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("yourTokenKey");
-
-    const parseJwt = (token) => {
-      try {
-        return JSON.parse(
-          decodeURIComponent(escape(atob(token.split(".")[1])))
-        );
-      } catch (e) {
-        return null;
-      }
-    };
-
-    const decodeUTF8 = (input) => {
-      try {
-        return decodeURIComponent(escape(input));
-      } catch (e) {
-        return input;
-      }
-    };
-
-    if (token) {
-      try {
-        const decodedToken = parseJwt(token);
-        console.log("Decoded Token:", decodedToken);
-
-        setUserId(decodedToken.user_id || "");
-        setNewReply((prevNewBoard) => ({
-          ...prevNewBoard,
-          user_id: decodedToken.user_id || "",
-        }));
-      } catch (error) {
-        console.error("Error decoding token:", error);
-      }
-    }
-  }, []);
-
   return (
     <div id='reviewContainer'>
-          <div id='reviewcontentBox'>
-            <h5 id='reviewListTitle'>방문후기</h5>
-              <div id='reviewBox'>
-                <span id='reviewType'>  User:</span>
-                <input id='reviewUserID' className='form-control' type="text" value={userId || ""} readOnly />
-                <label id='reviewType'>평점:</label>
-                <input
-                className='form-control'
-                id='reviewgrade'
-                  type="number"
-                  value={newReply.camp_rating}
-                  min="1"
-                  max="5"
-                  onChange={(e) =>
-                    setNewReply({ ...newReply, camp_rating: e.target.value })
-                  }
-                />
-                <label id='reviewType'>리뷰:</label>
-                <input
-                className='form-control'
-                id='reviewContent'
-                  type="text"
-                  value={newReply.camp_review}
-                  placeholder="리뷰내용을 입력해주세요"
-                  onChange={(e) =>
-                    setNewReply({ ...newReply, camp_review: e.target.value })
-                  }
-                />
-                <button id='reviewButton' onClick={handleAddReply}>리뷰 추가</button>
-              </div>
-          {replyData.map((reply) => (
-            <div key={reply.camp_reviewnumber}>
-              <div>
-              <span id='reviewcontentuserid'>{reply.user_id}유저 ID</span>
-              <span id='reviewcontentrating'>{reply.camp_rating}평점</span>
-              </div>
-              <p id='reviewcontent'>{reply.camp_review}리뷰</p>
-              <div id='reviewcontentupdatedelete'>
-                <div id='reviewcontentupdatedelete'>
-                <p>
-                {reply.user_id === userId && (
-                  <Button
-                  id='reviewcontentupdate'
-                    variant="outline-secondary"
-                    onClick={() => handleUpdateReply(reply.camp_reviewnumber)}
-                  >
-                    수정
-                  </Button>
-                )}
-              </p>
-              <p>
-                {reply.user_id === userId && (
-                  <Button
-                  id='reviewcontentdelete'
-                    variant="danger"
-                    onClick={() => handleDeleteReply(reply.camp_reviewnumber)}
-                  >
-                    삭제
-                  </Button>
-                )}
-              </p>
-                </div>
-              </div>
-              <hr id='reviewhrBar'/>
+      <div id='reviewcontentBox'>
+        <h5 id='reviewListTitle'>방문후기</h5>
+        <div id='reviewBox'>
+          <span id='reviewType'>User:</span>
+          <input
+            id='reviewUserID'
+            className='form-control'
+            type="text"
+            value={userId || ""}
+            readOnly
+          />
+          <label id='reviewType'>평점:</label>
+          <input
+            className='form-control'
+            id='reviewgrade'
+            type="number"
+            value={newReply.camp_rating}
+            min="1"
+            max="5"
+            onChange={(e) =>
+              setNewReply({ ...newReply, camp_rating: e.target.value })
+            }
+          />
+          <label id='reviewType'>리뷰:</label>
+          <input
+            className='form-control'
+            id='reviewContent'
+            type="text"
+            value={newReply.camp_review}
+            placeholder="리뷰내용을 입력해주세요"
+            onChange={(e) =>
+              setNewReply({ ...newReply, camp_review: e.target.value })
+            }
+          />
+          <button id='reviewButton' onClick={handleAddReply}>리뷰 추가</button>
+        </div>
+        {replyData.map((reply) => (
+          <div key={reply.camp_reviewnumber}>
+            <div>
+              <span id='reviewcontentuserid'>유저 ID: {reply.user_id}</span>
+              <span id='reviewcontentrating'>평점: {reply.camp_rating}</span>
             </div>
-          ))}
+            <p id='reviewcontent'>{reply.camp_review}</p>
+            <div id='reviewcontentupdatedelete'>
+              <div id='reviewcontentupdatedelete'>
+                <p>
+                  {reply.user_id === userId && (
+                    <Button
+                      id='reviewcontentdelete'
+                      variant="danger"
+                      onClick={() => handleDeleteReply(reply.camp_reviewnumber)}
+                    >
+                      삭제
+                    </Button>
+                  )}
+                </p>
+              </div>
+            </div>
+            <hr id='reviewhrBar'/>
           </div>
+        ))}
+      </div>
     </div>
   );
 }
