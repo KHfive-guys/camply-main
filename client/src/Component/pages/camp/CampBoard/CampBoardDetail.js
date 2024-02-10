@@ -5,6 +5,8 @@ import { Container, Button } from "react-bootstrap";
 import Reply from "./Board/Reply";
 import CampNavbar from "../CampNavbar";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import '../CampBoard/css/CampDetail.css';
+import tentIMG from '../../../img/텐트.png';
 
 const parseJwt = (token) => {
   console.log("Parsed JWT:", token);
@@ -211,76 +213,73 @@ function CampBoardDetail() {
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
-      <h1>Camp Board - Camp Details</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>게시글 번호</th>
-            <th>유저 번호</th>
-            <th>카테고리</th>
-            <th>캠핑장 위치</th>
-            <th>캠핑장 주소</th>
-            <th>캠핑장 이름</th>
-            <th>전화번호</th>
-            <th>성인 인원</th>
-            <th>아동 인원</th>
-            <th>1박 가격</th>
-            <th>부대 시설</th>
-            <th>상세설명</th>
-            {isCurrentUser && <th>수정</th>}
-            {isCurrentUser && <th>삭제</th>}
-            <th>찜하기</th>
-            <th>예약하기</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{boardData.camp_id}</td>
-            <td>{boardData.user_id}</td>
-            <td>{boardData.camp_select}</td>
-            <td>{boardData.camp_location}</td>
-            <td>{boardData.camp_address}</td>
-            <td>{boardData.camp_name}</td>
-            <td>{boardData.camp_phone}</td>
-            <td>{boardData.camp_adult}</td>
-            <td>{boardData.camp_child}</td>
-            <td>{boardData.camp_price}</td>
-            <td>{boardData.camp_facility}</td>
-            <td>{boardData.camp_description}</td>
-            {isCurrentUser && (
-              <td>
-                <div className="my-5 d-flex justify-content-center">
+      <div id='detailContainer'>
+      <h1 id='campdetailTitle'>상세보기</h1>
+      
+            <div id='updateAnddeleteButton'>
+              {isCurrentUser &&<th>수정</th>}
+              {isCurrentUser && <th> 삭제</th>}
+            </div>
+            {/* <td>{boardData.camp_id}</td>
+            <td>{boardData.user_id}</td> */}
+            <div id='campDetailBox'>
+           
+            <img src={tentIMG} alt='텐트' id='DetailIMG'></img>
+              <div>
+                <p id='detailType'>유형  | {boardData.camp_select}</p>
+                <p id='campdetailName'> 이름 | {boardData.camp_name}</p>
+                <p id='campdetaillocation'>위치 | {boardData.camp_location}{boardData.camp_address}</p>
+                <p ><span id='campdetail'>전화번호  |</span> {boardData.camp_phone}</p>
+                
+                <p ><span id='campdetail'>성인  |</span> {boardData.camp_adult}명</p>
+                <p ><span id='campdetail'>아동  |</span> {boardData.camp_child}명</p>
+                <p ><span id='campdetail'>가격  |</span> {boardData.camp_price}원</p>
+                <p ><span id='campdetail'>시설  |</span>{boardData.camp_facility}</p>
+                
+              
+              <div>
+                <Button id='detailReservationButton' variant="primary"  onClick={reserveMove}className="mt-3">
+                  예약하기
+                </Button>
+                <button className="like" id='heartButton' onClick={handleHeart}>
+                  {like ? (
+                    <AiFillHeart style={{ color: "#FEA92A", fontSize: "30px" }} />
+                  ) : (
+                    <AiOutlineHeart style={{ fontSize: "30px" }} />
+                  )}
+                </button>
+              </div>
+              <div id='updateAnddeleteButton2'>
+            { isCurrentUser &&(
+             
+                <div className="d-flex ">
                   <button
-                    className="btn btn-outline-secondary"
+                    className="btn"
+                    variant="primary" 
                     onClick={handleUpdateClick}
+                    id='detailReservationButton2'
                   >
                     <i className="fas fa-pen"></i> 수정하기
                   </button>
                 </div>
-              </td>
+              
             )}
-            {isCurrentUser && (
-              <td>
-                <button onClick={handleDelete}>삭제</button>
-              </td>
+            { isCurrentUser &&(
+                <button onClick={handleDelete} id='detailReservationButton2' variant="primary">삭제</button>
             )}
-            <td>
-              <div className="like" onClick={handleHeart}>
-                {like ? (
-                  <AiFillHeart style={{ color: "#FEA92A", fontSize: "30px" }} />
-                ) : (
-                  <AiOutlineHeart style={{ fontSize: "30px" }} />
-                )}
-              </div>
-            </td>
-            <td><Button variant="primary"  onClick={reserveMove}className="mt-3">
-            예약하기
-      </Button></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            </div>
+              
+           
+      </div>
+      </div>
+      <div id='CampdescriptionContainer'>
+        <div id='CampdescriptionBox'>
+        <p id='campdetaildescription'>상세설명</p>
+        <p>{boardData.camp_description}</p>
+        </div>
+      </div>
+      </div>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" ,marginTop:"50px"}}>
   <Button onClick={handlePrevPage}>이전</Button>
   {boardData.camp_images && boardData.camp_images.length > 0 && boardData.camp_images[currentPage] ? (
     <img
@@ -297,9 +296,13 @@ function CampBoardDetail() {
   <Button onClick={handleNextPage}>다음</Button>
 
 </div>
-      <h1>지도</h1>
+      <div id='campdetailmap'>
+
+      <h1 id='campdetailMapTitle'>지도</h1>
       <div id="map" style={{ width: "100%", height: "400px" }}></div>
 
+      </div>
+     
       <Reply />
     </section>
   );
