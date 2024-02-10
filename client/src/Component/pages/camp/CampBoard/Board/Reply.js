@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import '../css/review.css';
 
 function ReplyComponent() {
   const [replyData, setReplyData] = useState([]);
@@ -118,79 +119,74 @@ function ReplyComponent() {
   }, []);
 
   return (
-    <div>
-      <h1>리뷰</h1>
-      <div>
-        <label>User ID:</label>
-        <input type="text" value={userId || ""} readOnly />
-
-        <label>평점:</label>
-        <input
-          type="number"
-          value={newReply.camp_rating}
-          min="1"
-          max="5"
-          onChange={(e) =>
-            setNewReply({ ...newReply, camp_rating: e.target.value })
-          }
-        />
-
-        <label>리뷰:</label>
-        <input
-          type="text"
-          value={newReply.camp_review}
-          onChange={(e) =>
-            setNewReply({ ...newReply, camp_review: e.target.value })
-          }
-        />
-
-        <button onClick={handleAddReply}>리뷰 추가</button>
-      </div>
-
-      <table>
-        <thead>
-          <tr>
-            <th>리뷰 번호</th>
-            <th>게시판 번호</th>
-            <th>유저 ID</th>
-            <th>평점</th>
-            <th>리뷰</th>
-            <th>수정</th>
-            <th>삭제</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div id='reviewContainer'>
+          <div id='reviewcontentBox'>
+            <h5 id='reviewListTitle'>방문후기</h5>
+              <div id='reviewBox'>
+                <span id='reviewType'>  User:</span>
+                <input id='reviewUserID' className='form-control' type="text" value={userId || ""} readOnly />
+                <label id='reviewType'>평점:</label>
+                <input
+                className='form-control'
+                id='reviewgrade'
+                  type="number"
+                  value={newReply.camp_rating}
+                  min="1"
+                  max="5"
+                  onChange={(e) =>
+                    setNewReply({ ...newReply, camp_rating: e.target.value })
+                  }
+                />
+                <label id='reviewType'>리뷰:</label>
+                <input
+                className='form-control'
+                id='reviewContent'
+                  type="text"
+                  value={newReply.camp_review}
+                  placeholder="리뷰내용을 입력해주세요"
+                  onChange={(e) =>
+                    setNewReply({ ...newReply, camp_review: e.target.value })
+                  }
+                />
+                <button id='reviewButton' onClick={handleAddReply}>리뷰 추가</button>
+              </div>
           {replyData.map((reply) => (
-            <tr key={reply.camp_reviewnumber}>
-              <td>{reply.camp_reviewnumber}</td>
-              <td>{reply.camp_id}</td>
-              <td>{reply.user_id}</td>
-              <td>{reply.camp_rating}</td>
-              <td>{reply.camp_review}</td>
-              <td>
+            <div key={reply.camp_reviewnumber}>
+              <div>
+              <span id='reviewcontentuserid'>{reply.user_id}유저 ID</span>
+              <span id='reviewcontentrating'>{reply.camp_rating}평점</span>
+              </div>
+              <p id='reviewcontent'>{reply.camp_review}리뷰</p>
+              <div id='reviewcontentupdatedelete'>
+                <div id='reviewcontentupdatedelete'>
+                <p>
                 {reply.user_id === userId && (
                   <Button
+                  id='reviewcontentupdate'
                     variant="outline-secondary"
                     onClick={() => handleUpdateReply(reply.camp_reviewnumber)}
                   >
                     수정
                   </Button>
                 )}
-              </td>
-              <td>
+              </p>
+              <p>
                 {reply.user_id === userId && (
                   <Button
+                  id='reviewcontentdelete'
                     variant="danger"
                     onClick={() => handleDeleteReply(reply.camp_reviewnumber)}
                   >
                     삭제
                   </Button>
                 )}
-              </td>
-            </tr>
+              </p>
+                </div>
+              </div>
+              <hr id='reviewhrBar'/>
+            </div>
           ))}
-        </tbody>
-      </table>
+          </div>
     </div>
   );
 }

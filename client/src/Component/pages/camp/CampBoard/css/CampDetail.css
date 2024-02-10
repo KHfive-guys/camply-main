@@ -1,0 +1,134 @@
+#detailContainer{
+    margin: auto;
+    width:1000px;
+    padding-top:100px;
+}
+
+#campDetailBox{
+    width:1000px;
+    display: grid;
+    grid-template-columns: 400px 400px;
+    column-gap: 100px;
+    margin: auto;
+    padding: 50px 20px 20px 50px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 2px rgb(213, 212, 212);
+}
+
+/* 상세보기 제목 */
+#campdetailTitle{
+    font-weight: 900;
+    text-shadow: 3px 3px 0px orange;
+    margin-bottom: 30px;
+}
+
+/* 캠핑장 이름 */
+#campdetailName{
+    font-size: 30px;
+    font-weight: 900;
+}
+
+/* 상세페이지 이미지 */
+#DetailIMG{
+    width:422px;
+    height: 357px;
+}
+
+/* 유형 */
+#detailType{
+    color: rgb(162, 161, 161);
+    font-weight: 900;
+}
+
+/* 지역&위치 */
+#campdetaillocation{
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(77, 77, 77);
+}
+
+
+#CampdescriptionContainer{
+    margin-top: 60px;
+}
+
+#campdetail{
+    font-weight: 800;
+    font-size: 15px;
+    color: rgb(77, 77, 77);
+}
+
+/* 상세설명 박스 */
+#CampdescriptionBox{
+    width:1000px;
+    margin: auto;
+    padding: 30px 30px 30px 30px; 
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 2px rgb(213, 212, 212);
+}
+
+/* 상세설명 */
+#campdetaildescription{
+    color: rgb(49, 48, 48);
+    font-size: 20px;
+    font-weight: 900;
+}
+
+/* 상세페이지 예약 버튼 */
+#detailReservationButton{
+    width:300px;
+    background-color: #FEA92A;
+    border: none;
+    border-radius: 10px;
+    height:40px;
+    margin-bottom: 10px;
+    font-weight: 900;
+}
+
+/* 수정 삭제 버튼 */
+#detailReservationButton2{
+    width:180px;
+    background-color: #FEA92A;
+    border: none;
+    border-radius: 10px;
+    height:40px;
+    margin-bottom: 10px;
+}
+
+#detailReservationButton2:hover{
+    background-color: #fb9d10;
+}
+
+#updateAnddeleteButton{
+    float:right;
+    color:gray;
+    font-weight: 500;
+}
+
+/* 좋아요 버튼 */
+#heartButton{
+    background-color: white;
+    border: none;
+    margin-left: 20px;
+}
+
+#heartButton:hover{
+    color: #fb9d10;
+}
+
+#updateAnddeleteButton2{
+    display: grid;
+    grid-template-columns: 180px 180px;
+    column-gap: 10px;
+}
+
+#campdetailmap{
+    width:1000px;
+    margin: auto;
+}
+
+#campdetailMapTitle{
+    margin:50px 0px 20px 0px;
+    font-weight: 900;
+    text-shadow: 3px 3px 0px orange;
+}
