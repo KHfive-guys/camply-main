@@ -33,19 +33,19 @@ function BbsWrite() {
       .map(([facility]) => facility)
       .join(", ");
 
-  const campImagesString = newBoard.camp_images.join(";");
+    const campImagesString = newBoard.camp_images.join(";");
 
-  if (
-    newBoard.camp_select === "" ||
-    newBoard.camp_location === "" ||
-    newBoard.camp_name === "" ||
-    newBoard.camp_adult === 0 ||
-    newBoard.camp_price === 0 ||
-    newBoard.camp_images.length === 0
-  ) {
-    alert("모든 필수 입력 항목을 채워주세요.");
-    return;
-  }
+    if (
+      newBoard.camp_select === "" ||
+      newBoard.camp_location === "" ||
+      newBoard.camp_name === "" ||
+      newBoard.camp_adult === 0 ||
+      newBoard.camp_price === 0 ||
+      newBoard.camp_images.length === 0
+    ) {
+      alert("모든 필수 입력 항목을 채워주세요.");
+      return;
+    }
 
     axios
       .post("http://localhost:8080/camp/board/add", {
@@ -175,7 +175,9 @@ function BbsWrite() {
         <table className="table">
           <tbody>
             <tr>
-              <th className="table-primary">캠핑장 카테고리<span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 카테고리<span className="required"> *필수 입력</span>
+              </th>
               <td className="radio-buttons-container">
                 <div>
                   <input
@@ -246,7 +248,9 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 위치 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 위치 <span className="required"> *필수 입력</span>
+              </th>
               <td className="radio-buttons-container">
                 <div>
                   <input
@@ -343,7 +347,9 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 주소 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 주소 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   type="text"
@@ -355,7 +361,9 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 이름 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 이름 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   type="text"
@@ -369,7 +377,9 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 전화번호 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 전화번호 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   type="text"
@@ -381,7 +391,9 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">성인 인원 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                성인 인원 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   type="number"
@@ -401,7 +413,9 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">아동 인원 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                아동 인원 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   type="number"
@@ -419,9 +433,11 @@ function BbsWrite() {
                 />
               </td>
             </tr>
-   
+
             <tr>
-              <th className="table-primary">1박 가격 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                1박 가격 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   type="number"
@@ -434,9 +450,10 @@ function BbsWrite() {
               </td>
             </tr>
 
-            
             <tr>
-              <th className="table-primary">캠핑장 사진 추가 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 사진 추가 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <button
                   className="btn btn-outline-secondary"
@@ -444,7 +461,6 @@ function BbsWrite() {
                 >
                   사진 추가하기
                 </button>
-
               </td>
             </tr>
 
@@ -460,7 +476,7 @@ function BbsWrite() {
                   />
                 </td>
               </tr>
-              ))}
+            ))}
 
             <tr>
               <th className="table-primary">부대 시설</th>
@@ -487,8 +503,7 @@ function BbsWrite() {
             <tr>
               <th className="table-primary">캠핑장 상세설명</th>
               <td>
-                <input
-                  type="text"
+                <textarea
                   className="form-control"
                   value={newBoard.camp_description}
                   onChange={(e) =>
@@ -497,6 +512,7 @@ function BbsWrite() {
                       camp_description: e.target.value,
                     })
                   }
+                  style={{ whiteSpace: 'pre-wrap' }}
                 />
               </td>
             </tr>

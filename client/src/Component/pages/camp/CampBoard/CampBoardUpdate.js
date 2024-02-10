@@ -7,7 +7,6 @@ import CampNavbar from "../CampNavbar";
 function UpdateBoard() {
   const { camp_id } = useParams();
   const navigate = useNavigate();
-  
 
   const [boardData, setBoardData] = useState({
     user_id: "",
@@ -37,18 +36,15 @@ function UpdateBoard() {
     마트: false,
     바베큐장: false,
   });
-  
-
-  
 
   const handleCheckboxChange = (facility) => {
     const prevFacilities = { ...facilities };
-  
+
     setFacilities((prevFacilities) => ({
       ...prevFacilities,
       [facility]: !prevFacilities[facility],
     }));
-  
+
     setBoardData((prevBoardData) => ({
       ...prevBoardData,
       camp_facility: Object.entries({
@@ -58,9 +54,7 @@ function UpdateBoard() {
         .filter(([_, checked]) => checked)
         .map(([facility]) => facility)
         .join(", "),
-        
     }));
-
   };
 
   useEffect(() => {
@@ -87,34 +81,31 @@ function UpdateBoard() {
       .filter(([facility, checked]) => checked)
       .map(([facility]) => facility)
       .join(", ");
-  
+
     if (
       boardData.camp_select === "" ||
       boardData.camp_location === "" ||
       boardData.camp_name === "" ||
       boardData.camp_adult === 0 ||
       boardData.camp_child === 0 ||
-      boardData.camp_description === ""||
+      boardData.camp_description === "" ||
       boardData.camp_price === "" ||
       boardData.camp_phone === ""
     ) {
       alert("모든 필수 입력 항목을 채워주세요.");
       return;
     }
-  
+
     axios
       .put(`http://localhost:8080/camp/board/edit/${camp_id}`, boardData, {
         headers: {
           "Content-Type": "application/json",
         },
-        
       })
       .then(() => {
         alert("수정이 완료되었습니다.");
         console.log("Update successful");
         navigate(`/camp/board/get/${camp_id}`);
-
-        
       })
       .catch((error) => {
         console.error("Update failed:", error);
@@ -169,12 +160,14 @@ function UpdateBoard() {
 
   const addImageInputField = () => {
     if (boardData.camp_images.length < 5) {
-      setBoardData({ ...boardData, camp_images: [...boardData.camp_images, ""] });
+      setBoardData({
+        ...boardData,
+        camp_images: [...boardData.camp_images, ""],
+      });
     } else {
       alert("이미지는 최대 5장까지 저장 가능합니다.");
     }
   };
-
 
   return (
     <section>
@@ -186,9 +179,10 @@ function UpdateBoard() {
       <div>
         <table className="table">
           <tbody>
-
             <tr>
-              <th className="table-primary">캠핑장 카테고리 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 카테고리 <span className="required"> *필수 입력</span>
+              </th>
               <td className="radio-buttons-container">
                 <div>
                   <input
@@ -259,7 +253,9 @@ function UpdateBoard() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 위치 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 위치 <span className="required"> *필수 입력</span>
+              </th>
               <td className="radio-buttons-container">
                 <div>
                   <input
@@ -356,7 +352,9 @@ function UpdateBoard() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 주소 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 주소 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   className="form-control"
@@ -370,7 +368,9 @@ function UpdateBoard() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 이름 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 이름 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   type="text"
@@ -384,7 +384,9 @@ function UpdateBoard() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 전화번호 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 전화번호 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   type="text"
@@ -398,7 +400,9 @@ function UpdateBoard() {
             </tr>
 
             <tr>
-              <th className="table-primary">성인 인원 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                성인 인원 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   type="number"
@@ -418,7 +422,9 @@ function UpdateBoard() {
             </tr>
 
             <tr>
-              <th className="table-primary">아동 인원 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                아동 인원 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   type="number"
@@ -438,7 +444,9 @@ function UpdateBoard() {
             </tr>
 
             <tr>
-              <th className="table-primary">1박 가격 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                1박 가격 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <input
                   type="number"
@@ -452,7 +460,9 @@ function UpdateBoard() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 사진 추가 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                캠핑장 사진 추가 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <button
                   className="btn btn-outline-secondary"
@@ -463,36 +473,47 @@ function UpdateBoard() {
               </td>
             </tr>
 
-            {Array.isArray(boardData.camp_images) ? boardData.camp_images.map((image, index) => (
-  <tr key={index}>
-    <th className="table-primary">{`캠핑장 사진 ${index + 1}`}</th>
-    <td>
-      <input
-        type="text"
-        className="form-control"
-        value={image}
-        onChange={(e) => handleImageChange(index, e.target.value)}
-      />
-    </td>
-  </tr>
-)) : (
-  <tr>
-    <th className="table-primary">캠핑장 사진 <span className="required"> *필수 입력</span></th>
-    <td>
-      <input
-        type="text"
-        className="form-control"
-        value={boardData.camp_images || ""}
-        onChange={(e) => setBoardData({ ...boardData, camp_images: e.target.value })}
-      />
-    </td>
-  </tr>
-)}
-
-
+            {Array.isArray(boardData.camp_images) ? (
+              boardData.camp_images.map((image, index) => (
+                <tr key={index}>
+                  <th className="table-primary">{`캠핑장 사진 ${
+                    index + 1
+                  }`}</th>
+                  <td>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={image}
+                      onChange={(e) => handleImageChange(index, e.target.value)}
+                    />
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <th className="table-primary">
+                  캠핑장 사진 <span className="required"> *필수 입력</span>
+                </th>
+                <td>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={boardData.camp_images || ""}
+                    onChange={(e) =>
+                      setBoardData({
+                        ...boardData,
+                        camp_images: e.target.value,
+                      })
+                    }
+                  />
+                </td>
+              </tr>
+            )}
 
             <tr>
-              <th className="table-primary">부대 시설 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">
+                부대 시설 <span className="required"> *필수 입력</span>
+              </th>
               <td>
                 <div className="facilities-checkbox-container">
                   {Object.entries(facilities).map(
@@ -514,18 +535,18 @@ function UpdateBoard() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 상세설명 <span className="required"> *필수 입력</span></th>
+              <th className="table-primary">캠핑장 상세설명</th>
               <td>
-                <input
-                  type="text"
+                <textarea
                   className="form-control"
-                  value={boardData.camp_description || ""}
+                  value={boardData.camp_description}
                   onChange={(e) =>
                     setBoardData({
                       ...boardData,
                       camp_description: e.target.value,
                     })
                   }
+                  style={{ whiteSpace: 'pre-wrap' }}
                 />
               </td>
             </tr>

@@ -295,7 +295,7 @@ function CampBoardDetail() {
         <div id="CampdescriptionContainer">
           <div id="CampdescriptionBox">
             <p id="campdetaildescription">상세설명</p>
-            <p>{boardData.camp_description}</p>
+            <pre>{boardData.camp_description}</pre>
           </div>
         </div>
       </div>
