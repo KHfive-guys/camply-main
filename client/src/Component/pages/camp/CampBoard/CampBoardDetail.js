@@ -5,8 +5,8 @@ import { Container, Button } from "react-bootstrap";
 import Reply from "./Board/Reply";
 import CampNavbar from "../CampNavbar";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import '../CampBoard/css/CampDetail.css';
-import tentIMG from '../../../img/텐트.png';
+import "../CampBoard/css/CampDetail.css";
+import tentIMG from "../../../img/텐트.png";
 
 const parseJwt = (token) => {
   console.log("Parsed JWT:", token);
@@ -28,7 +28,10 @@ function CampBoardDetail() {
     setLike(!like);
     const userId = parseJwt(userToken)?.user_id;
     axios
-      .post(`http://localhost:8080/camp/board/add/dips`, { camp_id: camp_id, user_id: userId })
+      .post(`http://localhost:8080/camp/board/add/dips`, {
+        camp_id: camp_id,
+        user_id: userId,
+      })
       .then((response) => {
         alert("좋아요!.");
       })
@@ -36,8 +39,7 @@ function CampBoardDetail() {
         alert("좋아요 실패: " + error.response.data.message);
       });
   };
-  
-  
+
   const [like, setLike] = useState(false);
 
   const initializeMap = useCallback(() => {
@@ -152,7 +154,6 @@ function CampBoardDetail() {
     const confirmDelete = window.confirm(
       "게시글이 삭제됩니다. 계속하시겠습니까?"
     );
-  
 
     if (confirmDelete) {
       axios
@@ -213,96 +214,121 @@ function CampBoardDetail() {
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
-      <div id='detailContainer'>
-      <h1 id='campdetailTitle'>상세보기</h1>
-      
-            <div id='updateAnddeleteButton'>
-              {isCurrentUser &&<th>수정</th>}
-              {isCurrentUser && <th> 삭제</th>}
-            </div>
-            {/* <td>{boardData.camp_id}</td>
+      <div id="detailContainer">
+        <h1 id="campdetailTitle">상세보기</h1>
+
+        <div id="updateAnddeleteButton">
+          {isCurrentUser && <th>수정</th>}
+          {isCurrentUser && <th> 삭제</th>}
+        </div>
+        {/* <td>{boardData.camp_id}</td>
             <td>{boardData.user_id}</td> */}
-            <div id='campDetailBox'>
-           
-            <img src={tentIMG} alt='텐트' id='DetailIMG'></img>
-              <div>
-                <p id='detailType'>유형  | {boardData.camp_select}</p>
-                <p id='campdetailName'> 이름 | {boardData.camp_name}</p>
-                <p id='campdetaillocation'>위치 | {boardData.camp_location}{boardData.camp_address}</p>
-                <p ><span id='campdetail'>전화번호  |</span> {boardData.camp_phone}</p>
-                
-                <p ><span id='campdetail'>성인  |</span> {boardData.camp_adult}명</p>
-                <p ><span id='campdetail'>아동  |</span> {boardData.camp_child}명</p>
-                <p ><span id='campdetail'>가격  |</span> {boardData.camp_price}원</p>
-                <p ><span id='campdetail'>시설  |</span>{boardData.camp_facility}</p>
-                
-              
-              <div>
-                <Button id='detailReservationButton' variant="primary"  onClick={reserveMove}className="mt-3">
-                  예약하기
-                </Button>
-                <button className="like" id='heartButton' onClick={handleHeart}>
-                  {like ? (
-                    <AiFillHeart style={{ color: "#FEA92A", fontSize: "30px" }} />
-                  ) : (
-                    <AiOutlineHeart style={{ fontSize: "30px" }} />
-                  )}
-                </button>
-              </div>
-              <div id='updateAnddeleteButton2'>
-            { isCurrentUser &&(
-             
+        <div id="campDetailBox">
+          <img src={tentIMG} alt="텐트" id="DetailIMG"></img>
+          <div>
+            <p id="detailType">유형 | {boardData.camp_select}</p>
+            <p id="campdetailName"> 이름 | {boardData.camp_name}</p>
+            <p id="campdetaillocation">
+              위치 | {boardData.camp_location}
+              {boardData.camp_address}
+            </p>
+            <p>
+              <span id="campdetail">전화번호 |</span> {boardData.camp_phone}
+            </p>
+
+            <p>
+              <span id="campdetail">성인 |</span> {boardData.camp_adult}명
+            </p>
+            <p>
+              <span id="campdetail">아동 |</span> {boardData.camp_child}명
+            </p>
+            <p>
+              <span id="campdetail">가격 |</span> {boardData.camp_price}원
+            </p>
+            <p>
+              <span id="campdetail">시설 |</span>
+              {boardData.camp_facility}
+            </p>
+
+            <div>
+              <Button
+                id="detailReservationButton"
+                variant="primary"
+                onClick={reserveMove}
+                className="mt-3"
+              >
+                예약하기
+              </Button>
+              <button className="like" id="heartButton" onClick={handleHeart}>
+                {like ? (
+                  <AiFillHeart style={{ color: "#FEA92A", fontSize: "30px" }} />
+                ) : (
+                  <AiOutlineHeart style={{ fontSize: "30px" }} />
+                )}
+              </button>
+            </div>
+            <div id="updateAnddeleteButton2">
+              {isCurrentUser && (
                 <div className="d-flex ">
                   <button
                     className="btn"
-                    variant="primary" 
+                    variant="primary"
                     onClick={handleUpdateClick}
-                    id='detailReservationButton2'
+                    id="detailReservationButton2"
                   >
                     <i className="fas fa-pen"></i> 수정하기
                   </button>
                 </div>
-              
-            )}
-            { isCurrentUser &&(
-                <button onClick={handleDelete} id='detailReservationButton2' variant="primary">삭제</button>
-            )}
+              )}
+              {isCurrentUser && (
+                <button
+                  onClick={handleDelete}
+                  id="detailReservationButton2"
+                  variant="primary"
+                >
+                  삭제
+                </button>
+              )}
             </div>
-              
-           
-      </div>
-      </div>
-      <div id='CampdescriptionContainer'>
-        <div id='CampdescriptionBox'>
-        <p id='campdetaildescription'>상세설명</p>
-        <p>{boardData.camp_description}</p>
+          </div>
+        </div>
+        <div id="CampdescriptionContainer">
+          <div id="CampdescriptionBox">
+            <p id="campdetaildescription">상세설명</p>
+            <p>{boardData.camp_description}</p>
+          </div>
         </div>
       </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "50px",
+        }}
+      >
+        <Button onClick={handlePrevPage}>이전</Button>
+        {boardData.camp_images &&
+        boardData.camp_images.length > 0 &&
+        boardData.camp_images[currentPage] ? (
+          <img
+            style={{ width: "800px", height: "600px", objectFit: "cover" }}
+            src={boardData.camp_images[currentPage]}
+            alt={`상품 이미지 ${currentPage + 1}`}
+            onError={(e) => {
+              e.target.onerror = null;
+            }}
+          />
+        ) : (
+          <p>이미지가 없습니다.</p>
+        )}
+        <Button onClick={handleNextPage}>다음</Button>
       </div>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" ,marginTop:"50px"}}>
-  <Button onClick={handlePrevPage}>이전</Button>
-  {boardData.camp_images && boardData.camp_images.length > 0 && boardData.camp_images[currentPage] ? (
-    <img
-      style={{ width: "500px", height: "400px", objectFit: "cover" }}
-      src={boardData.camp_images[currentPage]}
-      alt={`상품 이미지 ${currentPage + 1}`}
-      onError={(e) => {
-        e.target.onerror = null;
-      }}
-    />
-  ) : (
-    <p>이미지가 없습니다.</p>
-  )}
-  <Button onClick={handleNextPage}>다음</Button>
-
-</div>
-      <div id='campdetailmap'>
-
-      <h1 id='campdetailMapTitle'>지도</h1>
-      <div id="map" style={{ width: "100%", height: "400px" }}></div>
-
+      <div id="campdetailmap">
+        <h1 id="campdetailMapTitle">지도</h1>
+        <div id="map" style={{ width: "100%", height: "400px" }}></div>
       </div>
-     
+
       <Reply />
     </section>
   );

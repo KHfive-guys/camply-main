@@ -6,6 +6,8 @@ import { Container } from "react-bootstrap";
 import CampNavbar from "../CampNavbar";
 import tentIMG from '../../../img/텐트.png';
 import '../CampBoard/css/SearchList.css';
+import Menu from '../CampMain/Home/Menu';
+
 
 function CampBoardAll() {
   const [boardData, setBoardData] = useState([]);
@@ -69,6 +71,8 @@ function CampBoardAll() {
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
+
+      <Menu/>
 
       <h1 id='tentSearchTitle'>캠플리 한눈에 보기</h1>
       <div id='tentContainer'>
