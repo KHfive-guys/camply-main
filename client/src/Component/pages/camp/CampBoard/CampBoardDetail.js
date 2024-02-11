@@ -245,7 +245,7 @@ function CampBoardDetail() {
             <span id="campdetailName"> 캠핑장 이름 | {boardData.camp_name}</span>
             <div>
             <p id="campdetaillocation">
-            <img id='markerIMG' src={marker} alt='위치'/> 위치가 쓰일 공간(나중에 지워주세요)
+            <img id='markerIMG' src={marker} alt='위치'/>
             {boardData.camp_location}
               {boardData.camp_address}
             </p>
