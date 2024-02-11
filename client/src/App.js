@@ -7,7 +7,7 @@ import {
   Navigate,
   Link,
 } from "react-router-dom";
-
+  
 import Register from "./Component/pages/common/Register";
 import GeneralRegister from "./Component/pages/common/GeneralRegister";
 import ManagerRegister from "./Component/pages/common/ManagerRegister";
