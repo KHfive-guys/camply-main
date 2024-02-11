@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import { Container } from "react-bootstrap";
 import "./css/CampBoard.css";
@@ -11,6 +11,7 @@ function BbsWrite() {
   const [userId, setUserId] = useState("");
   const [USER_BUSINESSADDRESS, setUserBusinessAddress] = useState("");
   const [USER_BUSINESSPHONE, setUserBusinessPhone] = useState("");
+  const { camp_id } = useParams();
   const [newBoard, setNewBoard] = useState({
     user_id: "",
     camp_id: 0,
@@ -82,7 +83,8 @@ function BbsWrite() {
           마트: false,
           바베큐장: false,
         });
-        navigate("/camp/board/all");
+        navigate(`/camp/board/all`);
+        
       })
       .catch((error) => {
         console.error("실패", error);
