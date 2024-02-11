@@ -150,7 +150,7 @@ const UpdateProduct = () => {
         }
       );
       alert("상품이 성공적으로 수정되었습니다.");
-      navigate("/seller/list");
+      navigate("/shop/seller/list");
     } catch (error) {
       console.error("Error updating product:", error);
       alert("상품 수정에 실패했습니다.");
@@ -159,7 +159,7 @@ const UpdateProduct = () => {
 
   //조회 페이지로 되돌아가기
   const handleCancel = () => {
-    navigate("/seller/list");
+    navigate("/shop/seller/list");
   };
 
   if (!product) {
