@@ -3,33 +3,37 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useParams,useLocation } from "react-router-dom"; // useParams 추가
-import "../../css/ShopDetail/ShopInquiry/ShopInquiry.css";
-import InquiryDetail from "./InquiryDetail";
+import '../../css/ShopDetail/ShopInquiry/ShopInquiry.css';
 import {Button} from '@mui/material';
-import { FaCheck } from "react-icons/fa";
+import Pagination from "react-js-pagination";
 
 
 
 const ShopInquiry = () => {
   const [questions, setQuestions] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 2;
+  const { productId } = useParams();
   const navigate = useNavigate();
-  const { productId } = useParams(); // URL 파라미터에서 productId 추출
-
-
-  
-
-
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        // productId를 사용하여 해당 제품의 문의글만 가져오는 엔드포인트로 수정
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+
         const response = await axios.get(
-          `http://localhost:8080/shop/question/view/${productId}`
+          `http://localhost:8080/shop/question/view/${productId}`,
+          {
+            
+          }
         );
+
+        console.log("Fetched questions data:", response.data);
+
         setQuestions(response.data);
       } catch (error) {
-        console.error("문의글 불러오는 중 에러 발생!!", error);
+        console.error("질문을 불러오는 중 에러 발생", error);
       }
     };
 
@@ -38,44 +42,124 @@ const ShopInquiry = () => {
     } else {
       console.error("productId가 정의되지 않았습니다.");
     }
-  }, [productId]);
+  }, [productId, currentPage]);
 
-  // 문의글 클릭 시 상세 정보 페이지로 이동하는 함수
   const handleQuestionClick = (questionNo) => {
     navigate(`/shop/question/view/${questionNo}`);
   };
 
-  // 작성하기 버튼 클릭 시 이동하는 함수
   const handleWriteClick = () => {
-    // 문의글 작성 경로에 productId를 포함하여 수정
     navigate(`/inquiry/writer?productId=${productId}`);
   };
 
+
   return (
-    <div className='inquiry-main'>
-      <section>
-        <h2 style={{ textAlign: "center" }}>문의</h2>
-        <ul className='comment-list'>
-          {questions.map((question) => (
-            <li key={question.questionNo}>
-              <p className='author'>작성자 {question.questionName}</p>
-              <div
-                className='comment'
-                onClick={() => handleQuestionClick(question.questionNo)}
-              >
-                <h3 className='title'>{question.questionTitle}</h3>
-              </div>
-            </li>
-          ))}
-          <div className='inquiry-btn'>
-          <Button type='button' variant="contained" color="success" onClick={handleWriteClick}>
-            작성하기 <FaCheck/>
-          </Button>
+    <>
+     <h2 style={{textAlign:'center', marginTop:'50px', marginBlock:'50px'}}>상품문의</h2>
+     <a name="reviewboard"></a>
+     <div className="tit-detail">
+        <p className="more fe"></p>
+     </div>
+     <div className="table-slide review-list smaller-table">
+        <table summary="번호, 제목, 작성자, 작성일, 조회">
+            <colgroup>
+                <col width={5}></col>
+                <col width={5}></col>
+                <col width={15}></col>
+                <col width={15}></col>
+                <col width={10}></col>
+                <col width={5}></col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <div className="tb-center">NO</div>
+                    </th>
+                    <th scope="col"></th>
+                    <th scope="col">
+                        <div className="tb-center">제목</div>
+                    </th>
+                    <th scope="col">
+                        <div className="tb-center">작성자</div>
+                    </th>
+                    <th scope="col">
+                        <div className="tb-center">작성일</div>
+                    </th>
+                    <th scope="col">
+                        <div className="tb-center">조회수</div>
+                    </th>
+                </tr>
+            </thead>
+            {questions.map((question) => (
+            <tbody key={question.questionNo}>
+                <tr className="nbg">
+                    <td>
+                       <div className="tb-center">
+                         <span className="reviewnum">
+                          {question.questionNo}
+                         </span>
+                       </div> 
+                    </td>
+                    <td>
+                        <div className="tb-center"></div>
+                    </td>
+                    <td>
+                        <div style={{cursor:'pointer'}}
+                          onClick={() => handleQuestionClick(question.questionNo)}
+                        className="tb-left reply_depth0">
+                          <span>{question.questionTitle}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div className="tb-center writer">
+                            <span>
+                             {question.userName}
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                      <div className="tb-center">{question.questionDate}</div>
+                    </td>
+                    <td>
+                      <div className="tb-center">
+                        <span className="review_board_showhits1">{question.questionHit}</span>
+                      </div>
+                    </td>
+                </tr>
+                <tr className="ms_review_content_box cnt" style={{display:'none'}}>
+                  <td colSpan={6}>
+                    <div className="tb-left">
+                      <div className="review-board-content">
+                        <div style={{paddingBottom:'15px',paddingLeft:'80px',paddingRight:'15px',paddingTop:'15px'}}></div>
+                        <div className="ms_cmt_list_box"></div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+               
+            </tbody>
+             ))}
+        </table>
+        <div className="pagination" style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+          <Pagination
+            activePage={currentPage}
+            itemsCountPerPage={2}
+            totalItemsCount={questions.length}
+            pageRangeDisplayed={5}
+            onChange={(pageNumber) => setCurrentPage(pageNumber)}
+          />
         </div>
-        </ul>
-      </section>
-    </div>
-  );
+
+        <div className="btm-writer">
+            <Button type='button' variant="contained" color="success" onClick={handleWriteClick}>글쓰기</Button>
+        </div>
+        
+     
+     </div>
+     
+    </>
+    
+  )
 };
 
 export default ShopInquiry;
