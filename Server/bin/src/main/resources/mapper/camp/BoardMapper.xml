@@ -14,7 +14,8 @@
         <result column="CAMP_CHILD" property="camp_child"/>
         <result column="CAMP_PRICE" property="camp_price"/>
         <result column="CAMP_DESCRIPTION" property="camp_description"/>
-        <result column="CAMP_IMAGE" property="camp_image"/>
+        <result column="CAMP_IMAGES" property="camp_images"/>
+        <result column="CAMP_FACILITY" property="camp_facility"/>
     </resultMap>
 
     <insert id="insertBoard" parameterType="com.camply.camp.board.vo.BoardVO">
@@ -28,8 +29,9 @@
             CAMP_ADULT,
             CAMP_CHILD,
             CAMP_PRICE,
-            CAMP_IMAGE,
-            CAMP_DESCRIPTION
+            CAMP_IMAGES,
+            CAMP_DESCRIPTION,
+            CAMP_FACILITY
         )
         VALUES (
                    #{user_id},
@@ -41,13 +43,18 @@
                    #{camp_adult},
                    #{camp_child},
                    #{camp_price},
-                   #{camp_image},
-                   #{camp_description}
+                   #{camp_images},
+                   #{camp_description},
+                   #{camp_facility}
                )
     </insert>
 
     <select id="getAllBoard"  resultMap="CampPostingMap">
         SELECT * FROM camp_posting ORDER BY camp_id DESC
+    </select>
+
+    <select id="getBoardCategory"  resultMap="CampPostingMap">
+        SELECT * FROM camp_posting WHERE camp_select = #{camp_select} ORDER BY camp_id DESC
     </select>
 
     <select id="getBoardById"  resultMap="CampPostingMap" parameterType="java.lang.Long">
@@ -71,7 +78,8 @@
             CAMP_CHILD = #{camp_child},
             CAMP_PRICE = #{camp_price},
             CAMP_DESCRIPTION = #{camp_description},
-            CAMP_IMAGE = #{camp_image}
+            CAMP_IMAGES = #{camp_images},
+            CAMP_FACILITY = #{camp_facility}
         WHERE CAMP_ID = #{camp_id}
     </update>
 
