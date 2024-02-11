@@ -97,7 +97,7 @@ tbody tr:hover {
   border-radius: 4px;
 }
 
-.sellerProduct .form-group input[type='text'] {
+.sellerProduct .form-group input[type="text"] {
   width: 100%;
   padding: 5px;
   border: 1px solid #ddd;
@@ -202,4 +202,16 @@ tbody tr:hover {
 
 .itemsPerPage-position .savebutton:focus {
   outline: none;
+}
+
+.custom-product {
+  color: #5c657b; /* 빨간색으로 설정, 원하는 색상 코드로 변경 가능 */
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.custom-link {
+  color: #5c657b; /* 빨간색으로 설정, 원하는 색상 코드로 변경 가능 */
+  font-size: 18px;
+  font-weight: 600;
 }
