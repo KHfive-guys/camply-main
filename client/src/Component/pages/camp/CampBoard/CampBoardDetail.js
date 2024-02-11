@@ -7,6 +7,8 @@ import CampNavbar from "../CampNavbar";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import "../CampBoard/css/CampDetail.css";
 import tentIMG from "../../../img/텐트.png";
+import marker from "../../../img/마커.png";
+import copyIMG from "../../../img/공유.png";
 
 const parseJwt = (token) => {
   console.log("Parsed JWT:", token);
@@ -208,6 +210,18 @@ function CampBoardDetail() {
     );
   };
 
+  // 링크 외부에 공유하기
+    const handleCopy = () => {
+      const dataToCopy = window.location.href;
+      navigator.clipboard.writeText(dataToCopy)
+        .then(() => {
+          alert('링크가 클립보드에 복사되었습니다!');
+        })
+        .catch(err => {
+          console.error('클립보드 복사 실패:', err);
+        });
+    };
+
   return (
     <section>
       <CampNavbar />
@@ -218,34 +232,37 @@ function CampBoardDetail() {
         <h1 id="campdetailTitle">상세보기</h1>
 
         <div id="updateAnddeleteButton">
-          {isCurrentUser && <th>수정</th>}
+          { isCurrentUser &&<th>수정</th>}
           {isCurrentUser && <th> 삭제</th>}
         </div>
         {/* <td>{boardData.camp_id}</td>
             <td>{boardData.user_id}</td> */}
         <div id="campDetailBox">
-          <img src={tentIMG} alt="텐트" id="DetailIMG"></img>
-          <div>
+         
+         
             <p id="detailType">유형 | {boardData.camp_select}</p>
-            <p id="campdetailName"> 이름 | {boardData.camp_name}</p>
+            <img src={tentIMG} alt="텐트" id="DetailIMG"></img>
+            <span id="campdetailName"> 캠핑장 이름 | {boardData.camp_name}</span>
+            <div>
             <p id="campdetaillocation">
-              위치 | {boardData.camp_location}
+            <img id='markerIMG' src={marker} alt='위치'/> 위치가 쓰일 공간(나중에 지워주세요)
+            {boardData.camp_location}
               {boardData.camp_address}
             </p>
-            <p>
+            <p id="campdetailtitle">
               <span id="campdetail">전화번호 |</span> {boardData.camp_phone}
             </p>
 
-            <p>
+            <p id="campdetailtitle">
               <span id="campdetail">성인 |</span> {boardData.camp_adult}명
             </p>
-            <p>
+            <p id="campdetailtitle">
               <span id="campdetail">아동 |</span> {boardData.camp_child}명
             </p>
-            <p>
+            <p id="campdetailtitle">
               <span id="campdetail">가격 |</span> {boardData.camp_price}원
             </p>
-            <p>
+            <p id="campdetailtitle">
               <span id="campdetail">시설 |</span>
               {boardData.camp_facility}
             </p>
@@ -266,9 +283,10 @@ function CampBoardDetail() {
                   <AiOutlineHeart style={{ fontSize: "30px" }} />
                 )}
               </button>
+              <button id='linkCopy' onClick={handleCopy}><img src={copyIMG} id='copyIMG' alt='링크 복사'/></button>
             </div>
             <div id="updateAnddeleteButton2">
-              {isCurrentUser && (
+              {isCurrentUser &&(
                 <div className="d-flex ">
                   <button
                     className="btn"
@@ -290,6 +308,7 @@ function CampBoardDetail() {
                 </button>
               )}
             </div>
+            
           </div>
         </div>
         <div id="CampdescriptionContainer">
