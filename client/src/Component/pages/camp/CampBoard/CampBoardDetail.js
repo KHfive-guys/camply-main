@@ -246,7 +246,6 @@ function CampBoardDetail() {
             <div>
             <p id="campdetaillocation">
             <img id='markerIMG' src={marker} alt='위치'/>
-            {boardData.camp_location}
               {boardData.camp_address}
             </p>
             <p id="campdetailtitle">
@@ -263,7 +262,7 @@ function CampBoardDetail() {
               <span id="campdetail">가격 |</span> {boardData.camp_price}원
             </p>
             <p id="campdetailtitle">
-              <span id="campdetail">시설 |</span>
+              <span id="campdetail">시설 | </span>
               {boardData.camp_facility}
             </p>
 
