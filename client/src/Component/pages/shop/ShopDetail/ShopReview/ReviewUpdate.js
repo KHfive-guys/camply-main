@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import '../../css/ShopDetail/ShopReview/ShopReview.css';
+import Nav from '../../../camp/CampNavbar';
+import { Button } from "@mui/material";
+import { FaCheck } from "react-icons/fa";
+import { IoIosArrowBack } from "react-icons/io";
 
 const ReviewUpdate = () => {
   const navigate = useNavigate();
@@ -52,11 +57,17 @@ const ReviewUpdate = () => {
   }, [reviewNo]);
 
   return (
+    <>
+    <Nav/>
     <div>
+      <h2 style={{textAlign:'center',marginTop:'60px'}}>리뷰 수정</h2>
       <form onSubmit={updateReview}>
-        <div>
-          <span>제목</span>
+      <div className="writer-container">
+        <div className="inquiry-title">
+          제목
+          <br/>
           <input
+            className=""
             type='text'
             name='reviewTitle'
             value={review.reviewTitle}
@@ -64,8 +75,9 @@ const ReviewUpdate = () => {
           />
         </div>
         <br />
-        <div>
-          <span>내용</span>
+        <div className="inquiry-content">
+          내용
+          <br/>
           <textarea
             name='reviewText'
             value={review.reviewText}
@@ -73,12 +85,16 @@ const ReviewUpdate = () => {
           />
         </div>
         <br />
-        <div>
-          <button type='submit'>수정</button>
-          <button onClick={backToList}>취소</button>
+        <div className="writer-btn">
+          <Button color="success" variant="contained" type="submit">수정 <FaCheck/></Button>
+          <Button variant="outlined" color="error" onClick={backToList}>
+          <IoIosArrowBack/> 취소
+          </Button>
         </div>
+      </div>
       </form>
     </div>
+    </>
   );
 };
 
