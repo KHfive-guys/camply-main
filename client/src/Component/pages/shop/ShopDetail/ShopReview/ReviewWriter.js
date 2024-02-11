@@ -99,12 +99,12 @@ const ReviewPost = () => {
         onChange={handleChange}
       />
       </div>
-      <div className="writer-btn">
-                <Button color="success" variant="contained" type="submit">작성하기 <FaCheck/></Button>
-                <Button variant="outlined" color="error" onClick={handleback}>
-                <IoIosArrowBack/> 목록보기
-                </Button>
-            </div> 
+        <div className="writer-btn">
+                  <Button color="success" variant="contained" type="submit">작성하기 <FaCheck/></Button>
+                  <Button variant="outlined" color="error" onClick={handleback}>
+                  <IoIosArrowBack/> 목록보기
+                  </Button>
+        </div> 
     </div>
     </form>
     </>
