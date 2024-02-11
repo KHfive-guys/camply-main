@@ -7,7 +7,7 @@ import { Container } from "react-bootstrap";
 import CampNavbar from "../CampNavbar";
 import tentIMG from '../../../img/야영장.png';
 import Menu from '../CampMain/Home/Menu';
-
+import campfire from '../../../img/모닥불.gif';
 
 function CampBoardTent() {
   const [boardData, setBoardData] = useState([]);
@@ -82,7 +82,7 @@ function CampBoardTent() {
 
       <Menu/>
 
-      <h1 id='tentSearchTitle'>야영장</h1>
+      <h1 id='tentSearchTitle'>야영장<img id='campfireIMG' src={campfire} alt='불'/></h1>
       <div id='tentContainer'>
           {boardData.map((board) =>
             board ? (

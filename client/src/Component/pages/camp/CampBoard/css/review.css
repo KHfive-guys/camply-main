@@ -33,8 +33,13 @@
     height: 40px;
 }
 
+#reviewButton:hover{
+    background-color: rgb(255, 140, 0);
+}
+
 #reviewType{
     padding-top: 8px;
+    font-weight: 700;
 }
 
 /* 작성된 리뷰 박스 */
@@ -42,6 +47,7 @@
     margin-top: 50px;
     background-color: rgba(240, 240, 240, 0.417);
     padding: 20px 20px 20px 20px;
+    margin-bottom: 40px;
 }
 
 #reviewcontentuserid{
@@ -85,4 +91,5 @@
 
 #reviewListTitle{
     margin-bottom: 40px;
+    font-weight: 700;
 }
