@@ -67,6 +67,10 @@ function CampBoardAll() {
     window.location.href = `/camp/board/get/${camp_id}`;
   };
 
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
     <section>
       <CampNavbar />
@@ -92,7 +96,7 @@ function CampBoardAll() {
                 </div>
                 <div>
                 <p id='Campdescription'>(1박기준)</p>
-                <p id='tentPrice'>{board.camp_price}원</p>
+                <p id='tentPrice'>{numberWithCommas(board.camp_price)}원</p>
                 </div>
                 <hr id='tentHrbar'/>
               </div>

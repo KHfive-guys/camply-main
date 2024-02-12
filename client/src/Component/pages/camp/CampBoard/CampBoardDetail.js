@@ -227,6 +227,10 @@ function CampBoardDetail() {
         });
     };
 
+    const numberWithCommas = (x) => {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
   return (
     <section>
       <CampNavbar />
@@ -240,7 +244,7 @@ function CampBoardDetail() {
           { isCurrentUser &&<th>수정</th>}
           {isCurrentUser && <th> 삭제</th>}
         </div>
-       
+
         <div id="campDetailBox">
             <p id="detailType">유형 | {boardData.camp_select}</p>
             <img src={tentIMG} alt="텐트" id="DetailIMG"></img>
@@ -261,7 +265,7 @@ function CampBoardDetail() {
               <span id="campdetail">아동 |</span> {boardData.camp_child}명
             </p>
             <p id="campdetailtitle">
-              <span id="campdetail">가격 |</span> {boardData.camp_price}원
+            <span id="campdetail">가격 |</span> {numberWithCommas(boardData.camp_price)}원
             </p>
             <p id="campdetailtitle">
               <span id="campdetail">시설 | </span>
