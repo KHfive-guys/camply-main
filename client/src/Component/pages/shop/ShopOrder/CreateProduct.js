@@ -1,24 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import '../css/ShopSell/CreateProduct.css';
-import Nav from '../../camp/CampNavbar';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "../css/ShopSell/CreateProduct.css";
+import Nav from "../../camp/CampNavbar";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  Link,
+} from "react-router-dom";
 
 const initialProductState = {
-  productName: '',
-  productDescription: '',
-  productPrice: '',
-  productCategory: 'tent',
-  productColor: '',
-  productThumbnail: '',
-  productMain: '',
-  productMain2: '',
-  productMain3: '',
-  productContent: '',
-  productStock: '',
-  productCreateDate: new Date().toISOString().split('T')[0], // 오늘 날짜로 기본 설정
-  productStatus: '판매중',
-  productCode: '',
+  productName: "",
+  productDescription: "",
+  productPrice: "",
+  productCategory: "tent",
+  productColor: "",
+  productThumbnail: "",
+  productMain: "",
+  productMain2: "",
+  productMain3: "",
+  productContent: "",
+  productStock: "",
+  productCreateDate: new Date().toISOString().split("T")[0], // 오늘 날짜로 기본 설정
+  productStatus: "판매중",
+  productCode: "",
 };
 
 const CreateProduct = () => {
@@ -40,18 +47,18 @@ const CreateProduct = () => {
 
   const generateProductCode = async () => {
     // localStorage에서 사용자 ID를 가져옴
-    const userId = localStorage.getItem('userId'); // 사용자 ID를 로컬 스토리지에서 가져옴
-    const token = localStorage.getItem('yourTokenKey');
+    const userId = localStorage.getItem("userId"); // 사용자 ID를 로컬 스토리지에서 가져옴
+    const token = localStorage.getItem("yourTokenKey");
 
     if (!token || !userId) {
-      console.error('Token or UserID is not available');
+      console.error("Token or UserID is not available");
       return;
     }
 
     try {
       // 백엔드에서 사용자별 상품 등록 수를 조회하는 요청
       const response = await axios.get(
-        'http://localhost:8080/shop/mypage/getUserProductCount',
+        "http://localhost:8080/shop/mypage/getUserProductCount",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -61,45 +68,45 @@ const CreateProduct = () => {
       const categoryCode = product.productCategory
         .substring(0, 3)
         .toUpperCase();
-      const date = new Date().toISOString().split('T')[0].replace(/-/g, '');
+      const date = new Date().toISOString().split("T")[0].replace(/-/g, "");
 
       // 상품 코드 설정
       const newProductCode = `${categoryCode}${date}${userId}${String(
         productCount
-      ).padStart(5, '0')}`;
+      ).padStart(5, "0")}`;
       setProduct((prevProduct) => ({
         ...prevProduct,
         productCode: newProductCode,
       }));
     } catch (error) {
-      console.error('Error generating product code:', error);
+      console.error("Error generating product code:", error);
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log('Input Changed:', name, value); // 로깅 추가
+    console.log("Input Changed:", name, value); // 로깅 추가
     // 입력값 변경
     setProduct({ ...product, [name]: value });
     // 유효성 검사
-    const isInputValid = value.trim() !== ''; // 공백만 있는 경우를 무효로 처리
+    const isInputValid = value.trim() !== ""; // 공백만 있는 경우를 무효로 처리
     setValidity({ ...validity, [name]: isInputValid });
   };
 
   const validateForm = () => {
     const fields = [
-      'productName',
-      'productPrice',
-      'productThumbnail',
-      'productMain',
-      'productContent',
-      'productStock',
+      "productName",
+      "productPrice",
+      "productThumbnail",
+      "productMain",
+      "productContent",
+      "productStock",
     ];
     let isFormValid = true;
     const newValidity = { ...validity };
 
     fields.forEach((field) => {
-      if (product[field].trim() === '') {
+      if (product[field].trim() === "") {
         newValidity[field] = false;
         isFormValid = false;
       } else {
@@ -119,50 +126,100 @@ const CreateProduct = () => {
 
     // 1. 판매가와 재고가 음수인지 검사
     if (price < 0 || stock < 0) {
-      alert('숫자는 양수만 입력해주시기 바랍니다.');
+      alert("숫자는 양수만 입력해주시기 바랍니다.");
       return; // 함수 실행을 여기서 중단
     }
 
     // 2. 판매가 범위 검사 (0 ~ 99999999)
     if (price > 99999999) {
-      alert('입력 가능한 숫자를 초과하였습니다.');
+      alert("입력 가능한 숫자를 초과하였습니다.");
       return; // 함수 실행을 여기서 중단
     }
 
     // 3. 재고 범위 검사 (0 ~ 99999)
     if (stock > 99999) {
-      alert('입력 가능한 숫자를 초과하였습니다.');
+      alert("입력 가능한 숫자를 초과하였습니다.");
       return; // 함수 실행을 여기서 중단
     }
 
     if (!validateForm()) {
-      alert('필수 입력사항을 모두 채워주세요.');
+      alert("필수 입력사항을 모두 채워주세요.");
       return; // 필수 입력사항이 모두 채워지지 않았으므로 함수 실행 중단
     }
 
     try {
       // Spring Boot 애플리케이션의 API 엔드포인트에 데이터 전송
       const response = await axios.post(
-        'http://localhost:8080/shop/mypage/productAdd',
+        "http://localhost:8080/shop/mypage/productAdd",
         product,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('yourTokenKey')}`,
+            Authorization: `Bearer ${localStorage.getItem("yourTokenKey")}`,
           },
         }
       );
       console.log(response.data);
-      alert('상품이 성공적으로 등록되었습니다.');
-      navigate('/seller/list');
+      alert("상품이 성공적으로 등록되었습니다.");
+      navigate("/shop/seller/list");
     } catch (error) {
-      console.error('Error registering product:', error);
-      alert('상품 등록에 실패했습니다.');
+      console.error("Error registering product:", error);
+      alert("상품 등록에 실패했습니다.");
     }
   };
 
   return (
     <>
       <Nav />
+      <h1 style={{ marginTop: "100px" }}></h1>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="home-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#home-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="home-tab-pane"
+            aria-selected="true"
+          >
+            <h className="custom-product">상품관리</h>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#profile-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="profile-tab-pane"
+            aria-selected="false"
+          >
+            <Link to="/shop/seller/sell" className="custom-link">
+              상품등록
+            </Link>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="contact-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#contact-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="contact-tab-pane"
+            aria-selected="false"
+          >
+            <Link to="/shop/seller/list" className="custom-link">
+              상품리스트
+            </Link>
+          </button>
+        </li>
+      </ul>
+      {/* ************고정 화면 ****************** */}
       <div className="create-update-Product">
         <h2>상품등록</h2>
 

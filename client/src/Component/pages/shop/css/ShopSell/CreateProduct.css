@@ -95,7 +95,7 @@ tbody tr:hover {
   color: #c0c0c0;
 }
 
-.create-update-Product .form-group input[type='text'] {
+.create-update-Product .form-group input[type="text"] {
   width: 100%;
   padding: 5px;
   border: 1px solid #ddd;
@@ -172,4 +172,16 @@ tbody tr:hover {
     width: 95%;
     margin: 0 auto;
   }
+}
+
+.custom-product {
+  color: #5c657b; /* 빨간색으로 설정, 원하는 색상 코드로 변경 가능 */
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.custom-link {
+  color: #5c657b; /* 빨간색으로 설정, 원하는 색상 코드로 변경 가능 */
+  font-size: 18px;
+  font-weight: 600;
 }

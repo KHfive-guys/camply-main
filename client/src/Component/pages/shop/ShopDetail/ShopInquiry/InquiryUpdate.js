@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-
+import Nav from '../../../camp/CampNavbar';
+import { Button } from "@mui/material";
+import { FaCheck } from "react-icons/fa";
+import { IoIosArrowBack } from "react-icons/io";
 const InquiryUpdate = () => {
   const navigate = useNavigate();
   const { questionNo } = useParams();
@@ -9,12 +12,10 @@ const InquiryUpdate = () => {
     questionTitle: "",
     questionText: "",
   });
-
   const onChange = (event) => {
     const { name, value } = event.target;
     setQuestion({ ...question, [name]: value });
   };
-
   const getQuestion = async () => {
     try {
       const response = await axios.get(
@@ -25,7 +26,6 @@ const InquiryUpdate = () => {
       console.error("문의글 정보를 불러오는 중 오류 발생", error);
     }
   };
-
   const updateQuestion = async (event) => {
     event.preventDefault();
     try {
@@ -42,20 +42,22 @@ const InquiryUpdate = () => {
       console.error("문의글 수정 중 오류 발생", error);
     }
   };
-
   const backToList = () => {
     navigate(`/shop/question/view/${questionNo}`);
   };
-
   useEffect(() => {
     getQuestion();
   }, [questionNo]);
-
   return (
+    <>
+    <Nav/>
     <div>
+    <h2 style={{textAlign:'center',marginTop:'60px'}}> 문의 수정</h2>
       <form onSubmit={updateQuestion}>
-        <div>
-          <span>제목</span>
+      <div className="writer-container">
+        <div className="inquiry-title">
+          제목
+          <br/>
           <input
             type='text'
             name='questionTitle'
@@ -64,8 +66,9 @@ const InquiryUpdate = () => {
           />
         </div>
         <br />
-        <div>
-          <span>내용</span>
+        <div className="inquiry-content">
+          내용
+          <br/>
           <textarea
             name='questionText'
             value={question.questionText}
@@ -73,13 +76,16 @@ const InquiryUpdate = () => {
           />
         </div>
         <br />
-        <div>
-          <button type='submit'>수정</button>
-          <button onClick={backToList}>취소</button>
+        <div className="writer-btn">
+          <Button color="success" variant="contained" type="submit">수정 <FaCheck/></Button>
+          <Button variant="outlined" color="error"  onClick={backToList}>
+          <IoIosArrowBack/> 취소
+          </Button>
+        </div>
         </div>
       </form>
     </div>
+    </>
   );
 };
-
 export default InquiryUpdate;

@@ -3,10 +3,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CommentWriter from "./ReviewComment/CommentWriter"; // 경로명에 question 관련된 부분이 없어 변경하지 않음
 import "../../css/ShopDetail/ShopReview/ReviewDetail.css"; // 경로명에 question 관련된 부분이 없어 변경하지 않음
+import Nav from '../../../camp/CampNavbar';
+import { Button } from "@mui/material";
 
-const ReviewDetail = () => {
+
+const ReviewDetail1 = () => {
   const { reviewNo } = useParams(); // questionNo -> reviewNo로 변경
-  const [review, setReview] = useState(null); // question -> review로 변경
+  const [review, setReview] = useState(reviewNo); // question -> review로 변경
   const [currentUser, setCurrentUser] = useState(null);
   const [comments, setComments] = useState([]);
   const navigate = useNavigate();
@@ -28,11 +31,11 @@ const ReviewDetail = () => {
     const fetchData = async () => {
       try {
         const reviewResponse = await axios.get(
-          `http://localhost:8080/shop/review/${reviewNo}` // question -> review로 변경
+          `http://localhost:8080/shop/review/${reviewNo}`
         );
-        setReview(reviewResponse.data); // setQuestion -> setReview로 변경
+        setReview(reviewResponse.data);
         const commentsResponse = await axios.get(
-          `http://localhost:8080/shop/review/comment/list/${reviewNo}` // questionNo -> reviewNo로 변경
+          `http://localhost:8080/shop/review/comment/list/${reviewNo}`
         );
         setComments(commentsResponse.data);
         const userId = extractUserIdFromToken();
@@ -60,49 +63,101 @@ const ReviewDetail = () => {
     }
   };
 
-  return (
-    <>
-      <div className='container-review'>
-        {review ? ( // question -> review로 변경
-          <>
-            <div className='details'>
-              <p className='writer'>작성자 {review.reviewName}</p>
-              <p className='date'>작성날짜 {review.reviewDate}</p>
-              <p className='hit'>
-                조회수: <span className='hit-count'>{review.reviewHit}</span>
-              </p>
-            </div>
-            <p>내용 {review.reviewText}</p>
-            <div>
+    return (
+        <>
+        <Nav/>
+        <h2 style={{marginTop:'100px'}}>상품리뷰</h2>
+        <div className="review-table-view">
+            <table summary="게시글 보기">
+                {review ? (
+                    <>
+                <thead>
+                    <tr>
+                        <th>
+                            <div className="tb-center">{review.reviewTitle}</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td className="line">
+                            <div className="content-sub">
+                                <div>
+                                    <span>
+                                        <em>Date :</em>
+                                        {review.reviewDate}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span className="writer">
+                                       <em>작성자 :</em>
+                                       {review.userName}
+                                    </span>
+                                    <span>
+                                        <em>조회수:</em>
+                                        {review.reviewHit}
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div className="data-content">
+                                {review.reviewText}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <div>
               {review.userId === currentUser && ( // question -> review로 변경
                 <>
-                  <button
-                    onClick={() => navigate(`/review/update/${reviewNo}`)} // inquiry -> review로 변경
-                  >
-                    수정
-                  </button>
-                  <button onClick={handleDeleteClick}>삭제</button>
+                  <div style={{marginTop:'30px',marginRight:'10px'}} className="Detail-btn">
+                    <div style={{marginRight:'10px'}} className="edit-btn">
+                      <Button
+                      type='button' variant="contained" color="success"
+                        onClick={() => navigate(`/review/update/${reviewNo}`)} // inquiry -> review로 변경
+                      >
+                        수정
+                      </Button>
+                    </div>
+                    <div className="delete-btn">
+                      <Button
+                      variant="outlined" color="error"
+                      onClick={handleDeleteClick}>삭제</Button>
+                      </div>
+                  </div>
                 </>
               )}
             </div>
-          </>
-        ) : (
-          <p>리뷰를 찾을 수 없습니다.</p> // 문의글 -> 리뷰로 변경
-        )}
-      </div>
+                </>
+                ):(
+                <p>리뷰를 찾을 수 없습니다.</p>
+                )}
+            </table>
+        </div>
+        <br/>
+        <div className="comment-container">
+            <div style={{marginTop:'70px'}}>
+            <CommentWriter reviewNo={+reviewNo} updateComments={() => {}} />
+            <div className='comment-list'>
+                <h3>덧글 목록</h3>
+                {comments.map((comment) => (
+                    <div key={comment.commentNo} className='comment-list'>
+                    <div className="commentDate">
+                        <p>{comment.commentDate}</p>
+                    </div>
+                    <div className="commentText">
+                    <p>{comment.commentText}</p>
+                    </div>
 
-      <CommentWriter reviewNo={+reviewNo} updateComments={() => {}} />
-      <div className='comment-list'>
-        <h3>덧글 목록</h3>
-        {comments.map((comment) => (
-          <div key={comment.commentNo} className='comment'>
-            <p>{comment.commentText}</p>
-            <p>{comment.commentDate}</p>
-          </div>
-        ))}
-      </div>
-    </>
-  );
+                    </div>
+                ))}
+            </div>
+            </div>
+        </div>
+        </>
+    )
 };
 
-export default ReviewDetail;
+export default ReviewDetail1;

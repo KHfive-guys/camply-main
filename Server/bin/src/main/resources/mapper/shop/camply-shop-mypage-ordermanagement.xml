@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.camply.shop.mypage.ordermanagement.dao.OrderManagementDAO">
+<mapper namespace="com.camply.shop.mypage.admin.ordermanagement.dao.OrderManagementDAO">
 	<resultMap id="OrderListResultMap" type="com.camply.shop.common.vo.OrderVO">
 		<!-- Order 매핑 -->
 		<id property="orderId" column="ORDER_ID"/>

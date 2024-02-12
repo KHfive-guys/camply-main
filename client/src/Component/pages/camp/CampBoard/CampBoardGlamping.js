@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./css/CampBoardAll.css";
+import '../CampBoard/css/SearchList.css';
 import { Container } from "react-bootstrap";
 import CampNavbar from "../CampNavbar";
+import tentIMG from '../../../img/글램핑.jpg';
+import Menu from '../CampMain/Home/Menu';
+
 
 function CampBoardTent() {
   const [boardData, setBoardData] = useState([]);
@@ -76,39 +80,31 @@ function CampBoardTent() {
         <Container className="home-content"></Container>
       </Container>
 
-      <h1>Camp Board - Glamping</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>게시글 번호</th>
-            <th>카테고리</th>
-            <th>캠핑장 위치</th>
-            <th>캠핑장 이름</th>
-            <th>1박 가격</th>
-          </tr>
-        </thead>
-        <tbody>
+      <Menu/>
+      
+      <h1 id='tentSearchTitle'>글램핑</h1>
+      <div id='tentContainer'>
           {boardData.map((board) =>
-            board ? (
-              <tr
+            board?(
+              <div id='tentResultBox'
                 key={board.camp_id}
                 onClick={() => handleRowClick(board.camp_id)}
               >
-                <td>{board.camp_id}</td>
-                <td>{board.camp_select}</td>
-                <td>{board.camp_location}</td>
-                <td>{board.camp_name}</td>
-                <td>{board.camp_price}</td>
-              </tr>
+                <img src={tentIMG} alt='텐트' id='tentIMG'></img>
+               <div id='firstTentBox'>
+                <p id='tentType'>{board.camp_select}</p>
+                <p id='tentName'>{board.camp_name}</p>
+                <p id='tentLocation'>{board.camp_location}</p>
+                </div>
+                <div>
+                <p id='Campdescription'>(1박기준)</p>
+                <p id='tentPrice'>{board.camp_price}원</p>
+                </div>
+                <hr id='tentHrbar'/>
+              </div>
             ) : null
           )}
-        </tbody>
-      </table>
-      {userType === "Admin" && (
-        <Link to="/camp/board/add">
-          <button>게시글 작성하기</button>
-        </Link>
-      )}
+          </div>
     </section>
   );
 }

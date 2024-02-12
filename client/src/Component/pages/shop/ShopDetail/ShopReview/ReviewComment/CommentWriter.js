@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import '../../../css/ShopDetail/ShopReview/ReviewComment.css';
+import { Button, radioClasses } from "@mui/material";
 
 const CommentWriter = ({ reviewNo, updateComments }) => {
   // props로 reviewNo 받음
@@ -46,19 +48,26 @@ const CommentWriter = ({ reviewNo, updateComments }) => {
 
   return (
     <>
-      <div>
-        <span>내용</span>
-        <input
-          type='text'
-          name='commentText'
-          value={commentText}
-          onChange={onChange}
-        />
+    <div className="comment-container">
+      <div className="comment-writer" style={{marginTop:'0px'}}>
+        <label for="editor" className="comment-writer_tl fl">
+          <strong style={{paddingLeft:'5px'}}>댓글쓰기</strong>
+        </label>
+        <div className="bd_writer clear">
+          <div className="simple-writer">
+            <div className="text-btn">
+                <input
+                  type='text'
+                  name='commentText'
+                  value={commentText}
+                  onChange={onChange}
+                />
+              <button style={{marginLeft:'10px', borderRadius:'10px', width:'80px', height:'90px'}} type='button'  onClick={saveComment}>작성하기</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <button onClick={saveComment}>작성</button>
-        <button onClick={backToList}>취소</button>
-      </div>
+    </div>
     </>
   );
 };
