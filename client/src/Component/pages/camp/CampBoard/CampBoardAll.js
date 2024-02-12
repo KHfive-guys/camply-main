@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./css/CampBoardAll.css";
 import { Container } from "react-bootstrap";
 import CampNavbar from "../CampNavbar";
 import tentIMG from '../../../img/텐트.png';
 import '../CampBoard/css/SearchList.css';
 import Menu from '../CampMain/Home/Menu';
+
 
 
 function CampBoardAll() {
@@ -32,6 +33,7 @@ function CampBoardAll() {
         console.error("Error fetching data:", error);
       });
   }, []);
+  
 
   const parseJwt = (token) => {
     try {
