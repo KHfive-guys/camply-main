@@ -65,25 +65,29 @@ const CartList = () => {
         <>
             <Nav />
             <div style={{ marginTop: '100px', display: 'flex', justifyContent: 'center' }}>
-            <div style={{ maxWidth: '800px'}} id="content">
+            <div style={{ maxWidth: '900px'}} id="content">
                 <div id="cartWrap">
                     <h2 className="tit-page">장바구니</h2>
                     <div className="page-body">
                         <div className="table-cart table-fill-prd">
-                            <div className="cart-list">
+                            <div className="cart-list" >
                                 <table summary="사진, 제품명, 수량, 가격, 취소">
                                     <colgroup>
-                                        <col width={120}></col>
+                                        <col width={150}></col>
+                                        <col width={100}></col>
+                                        <col width={100}></col>
                                         <col width={"*"}></col>
                                         <col width={110}></col>
                                         <col width={100}></col>
-                                        <col width={95}></col>
+                                        <col width={100}></col>
                                     </colgroup>
                                     <thead>
                                         <tr>
                                             <th scope="col">
                                                 <div className="tb-center">사진</div>
                                             </th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
                                             <th scope="col">
                                                 <div className="tb-center">상품명</div>
                                             </th>
@@ -119,12 +123,18 @@ const CartList = () => {
                                                     <div className="tb-center">
                                                         <div className="thumb">
                                                             <img
-                                                                style={{ display: 'block', width: "70px", height: "70px" }}
+                                                                style={{ display: 'block', width: "100px", height: "100px" }}
                                                                 src={item.productThumbnail}
                                                                 alt="상품 이미지"
                                                             />
                                                         </div>
                                                     </div>
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+
                                                 </td>
                                                 <td>
                                                     <div className="tb-left">
@@ -146,9 +156,9 @@ const CartList = () => {
                                                 <td>
                                                     <div className="tb-center">
                                                         <span className="d-block">
-                                                            <Button color="success" variant="contained" type="submit" onClick={() => handleRemoveItem(item.cartId)}>
+                                                            <button type="submit" onClick={() => handleRemoveItem(item.cartId)}>
                                                                 삭제하기
-                                                            </Button>
+                                                            </button>
                                                         </span>
                                                     </div>
                                                 </td>
@@ -163,12 +173,17 @@ const CartList = () => {
                     <div className="basket-totalprice">
                         <div className="totalprice-img">총 결제금액</div>
                         <div className="totalprice-text">
-                            {cartItems.reduce((acc, item) => acc + item.productPrice * item.productAmount, 0)}원
+                        <span style={{color:'#FEA92A'}}>{cartItems.reduce((acc, item) => acc + item.productPrice * item.productAmount, 0)}</span>
+                        원
                         </div>
                     </div>
                     <div className="btn-order-ctrl">
-                        <Button color="success" variant="contained" type="submit" onClick={() => handleCheckout(cartItems[0])}>결제하기</Button>
-                        <button onClick={backtodetail}>계속 쇼핑하기</button>
+                        
+                        <button className="order-btn" type="submit" onClick={() => handleCheckout(cartItems[0])}>결제하기</button>
+                        
+                        
+                        <button className="back-btn"  onClick={backtodetail}>계속 쇼핑하기</button>
+                      
                     </div>
                 </div>
             </div>

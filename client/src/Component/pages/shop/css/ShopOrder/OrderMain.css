@@ -189,7 +189,6 @@ col {
 .order-main {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     box-sizing: border-box;
-    margin-top: 20px;
     padding: 0px;
     border-bottom: 1px solid rgb(221, 221, 221);
     min-width: 1200px;
@@ -823,7 +822,7 @@ thead td .base .equal {
     display: inline-block;
     color: black;
     text-align: center;
-    border: 1px solid #231f20;
+    border: 1px solid #FEA92A;
     background: #FEA92A;
     transition: all 0.3s ease;
 }
@@ -833,7 +832,7 @@ thead td .base .equal {
     display: inline-block;
     color: #FEA92A;
     text-align: center;
-    border: 1px solid #231f20;
+    border: 1px solid #e9e9e9;
     background: #fff;
     transition: all 0.3s ease;
 

@@ -77,10 +77,10 @@ const InquiryUpdate = () => {
         </div>
         <br />
         <div className="writer-btn">
-          <Button color="success" variant="contained" type="submit">수정 <FaCheck/></Button>
-          <Button variant="outlined" color="error"  onClick={backToList}>
+          <button className="btn-writer" type="submit">수정 <FaCheck/></button>
+          <button className="back-btn"  onClick={backToList}>
           <IoIosArrowBack/> 취소
-          </Button>
+          </button>
         </div>
         </div>
       </form>
