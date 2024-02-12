@@ -9,6 +9,8 @@ import "../CampBoard/css/CampDetail.css";
 import tentIMG from "../../../img/텐트.png";
 import marker from "../../../img/마커.png";
 import copyIMG from "../../../img/공유.png";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+
 
 const parseJwt = (token) => {
   console.log("Parsed JWT:", token);
@@ -331,7 +333,8 @@ function CampBoardDetail() {
           marginTop: "50px",
         }}
       >
-        <Button onClick={handlePrevPage}>이전</Button>
+        <Button onClick={handlePrevPage}>{<FaAngleLeft size={30} />}</Button>
+
         {boardData.camp_images &&
         boardData.camp_images.length > 0 &&
         boardData.camp_images[currentPage] ? (
@@ -346,7 +349,7 @@ function CampBoardDetail() {
         ) : (
           <p>이미지가 없습니다.</p>
         )}
-        <Button onClick={handleNextPage}>다음</Button>
+        <Button onClick={handleNextPage}>{<FaAngleRight size={30} />}</Button>
       </div>
       
       <div id="campdetailmap">
