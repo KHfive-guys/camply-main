@@ -1,12 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { CgWebsite } from 'react-icons/cg';
-import { TfiFullscreen } from 'react-icons/tfi';
+import axios from 'axios';
 
 function ReservationCard(props) {
-  // 첫 번째 이미지만 사용하도록 수정
-  const mainImage = props.camp_images && props.camp_images.length > 0 ? props.camp_images[0] : null;
+  const [boardData, setBoardData] = useState({ camp_images: [] });
+
+  useEffect(() => {
+    const fetchCampData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/camp/board/get/${props.camp_id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("yourTokenKey")}`,
+          },
+        });
+        const camp_images = response.data.camp_images.split(";");
+        setBoardData({ ...response.data, camp_images });
+      } catch (error) {
+        console.error("Error fetching camp data:", error);
+      }
+    };
+
+    fetchCampData();
+  }, [props.camp_id]);
+
+  const mainImage = boardData.camp_images && boardData.camp_images.length > 0 ? (
+    <div className="carousel-item active">
+      <img
+        src={boardData.camp_images[0]}
+        className="d-block w-100"
+        alt="camp-main-image"
+        style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+      />
+    </div>
+  ) : (
+    <p>이미지가 없습니다.</p>
+  );
 
   const handleReservationClick = () => {
     props.introduceLink(props.camp_id);
@@ -15,16 +45,7 @@ function ReservationCard(props) {
   return (
     <Card className="project-card-view">
       <div className="carousel-inner">
-        {mainImage && (
-          <div className="carousel-item active">
-            <img
-              src={mainImage}
-              className="d-block w-100"
-              alt="camp-main-image"
-              style={{ width: '200px', height: '200px', objectFit: 'cover' }}
-            />
-          </div>
-        )}
+        {mainImage}
       </div>
       <Card.Body>
         <Card.Title>{props.title}</Card.Title>
@@ -43,8 +64,6 @@ function ReservationCard(props) {
           </p>
         )}
         
-        
-
         {!props.isBlog && props.reservationsLink && (
           <Button
             variant="warning"

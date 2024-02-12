@@ -97,7 +97,7 @@ function Reservations() {
           
           <Col key={camp.camp_id} md={3} className="project-card">
             <ReservationCard
-              camp_id={camp.camp_id} // 이 부분 추가
+              camp_id={camp.camp_id}
               camp_images={camp.camp_images}
               title={camp.camp_name}
               address={camp.camp_address}
