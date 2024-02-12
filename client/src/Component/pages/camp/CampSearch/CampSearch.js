@@ -201,18 +201,17 @@ function SearchPage() {
             {searchResults.map((site) => (
               <Col
                 key={site.CAMP_ID}
-                md={4}
+                md={3}
                 className='mb-3'
                 onClick={() => handleRowClick(site.CAMP_ID)}
               >
-               
                 <Card>
                   <Card.Body >
                     <Card.Img src={site.CAMP_IMAGES.split(";")}></Card.Img>
                     <Card.Title>{site.CAMP_SELECT}</Card.Title>
                     <Card.Text>{site.CAMP_NAME}</Card.Text>
                     <Card.Text>{site.CAMP_LOCATION}</Card.Text>
-                    <Card.Text> ( 1 박기준 ) {site.CAMP_PRICE}원</Card.Text>
+                    <Card.Text>{site.CAMP_PRICE}원</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
