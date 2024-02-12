@@ -39,7 +39,7 @@ const CategoryList = () => {
 
         const categoryProductMap = {};
         productData.forEach(({ category, products }) => {
-          categoryProductMap[category] = products.slice(0, 10); 
+          categoryProductMap[category] = products.slice(0, 5); 
         });
         setCategoryProducts(categoryProductMap);
       } catch (error) {
