@@ -25,6 +25,10 @@ function ReservationCard(props) {
     fetchCampData();
   }, [props.camp_id]);
 
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   const mainImage = boardData.camp_images && boardData.camp_images.length > 0 ? (
     <div className="carousel-item active">
       <img
@@ -60,7 +64,7 @@ function ReservationCard(props) {
         )}
         {props.price && (
           <p>
-            <strong>가격:</strong> {props.price}원
+            <strong>가격:</strong> {numberWithCommas(props.price)}원
           </p>
         )}
         
