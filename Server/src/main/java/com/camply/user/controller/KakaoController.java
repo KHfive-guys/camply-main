@@ -1,46 +1,48 @@
 package com.camply.user.controller;
 
-import com.camply.user.service.KakaoService;
+import com.camply.user.service.UserService;
 import com.camply.user.vo.KakaoVO;
-import jakarta.servlet.http.HttpServletResponse;
+import com.camply.user.vo.UserVO;
+import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Optional;
 
+@AllArgsConstructor
 @RestController
-@CrossOrigin(origins= "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class KakaoController {
+
+    // 멤버(필드)변수
     @Autowired
-    private KakaoService kakaoService;
+    private UserService userService;
 
-    @GetMapping("/kakao/register")
-    public void kakaoRegister(HttpServletResponse response, @AuthenticationPrincipal OAuth2User oauth2User) throws IOException {
-        if (oauth2User != null) {
-            String account_email = oauth2User.getAttribute("account_email");
-            String profileNickname = oauth2User.getAttribute("profile_nickname");
-            String name = oauth2User.getAttribute("name");
+    // 카카오 로그인 정보 DB & 세션에 저장
+    @PostMapping("/kakao/register")
+    public ResponseEntity<String> handleKakaoLogin(@RequestBody KakaoVO kakaoVO, HttpSession session) {
 
-            KakaoVO kakaoVO = new KakaoVO();
-            kakaoVO.setAccountEmail(account_email);
-            kakaoVO.setProfileNickname(profileNickname);
-            kakaoVO.setName(name);
+        String email = kakaoVO.getAccount_email();
+        String nickname = kakaoVO.getProfile_nickname();
+        String name = kakaoVO.getName();
 
-            kakaoService.processKakaoUser(kakaoVO);
-
-            System.out.println(account_email);
-            System.out.println(profileNickname);
-            System.out.println(name);
-
-            response.sendRedirect("/login");
+        UserVO user = new UserVO();
+        user.setUSER_EMAIL(email);
+        user.setUSER_NICKNAME(nickname);
+        user.setUSER_NAME(name);
 
 
-        }
+        userService.registerKakao(user);
+
+        session.setAttribute("user", email);
+
+        return ResponseEntity.ok("카카오 회원가입 성공");
     }
 }
+
 
 
 
