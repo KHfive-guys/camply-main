@@ -235,11 +235,8 @@ function CampBoardDetail() {
           { isCurrentUser &&<th>수정</th>}
           {isCurrentUser && <th> 삭제</th>}
         </div>
-        {/* <td>{boardData.camp_id}</td>
-            <td>{boardData.user_id}</td> */}
+       
         <div id="campDetailBox">
-         
-         
             <p id="detailType">유형 | {boardData.camp_select}</p>
             <img src={tentIMG} alt="텐트" id="DetailIMG"></img>
             <span id="campdetailName"> 캠핑장 이름 | {boardData.camp_name}</span>
@@ -342,6 +339,7 @@ function CampBoardDetail() {
         )}
         <Button onClick={handleNextPage}>다음</Button>
       </div>
+      
       <div id="campdetailmap">
         <h1 id="campdetailMapTitle">지도</h1>
         <div id="map" style={{ width: "100%", height: "400px" }}></div>

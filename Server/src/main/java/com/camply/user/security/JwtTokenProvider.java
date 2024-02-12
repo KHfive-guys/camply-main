@@ -75,21 +75,6 @@ public class JwtTokenProvider {
         return null;
     }
 
-    public String generateOAuth2RegisterToken(Authentication authentication) {
-        // util
-        Date toKenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 10));
-
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        String email = oAuth2User.getAttribute("email");
-
-        return Jwts.builder()
-                .setSubject("OAuth2Register")
-                .claim("email", email)
-                .setExpiration(toKenExpiresDate)
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-    }
-
     public Long getUserIdFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
             .setSigningKey(key)
@@ -98,25 +83,6 @@ public class JwtTokenProvider {
             .getBody();
         return claims.get("user_id", Long.class); // 클레임에서 "user_id"를 Long 타입으로 추출
     }
-    
-    public Boolean validateToken(String token) {
-        try {
-            Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(token);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
-    public Claims getClaimsFromToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
 }
 

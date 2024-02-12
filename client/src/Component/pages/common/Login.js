@@ -46,11 +46,11 @@ function Login() {
   };
 
   const handleSuccess = (response) => {
-    console.log("Kakao login success:", response);
+    console.log("카카오 로그인 성공:", response);
   };
 
   const handleFailure = (error) => {
-    console.error("Kakao login failure:", error);
+    console.error("카카오 로그인 실패:", error);
   };
 
   const handleLogout = () => {
