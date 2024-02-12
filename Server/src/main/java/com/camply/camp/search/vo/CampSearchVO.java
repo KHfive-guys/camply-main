@@ -25,6 +25,7 @@ public class CampSearchVO {
 	
 	@JsonProperty("CAMP_NAME")
     private String CAMP_NAME;
+	
 	@JsonProperty("CAMP_ADULT")
     private Long CAMP_ADULT;
 	
@@ -34,7 +35,7 @@ public class CampSearchVO {
 	@JsonProperty("CAMP_PRICE")
     private Long CAMP_PRICE;
 	
-	@JsonProperty("CAMP_IMAGE")
-    private String CAMP_IMAGE;
+	@JsonProperty("CAMP_IMAGES")
+    private String CAMP_IMAGES;
 
 }

@@ -180,6 +180,7 @@ function CampBoardDetail() {
 
   // 예약페이지 이동
   const reserveMove = ({}) => {
+
     navigate("/camp/reserve", {
       state: {
         // 캠핑장 번호
@@ -194,6 +195,10 @@ function CampBoardDetail() {
         CAMP_CHECKIN: `${searchInfo.CAMP_CHECKIN}`,
         // 체크아웃 시간
         CAMP_CHECKOUT: `${searchInfo.CAMP_CHECKOUT}`,
+        // 캠핑장이름
+        CAMP_NAME: `${boardData.camp_name}`,
+        // 가격
+        CAMP_PRICE: `${boardData.camp_price}`
       },
     });
   };

@@ -22,7 +22,21 @@ public class ReserveController {
 	
 	@PostMapping("/reserve")
 	public ResponseEntity<String> reserveCamp(@RequestBody ReserveVO reserveVO) {
+		
 		try {
+
+			System.out.println("ReserveController USER_ID : " + reserveVO.getUSER_ID());
+			System.out.println("ReserveController CAMP_CHECKIN : " + reserveVO.getCAMP_CHECKIN());
+			System.out.println("ReserveController CAMP_CHECKOUT : " + reserveVO.getCAMP_CHECKOUT());
+			System.out.println("ReserveController ALLOWED_USERS_ADULT : " + reserveVO.getALLOWED_USERS_ADULT());
+			System.out.println("ReserveController ALLOWED_USERS_CHILD : " + reserveVO.getALLOWED_USERS_CHILD());
+			System.out.println("ReserveController COMPLETE_PAYMENT : " + reserveVO.getCOMPLETE_PAYMENT());
+			System.out.println("ReserveController CAMP_USER_PHONE : " + reserveVO.getCAMP_USER_PHONE());
+			System.out.println("ReserveController CAMP_USER_EMAIL : " + reserveVO.getCAMP_USER_EMAIL());
+			System.out.println("ReserveController CAMP_ID : " + reserveVO.getCAMP_ID());
+			System.out.println("ReserveController CAMP_NAME : " + reserveVO.getCAMP_NAME());
+			System.out.println("ReserveController CAMP_PRICE : " + reserveVO.getTOTAL_PRICE());
+	        
 			reserveservice.insertReserveCamp(reserveVO);
 			return ResponseEntity.ok("insert Success");
 			
