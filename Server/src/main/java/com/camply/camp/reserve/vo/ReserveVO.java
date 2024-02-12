@@ -41,4 +41,11 @@ public class ReserveVO {
 
 	@JsonProperty("CAMP_ID")
 	private Long CAMP_ID;
+
+	@JsonProperty("TOTAL_PRICE")
+	private String TOTAL_PRICE;
+
+	@JsonProperty("CAMP_NAME")
+	private String CAMP_NAME;
+
 }
