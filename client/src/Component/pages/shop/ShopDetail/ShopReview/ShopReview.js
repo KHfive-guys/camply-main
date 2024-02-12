@@ -9,11 +9,16 @@ import {Button} from '@mui/material';
 
 
 
+
 const ShopReview = () => {
     // 컴포넌트 이름 변경: ShopInquiry -> ShopReview
     const [reviews, setReviews] = useState([]); // 변수명 변경: questions -> reviews
     const navigate = useNavigate();
     const { productId } = useParams(); // URL 파라미터에서 productId 추출
+   
+
+
+
 
   
     useEffect(() => {
@@ -25,6 +30,7 @@ const ShopReview = () => {
             `http://localhost:8080/shop/review/view/${productId}` // 경로 변경: question -> review
           );
           setReviews(response.data); // 상태 변경 함수명 수정: setQuestions -> setReviews
+            
         } catch (error) {
           console.error("리뷰 불러오는 중 에러 발생!!", error);
         }
@@ -36,6 +42,7 @@ const ShopReview = () => {
         console.error("productId가 정의되지 않았습니다.");
       }
     }, [productId]);
+
   
     // 리뷰 클릭 시 상세 정보 페이지로 이동하는 함수
     const handleReviewClick = (reviewNo) => {
@@ -137,8 +144,9 @@ const ShopReview = () => {
              ))}
         </table>
         <div className="btm-writer">
-            <Button type='button' variant="contained" color="success" onClick={handleWriteClick}>글쓰기</Button>
+            <button type='button' className="btn-writer" onClick={handleWriteClick}>글쓰기</button>
         </div>
+        
         
      </div>
         

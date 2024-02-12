@@ -100,10 +100,10 @@ const ReviewPost = () => {
       />
       </div>
         <div className="writer-btn">
-                  <Button color="success" variant="contained" type="submit">작성하기 <FaCheck/></Button>
-                  <Button variant="outlined" color="error" onClick={handleback}>
+                  <button className="btn-writer" type="submit">작성하기 <FaCheck/></button>
+                  <button className="back-btn" onClick={handleback}>
                   <IoIosArrowBack/> 목록보기
-                  </Button>
+                  </button>
         </div> 
     </div>
     </form>
