@@ -54,11 +54,11 @@
     </select>
 
     <select id="getBoardCategory"  resultMap="CampPostingMap">
-        SELECT * FROM camp_posting WHERE camp_select = #{camp_select} ORDER BY camp_id DESC
+        SELECT * FROM camp_posting WHERE camp_select = #{camp_select} ORDER BY dbms_random.value
     </select>
 
     <select id="getBoardLocation"  resultMap="CampPostingMap">
-        SELECT * FROM camp_posting WHERE camp_location = #{camp_location}
+        SELECT * FROM camp_posting WHERE camp_location = #{camp_location} ORDER BY dbms_random.value
     </select>
 
     <select id="getBoardById"  resultMap="CampPostingMap" parameterType="java.lang.Long">
