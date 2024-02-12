@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { NavDropdown } from 'react-bootstrap';
+import Nav from '../../camp/CampNavbar';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  Link,
+} from 'react-router-dom';
 
 const OrderProduct = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true); // 상품 조회 시 0번째에서 1번째로 넘어가기 위한 로딩 변수
   const [selectedProducts, setSelectedProducts] = useState([]); // 선택된 제품을 저장할 상태 변수
   const [selectAll, setSelectAll] = useState(false); // 전체 선택 상태
+  const token = localStorage.getItem('yourTokenKey'); // 토큰을 로컬 스토리지에서 가져옵니다.
 
   //주문 리스트 조회
   useEffect(() => {
@@ -14,7 +23,12 @@ const OrderProduct = () => {
       try {
         // 서버에서 주문 목록을 가져옵니다. 여기서는 판매자 ID가 1이라고 가정합니다.
         const response = await axios.get(
-          'http://localhost:8080/shop/mypage/orderList/1'
+          'http://localhost:8080/shop/mypage/orderList',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
+            },
+          }
         );
 
         // 응답 데이터를 state에 저장합니다.
@@ -57,81 +71,159 @@ const OrderProduct = () => {
 
   //조회 시 0번째 빈 배열에서 1번째 값으로 넘어가기 위한 로딩
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div class="spinner-border m-5" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    );
   }
   console.log(orders);
 
   return (
-    <div>
-      <h2>주문조회</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                checked={selectAll}
-                onChange={handleSelectAllChange}
-              />
-            </th>
-            <th>주문일</th>
-            <th>주문번호</th>
-            <th>주문자</th>
-            <th>상품명</th>
-            <th>총결제금액</th>
-            <th>주문수량</th>
-            <th>상품금액</th>
-            <th>주문상태</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr key={order.orderId}>
-              <td>
+    <>
+      <Nav />
+      <h1 style={{ marginTop: '100px' }}></h1>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="home-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#home-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="home-tab-pane"
+            aria-selected="true"
+          >
+            <h className="custom-product">판매자 관리</h>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#profile-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="profile-tab-pane"
+            aria-selected="false"
+          >
+            <Link to="/shop/seller/sell" className="custom-link">
+              상품등록
+            </Link>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="contact-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#contact-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="contact-tab-pane"
+            aria-selected="false"
+          >
+            <Link to="/shop/seller/list" className="custom-link">
+              상품리스트
+            </Link>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="contact-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#contact-tab-pane"
+            type="button"
+            role="tab"
+            aria-controls="contact-tab-pane"
+            aria-selected="false"
+          >
+            <Link to="/shop/seller/orderlist" className="custom-link">
+              주문관리
+            </Link>
+          </button>
+        </li>
+      </ul>
+      {/* ************고정 화면 ****************** */}
+      <div className="orderList">
+        <h2>주문조회</h2>
+        <table>
+          <thead>
+            <tr>
+              <th className="checkbox-no-th">
                 <input
                   type="checkbox"
-                  checked={selectedProducts.includes(order.productId)}
-                  onChange={() => handleCheckboxChange(order.productId)}
+                  checked={selectAll}
+                  onChange={handleSelectAllChange}
                 />
-              </td>
-              <td> {order.orderDate}</td>
-              <td> {order.orderId}</td>
-              <td> {order.orderOrdererName}</td>
-              <td> {order.product.productName}</td>
-              <td> {order.formattedTotalAmount}</td>
-              <td> {order.orderProductQuantity}</td>
-              <td> {order.product.formattedProductPrice}</td>
-
-              <td>
-                {order.orderStatus}
-                <NavDropdown title=" " id="basic-nav-dropdown">
-                  <NavDropdown.Item
-                  // onClick={() => handleDeleteClick(order.productId)}
-                  >
-                    상품준비중
-                  </NavDropdown.Item>
-                  <NavDropdown.Item
-                  //onClick={() => handleDeleteClick(order.productId)}
-                  >
-                    배송중
-                  </NavDropdown.Item>
-                  <NavDropdown.Item
-                  // onClick={() => handleDeleteClick(order.productId)}
-                  >
-                    배송완료
-                  </NavDropdown.Item>
-                  <NavDropdown.Item
-                  //  onClick={() => handleDeleteClick(order.productId)}
-                  >
-                    취소
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </td>
+              </th>
+              <th>주문일</th>
+              <th>주문번호</th>
+              <th>주문자</th>
+              <th>상품명</th>
+              <th>총결제금액</th>
+              <th>주문수량</th>
+              <th>상품금액</th>
+              <th>주문상태</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order.orderNo}>
+                <td className="checkbox-td">
+                  <input
+                    type="checkbox"
+                    checked={selectedProducts.includes(order.productId)}
+                    onChange={() => handleCheckboxChange(order.productId)}
+                  />
+                </td>
+                <td> {order.orderDate}</td>
+                <td> {order.orderNo}</td>
+                <td> {order.orderOrdererName}</td>
+                <td> {order.productName}</td>
+                <td>
+                  {new Intl.NumberFormat('ko-KR', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(order.totalPrice)}
+                  원
+                </td>
+                <td> {order.orderProductAmount}</td>
+                <td> {order.product.formattedProductPrice}</td>
+                <td>
+                  {order.orderStatus}
+                  <NavDropdown title=" " id="basic-nav-dropdown">
+                    <NavDropdown.Item
+                    // onClick={() => handleDeleteClick(order.productId)}
+                    >
+                      상품준비중
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    //onClick={() => handleDeleteClick(order.productId)}
+                    >
+                      배송중
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    // onClick={() => handleDeleteClick(order.productId)}
+                    >
+                      배송완료
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    //  onClick={() => handleDeleteClick(order.productId)}
+                    >
+                      취소
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 

@@ -38,6 +38,7 @@ import Chair from './Component/pages/shop/Category/Table';
 import CreateProduct from './Component/pages/shop/ShopOrder/CreateProduct';
 import SellerProduct from './Component/pages/shop/ShopOrder/SellerProduct';
 import UpdateProduct from './Component/pages/shop/ShopOrder/UpdateProduct';
+import OrderProduct from './Component/pages/shop/ShopOrder/OrderProduct';
 import ShopMore from './Component/pages/shop/ShopDetail/ShopMore/ShopMore';
 import ShopInquiry from './Component/pages/shop/ShopDetail/ShopInquiry/ShopInquiry';
 import ButtonUp from './Component/pages/shop/ButtonUp';
@@ -137,7 +138,7 @@ function App() {
                     aria-controls="home-tab-pane"
                     aria-selected="true"
                   >
-                    <h className="custom-product">상품관리</h>
+                    <h className="custom-product">판매자 관리</h>
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -172,6 +173,22 @@ function App() {
                     </Link>
                   </button>
                 </li>
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link"
+                    id="contact-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#contact-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="contact-tab-pane"
+                    aria-selected="false"
+                  >
+                    <Link to="/shop/seller/orderlist" className="custom-link">
+                      주문관리
+                    </Link>
+                  </button>
+                </li>
               </ul>
 
               {/* <Link to="/shop/seller/sell">상품등록</Link>
@@ -189,6 +206,7 @@ function App() {
                 <Routes>
                   <Route path="/sell" element={<CreateProduct />} />
                   <Route path="/list" element={<SellerProduct />} />
+                  <Route path="/orderlist" element={<OrderProduct />} />
                   <Route
                     path="/product/edit/:productId"
                     element={<UpdateProduct />}
