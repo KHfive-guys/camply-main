@@ -9,34 +9,35 @@ import Pagination from "react-js-pagination";
 const Tent = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const itemsPerPage = 2; // 페이지당 보여줄 아이템 갯수
 
 
   useEffect(() => {
     const fetchData = async () => {
       
       try {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
         const response = await axios.get("http://localhost:8080/shop/category/main/chair");
-        setProducts(response.data.slice(startIndex, endIndex));
+        setProducts(response.data);
       } catch (error) {
         console.error("상품을 불러오는 중 에러 발생", error);
       }
     };
 
     fetchData();
-  }, [currentPage]);
+  }, []); // 컴포넌트가 처음 마운트될 때만 실행
 
+  const startIndex = (currentPage -1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedProducts = products.slice(startIndex, endIndex);
   return (
     <>
     <div className='category-item' style={{ display: 'flex', justifyContent: 'center' }}>
-      {products.length > 0 ? (
+      {displayedProducts.length > 0 ? (
         <div>
           <section>
             <h2 style={{ display: 'flex', justifyContent: 'center' }}>의자&테이블</h2><br />
             <ul className='swiper-wrapper'>
-              {products.map((product) => (
+              {displayedProducts.map((product) => (
                 <li key={product.productId} className='swiper-slide swiper-slide-active' style={{
                   width: "272.5px",
                   marginRight: "30px",

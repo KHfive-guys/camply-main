@@ -12,27 +12,30 @@ const Tent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
         const response = await axios.get(`http://localhost:8080/shop/category/main/tent`);
-        setProducts(response.data.slice(startIndex, endIndex));
+        setProducts(response.data);
       } catch (error) {
         console.error("상품을 불러오는 중 에러 발생", error);
       }
     };
 
     fetchData();
-  }, [currentPage]);
+  }, []); // 컴포넌트가 처음 마운트될 때만 실행
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  // 현재 페이지에 해당하는 상품을 잘라내어 사용
+  const displayedProducts = products.slice(startIndex, endIndex);
 
   return (
     <>
       <div className='category-item' style={{ display: 'flex', justifyContent: 'center' }}>
-        {products.length > 0 ? (
+        {displayedProducts.length > 0 ? (
           <div>
             <section>
               <h2 style={{ display: 'flex', justifyContent: 'center' }}><b>텐트</b></h2><br />
               <ul className='swiper-wrapper'>
-                {products.map((product) => (
+                {displayedProducts.map((product) => (
                   <li key={product.productId} className='swiper-slide swiper-slide-active' style={{
                     width: "272.5px",
                     marginRight: "30px",
@@ -68,7 +71,7 @@ const Tent = () => {
           activePage={currentPage}
           itemsCountPerPage={itemsPerPage}
           totalItemsCount={products.length}
-          pageRangeDisplayed={5}
+          pageRangeDisplayed={3}
           onChange={(pageNumber) => setCurrentPage(pageNumber)}
         />
       </div>
