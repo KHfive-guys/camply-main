@@ -1,90 +1,175 @@
-import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import axios from "axios";
 import ReservationCard from './ReservationCards';
-//import Particle from '../Particle';
-import backpacking from '../../../../Assets/Reservations/backpacking.png';
-import motorhome from '../../../../Assets/Reservations/motorhome.png';
-import tent from '../../../../Assets/Reservations/tent.png';
-import glamping from '../../../../Assets/Reservations/glamping.png';
-import rooftop from '../../../../Assets/Reservations/rooftop.png';
-import caravan from '../../../../Assets/Reservations/caravan.png';
+import { useNavigate } from "react-router-dom";
 
 function Reservations() {
+  const [recentData, setRecentData] = useState([]);
+  const [boardData, setBoardData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [seoulData, setSeoulData] = useState([]);
+  const [gyeonggiData, setGyeonggiData] = useState([]);
+  const [seoulCurrentPage, setSeoulCurrentPage] = useState(1);
+  const [gyeonggiCurrentPage, setGyeonggiCurrentPage] = useState(1);
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("yourTokenKey");
+    if (token) {
+      const decodedToken = parseJwt(token);
+      console.log("Decoded Token:", decodedToken);
+    }
+
+    const fetchCampingData = async () => {
+      try {
+        const seoulResponse = await axios.get(`http://localhost:8080/camp/board/location/서울`);
+        const gyeonggiResponse = await axios.get(`http://localhost:8080/camp/board/location/경기`);
+        setSeoulData(seoulResponse.data);
+        setGyeonggiData(gyeonggiResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchCampingData();
+  }, []);
+
+  useEffect(() => {
+    const fetchRecentData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/camp/board/all");
+        setRecentData(response.data);
+      } catch (error) {
+        console.error("Error fetching recent data:", error);
+      }
+    };
+
+    fetchRecentData();
+  }, []);
+
+  const parseJwt = (token) => {
+    try {
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
+      return decodedToken;
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const handleSeoulPrev = () => {
+    setSeoulCurrentPage(seoulCurrentPage === 1 ? seoulCurrentPage : seoulCurrentPage - 1);
+  };
+
+  const handleSeoulNext = () => {
+    setSeoulCurrentPage(seoulCurrentPage === Math.ceil(seoulData.length / 3) ? seoulCurrentPage : seoulCurrentPage + 1);
+  };
+
+  const handleGyeonggiPrev = () => {
+    setGyeonggiCurrentPage(gyeonggiCurrentPage === 1 ? gyeonggiCurrentPage : gyeonggiCurrentPage - 1);
+  };
+
+  const handleGyeonggiNext = () => {
+    setGyeonggiCurrentPage(gyeonggiCurrentPage === Math.ceil(gyeonggiData.length / 3) ? gyeonggiCurrentPage : gyeonggiCurrentPage + 1);
+  };
+
+  const handlePrev = () => {
+    setCurrentPage(currentPage === 1 ? currentPage : currentPage - 1);
+  };
+
+  const handleNext = () => {
+    setCurrentPage(currentPage === Math.ceil(recentData.length / 3) ? currentPage : currentPage + 1);
+  };
+
+  const handleRecentCampClick = (camp_id) => {
+    navigate(`/camp/board/get/${camp_id}`);
+  };
+
   return (
     <Container fluid className="project-section">
-      <Container>
+      
         <h1 className="project-heading">
-          캠핑은 <strong className="purple">캠플리</strong> 예약하자
-        </h1>
-        <p style={{ color: 'black' }}>캠플리와 캠핑을 즐겨보세요.</p>
-        <Row style={{ justifyContent: 'center', paddingBottom: '10px' }}>
-          <Col md={4} className="project-card">
+        최근 <strong className="purple">캠핑장</strong> 예약하자
+      </h1>
+      <Row style={{ justifyContent: 'center', paddingBottom: '10px' }}>
+        {recentData.slice((currentPage - 1) * 3, currentPage * 3).map(camp => (
+          
+          <Col key={camp.camp_id} md={3} className="project-card">
             <ReservationCard
-              imgPath={glamping}
-              isBlog={false}
-              title="Glamping"
-              description="글램핑은 '글래머러스 캠핑'의 합성어로, 자연 속에서도 편안한 숙박을 즐길 수 있는 스타일리시한 캠핑 형태입니다. 특히 고급 텐트, 캠핑카, 혹은 독특한 숙박 시설을 활용하여 자연과의 조화를 즐기는 경험을 제공합니다."
-              introduceLink="#"
+              camp_id={camp.camp_id} // 이 부분 추가
+              camp_images={camp.camp_images}
+              title={camp.camp_name}
+              address={camp.camp_address}
+              price={camp.camp_price}
+              introduceLink={handleRecentCampClick}
               reservationsLink="#"
             />
           </Col>
+        ))}
+      </Row>
+      <div style={{ textAlign: 'center' }}>
+        <Button variant="primary" onClick={handlePrev} disabled={currentPage === 1}>
+          이전
+        </Button>{' '}
+        <Button variant="primary" onClick={handleNext} disabled={currentPage === Math.ceil(recentData.length / 3)}>
+          다음
+        </Button>
+      </div>
 
-          <Col md={4} className="project-card">
+      <h1 className="project-heading">
+        서울 <strong className="purple">캠핑장</strong> 예약하자
+      </h1>
+      <Row style={{ justifyContent: 'center', paddingBottom: '10px' }}>
+        {seoulData.slice((seoulCurrentPage - 1) * 3, seoulCurrentPage * 3).map(camp => (
+          <Col key={camp.camp_id} md={3} className="project-card">
             <ReservationCard
-              imgPath={caravan}
-              isBlog={false}
-              title="Caravan Camping"
-              description="카라반 캠핑은 이동형 주택인 카라반(휴대용 트레일러)을 이용하여 캠핑하는 형태입니다. 이동이 용이하며 필요한 시기에 자신만의 캠핑 장소를 찾아갈 수 있어 자유로운 여행이 가능합니다."
-              introduceLink="#"
+              camp_id={camp.camp_id} // 이 부분 추가
+              camp_images={camp.camp_images}
+              title={camp.camp_name}
+              address={camp.camp_address}
+              price={camp.camp_price}
+              introduceLink={handleRecentCampClick}
               reservationsLink="#"
             />
           </Col>
+        ))}
+      </Row>
+      <div style={{ textAlign: 'center' }}>
+        <Button variant="primary" onClick={handleSeoulPrev} disabled={seoulCurrentPage === 1}>
+          이전
+        </Button>{' '}
+        <Button variant="primary" onClick={handleSeoulNext} disabled={seoulCurrentPage === Math.ceil(seoulData.length / 3)}>
+          다음
+        </Button>
+      </div>
 
-          <Col md={4} className="project-card">
+      <h1 className="project-heading">
+        경기 <strong className="purple">캠핑장</strong> 예약하자
+      </h1>
+      <Row style={{ justifyContent: 'center', paddingBottom: '10px' }}>
+        {gyeonggiData.slice((gyeonggiCurrentPage - 1) * 3, gyeonggiCurrentPage * 3).map(camp => (
+          <Col key={camp.camp_id} md={3} className="project-card">
             <ReservationCard
-              imgPath={tent}
-              isBlog={false}
-              title="Tent Camping"
-              description="텐트 캠핑은 전통적이고 가장 기본적인 캠핑 형태로, 텐트를 설치하여 자연 속에서 숙박하는 것입니다. 간이 캠핑장이나 자연 속에서 멋진 야경을 감상하며 휴식을 취할 수 있습니다."
-              introduceLink="#"
+              camp_id={camp.camp_id}
+              camp_images={camp.camp_images}
+              title={camp.camp_name}
+              address={camp.camp_address}
+              price={camp.camp_price}
+              introduceLink={handleRecentCampClick}
               reservationsLink="#"
             />
           </Col>
-
-          <Col md={4} className="project-card">
-            <ReservationCard
-              imgPath={backpacking}
-              isBlog={false}
-              title="Backpacking"
-              description="백패킹은 가벼운 캠핑 장비를 가지고 여행하는 형태로, 주로 등산로나 자연 경로를 따라 걷는 여행을 의미합니다. 자연 속에서 더 가벼운 독립적인 경험을 즐길 수 있습니다."
-              introduceLink="#"
-              reservationsLink="#"
-            />
-          </Col>
-
-          <Col md={4} className="project-card">
-            <ReservationCard
-              imgPath={rooftop}
-              isBlog={false}
-              title="Rooftop Tent Camping"
-              description="루프탑 텐트 캠핑은 차량의 지붕에 텐트를 설치하여 캠핑하는 형태입니다. 텐트를 차량 위에 펼치면 빠르게 숙소를 마련할 수 있어 여행 중에 편리하게 이용할 수 있습니다."
-              introduceLink="#"
-              reservationsLink="#"
-            />
-          </Col>
-
-          <Col md={4} className="project-card">
-            <ReservationCard
-              imgPath={motorhome}
-              isBlog={false}
-              title="Motorhome Camping"
-              description="모터홈은 주택과 차량이 결합된 이동형 숙소로, 주행 중에도 편안한 숙박을 즐길 수 있는 캠핑 스타일입니다. 주행 중에도 휴식과 요리, 화장실 이용이 가능합니다."
-              introduceLink="#"
-              reservationsLink="#"
-            />
-          </Col>
-        </Row>
-      </Container>
+        ))}
+      </Row>
+      <div style={{ textAlign: 'center' }}>
+        <Button variant="primary" onClick={handleGyeonggiPrev} disabled={gyeonggiCurrentPage === 1}>
+          이전
+        </Button>{' '}
+        <Button variant="primary" onClick={handleGyeonggiNext} disabled={gyeonggiCurrentPage === Math.ceil(gyeonggiData.length / 3)}>
+          다음
+        </Button>
+      </div>
     </Container>
   );
 }

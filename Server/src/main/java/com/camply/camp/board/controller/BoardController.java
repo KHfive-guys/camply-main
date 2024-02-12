@@ -36,11 +36,15 @@ public class BoardController {
 		
 	}
 
-	@GetMapping("/{camp_select}")
+	@GetMapping("/category/{camp_select}")
 	public List<BoardVO> getBoardCategory(@PathVariable String camp_select) {
 		return boardService.getBoardCategory(camp_select);
 	}
 
+	@GetMapping("/location/{camp_location}")
+	public List<BoardVO> getBoardLocation(@PathVariable String camp_location) {
+		return boardService.getBoardLocation(camp_location);
+	}
 
 	@GetMapping("/get/{camp_id}")
 	public ResponseEntity<?> getBoardById(@PathVariable Long camp_id) {
