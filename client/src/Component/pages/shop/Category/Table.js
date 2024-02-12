@@ -4,6 +4,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import '../../shop/css/ShopMain.css';
 import Pagination from "react-js-pagination";
+import ShopLayout from "../ShopLayout";
+
 
 
 const Tent = () => {
@@ -31,6 +33,8 @@ const Tent = () => {
   const displayedProducts = products.slice(startIndex, endIndex);
   return (
     <>
+    
+    <ShopLayout/>
     <div className='category-item' style={{ display: 'flex', justifyContent: 'center' }}>
       {displayedProducts.length > 0 ? (
         <div>
