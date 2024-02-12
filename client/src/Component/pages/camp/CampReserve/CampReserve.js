@@ -41,23 +41,36 @@ const CampReserve = () => {
     }
     const handlebackbtn = () => {
         const confirmCancellation = window.confirm("예약을 취소하시겠습니까?");
-    if (confirmCancellation) {
-     
-      alert("예약이 취소되었습니다.");
-      navigate(`/camp`)
-    } else {
-     
-      alert("취소가 취소되었습니다.");
+        if (confirmCancellation) {
         
+        alert("예약이 취소되었습니다.");
+        navigate(`/camp/searchList`)
+        } else {
+        
+        alert("취소가 취소되었습니다.");
+            
+        }
+    };
+
+    const finishhand = () => {
+        alert("예약완료.");
+        navigate(`/camp/searchList`)
     }
-  };
-  const token = localStorage.getItem("yourTokenKey");
-  const parseUserIdFromToken = (token) => {
+
+    const token = localStorage.getItem("yourTokenKey");
+    const parseUserIdFromToken = (token) => {
     const payloadBase64 = token.split(".")[1];
     const payload = JSON.parse(atob(payloadBase64));
     return payload.user_id;
   };
+  
+  // 상세페이지에서 데이터 받기
+  const reserveInfo = { ...location.state };
+
   const nowDate = new Date();
+  console.log("code_check reserveInfo CAMP_CHECKIN : " + reserveInfo.CAMP_CHECKIN)
+  console.log("code_check reserveInfo CAMP_CHECKOUT : " + reserveInfo.CAMP_CHECKOUT)
+ 
   const handleOrderbtn = async () => {
     const confirmOrder = window.confirm("결제를 진행 하시겠습니까?");
     if(confirmOrder) {
@@ -73,12 +86,24 @@ const CampReserve = () => {
                 pg: 'mobilians.170622040674',
                 pay_method: "card",
                 merchant_uid: uid, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 중복되지 않은 임의의 문자열을 입력)
-                name: "안녕", //결제창에 노출될 상품명
-                amount: "12", //금액
-                buyer_email : "adsf" , 
-                buyer_name : "asdf" ,
-                buyer_tel : "123" ,
+                name: reserveInfo.CAMP_NAME, //결제창에 노출될 상품명
+                // amount: reserveInfo.CAMP_PRICE, //금액 테스트 결제를위해 금액변경
+                amount: "100",
+                buyer_email : CAMP_USER_EMAIL , 
+                buyer_name : CAMP_USER_NAME ,
+                buyer_tel : CAMP_USER_PHONE ,
             }, rsp => { 
+                console.log("USER_ID : " + USER_ID);
+                console.log("CAMP_CHECKIN : " + reserveInfo.CAMP_CHECKIN);
+                console.log("CAMP_CHECKOUT : " + reserveInfo.CAMP_CHECKOUT);
+                console.log("ALLOWED_USERS_ADULT : " + reserveInfo.CAMP_ADULT);
+                console.log("ALLOWED_USERS_CHILD : " + reserveInfo.CAMP_CHILD);
+                console.log("COMPLETE_PAYMENT : " + nowDate);
+                console.log("CAMP_USER_PHONE : " + CAMP_USER_PHONE);
+                console.log("CAMP_USER_EMAIL : " + CAMP_USER_EMAIL);
+                console.log("CAMP_ID : " + reserveInfo.CAMP_ID);
+                console.log("CAMP_NAME : " + reserveInfo.CAMP_NAME);
+                console.log("CAMP_PRICE : " + reserveInfo.CAMP_PRICE);
                 try {
                     axios.post("http://localhost:8080/camp/reserve", {
                         USER_ID: USER_ID,
@@ -90,6 +115,9 @@ const CampReserve = () => {
                         CAMP_USER_PHONE: CAMP_USER_PHONE,
                         CAMP_USER_EMAIL: CAMP_USER_EMAIL,
                         CAMP_ID: reserveInfo.CAMP_ID,
+                        TOTAL_PRICE: reserveInfo.CAMP_PRICE,
+                        CAMP_NAME: reserveInfo.CAMP_NAME,
+
                     }, {
                         headers: {
                             "Content-Type": "application/json",
@@ -97,10 +125,9 @@ const CampReserve = () => {
                     })
                     .then(response => {
                         if (response.status === 200) {
-                            navigate("/camp");
-                            // <Alert icon={<CiCircleCheck fontSize="inherit" />} severity="success">
-                            //     예약이 완료되었습니다. 예약확인은 마이페이지에서 가능합니다.
-                            // </Alert>
+                           
+                            finishhand();
+                       
                         } else {
                             console.error("Reserve failed");
                         }
@@ -122,9 +149,6 @@ const CampReserve = () => {
     }
   };
 
-
-  // 상세페이지에서 데이터 받기
-  const reserveInfo = { ...location.state };
     return(
         <>
        <Nav/>

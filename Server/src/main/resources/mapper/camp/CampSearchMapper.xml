@@ -11,7 +11,7 @@
         <result property="CAMP_ADULT" column="CAMP_ADULT"/>
         <result property="CAMP_CHILD" column="CAMP_CHILD"/>
         <result property="CAMP_PRICE" column="CAMP_PRICE"/>
-        <result property="CAMP_IMAGE" column="CAMP_IMAGE"/>
+        <result property="CAMP_IMAGES" column="CAMP_IMAGES"/>
         
     </resultMap> 
     <!-- <collection property="CampReservationSearch" resultMap="CampReservationSearchMap"/>  -->
