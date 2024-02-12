@@ -25,6 +25,10 @@ public class UserService {
 		userdao.managerRegister(userVO);
 	}
 
+	public void registerKakao(UserVO userVO) {
+		userdao.emailRegister(userVO);
+	}
+
 	public UserVO getMemberByUsername(String USER_EMAIL) {
 		return userdao.selectEmail(USER_EMAIL);
 	}
