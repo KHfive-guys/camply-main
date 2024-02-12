@@ -3,9 +3,9 @@ import styled from "styled-components";
 import logo from "../../img/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import KakaoLogin from 'react-kakao-login';
-import CampNavBar from '../camp/CampNavbar';
-
+import KakaoLogin from "react-kakao-login";
+import CampNavBar from "../camp/CampNavbar";
+import { PiTShirt } from "react-icons/pi";
 
 function Register() {
   const handleNaverLogin = () => {
@@ -27,41 +27,28 @@ function Register() {
   };
 
   const navigate = useNavigate();
-
-  const handleKakaoLogin = async (response) => {
-    const { account_email	, profile_nickname, name } = response.profile.kakao_account;
-
+  
+  const handleKakaoLoginSuccess = async () => {
     try {
-        const registrationResponse = await fetch("http://localhost:8080/login/oauth2/code/kakao", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Anonymous" 
-            },
-            mode: "cors",
-            credentials: "include",
-            body: JSON.stringify({
-                USER_EMAIL: account_email	,
-                USER_NAME: name,
-                USER_NICKNAME: profile_nickname,
-            }),
-        });
+      const response = await fetch("http://localhost:8080/kakao/register");
+      console.log()
 
-        if (registrationResponse.ok) {
-            console.log("카카오 회원가입 성공");
-            navigate("/login");
-        } else {
-            console.error("카카오 회원가입 실패");
-        }
+      if (response.status !== 200) {
+        throw new Error(
+          `Failed to fetch  login URL. Status: ${response.status}`
+        );
+      }
+
+      const Url = await response.text();
+      window.location.href = Url;
     } catch (error) {
-        console.error("카카오 회원가입 실패", error);
+      console.error(" login error:", error);
     }
-};
-
+  };
 
   return (
     <section>
-      <CampNavBar/>
+      <CampNavBar />
       <Container fluid className="home-section" id="home">
         <Container className="home-content"></Container>
       </Container>
@@ -69,26 +56,18 @@ function Register() {
       <LoginWrap>
         <HeadBannerGroup />
         <LoginSectionRoot>
-          <LoginHeadLogo>
-          </LoginHeadLogo>
+          <LoginHeadLogo></LoginHeadLogo>
           <img src={logo} width="300px" />
           <LoginSection>
             <LoginTitle>일반 유저 회원가입하기</LoginTitle>
 
             <Title>회원가입 방법 선택하기</Title>
             <LoginSns className="wrap">
-            <Item>
-                <KakaoLogin
-                    token="e4e518b34dec41360511f03ad7a9ac61"
-                    onSuccess={handleKakaoLogin}
-                    onFail={(e) => console.log(e)}
-                    onLogout={(e) => console.log(e)}
-                >
-                    <button>
-                        카카오톡으로 가입하기
-                    </button>
-                </KakaoLogin>
-            </Item>
+              <Item>
+                <p>
+                 <button onClick={handleKakaoLoginSuccess}>카카오로그인 </button>
+                </p>
+              </Item>
               <Item>
                 <button onClick={handleNaverLogin}>
                   <SpIcon className="SpNaver" />
