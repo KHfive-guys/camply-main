@@ -246,14 +246,15 @@ function App() {
         <Route path="/camp/board/glamping" element={<CampBoardGlamping />} />
         <Route path="/camp/board/site" element={<CampBoardSite />} />
         <Route path="/camp/board/pension" element={<CampBoardPension />} />
-
+          
         <Route
           path="/shop/*"
           element={
-            <ShopLayout>
+            <>
+              <ScrollToTop />
               <Routes>
                 <Route path="/main" element={<ShopMain />} />
-                
+                <Route path="/detail/:productId" element={<ShopDetail />} />
                 <Route path="/mypage" element={<ShopMyPage />} />
                 <Route path="/cart" element={<ShopCart />} />
                 <Route path="/tent" element={<Tent />} />
@@ -263,12 +264,13 @@ function App() {
                 <Route path="/lamp" element={<Lamp />} />
                 <Route path="/fireplace" element={<BBQ />} />
               </Routes>
-            </ShopLayout>
+            </>
           }
         />
+        
         <Route path="/shop/mycart/:userId" element={<CartList />} />
         <Route path="/shop/order/:productId" element={<OrderCart />} />
-        <Route path="/shop/detail/:productId" element={<ShopDetail />} />
+        
         <Route path="/shop/detail/:productId/more" element={<ShopMore />} />
         <Route path="/shop/detail/:productId/review" element={<ShopReview />} />
 

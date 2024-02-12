@@ -10,6 +10,9 @@ import ShopReview from "./ShopReview/ShopReview";
 import ShopLayout from '../ShopLayout';
 import { useRef } from "react";
 import { Link as ScrollLink, Element } from "react-scroll";
+import ShopNav from "../ShopNav";
+
+
 
 
 const ShopDetail = () => {
@@ -112,8 +115,9 @@ const ShopDetail = () => {
   return (
     <>
     <Nav />
-    <div className='main-shopping'>
-      <ShopLayout/>
+    <div style={{marginTop:'100px'}}>
+    <ShopNav/>
+    <div style={{marginTop:'100px'}} className='main-shopping'>
       <div className='main-section1'>
         <div className='main-section2'>
           <main className='main-section3'>
@@ -249,14 +253,14 @@ const ShopDetail = () => {
                         className='right-section-footer-button-div-button'
                         type='button'
                       >
-                        <Link to={`/shop/cart`}>
+                        
                           <span
                             className='right-section-footer-button-span2'
                             onClick={addToCart}
                           >
                             장바구니
                           </span>
-                        </Link>
+                        
                       </button>
                       <button
                        style={{marginLeft:'20px'}}
@@ -338,6 +342,7 @@ const ShopDetail = () => {
         <hr></hr>
         <div className='Footer'></div>
       </div>
+    </div>
     </div>
     </>
   );

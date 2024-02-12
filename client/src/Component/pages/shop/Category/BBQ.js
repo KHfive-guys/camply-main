@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import '../../shop/css/ShopMain.css';
 import Pagination from "react-js-pagination";
-
+import ShopLayout from "../ShopLayout";
 
 const BBQ = () => {
   const [products, setProducts] = useState([]);
@@ -29,6 +29,7 @@ const BBQ = () => {
 
   return (
     <>
+    <ShopLayout/>
     <div className='category-item' style={{ display: 'flex', justifyContent: 'center' }}>
       {displayedProducts.length > 0 ? (
         <div>
