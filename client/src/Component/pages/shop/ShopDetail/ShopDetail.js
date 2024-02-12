@@ -4,9 +4,13 @@ import axios from "axios";
 import "../css/ShopDetail/ShopDetail.css";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import Nav from "../../camp/CampNavbar";
-import ShopReview from "./ShopReview/ShopReview";
 import ShopMore from "./ShopMore/ShopMore";
 import ShopInquiry from "./ShopInquiry/ShopInquiry";
+import ShopReview from "./ShopReview/ShopReview";
+import ShopLayout from '../ShopLayout';
+import { useRef } from "react";
+import { Link as ScrollLink, Element } from "react-scroll";
+
 
 const ShopDetail = () => {
   const { productId } = useParams();
@@ -17,6 +21,10 @@ const ShopDetail = () => {
   const [userToken, setUserToken] = useState("");
   const [isCurrentUser, setIsCurrentUser] = useState(false);
   const navigate = useNavigate();
+  const productRef = useRef(null);
+  const reviewRef = useRef(null);
+  const inquiryRef = useRef(null);
+
   // 토큰에서 사용자 ID 추출하는 함수
   const extractUserIdFromToken = () => {
     const token = localStorage.getItem("yourTokenKey");
@@ -96,12 +104,16 @@ const ShopDetail = () => {
     navigate(`/shop/order/${productId}`, { state: { product, quantity } });
   };
 
+  
+
+
   const isUserLoggedIn = !!userToken;
 
   return (
+    <>
+    <Nav />
     <div className='main-shopping'>
-      <hr></hr>
-      <Nav />
+      <ShopLayout/>
       <div className='main-section1'>
         <div className='main-section2'>
           <main className='main-section3'>
@@ -116,7 +128,7 @@ const ShopDetail = () => {
                     />
                   </div>
                 </div>
-                <section className='right-section'>
+                <section className='right-section' ref={productRef}>
                   <div className='right-section2'>무료배송</div>
                   <div className='right-section3'>
                     <h1 className='right-section-title'>
@@ -246,6 +258,11 @@ const ShopDetail = () => {
                           </span>
                         </Link>
                       </button>
+                      <button
+                       style={{marginLeft:'20px'}}
+                       className="right-section-footer-button-div-button"
+                       type="button"
+                      >
                       <Link
                         to={{
                           pathname: `/shop/order/${productId}`,
@@ -259,6 +276,7 @@ const ShopDetail = () => {
                           결제하기
                         </span>
                       </Link>
+                      </button>
                     </div>
                   </div>
                 </section>
@@ -268,36 +286,60 @@ const ShopDetail = () => {
             )}
           </main>
           <nav className='nav-first'>
-            <ul className='nav-first-ul'>
-              <li className='nav-first-ul-li'>
-                <Link to='/'>
-                  <span className='nav-first-ul-li-a-span'>상세정보</span>
-                </Link>
-              </li>
-              <li className='nav-first-ul-li'>
-                <Link to={`/shop/detail/${productId}/review`}>
-                  <span className='nav-first-ul-li-a-span'>리뷰</span>
-                </Link>
-                <span className='nav-first-ul-li-a-span-count'></span>
-              </li>
-              <li className='nav-first-ul-li'>
-                <Link to={`/shop/detail/${productId}/inquiry`}>
-                  <span className='nav-first-ul-li-a-span'>문의</span>
-                </Link>
-              </li>
+                  <ul className='nav-first-ul'>
+                    <li className='nav-first-ul-li'>
+                      <ScrollLink
+                        to='product'
+                        spy={true}
+                        smooth={true}
+                        offset={-70}
+                        duration={500}
+                      >
+                        <span style={{fontSize:'20px'}}>상세정보</span>
+                      </ScrollLink>
+                    </li>
+                    <li className='nav-first-ul-li'>
+                      <ScrollLink
+                        to='review'
+                        spy={true}
+                        smooth={true}
+                        offset={-70}
+                        duration={500}
+                      >
+                        <span style={{fontSize:'20px'}}>리뷰</span>
+                      </ScrollLink>
+                    </li>
+                    <li className='nav-first-ul-li'>
+                      <ScrollLink
+                        to='inquiry'
+                        spy={true}
+                        smooth={true}
+                        offset={-70}
+                        duration={500}
+                      >
+                       <span style={{fontSize:'20px'}}>문의</span>
+                      </ScrollLink>
+                    </li>
             </ul>
           </nav>
         </div>
-        <hr></hr>
-        <ShopMore />
-        <hr></hr>
-        <ShopReview />
-        <hr></hr>
-        <ShopInquiry />
+    
+        <Element name='product' className='element'>
+            <ShopMore />
+        </Element>
+       
+        <Element name='review' className='element'>
+            <ShopReview />
+          </Element>
+      
+        <Element name='inquiry' className='element'>
+            <ShopInquiry />
+          </Element>
         <hr></hr>
         <div className='Footer'></div>
       </div>
     </div>
+    </>
   );
 };
 

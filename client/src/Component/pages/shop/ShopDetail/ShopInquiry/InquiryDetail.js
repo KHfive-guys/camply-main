@@ -3,8 +3,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CommentWriter from "./InquiryComment/CommentWriter";
 import "../../css/ShopDetail/ShopInquiry/InquiryDetail.css";
+import Nav from '../../../camp/CampNavbar';
+import { Button } from "@mui/material";
 
-const InquiryDetail = () => {
+const InquiryDetail1 = () => {
   const { questionNo } = useParams();
   const [question, setQuestion] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
@@ -62,48 +64,99 @@ const InquiryDetail = () => {
 
   return (
     <>
-      <div className='container-question'>
-        {question ? (
-          <>
-            <div className='details'>
-              <p className='writer'>작성자 {question.questionName}</p>
-              <p className='date'>작성날짜 {question.questionDate}</p>
-              <p className='hit'>
-                조회수:{" "}
-                <span className='hit-count'>{question.questionHit}</span>
-              </p>
-            </div>
-            <p>내용 {question.questionText}</p>
-            <div>
-              {question.userId === currentUser && (
+    <Nav/>
+    <h2 style={{marginTop:'100px'}}>상품문의</h2>
+    <div className="review-table-view">
+        <table summary="게시글 보기">
+            {question ? (
                 <>
+            <thead>
+                <tr>
+                    <th>
+                        <div className="tb-center">{question.questionTitle}</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td className="line">
+                        <div className="content-sub">
+                            <div>
+                                <span>
+                                    <em>Date :</em>
+                                    {question.questionDate}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="writer">
+                                   <em>작성자 :</em>
+                                   {question.userName}
+                                </span>
+                                <span>
+                                    <em>조회수:</em>
+                                    {question.questionHit}
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div className="data-content">
+                            {question.questionText}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <div>
+          {question.userId === currentUser && ( // question -> review로 변경
+            <>
+              <div style={{marginTop:'30px',marginRight:'10px'}} className="Detail-btn">
+                <div style={{marginRight:'10px'}} className="edit-btn">
                   <button
-                    onClick={() => navigate(`/inquiry/update/${questionNo}`)}
+                  type='button'className="btn-update"
+                    onClick={() => navigate(`/inquiry/update/${questionNo}`)} // inquiry -> review로 변경
                   >
                     수정
                   </button>
-                  <button onClick={handleDeleteClick}>삭제</button>
-                </>
-              )}
-            </div>
-          </>
-        ) : (
-          <p>문의글을 찾을 수 없습니다.</p>
-        )}
-      </div>
+                </div>
+                <div className="delete-btn">
+                  <button
+                  className="delete-btn1"
+                  onClick={handleDeleteClick}>삭제</button>
+                  </div>
+              </div>
+            </>
+          )}
+        </div>
+            </>
+            ):(
+            <p>문의글을 찾을 수 없습니다.</p>
+            )}
+        </table>
+    </div>
+    <br/>
+    <div className="comment-container">
+        <div style={{marginTop:'70px'}}>
+        <CommentWriter questionNo={+questionNo} updateComments={() => {}} />
+        <div className='comment-list'>
+            <h3>덧글 목록</h3>
+            {comments.map((comment) => (
+                <div key={comment.commentNo} className='comment-list'>
+                <div className="commentDate">
+                    <p>{comment.commentDate}</p>
+                </div>
+                <div className="commentText">
+                <p>{comment.commentText}</p>
+                </div>
 
-      <CommentWriter questionNo={+questionNo} updateComments={() => {}} />
-      <div className='comment-list'>
-        <h3>덧글 목록</h3>
-        {comments.map((comment) => (
-          <div key={comment.commentNo} className='comment'>
-            <p>{comment.commentText}</p>
-            <p>{comment.commentDate}</p>
-          </div>
-        ))}
-      </div>
+                </div>
+            ))}
+        </div>
+        </div>
+    </div>
     </>
-  );
+)
 };
 
-export default InquiryDetail;
+export default InquiryDetail1;

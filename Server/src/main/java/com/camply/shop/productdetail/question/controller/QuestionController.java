@@ -35,7 +35,7 @@ public class QuestionController {
 	// 문의글 조회
 	@GetMapping("/view/{productId}")
 	public ResponseEntity<List<QuestionVO>> getQuestion(@PathVariable int productId) {
-		questionService.incrementQuestionHit(productId);
+		
 		List<QuestionVO> question = questionService.getQuestion(productId);
 
 		if (question != null) {
@@ -48,6 +48,7 @@ public class QuestionController {
 	//업데이트용 문의 조회
 	@GetMapping("/{questionNo}")
 	public ResponseEntity<QuestionVO> getQuestionNo(@PathVariable int questionNo){
+		questionService.incrementQuestionHit(questionNo);
 		QuestionVO question = questionService.getQuestionNo(questionNo);
 		if (question != null) {
 			return ResponseEntity.ok(question);

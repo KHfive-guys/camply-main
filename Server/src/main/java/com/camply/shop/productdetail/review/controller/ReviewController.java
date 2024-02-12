@@ -3,6 +3,7 @@ package com.camply.shop.productdetail.review.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,7 +36,7 @@ public class ReviewController {
 	// 후기 조회
 	@GetMapping("/view/{productId}")
 	public ResponseEntity<List<ReviewVO>> getReview(@PathVariable int productId) {
-		reviewService.incrementReviewHit(productId);
+	
 		List<ReviewVO> reviewVO = reviewService.getReview(productId);
 
 		if (reviewVO != null) {
@@ -48,8 +49,8 @@ public class ReviewController {
 	// 업데이트용 후기 조회
 	@GetMapping("/{reviewNo}")
 	public ResponseEntity<ReviewVO> getReviewNo(@PathVariable int reviewNo) {
+		reviewService.incrementReviewHit(reviewNo);
 		ReviewVO reviewVO = reviewService.getReviewNo(reviewNo);
-
 		if (reviewVO != null) {
 			return ResponseEntity.ok(reviewVO);
 		} else {
