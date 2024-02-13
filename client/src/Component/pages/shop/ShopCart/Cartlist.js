@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/ShopCart/ShopCart.css";
 import { Button } from "@mui/material";
 import Nav from "../../camp/CampNavbar";
+import CartImg from '../../../img/ShopImg/icons8-쇼핑-카트.gif'
 
 const CartList = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -91,7 +92,7 @@ const CartList = () => {
       >
         <div style={{ maxWidth: "900px" }} id='content'>
           <div id='cartWrap'>
-            <h2 className='tit-page'>장바구니</h2>
+            <h2 className='tit-page'><img src={CartImg}/>장바구니</h2>
             <button className="order-btn" onClick={handleRemoveSelected}>선택 항목 삭제</button>
             <div className='page-body'>
               <div className='table-cart table-fill-prd'>
