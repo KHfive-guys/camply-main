@@ -83,6 +83,9 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  // 탭 상태 관리
+  const [activeTab, setActiveTab] = useState('home');
+
   return (
     <Router>
       <Routes>
@@ -127,68 +130,45 @@ function App() {
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button
-                    class="nav-link active"
-                    id="home-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#home-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="home-tab-pane"
-                    aria-selected="true"
+                    class={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('home')}
                   >
-                    <h className="custom-product">판매자 관리</h>
+                    판매자 관리
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button
-                    class="nav-link"
-                    id="profile-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#profile-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="profile-tab-pane"
-                    aria-selected="false"
+                    class={`nav-link ${activeTab === 'sell' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('sell')}
                   >
-                    <Link to="/shop/seller/sell" className="custom-link">
-                      상품등록
-                    </Link>
+                    상품등록
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button
-                    class="nav-link"
-                    id="contact-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#contact-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="contact-tab-pane"
-                    aria-selected="false"
+                    class={`nav-link ${activeTab === 'list' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('list')}
                   >
-                    <Link to="/shop/seller/list" className="custom-link">
-                      상품리스트
-                    </Link>
+                    상품리스트
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button
-                    class="nav-link"
-                    id="contact-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#contact-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="contact-tab-pane"
-                    aria-selected="false"
+                    class={`nav-link ${
+                      activeTab === 'orderlist' ? 'active' : ''
+                    }`}
+                    onClick={() => setActiveTab('orderlist')}
                   >
-                    <Link to="/shop/seller/orderlist" className="custom-link">
-                      주문관리
-                    </Link>
+                    주문관리
                   </button>
                 </li>
               </ul>
-
+              <div className="tab-content" id="nav-tabContent">
+                {activeTab === 'home' && <div>Home Content</div>}
+                {activeTab === 'sell' && <CreateProduct />}
+                {activeTab === 'list' && <SellerProduct />}
+                {activeTab === 'orderlist' && <OrderProduct />}
+              </div>
               {/* <Link to="/shop/seller/sell">상품등록</Link>
               <Link to="/shop/seller/list">상품리스트</Link> */}
             </div>
@@ -262,7 +242,7 @@ function App() {
         <Route path="/camp/board/glamping" element={<CampBoardGlamping />} />
         <Route path="/camp/board/site" element={<CampBoardSite />} />
         <Route path="/camp/board/pension" element={<CampBoardPension />} />
-          
+
         <Route
           path="/shop/*"
           element={
@@ -283,10 +263,10 @@ function App() {
             </>
           }
         />
-        
+
         <Route path="/shop/mycart/:userId" element={<CartList />} />
         <Route path="/shop/order/:productId" element={<OrderCart />} />
-        
+
         <Route path="/shop/detail/:productId/more" element={<ShopMore />} />
         <Route path="/shop/detail/:productId/review" element={<ShopReview />} />
 
