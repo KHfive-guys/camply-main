@@ -9,7 +9,7 @@ import { Button } from "@mui/material";
 
 const ReviewDetail1 = () => {
   const { reviewNo } = useParams(); // questionNo -> reviewNo로 변경
-  const [review, setReview] = useState(reviewNo); // question -> review로 변경
+  const [review, setReview] = useState(null); // question -> review로 변경
   const [currentUser, setCurrentUser] = useState(null);
   const [comments, setComments] = useState([]);
   const navigate = useNavigate();
@@ -27,6 +27,7 @@ const ReviewDetail1 = () => {
   };
 
   // 리뷰 세부 정보 및 댓글 목록 가져오기
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,20 +35,26 @@ const ReviewDetail1 = () => {
           `http://localhost:8080/shop/review/${reviewNo}`
         );
         setReview(reviewResponse.data);
-        const commentsResponse = await axios.get(
-          `http://localhost:8080/shop/review/comment/list/${reviewNo}`
-        );
-        setComments(commentsResponse.data);
+        await updateComments(); // 댓글 목록 가져오기도 이 함수를 사용
         const userId = extractUserIdFromToken();
         setCurrentUser(userId);
       } catch (error) {
         console.error("데이터를 불러오는 중 오류 발생", error);
       }
     };
-
+  
     fetchData();
   }, [reviewNo]); // questionNo -> reviewNo로 변경
-
+  const updateComments = async () => {
+    try {
+      const commentsResponse = await axios.get(
+        `http://localhost:8080/shop/review/comment/list/${reviewNo}`
+      );
+      setComments(commentsResponse.data); // 댓글 목록 상태를 업데이트
+    } catch (error) {
+      console.error("댓글 목록을 업데이트하는 중 오류 발생", error);
+    }
+  };
   // 리뷰 삭제 핸들러
   const handleDeleteClick = async () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -85,7 +92,7 @@ const ReviewDetail1 = () => {
                                 <div>
                                     <span>
                                         <em>Date :</em>
-                                        {review.reviewDate}
+                                        {review.reviewDate.split('T')[0]}
                                     </span>
                                 </div>
                                 <div>
@@ -157,7 +164,7 @@ const ReviewDetail1 = () => {
                 ))}
             </div>
             <div style={{marginTop:'30px',marginBottom:'100px', borderBottom:'1px solid #e9e9e9'}}>
-            <CommentWriter reviewNo={+reviewNo} updateComments={() => {}} />
+            <CommentWriter reviewNo={reviewNo} updateComments={updateComments} />
             </div>
             </div>
         </div>

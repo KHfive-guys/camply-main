@@ -19,20 +19,20 @@ const CommentWriter = ({ reviewNo, updateComments }) => {
       [name]: value,
     });
   };
-
   const saveComment = async () => {
     try {
       const response = await axios.post(
         `http://localhost:8080/shop/review/comment/post`,
         {
           ...comment,
-          reviewNo: reviewNo, // 숫자형 reviewNo 사용
+          reviewNo: reviewNo,
         }
       );
       if (response.status === 200) {
         alert("덧글 등록 완료");
-        navigate(`/shop/review/view/${reviewNo}`);
-        updateComments(); // 덧글 목록 업데이트
+        setComment({ commentText: "" }); 
+        await updateComments(); 
+        navigate(`/shop/review/view/${reviewNo}`); // 상태 업데이트 후 페이지 이동
       } else {
         alert("덧글 등록에 실패했습니다.");
       }

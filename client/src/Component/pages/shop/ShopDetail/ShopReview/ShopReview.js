@@ -122,7 +122,7 @@ const ShopReview = () => {
                         </div>
                     </td>
                     <td>
-                      <div className="tb-center">{review.reviewDate}</div>
+                      <div className="tb-center">{review.reviewDate.split('T')[0]}</div>
                     </td>
                     <td>
                       <div className="tb-center">
