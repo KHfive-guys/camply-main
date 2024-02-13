@@ -1,5 +1,7 @@
 package com.camply.shop.mypage.general.myorder.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,8 +25,8 @@ public class MyOrderController {
 
 	// 내주문 조회
 	@GetMapping("/view/{userId}")
-	public ResponseEntity<OrderVO> viewMyOrder(@PathVariable int userId) {
-		OrderVO order = myOrderService.viewMyOrder(userId);
+	public ResponseEntity<List<OrderVO>> viewMyOrder(@PathVariable Long userId) {
+		List<OrderVO> order = myOrderService.viewMyOrder(userId);
 		if (order != null) {
 			return ResponseEntity.ok(order);
 		} else {
@@ -34,13 +36,13 @@ public class MyOrderController {
 
 	// 내주문 수정
 	@PatchMapping("/update")
-	public void updateMyOrder(@PathVariable int orderId) {
-		myOrderService.updateMyOrder(orderId);
+	public void updateMyOrder(@PathVariable int orderNo) {
+		myOrderService.updateMyOrder(orderNo);
 	}
 
 	// 내주문 삭제
-	@DeleteMapping("/delete/{orderId}")
-	public void deleteMyOrder(@PathVariable int orderId) {
-		myOrderService.deleteMyOrder(orderId);
+	@DeleteMapping("/delete/{orderNo}")
+	public void deleteMyOrder(@PathVariable int orderNo) {
+		myOrderService.deleteMyOrder(orderNo);
 	}
 }

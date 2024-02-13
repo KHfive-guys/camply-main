@@ -67,6 +67,7 @@ import CampBoardSite from "./Component/pages/camp/CampBoard/CampBoardSite";
 import MyShopping from "./Component/pages/common/MyShopping";
 import MyCamping from "./Component/pages/common/MyCamping";
 import CartList from "./Component/pages/shop/ShopCart/Cartlist";
+import OrderList from "./Component/pages/shop/ShopOrder/Order/OrderMain";
 import "./Component/pages/camp/CampStyle.css";
 import "./CampApp.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -86,29 +87,29 @@ function App() {
     <Router>
       <Routes>
         <Route
-          path="/"
+          path='/'
           element={
-            <div className="container text-center mt-5">
-              <h1 className="display-4">
+            <div className='container text-center mt-5'>
+              <h1 className='display-4'>
                 안녕하세요. 캠플리에 오신걸 환영합니다.
               </h1>
-              <p className="lead">캠핑 예약 또는 쇼핑 몰로 이동하세요.</p>
-              <div className="d-flex justify-content-center">
-                <Link to="/camp" className="btn btn-primary m-2">
+              <p className='lead'>캠핑 예약 또는 쇼핑 몰로 이동하세요.</p>
+              <div className='d-flex justify-content-center'>
+                <Link to='/camp' className='btn btn-primary m-2'>
                   <img
                     src={campMainImg}
-                    alt="Camping Image"
-                    className="img-thumbnail"
+                    alt='Camping Image'
+                    className='img-thumbnail'
                     style={{ width: "200px", height: "200px" }}
                   />
                   <p>캠핑 예약</p>
                 </Link>
 
-                <Link to="/shop/main" className="btn btn-success m-2">
+                <Link to='/shop/main' className='btn btn-success m-2'>
                   <img
                     src={campMainImg}
-                    alt="Shopping Image"
-                    className="img-thumbnail"
+                    alt='Shopping Image'
+                    className='img-thumbnail'
                     style={{ width: "200px", height: "200px" }}
                   />
                   <p>쇼핑몰</p>
@@ -118,56 +119,56 @@ function App() {
           }
         />
         <Route
-          path="/shop/seller"
+          path='/shop/seller'
           element={
             <div>
               <Navbar />
               <h1 style={{ marginTop: "100px" }}></h1>
 
               <h1 style={{ marginTop: "100px" }}></h1>
-              <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
+              <ul class='nav nav-tabs' id='myTab' role='tablist'>
+                <li class='nav-item' role='presentation'>
                   <button
-                    class="nav-link active"
-                    id="home-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#home-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="home-tab-pane"
-                    aria-selected="true"
+                    class='nav-link active'
+                    id='home-tab'
+                    data-bs-toggle='tab'
+                    data-bs-target='#home-tab-pane'
+                    type='button'
+                    role='tab'
+                    aria-controls='home-tab-pane'
+                    aria-selected='true'
                   >
-                    <h className="custom-product">상품관리</h>
+                    <h className='custom-product'>상품관리</h>
                   </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class='nav-item' role='presentation'>
                   <button
-                    class="nav-link"
-                    id="profile-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#profile-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="profile-tab-pane"
-                    aria-selected="false"
+                    class='nav-link'
+                    id='profile-tab'
+                    data-bs-toggle='tab'
+                    data-bs-target='#profile-tab-pane'
+                    type='button'
+                    role='tab'
+                    aria-controls='profile-tab-pane'
+                    aria-selected='false'
                   >
-                    <Link to="/shop/seller/sell" className="custom-link">
+                    <Link to='/shop/seller/sell' className='custom-link'>
                       상품등록
                     </Link>
                   </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class='nav-item' role='presentation'>
                   <button
-                    class="nav-link"
-                    id="contact-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#contact-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="contact-tab-pane"
-                    aria-selected="false"
+                    class='nav-link'
+                    id='contact-tab'
+                    data-bs-toggle='tab'
+                    data-bs-target='#contact-tab-pane'
+                    type='button'
+                    role='tab'
+                    aria-controls='contact-tab-pane'
+                    aria-selected='false'
                   >
-                    <Link to="/shop/seller/list" className="custom-link">
+                    <Link to='/shop/seller/list' className='custom-link'>
                       상품리스트
                     </Link>
                   </button>
@@ -181,16 +182,16 @@ function App() {
         />
 
         <Route
-          path="/shop/seller/*"
+          path='/shop/seller/*'
           element={
             <>
               <Preloader load={load} />
-              <div className="App" id={load ? "no-scroll" : "scroll"}>
+              <div className='App' id={load ? "no-scroll" : "scroll"}>
                 <Routes>
-                  <Route path="/sell" element={<CreateProduct />} />
-                  <Route path="/list" element={<SellerProduct />} />
+                  <Route path='/sell' element={<CreateProduct />} />
+                  <Route path='/list' element={<SellerProduct />} />
                   <Route
-                    path="/product/edit/:productId"
+                    path='/product/edit/:productId'
                     element={<UpdateProduct />}
                   />
                 </Routes>
@@ -200,93 +201,96 @@ function App() {
         />
 
         <Route
-          path="/camp/*"
+          path='/camp/*'
           element={
             <>
               <Preloader load={load} />
-              <div className="App" id={load ? "no-scroll" : "scroll"}>
+              <div className='App' id={load ? "no-scroll" : "scroll"}>
                 <Navbar />
                 <ScrollToTop />
                 <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/reservation" element={<Reservations />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/inquiry" element={<Inquiry />} />
+                  <Route path='/' element={<Home />} />
+                  <Route path='/reservation' element={<Reservations />} />
+                  <Route path='/about' element={<About />} />
+                  <Route path='/inquiry' element={<Inquiry />} />
                 </Routes>
               </div>
             </>
           }
         />
-        <Route path="/register" element={<Register />} />
-        <Route path="/register/general" element={<GeneralRegister />} />
-        <Route path="/register/manager" element={<ManagerRegister />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/register/general' element={<GeneralRegister />} />
+        <Route path='/register/manager' element={<ManagerRegister />} />
         <Route
-          path="/register/general/email"
+          path='/register/general/email'
           element={<GeneralEmailRegister />}
         />
         <Route
-          path="/register/manager/email"
+          path='/register/manager/email'
           element={<ManagerEmailRegister />}
         />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/camp/board/add" element={<CampBoard />} />
-        <Route path="/camp/board/all" element={<CampBoardAll />} />
-        <Route path="/camp/board/get/:camp_id" element={<CampBoardDetail />} />
-        <Route path="/camp/board/edit/:camp_id" element={<CampBoardUpdate />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/myshopping" element={<MyShopping />} />
-        <Route path="/mycamping" element={<MyCamping />} />
-        <Route path="/mypage/edit" element={<EditUser />} />
-        <Route path="/camp/searchList" element={<CampSearch />} />
-        <Route path="/camp/reserve" element={<CampReserve />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/camp/board/add' element={<CampBoard />} />
+        <Route path='/camp/board/all' element={<CampBoardAll />} />
+        <Route path='/camp/board/get/:camp_id' element={<CampBoardDetail />} />
+        <Route path='/camp/board/edit/:camp_id' element={<CampBoardUpdate />} />
+        <Route path='/mypage' element={<MyPage />} />
+        <Route path='/myshopping' element={<MyShopping />} />
+        <Route path='/mycamping' element={<MyCamping />} />
+        <Route path='/mypage/edit' element={<EditUser />} />
+        <Route path='/camp/searchList' element={<CampSearch />} />
+        <Route path='/camp/reserve' element={<CampReserve />} />
 
-        <Route path="/camp/board/caravan" element={<CampBoardCaravan />} />
-        <Route path="/camp/board/tent" element={<CampBoardTent />} />
-        <Route path="/camp/board/glamping" element={<CampBoardGlamping />} />
-        <Route path="/camp/board/site" element={<CampBoardSite />} />
-        <Route path="/camp/board/pension" element={<CampBoardPension />} />
-          
+        <Route path='/camp/board/caravan' element={<CampBoardCaravan />} />
+        <Route path='/camp/board/tent' element={<CampBoardTent />} />
+        <Route path='/camp/board/glamping' element={<CampBoardGlamping />} />
+        <Route path='/camp/board/site' element={<CampBoardSite />} />
+        <Route path='/camp/board/pension' element={<CampBoardPension />} />
+
         <Route
-          path="/shop/*"
+          path='/shop/*'
           element={
             <>
               <ScrollToTop />
               <Routes>
-                <Route path="/main" element={<ShopMain />} />
-                <Route path="/detail/:productId" element={<ShopDetail />} />
-                <Route path="/mypage" element={<ShopMyPage />} />
-                <Route path="/cart" element={<ShopCart />} />
-                <Route path="/tent" element={<Tent />} />
-                <Route path="/chair" element={<Chair />} />
-                <Route path="/sleeping" element={<Sleeping />} />
-                <Route path="/kitchen" element={<Kitchen />} />
-                <Route path="/lamp" element={<Lamp />} />
-                <Route path="/fireplace" element={<BBQ />} />
+                <Route path='/main' element={<ShopMain />} />
+                <Route path='/detail/:productId' element={<ShopDetail />} />
+                <Route path='/mypage' element={<ShopMyPage />} />
+                <Route path='/cart' element={<ShopCart />} />
+                <Route path='/tent' element={<Tent />} />
+                <Route path='/chair' element={<Chair />} />
+                <Route path='/sleeping' element={<Sleeping />} />
+                <Route path='/kitchen' element={<Kitchen />} />
+                <Route path='/lamp' element={<Lamp />} />
+                <Route path='/fireplace' element={<BBQ />} />
               </Routes>
             </>
           }
         />
-        
-        <Route path="/shop/mycart/:userId" element={<CartList />} />
-        <Route path="/shop/order/:productId" element={<OrderCart />} />
-        
-        <Route path="/shop/detail/:productId/more" element={<ShopMore />} />
-        <Route path="/shop/detail/:productId/review" element={<ShopReview />} />
 
-        <Route path="/shop/review/view/:reviewNo" element={<ReviewDetail />} />
-        <Route path="/review/update/:reviewNo" element={<ReviewUpdate />} />
+        <Route path='/shop/mycart/:userId' element={<CartList />} />
+        <Route path='/shop/order/:productId' element={<OrderCart />} />
         <Route
-          parh="/shop/detail/:productId/inquiry"
+          path='/shop/mypage/general/myorder/view:userId'
+          element={<OrderList />}
+        />
+        <Route path='/shop/detail/:productId/more' element={<ShopMore />} />
+        <Route path='/shop/detail/:productId/review' element={<ShopReview />} />
+
+        <Route path='/shop/review/view/:reviewNo' element={<ReviewDetail />} />
+        <Route path='/review/update/:reviewNo' element={<ReviewUpdate />} />
+        <Route
+          parh='/shop/detail/:productId/inquiry'
           element={<ShopInquiry />}
         />
         <Route
-          path="/shop/question/view/:questionNo"
+          path='/shop/question/view/:questionNo'
           element={<InquiryDetail />}
         />
-        <Route path="/inquiry/update/:questionNo" element={<InquiryUpdate />} />
-        <Route path="/inquiry/writer" element={<InquiryWriter />} />
-        <Route path="/review/writer" element={<ReviewWriter />} />
+        <Route path='/inquiry/update/:questionNo' element={<InquiryUpdate />} />
+        <Route path='/inquiry/writer' element={<InquiryWriter />} />
+        <Route path='/review/writer' element={<ReviewWriter />} />
       </Routes>
 
       <Footer />
