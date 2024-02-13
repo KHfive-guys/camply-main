@@ -1,21 +1,40 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Container, Button, Form, Modal, Row, Col } from "react-bootstrap";
-import CampNavbar from "../camp/CampNavbar";
-import bcrypt from "bcryptjs";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { Container, Button, Form, Modal, Row, Col } from 'react-bootstrap';
+import CampNavbar from '../camp/CampNavbar';
+import bcrypt from 'bcryptjs';
+import '../camp/CampBoard/css/MyPage.css';
 
 function MyPage() {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [passwordVerified, setPasswordVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
 
+  // 캠핑정보 가져오기
+  const [campList, setCampList] = useState([]);
+  const handleShowCamp = () => {
+    axios
+      .delete(`http://localhost:8080/camp/Mypage/paymentResult`)
+      .then(() => {
+        setCampList({});
+      })
+      .catch((error) => {
+        console.error('캠핑정보를 불러오지 못했습니다 :', error);
+      });
+  };
+
   useEffect(() => {
-    const token = localStorage.getItem("yourTokenKey");
+    handleShowCamp();
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem('yourTokenKey');
 
     if (token) {
       const USER_ID = parseUserIdFromToken(token);
@@ -27,12 +46,12 @@ function MyPage() {
           },
         })
         .then((response) => {
-          console.log("User Data Response:", response.data);
+          console.log('User Data Response:', response.data);
           setUserData(response.data || {});
           setLoading(false);
         })
         .catch((error) => {
-          console.error("사용자 정보 가져오기 실패:", error);
+          console.error('사용자 정보 가져오기 실패:', error);
           setLoading(false);
         });
     } else {
@@ -41,16 +60,16 @@ function MyPage() {
   }, []);
 
   const parseUserIdFromToken = (token) => {
-    const payloadBase64 = token.split(".")[1];
+    const payloadBase64 = token.split('.')[1];
     const payload = JSON.parse(atob(payloadBase64));
     return payload.user_id;
   };
 
   const handleDeleteAccount = () => {
-    const confirmDelete = window.confirm("정말로 회원 탈퇴하시겠습니까?");
+    const confirmDelete = window.confirm('정말로 회원 탈퇴하시겠습니까?');
 
     if (confirmDelete) {
-      const token = localStorage.getItem("yourTokenKey");
+      const token = localStorage.getItem('yourTokenKey');
 
       setDeleting(true);
 
@@ -63,12 +82,12 @@ function MyPage() {
           },
         })
         .then(() => {
-          localStorage.removeItem("yourTokenKey");
+          localStorage.removeItem('yourTokenKey');
           setUserData({});
-          navigate("/login");
+          navigate('/login');
         })
         .catch((error) => {
-          console.error("회원 탈퇴 실패:", error);
+          console.error('회원 탈퇴 실패:', error);
         })
         .finally(() => {
           setDeleting(false);
@@ -86,7 +105,7 @@ function MyPage() {
   const handleEdit = async () => {
     handleCloseModal();
     try {
-      const token = localStorage.getItem("yourTokenKey");
+      const token = localStorage.getItem('yourTokenKey');
       const USER_ID = parseUserIdFromToken(token);
 
       const response = await axios.get(
@@ -99,25 +118,25 @@ function MyPage() {
       );
 
       const storedPassword = response.data.USER_PASSWORD;
-      console.log("Entered Password:", password);
-      console.log("Stored Password:", storedPassword);
+      console.log('Entered Password:', password);
+      console.log('Stored Password:', storedPassword);
 
       const passwordMatch = await bcrypt.compare(password, storedPassword);
 
       if (passwordMatch) {
         setPasswordVerified(true);
-        navigate("/mypage/edit");
+        navigate('/mypage/edit');
       } else {
-        alert("비밀번호가 일치하지 않습니다.");
+        alert('비밀번호가 일치하지 않습니다.');
       }
     } catch (error) {
-      console.error("Error during password verification:", error);
+      console.error('Error during password verification:', error);
     }
   };
 
   useEffect(() => {
     if (passwordVerified) {
-      navigate("/mypage/edit");
+      navigate('/mypage/edit');
     }
   }, [passwordVerified, navigate]);
 
@@ -128,83 +147,63 @@ function MyPage() {
   return (
     <section>
       <CampNavbar />
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
 
-      <Container>
-        <Row className="justify-content-center mb-4">
-          <Col>
-            <Button variant="primary" onClick={() => navigate("/mypage")}>
-              내 정보
-            </Button>
-          </Col>
-          <Col>
-            <Button variant="primary" onClick={() => navigate("/myshopping")}>
-              나의 쇼핑
-            </Button>
-          </Col>
-          <Col>
-            <Button variant="primary" onClick={() => navigate("/mycamping")}>
-              나의 캠핑
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-
-      <h1 className="text-center mb-4">나의 캠핑</h1>
-      <Container>
-        <div>
-          <p>이메일: {userData.USER_EMAIL}</p>
-          <p>이름: {userData.USER_NAME}</p>
-          <p>닉네임: {userData.USER_NICKNAME}</p>
-
-          {userData.USER_TYPE === "General" && (
-            <p>주소: {userData.USER_ADDRESS}</p>
-          )}
-
-          {userData.USER_TYPE === "Admin" && (
-            <>
-              <p>사업자 번호: {userData.USER_BUSINESSNUMBER}</p>
-              <p>사업자 주소: {userData.USER_BUSINESSADDRESS}</p>
-              <p>사업자 전화번호: {userData.USER_BUSINESSPHONE}</p>
-            </>
-          )}
-
-          <Button variant="primary" onClick={handleShowModal}>
-            수정하기
-          </Button>
-
-          <button onClick={handleDeleteAccount} disabled={deleting}>
-            {deleting ? "회원 탈퇴 중..." : "회원 탈퇴"}
-          </button>
-
-          <Modal show={showModal} onHide={handleCloseModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>비밀번호 확인</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form.Group controlId="formPasswordModal">
-                <Form.Label>비밀번호를 입력하세요</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="비밀번호를 입력해주세요"
-                  value={password}
-                  onChange={handlePasswordChange}
-                />
-              </Form.Group>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseModal}>
-                취소
-              </Button>
-              <Button variant="primary" onClick={handleEdit}>
-                확인
-              </Button>
-            </Modal.Footer>
-          </Modal>
+      <h1 className='mb-4' id='mypageMainTitle'>
+        마이페이지
+      </h1>
+      <p>안녕하세요.</p>
+      <p>{userData.USER_NAME}님 </p>
+      <a href='MyPage2'>내 정보 수정</a>
+      <div id='MypageContainer'>
+        <div id='mypagebuttonbox'>
+          <div>
+            <p id='MypagecampinfoTitle'>쇼핑정보</p>
+            <button
+              id='Mypageinfo'
+              variant='primary'
+              onClick={() => navigate('/myshopping')}
+            >
+              쇼핑정보
+            </button>
+          </div>
+          <div>
+            <p id='MypagecampinfoTitle'>캠핑정보</p>
+            <button
+              id='Mypagecampinfo'
+              variant='primary'
+              onClick={() => navigate('/mycamping')}
+            >
+              <span style={{ color: 'orange' }}>▶</span>캠핑예약내역
+            </button>
+            <button
+              id='Mypageinfo'
+              variant='primary'
+              onClick={() => navigate('/MyLikeList')}
+            >
+              캠핑 찜 목록
+            </button>
+          </div>
         </div>
-      </Container>
+        <div>
+          <h5 id='reserveListTitle'>캠핑 예약 내역</h5>
+
+          {campList.map((camp) => (
+            <div key={camp.CAMP_RESERVATION} id='mypagereserveList'>
+              <p>캠핑장 이름 : {camp.CAMP_NAME}</p>
+              <div></div>
+              <div id='reservesecondBox'>
+                <span> 체크인 : {camp.CAMP_CHECKIN}</span>~
+                <span> 체크아웃 : {camp.CAMP_CHECKOUT}</span>
+                <p>결제 완료 시각 : {camp.COMPLETE_PAYMENT}</p>
+                <span id='reserveResult'>결제금액 : {camp.TOTLE_PRICE}원</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

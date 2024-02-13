@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import StarRating from "./StarRating";
+import StarRated from "./StarRated";
 import { Row } from "react-bootstrap";
 import "../css/review.css";
 
@@ -124,7 +125,7 @@ function ReplyComponent() {
               <Row md={6}>
                 <span id="reviewcontentuserid">유저 ID: {reply.user_id}</span>
                 <span id="reviewcontentrating">
-                  <StarRating value={reply.camp_rating} />
+                  <StarRated value={reply.camp_rating} />
                 </span>
               </Row>
             </div>
