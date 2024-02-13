@@ -55,13 +55,13 @@ function ReplyComponent() {
   const handleAddReply = () => {
     axios
       .post(`http://localhost:8080/board/reply/add/${camp_id}`, newReply)
-      .then((response) => {
-        setReplyData((prevReplies) => [...prevReplies, response.data]);
+      .then(() => {
         setNewReply({
-          user_id: "",
+          user_id: userId,
           camp_rating: 5,
           camp_review: "",
         });
+        window.location.reload();
       })
       .catch((error) => {
         console.error("리뷰 추가 실패:", error);
@@ -81,6 +81,7 @@ function ReplyComponent() {
         console.error("Failed to delete reply:", error);
       });
   };
+  
 
   return (
     <div id='reviewContainer'>
@@ -132,7 +133,6 @@ function ReplyComponent() {
                 <p>
                   {reply.user_id === userId && (
                     <Button
-                      id='reviewcontentdelete'
                       variant="danger"
                       onClick={() => handleDeleteReply(reply.camp_reviewnumber)}
                     >
