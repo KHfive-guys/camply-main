@@ -267,15 +267,16 @@ const SellerProduct = () => {
         <table>
           <thead>
             <tr>
-              <th className="checkbox-no-th">
+              <th className="checkbox-th-size">
                 <input
                   type="checkbox"
                   checked={selectAll}
                   onChange={handleSelectAllChange}
+                  className="checkbox-th-position"
                 />
               </th>
-              <th className="checkbox-no-th">No</th>
-              <th className="productname-th">상품명</th>
+              <th className="no-th-size">No</th>
+              <th className="productname-th-size">상품명</th>
               <th>판매가</th>
               <th>카테고리</th>
               <th>상태</th>
@@ -292,17 +293,20 @@ const SellerProduct = () => {
               )
               .map((ShopProduct, index) => (
                 <tr key={ShopProduct.productId || index}>
-                  <td className="checkbox-td">
+                  <td>
                     <input
                       type="checkbox"
                       checked={selectedProducts.includes(ShopProduct.productId)}
                       onChange={() =>
                         handleCheckboxChange(ShopProduct.productId)
                       }
+                      className="checkbox-td-position"
                     />
                   </td>
                   {/* 고유 식별자 product_id는 유지하되 프론트에 보여지기 위한 No 값 */}
-                  <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
+                  <td className="no-td-size">
+                    {index + 1 + (currentPage - 1) * itemsPerPage}
+                  </td>
                   <td>
                     <img
                       src={ShopProduct.productThumbnail}
