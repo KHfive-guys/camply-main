@@ -139,25 +139,29 @@ const ReviewDetail1 = () => {
         <br/>
         <div className="comment-container">
             <div style={{marginTop:'70px'}}>
-            <CommentWriter reviewNo={+reviewNo} updateComments={() => {}} />
+            
             <div className='comment-list'>
-                <h3>덧글 목록</h3>
+                <h3>덧글</h3>
                 {comments.map((comment) => (
-                    <div key={comment.commentNo} className='comment-list'>
-                    <div className="commentDate">
+                    <div style={{marginBottom:'10px'}} key={comment.commentNo} className='review-comment-list'>
+                      <div style={{border:'1px solid #e9e9e9', borderRadius:'10px', marginBottom:'50px'}}>
+                    <div style={{display:'flex', justifyContent:'flex-end', marginRight:'20px', marginTop:'10px'}} className="commentDate">
                         <p>{comment.commentDate}</p>
                     </div>
-                    <div className="commentText">
+                    <div style={{display:'flex',justifyContent:'center',fontWeight:'bold',marginBottom:'100px'}} className="commentText">
                     <p>{comment.commentText}</p>
                     </div>
-
+                    
+                    </div>
                     </div>
                 ))}
+            </div>
+            <div style={{marginTop:'30px',marginBottom:'100px', borderBottom:'1px solid #e9e9e9'}}>
+            <CommentWriter reviewNo={+reviewNo} updateComments={() => {}} />
             </div>
             </div>
         </div>
         </>
     )
 };
-
 export default ReviewDetail1;

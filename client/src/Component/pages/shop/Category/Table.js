@@ -11,7 +11,7 @@ import ShopLayout from "../ShopLayout";
 const Tent = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2; // 페이지당 보여줄 아이템 갯수
+  const itemsPerPage = 5; // 페이지당 보여줄 아이템 갯수
 
 
   useEffect(() => {

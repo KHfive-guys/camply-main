@@ -11,7 +11,7 @@ import ShopLayout from '../ShopLayout';
 import { useRef } from "react";
 import { Link as ScrollLink, Element } from "react-scroll";
 import ShopNav from "../ShopNav";
-
+import ButtonUp from '../ButtonUp';
 
 
 
@@ -344,6 +344,7 @@ const ShopDetail = () => {
       </div>
     </div>
     </div>
+    <ButtonUp/>
     </>
   );
 };
