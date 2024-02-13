@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 public interface UserDao {
 
 	void emailRegister(@Param("uservo") UserVO uservo);
+	void kakaoRegister(@Param("uservo") UserVO uservo);
 	void managerRegister(UserVO Uservo);
 	UserVO selectEmail(String USER_EMAIL);
 	void deleteUserById(Long USER_ID);

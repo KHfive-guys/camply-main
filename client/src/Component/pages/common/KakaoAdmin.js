@@ -48,7 +48,6 @@ const SocialKakao = () => {
   return (
     <>
     <div>
-     
     <KakaoLogin
       token={kakaoClientId}
       onSuccess={kakaoOnSuccess}

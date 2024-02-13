@@ -32,9 +32,8 @@ public class KakaoController {
         userVO.setUSER_NAME(name);
         userVO.setUSER_NICKNAME(nickname);
         userVO.setUSER_TYPE(userType);
-        userVO.setUSER_PASSWORD("qweqwe");
 
-        userService.registerUser(userVO);
+        userService.kakaoRegister(userVO);
 
         System.out.println("Email: " + email);
         System.out.println("Name: " + name);
