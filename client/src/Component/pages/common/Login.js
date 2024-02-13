@@ -73,13 +73,11 @@ function Login() {
           kakaoToken: kakaoToken,
         }),
       });
-
+  
       if (response.ok) {
         const user_info = await response.json();
         console.log("Kakao Login successful. Member info:", user_info);
-
-        setUserType(user_info.USER_TYPE);
-
+  
         localStorage.setItem("yourTokenKey", user_info.token);
         setLoggedIn(true);
         navigate("/");
@@ -91,6 +89,7 @@ function Login() {
       console.error("Error during Kakao login:", error);
     }
   };
+  
   
   return (
     <>

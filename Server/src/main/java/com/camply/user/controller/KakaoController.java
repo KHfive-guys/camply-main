@@ -26,18 +26,21 @@ public class KakaoController {
         String name = (String) data.get("name");
         String nickname = (String) data.get("nickname");
         String userType = (String) data.get("userType");
+        String token = (String) data.get("access_token");
 
         UserVO userVO = new UserVO();
         userVO.setUSER_EMAIL(email);
         userVO.setUSER_NAME(name);
         userVO.setUSER_NICKNAME(nickname);
         userVO.setUSER_TYPE(userType);
+        userVO.setUSER_PASSWORD(token);
 
         userService.kakaoRegister(userVO);
 
         System.out.println("Email: " + email);
         System.out.println("Name: " + name);
         System.out.println("Nickname: " + nickname);
+        System.out.println("Token: " + token);
 
         return ResponseEntity.ok("Kakao user registration Success");
     }
