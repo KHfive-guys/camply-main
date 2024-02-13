@@ -217,3 +217,42 @@ tbody tr:hover {
   font-size: 17px;
   font-weight: bold;
 }
+
+.custom-product {
+  color: #5c657b; /* 빨간색으로 설정, 원하는 색상 코드로 변경 가능 */
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.custom-link {
+  color: #5c657b; /* 빨간색으로 설정, 원하는 색상 코드로 변경 가능 */
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.checkbox-th-position {
+  position: relative;
+  top: 5px;
+}
+
+.checkbox-td-position {
+  position: relative;
+  top: 5px;
+}
+
+.checkbox-th-size {
+  width: 2%;
+}
+
+.no-th-size {
+  width: 5%;
+  text-align: center;
+}
+.no-td-size {
+  width: 5%;
+  text-align: center;
+}
+
+.productname-th-size {
+  width: 25%;
+}

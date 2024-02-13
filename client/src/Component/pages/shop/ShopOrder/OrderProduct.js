@@ -84,7 +84,7 @@ const OrderProduct = () => {
       <Nav />
 
       <div className="orderList">
-        <h2>주문조회</h2>
+        <h2>주문관리</h2>
         <table>
           <thead>
             <tr>
