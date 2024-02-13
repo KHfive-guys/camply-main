@@ -1,20 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import Token from './Component/pages/common/Token';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import Token from "./Component/pages/common/Token";
 
-
-
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-
-  <React.StrictMode>
-    <App/>
-    <Token/>
-  </React.StrictMode>
+  <div>
+    <App />
+    <Token />
+  </div>
 );
 
 // If you want to start measuring performance in your app, pass a function
