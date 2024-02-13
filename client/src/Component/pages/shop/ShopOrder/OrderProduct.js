@@ -15,8 +15,8 @@ const OrderProduct = () => {
   const [loading, setLoading] = useState(true); // 상품 조회 시 0번째에서 1번째로 넘어가기 위한 로딩 변수
   const [selectedProducts, setSelectedProducts] = useState([]); // 선택된 제품을 저장할 상태 변수
   const [selectAll, setSelectAll] = useState(false); // 전체 선택 상태
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const token = localStorage.getItem('yourTokenKey'); // 토큰을 로컬 스토리지에서 가져옵니다.
-
   //주문 리스트 조회
   useEffect(() => {
     const fetchOrders = async () => {
@@ -84,17 +84,18 @@ const OrderProduct = () => {
       <Nav />
 
       <div className="orderList">
-        <h2>주문조회</h2>
+        <h2>주문관리</h2>
         <table>
           <thead>
             <tr>
-              <th className="checkbox-no-th">
+              {/* <th className="checkbox-no-th">
                 <input
                   type="checkbox"
                   checked={selectAll}
                   onChange={handleSelectAllChange}
                 />
-              </th>
+              </th> */}
+              <th className="no-th-size">No</th>
               <th>주문일</th>
               <th>주문번호</th>
               <th>주문자</th>
@@ -106,15 +107,17 @@ const OrderProduct = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr key={order.orderNo}>
-                <td className="checkbox-td">
+            {orders.map((order, index) => (
+              <tr key={order.orderNo || index}>
+                {/* <td className="checkbox-td">
                   <input
                     type="checkbox"
                     checked={selectedProducts.includes(order.productId)}
                     onChange={() => handleCheckboxChange(order.productId)}
                   />
-                </td>
+                </td> */}
+                {/* 고유 식별자 order_no 유지하되 프론트에 보여지기 위한 No 값 */}
+                <td className="no-td-size"> {index + 1}</td>
                 <td> {order.orderDate}</td>
                 <td> {order.orderNo}</td>
                 <td> {order.orderOrdererName}</td>

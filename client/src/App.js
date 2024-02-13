@@ -129,12 +129,20 @@ function App() {
               <Navbar />
               <h1 style={{ marginTop: '100px' }}></h1>
               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="sellermanagement" role="presentation">
+                {/* <li class="sellermanagement" role="presentation">
                   <button
                     class={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
                     onClick={() => setActiveTab('home')}
                   >
                     판매자 관리
+                  </button>
+                </li> */}
+                <li class="sellermanagement" role="presentation">
+                  <button
+                    class={`nav-link ${activeTab === 'list' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('list')}
+                  >
+                    상품리스트
                   </button>
                 </li>
                 <li class="sellermanagement" role="presentation">
@@ -143,14 +151,6 @@ function App() {
                     onClick={() => setActiveTab('sell')}
                   >
                     상품등록
-                  </button>
-                </li>
-                <li class="sellermanagement" role="presentation">
-                  <button
-                    class={`nav-link ${activeTab === 'list' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('list')}
-                  >
-                    상품리스트
                   </button>
                 </li>
                 <li class="sellermanagement" role="presentation">
@@ -165,9 +165,9 @@ function App() {
                 </li>
               </ul>
               <div className="tab-content" id="nav-tabContent">
-                {activeTab === 'home' && <div></div>}
-                {activeTab === 'sell' && <CreateProduct />}
+                {/* {activeTab === 'home' && <div></div>} */}
                 {activeTab === 'list' && <SellerProduct />}
+                {activeTab === 'sell' && <CreateProduct />}
                 {activeTab === 'orderlist' && <OrderProduct />}
               </div>
               {/* <Link to="/shop/seller/sell">상품등록</Link>
