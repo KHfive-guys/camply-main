@@ -333,7 +333,7 @@ function CampBoardDetail() {
           marginTop: "50px",
         }}
       >
-        <Button onClick={handlePrevPage}>{<FaAngleLeft size={30} />}</Button>
+        <button className="button" onClick={handlePrevPage}>{<FaAngleLeft size={30} />}</button>
 
         {boardData.camp_images &&
         boardData.camp_images.length > 0 &&
@@ -349,7 +349,7 @@ function CampBoardDetail() {
         ) : (
           <p>이미지가 없습니다.</p>
         )}
-        <Button onClick={handleNextPage}>{<FaAngleRight size={30} />}</Button>
+        <button className="button" onClick={handleNextPage}>{<FaAngleRight size={30} />}</button>
       </div>
       
       <div id="campdetailmap">
