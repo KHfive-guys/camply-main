@@ -33,20 +33,26 @@ const InquiryDetail1 = () => {
           `http://localhost:8080/shop/question/${questionNo}`
         );
         setQuestion(questionResponse.data);
-        const commentsResponse = await axios.get(
-          `http://localhost:8080/shop/question/comment/list/${questionNo}`
-        );
-        setComments(commentsResponse.data);
+        await updateComments(); // 댓글 목록 가져오기도 이 함수를 사용
         const userId = extractUserIdFromToken();
         setCurrentUser(userId);
       } catch (error) {
         console.error("데이터를 불러오는 중 오류 발생", error);
       }
     };
-
+  
     fetchData();
   }, [questionNo]);
-
+  const updateComments = async () => {
+    try {
+      const commentsResponse = await axios.get(
+        `http://localhost:8080/shop/question/comment/list/${questionNo}`
+      );
+      setComments(commentsResponse.data); // 댓글 목록 상태를 업데이트
+    } catch (error) {
+      console.error("댓글 목록을 업데이트하는 중 오류 발생", error);
+    }
+  };
   // 문의글 삭제 핸들러
   const handleDeleteClick = async () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
@@ -82,10 +88,10 @@ const InquiryDetail1 = () => {
                     <td className="line">
                         <div className="content-sub">
                             <div>
-                                <span>
-                                    <em>Date :</em>
-                                    {question.questionDate}
-                                </span>
+                            <span>
+  <em>Date :</em>
+  {question.questionDate.split('T')[0]}
+</span>
                             </div>
                             <div>
                                 <span className="writer">
@@ -156,7 +162,7 @@ const InquiryDetail1 = () => {
             ))}
         </div>
         <div style={{marginTop:'30px',marginBottom:'100px', borderBottom:'1px solid #e9e9e9'}}>
-        <CommentWriter questionNo={+questionNo} updateComments={() => {}} />
+        <CommentWriter questionNo={questionNo} updateComments={updateComments} />
         </div>
         </div>
     </div>

@@ -31,8 +31,10 @@ const CommentWriter = ({ questionNo, updateComments }) => {
       );
       if (response.status === 200) {
         alert("덧글 등록 완료");
+        setComment({ commentText: "" }); 
+        await updateComments(); 
         navigate(`/shop/question/view/${questionNo}`);
-        updateComments(); // 덧글 목록 업데이트
+    
       } else {
         alert("덧글 등록에 실패했습니다.");
       }

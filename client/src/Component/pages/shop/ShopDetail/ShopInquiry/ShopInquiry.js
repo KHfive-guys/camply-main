@@ -132,7 +132,7 @@ const ShopInquiry = () => {
                     </div>
                   </td>
                   <td>
-                    <div className="tb-center">{question.questionDate}</div>
+                    <div className="tb-center">{question.questionDate.split('T')[0]}</div>
                   </td>
                   <td>
                     <div className="tb-center">
