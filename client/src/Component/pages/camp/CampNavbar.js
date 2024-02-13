@@ -227,7 +227,7 @@ function NavBar() {
                           onClick={() => updateExpanded(false)}
                         >
                           <MdAddShoppingCart style={{ marginBottom: '2px' }} />{' '}
-                          상품 관리
+                          판매자 관리
                         </Nav.Link>
                       </Nav.Item>
                     )}
