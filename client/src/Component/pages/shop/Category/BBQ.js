@@ -9,7 +9,7 @@ import ShopLayout from "../ShopLayout";
 const BBQ = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const itemsPerPage = 5;
 
   useEffect(() => {
     const fetchData = async () => {

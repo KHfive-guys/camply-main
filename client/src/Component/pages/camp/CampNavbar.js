@@ -215,7 +215,6 @@ function NavBar() {
                 </Nav.Item>
               </>
             )}
-
             {isShopPath && (
               <>
                 {isLoggedIn && (
@@ -232,7 +231,8 @@ function NavBar() {
                         </Nav.Link>
                       </Nav.Item>
                     )}
-
+                    <>
+                    {isLoggedIn && userType === "General" && (
                     <Nav.Item>
                       <Nav.Link
                         as={Link}
@@ -243,6 +243,9 @@ function NavBar() {
                         장바구니
                       </Nav.Link>
                     </Nav.Item>
+                    )}
+                    <>
+                    {isLoggedIn && userType === "General" && (
                     <Nav.Item>
                       <Nav.Link
                         as={Link}
@@ -253,6 +256,9 @@ function NavBar() {
                         결제관리
                       </Nav.Link>
                     </Nav.Item>
+                    )}
+                    </>
+                    </>
                   </>
                 )}
 
