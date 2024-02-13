@@ -1,6 +1,7 @@
 import KakaoLogin from 'react-kakao-login';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import kakaoRegister from '../../img/Register/kakao_login_medium_narrow.png';
 
 
 const SocialKakao = () => {
@@ -46,11 +47,16 @@ const SocialKakao = () => {
 
   return (
     <>
-      <KakaoLogin
-        token={kakaoClientId}
-        onSuccess={kakaoOnSuccess}
-        onFail={kakaoOnFailure}
-      />
+    <div>
+     
+    <KakaoLogin
+      token={kakaoClientId}
+      onSuccess={kakaoOnSuccess}
+      onFail={kakaoOnFailure}
+    >
+      <img src={kakaoRegister} alt="Kakao Register" />
+    </KakaoLogin>
+      </div>
     </>
   );
 };

@@ -7,26 +7,10 @@ import KakaoLogin from "react-kakao-login";
 import CampNavBar from "../camp/CampNavbar";
 import { PiTShirt } from "react-icons/pi";
 import KakaoGeneral from "./KakaoGeneral";
+import kakaoRegister from '../../img/Register/kakao_login_medium_narrow.png';
 
 function Register() {
-  const handleNaverLogin = () => {
-    const naverLogin = new window.naver.LoginWithNaverId({
-      clientId: "HQHp_3R0uDH7Ey5eoKgv",
-      callbackUrl: "http://localhost:8080/naver/callback",
-      isPopup: false,
-      loginButton: { color: "green", type: 3, height: 42 },
-    });
-
-    naverLogin.init();
-
-    naverLogin.getLoginStatus((status) => {
-      if (status) {
-        const uniqueId = naverLogin.user.getId();
-        const email = naverLogin.user.getEmail();
-      }
-    });
-  };
-
+  
   return (
     <section>
       <CampNavBar />
@@ -37,8 +21,6 @@ function Register() {
       <LoginWrap>
         <HeadBannerGroup />
         <LoginSectionRoot>
-          <LoginHeadLogo></LoginHeadLogo>
-          <img src={logo} width="300px" />
           <LoginSection>
             <LoginTitle>일반 유저 회원가입하기</LoginTitle>
 
@@ -48,22 +30,16 @@ function Register() {
                 <KakaoGeneral/>
               </Item>
               <Item>
-                <button onClick={handleNaverLogin}>
-                  <SpIcon className="SpNaver" />
-                  네이버로 가입하기
-                </button>
-              </Item>
-              <Item>
                 <Link to="/register/general/email">
                   <Email>
                     <SpIcon className="Email" />
-                    "이메일로 가입하기"
+                    이메일로 가입하기
                   </Email>
                 </Link>
               </Item>
               <AdditionTxt>
                 이미 가입하셨다면
-                <a href="/login">바로 로그인하기</a>
+                <a style={{color:'#f1c333', marginLeft:'5px'}} href="/login">   바로 로그인하기</a>
               </AdditionTxt>
             </LoginSns>
           </LoginSection>
@@ -73,15 +49,29 @@ function Register() {
   );
 }
 const AdditionTxt = styled.button`
-  margin-top: 30px;
-  color: #666;
-  font-size: 14px;
-  a {
-    text-decoration: underline;
-  }
+
+margin-top: 6px;
+width: 100%;
+height: 44px;
+border-radius: 2px;
+border: none;
+background: green;
+color: #000;
+font-size: 16px;
+line-height: 30px;
+padding: 0 16px;
+display: inline-block;
+box-shadow: 0 1px 3px 0 rgb(220 220 220 / 30%);
+box-sizing: border-box;
+cursor: pointer;
+font-weight: 400;
+text-align: center;
+text-decoration: none;
+transition: border-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+vertical-align: middle;
+
 `;
 const Email = styled.a``;
-const Naver = styled.a``;
 const Hidden = styled.div`
   &.HiddenTag {
     display: none !important; */
@@ -114,15 +104,27 @@ const LoginSns = styled.div`
       }
 
       ${Email} {
-        border: 2px solid #f1c333;
-        background: #fff;
-        color: #f1c333;
-        line-height: 28px;
+        margin-top: 6px;
+      width: 100%;
+      height: 44px;
+      border-radius: 2px;
+      border: none;
+      background: #f1c333;
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 30px;
+      
+      display: inline-block;
+      box-shadow: 0 1px 3px 0 rgb(220 220 220 / 30%);
+      box-sizing: border-box;
+      cursor: pointer;
+      font-weight: 400;
+      text-align: center;
+      text-decoration: none;
+      transition: border-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+      vertical-align: middle;
       }
 
-      ${Naver} {
-        background: #63c33d;
-      }
 
       ${More} {
         font-size: 14px !important;

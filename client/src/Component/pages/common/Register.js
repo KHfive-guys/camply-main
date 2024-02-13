@@ -16,17 +16,19 @@ const Register = () =>  {
         </Container>
       </Container>
 
-      <div class="container text-center">
-        <div class="row row-cols-2">
-          <div class="col">
-            <Link to="/register/general">
-              <img src={general} alt="General Register" width="500px" height="500px" />
-            </Link>
-          </div>
-          <div class="col">
-            <Link to="/register/manager">
-              <img src={manager} alt="Manager Register" width="500px" height="500px" />
-            </Link>
+    <div>
+        <div style={{marginTop:'100px', marginBottom:'100px', marginLeft:'30%'}} class="container text-center">
+          <div class="row row-cols-4">
+            <div class="col">
+              <Link to="/register/general">
+                <img src={general} alt="General Register" width="300px" height="300px" />
+              </Link>
+            </div>
+            <div class="col">
+              <Link to="/register/manager">
+                <img src={manager} alt="Manager Register" width="300px" height="300px" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

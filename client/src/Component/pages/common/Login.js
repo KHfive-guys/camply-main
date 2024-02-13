@@ -5,6 +5,7 @@ import KakaoLogin from "react-kakao-login";
 import { Container } from "react-bootstrap";
 import CampNavbar from '../camp/CampNavbar';
 import Kakao from "./KakaoGeneral";
+import kakaobuttonimg1 from '../../img/Login/kakao_login_medium_narrow.png'
 
 function Login() {
   const navigate = useNavigate();
@@ -85,13 +86,9 @@ function Login() {
           </LoginHeadText>
           <LoginSignupContent>
             <HorizontalButtons>
-              <CustomNaverButton className="naver" href="">
-                Naver Login
-              </CustomNaverButton>
-
-                  <CustomKakaoButton className="kakao">
-                    Kakao Login
-                  </CustomKakaoButton>
+                  <div className="kakao">
+                  <img src={kakaobuttonimg1}/>
+                  </div>
 
 
             </HorizontalButtons>
@@ -280,9 +277,7 @@ const RadiusButton = styled.a`
     margin-right: 0;
   }
 
-  &.naver {
-    background: #30c612;
-  }
+  
 
   &.kaako {
     padding-right: 4px;
@@ -383,24 +378,5 @@ const LoginWrap = styled.div`
   background: #fff;
 `;
 
-const CustomKakaoButton = styled.button`
-  /* Your custom styles here */
-  background-color: #ffeb00;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-`;
 
-const CustomNaverButton = styled.a`
-  /* Your custom styles here */
-  background-color: #03c75a;
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  display: inline-block;
-`;
 export default Login;
