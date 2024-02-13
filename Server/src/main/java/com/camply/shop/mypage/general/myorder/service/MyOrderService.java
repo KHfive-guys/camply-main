@@ -16,18 +16,18 @@ public class MyOrderService {
 	private MyOrderDao myOrderDao;
 
 	// 내주문 조회
-	public OrderVO viewMyOrder(int userId) {
+	public List<OrderVO> viewMyOrder(Long userId) {
 		return myOrderDao.viewMyOrder(userId);
 	}
 
 	// 내주문 수정
 	@Transactional
-	public void updateMyOrder(int orederId) {
-		myOrderDao.updateMyOrder(orederId);
+	public void updateMyOrder(int orderNo) {
+		myOrderDao.updateMyOrder(orderNo);
 	}
 
 	// 내주문 삭제
-	public void deleteMyOrder(int orderId) {
-		myOrderDao.deleteMyOrder(orderId);
+	public void deleteMyOrder(int orderNo) {
+		myOrderDao.deleteMyOrder(orderNo);
 	}
 }

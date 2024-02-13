@@ -128,22 +128,22 @@ function NavBar() {
   return (
     <Navbar
       expanded={expand}
-      fixed="top"
-      expand="md"
+      fixed='top'
+      expand='md'
       className={navColour ? "sticky" : "navbar"}
     >
       <Container>
-        <Navbar.Brand href="/" className="d-flex">
+        <Navbar.Brand href='/' className='d-flex'>
           <img
             src={logo}
-            className="logo"
-            alt="brand"
+            className='logo'
+            alt='brand'
             style={{ width: "250px", height: "auto" }}
           />
         </Navbar.Brand>
 
         <Navbar.Toggle
-          aria-controls="responsive-navbar-nav"
+          aria-controls='responsive-navbar-nav'
           onClick={() => updateExpanded(expand ? false : "expanded")}
         >
           <span></span>
@@ -151,8 +151,8 @@ function NavBar() {
           <span></span>
         </Navbar.Toggle>
 
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="ms-auto" defaultActiveKey="#home">
+        <Navbar.Collapse id='responsive-navbar-nav'>
+          <Nav className='ms-auto' defaultActiveKey='#home'>
             <Nav.Item>
               <Nav.Link
                 as={Link}
@@ -169,7 +169,7 @@ function NavBar() {
                   <Nav.Item>
                     <Nav.Link
                       as={Link}
-                      to="/camp/board/add"
+                      to='/camp/board/add'
                       onClick={() => updateExpanded(false)}
                     >
                       <MdFormatListBulletedAdd
@@ -181,7 +181,7 @@ function NavBar() {
                 )}
 
                 <Nav.Item>
-                  <Nav.Link href="#" onClick={handleWeatherModalShow}>
+                  <Nav.Link href='#' onClick={handleWeatherModalShow}>
                     <IoMdSunny style={{ marginBottom: "2px" }} /> 날씨
                   </Nav.Link>
                 </Nav.Item>
@@ -195,7 +195,7 @@ function NavBar() {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button
-                      variant="secondary"
+                      variant='secondary'
                       onClick={handleWeatherModalClose}
                     >
                       Close
@@ -206,7 +206,7 @@ function NavBar() {
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to="/shop/main"
+                    to='/shop/main'
                     onClick={() => updateExpanded(false)}
                   >
                     <PiShoppingBagOpenLight style={{ marginBottom: "2px" }} />{" "}
@@ -224,7 +224,7 @@ function NavBar() {
                       <Nav.Item>
                         <Nav.Link
                           as={Link}
-                          to="/shop/seller"
+                          to='/shop/seller'
                           onClick={() => updateExpanded(false)}
                         >
                           <MdAddShoppingCart style={{ marginBottom: "2px" }} />{" "}
@@ -236,11 +236,21 @@ function NavBar() {
                     <Nav.Item>
                       <Nav.Link
                         as={Link}
-                        to="/shop/mycart/:userId"
+                        to='/shop/mycart/:userId'
                         onClick={() => updateExpanded(false)}
                       >
                         <FiShoppingCart style={{ marginBottom: "2px" }} />{" "}
                         장바구니
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link
+                        as={Link}
+                        to='/shop/mypage/general/myorder/view:userId'
+                        onClick={() => updateExpanded(false)}
+                      >
+                        <FiShoppingCart style={{ marginBottom: "2px" }} />{" "}
+                        결제관리
                       </Nav.Link>
                     </Nav.Item>
                   </>
@@ -249,7 +259,7 @@ function NavBar() {
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to="/camp"
+                    to='/camp'
                     onClick={() => updateExpanded(false)}
                   >
                     <GiCampingTent style={{ marginBottom: "2px" }} /> 캠핑장
@@ -263,7 +273,7 @@ function NavBar() {
               <Nav.Item>
                 <Nav.Link
                   as={Link}
-                  to="/mypage"
+                  to='/mypage'
                   onClick={() => updateExpanded(false)}
                 >
                   <LuUserCircle2 style={{ marginBottom: "2px" }} /> 마이페이지
