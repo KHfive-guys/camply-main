@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Nav from '../../camp/CampNavbar';
+import ProductUpdate from '../../../img/Seller/상품수정.png';
 import {
   BrowserRouter as Router,
   Routes,
@@ -177,9 +178,12 @@ const UpdateProduct = () => {
   return (
     <>
       <Nav />
-
+      <h1 style={{ marginTop: '200px' }}></h1>
       <div className="create-update-Product">
-        <h2>상품수정</h2>
+        <h2>
+          <img src={ProductUpdate} alt="productupdate" />
+          상품수정
+        </h2>
         <form onSubmit={handleSubmit}>
           {/* 각 필드를 입력할 수 있는 입력 요소를 생성 */}
 

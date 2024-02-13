@@ -173,3 +173,13 @@ tbody tr:hover {
     margin: 0 auto;
   }
 }
+
+.create-update-Product img {
+  width: 50px;
+  height: auto;
+}
+
+.orderList img {
+  width: 50px;
+  height: auto;
+}
