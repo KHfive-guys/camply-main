@@ -256,3 +256,13 @@ tbody tr:hover {
 .productname-th-size {
   width: 25%;
 }
+
+.sellerProduct img {
+  width: 50px;
+  height: auto;
+}
+
+.create-update-Product img {
+  width: 50px;
+  height: auto;
+}

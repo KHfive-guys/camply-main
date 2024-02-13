@@ -13,6 +13,7 @@ import {
   useNavigate,
   Link,
 } from 'react-router-dom';
+import ProductList from '../../../img/Seller/상품리스트.png';
 
 const SellerProduct = () => {
   const [products, setProducts] = useState([]);
@@ -238,7 +239,11 @@ const SellerProduct = () => {
       <Nav />
 
       <div className="sellerProduct">
-        <h2>상품리스트 </h2>
+        <h2>
+          &nbsp;&nbsp;
+          <img src={ProductList} alt="product" />
+          상품리스트{' '}
+        </h2>
 
         <span className="itemsPerPage-position">
           <button

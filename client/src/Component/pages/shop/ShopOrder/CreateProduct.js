@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/ShopSell/CreateProduct.css';
 import Nav from '../../camp/CampNavbar';
+import ProductAdd from '../../../img/Seller/상품등록.png';
 import {
   BrowserRouter as Router,
   Routes,
@@ -172,7 +173,10 @@ const CreateProduct = () => {
       <Nav />
 
       <div className="create-update-Product">
-        <h2>상품등록</h2>
+        <h2>
+          <img src={ProductAdd} alt="productadd" />
+          상품등록
+        </h2>
 
         <div className="form-group">
           <label htmlFor="productCode">상품코드 </label>
