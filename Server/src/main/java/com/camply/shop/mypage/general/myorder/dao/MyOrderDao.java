@@ -10,11 +10,11 @@ import com.camply.shop.common.vo.OrderVO;
 public interface MyOrderDao {
 
 	// 내주문 조회
-	OrderVO viewMyOrder(int userId);
+	List<OrderVO> viewMyOrder(Long userId);
 
 	// 내주문 수정
-	void updateMyOrder(int orderId);
+	void updateMyOrder(int orderNo);
 
 	// 내주문 삭제
-	void deleteMyOrder(int orderId);
+	void deleteMyOrder(int orderNo);
 }

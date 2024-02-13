@@ -13,7 +13,25 @@ function MyPage() {
   const [password, setPassword] = useState("");
   const [passwordVerified, setPasswordVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
+
+  // 캠핑정보 가져오기
+  const [campList, setCampList] = useState([]);
+  // 캠핑좋아요정보 가져오기
+  const handleShowLikeList = () => {
+    axios
+      .delete(`http://localhost:8080/camp/Mypage/campDipsList`)
+      .then(() => {
+        setCampList({});
+      })
+      .catch((error) => {
+        console.error("캠핑정보를 불러오지 못했습니다 :", error);
+      });
+  };
+  useEffect(() => {
+    handleShowLikeList();
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
@@ -144,11 +162,11 @@ function MyPage() {
             <div>
               <p id="MypagecampinfoTitle">쇼핑정보</p>
               <button
-                id="Mypagecampinfo"
+                id="Mypageinfo"
                 variant="primary"
                 onClick={() => navigate("/myshopping")}
               >
-                <span style={{ color: "orange" }}>▶</span> 쇼핑정보
+                쇼핑정보
               </button>
             </div>
             <div>
@@ -160,16 +178,29 @@ function MyPage() {
               >
                 캠핑예약내역
               </button>
-            </div>
-            <div>
               <button
-                id="Mypageinfo"
+                id="Mypagecampinfo"
                 variant="primary"
                 onClick={() => navigate("/MyLikeList")}
               >
-                캠핑 찜 목록
+                <span style={{ color: "orange" }}>▶</span>캠핑 찜 목록
               </button>
             </div>
+          </div>
+          <div>
+            <h5 id="reserveListTitle">캠핑 찜 목록</h5>
+
+            {campList.map((camp) => (
+              <div key={camp.CAMP_RESERVATION} id="mypagereserveList">
+                <p>캠핑장 이름 : {camp.CAMP_NAME}</p>
+                <div></div>
+                <div id="reservesecondBox">
+                  <span> 체크인 : {camp.CAMP_CHECKIN}</span>~
+                  <span> 체크아웃 : {camp.CAMP_CHECKOUT}</span>
+                  <p id="reserveResult">결제금액 : {camp.TOTLE_PRICE}원</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

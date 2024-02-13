@@ -215,7 +215,6 @@ function NavBar() {
                 </Nav.Item>
               </>
             )}
-
             {isShopPath && (
               <>
                 {isLoggedIn && (
@@ -228,21 +227,38 @@ function NavBar() {
                           onClick={() => updateExpanded(false)}
                         >
                           <MdAddShoppingCart style={{ marginBottom: '2px' }} />{' '}
-                          판매자 관리
+                          상품 관리
                         </Nav.Link>
                       </Nav.Item>
                     )}
-
-                    <Nav.Item>
-                      <Nav.Link
-                        as={Link}
-                        to="/shop/mycart/:userId"
-                        onClick={() => updateExpanded(false)}
-                      >
-                        <FiShoppingCart style={{ marginBottom: '2px' }} />{' '}
-                        장바구니
-                      </Nav.Link>
-                    </Nav.Item>
+                    <>
+                      {isLoggedIn && userType === 'General' && (
+                        <Nav.Item>
+                          <Nav.Link
+                            as={Link}
+                            to="/shop/mycart/:userId"
+                            onClick={() => updateExpanded(false)}
+                          >
+                            <FiShoppingCart style={{ marginBottom: '2px' }} />{' '}
+                            장바구니
+                          </Nav.Link>
+                        </Nav.Item>
+                      )}
+                      <>
+                        {isLoggedIn && userType === 'General' && (
+                          <Nav.Item>
+                            <Nav.Link
+                              as={Link}
+                              to="/shop/mypage/general/myorder/view:userId"
+                              onClick={() => updateExpanded(false)}
+                            >
+                              <FiShoppingCart style={{ marginBottom: '2px' }} />{' '}
+                              결제관리
+                            </Nav.Link>
+                          </Nav.Item>
+                        )}
+                      </>
+                    </>
                   </>
                 )}
 

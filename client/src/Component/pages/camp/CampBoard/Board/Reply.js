@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import '../css/review.css';
+import StarRating from "./StarRating";
+import StarRated from "./StarRated";
+import { Row } from "react-bootstrap";
+import "../css/review.css";
 
 function ReplyComponent() {
   const [replyData, setReplyData] = useState([]);
@@ -55,13 +58,13 @@ function ReplyComponent() {
   const handleAddReply = () => {
     axios
       .post(`http://localhost:8080/board/reply/add/${camp_id}`, newReply)
-      .then((response) => {
-        setReplyData((prevReplies) => [...prevReplies, response.data]);
+      .then(() => {
         setNewReply({
-          user_id: "",
+          user_id: userId,
           camp_rating: 5,
           camp_review: "",
         });
+        window.location.reload();
       })
       .catch((error) => {
         console.error("리뷰 추가 실패:", error);
@@ -82,35 +85,29 @@ function ReplyComponent() {
       });
   };
 
+  const handleRatingChange = (rating) => {
+    setNewReply({ ...newReply, camp_rating: rating });
+  };
+
   return (
-    <div id='reviewContainer'>
-      <div id='reviewcontentBox'>
-        <h5 id='reviewListTitle'>방문후기</h5>
-        <div id='reviewBox'>
-          <span id='reviewType'>User:</span>
+    <div id="reviewContainer">
+      <div id="reviewcontentBox">
+        <h5 id="reviewListTitle">방문후기</h5>
+        <div id="reviewBox">
+          <span id="reviewType">User:</span>
           <input
-            id='reviewUserID'
-            className='form-control'
+            id="reviewUserID"
+            className="form-control"
             type="text"
             value={userId || ""}
             readOnly
           />
-          <label id='reviewType'>평점:</label>
+          <label id="reviewType">평점:</label>
+          <StarRating onChange={handleRatingChange} />
+          <label id="reviewType">리뷰:</label>
           <input
-            className='form-control'
-            id='reviewgrade'
-            type="number"
-            value={newReply.camp_rating}
-            min="1"
-            max="5"
-            onChange={(e) =>
-              setNewReply({ ...newReply, camp_rating: e.target.value })
-            }
-          />
-          <label id='reviewType'>리뷰:</label>
-          <input
-            className='form-control'
-            id='reviewContent'
+            className="form-control"
+            id="reviewContent"
             type="text"
             value={newReply.camp_review}
             placeholder="리뷰내용을 입력해주세요"
@@ -118,21 +115,26 @@ function ReplyComponent() {
               setNewReply({ ...newReply, camp_review: e.target.value })
             }
           />
-          <button id='reviewButton' onClick={handleAddReply}>리뷰 추가</button>
+          <button id="reviewButton" onClick={handleAddReply}>
+            리뷰 추가
+          </button>
         </div>
         {replyData.map((reply) => (
           <div key={reply.camp_reviewnumber}>
             <div>
-              <span id='reviewcontentuserid'>유저 ID: {reply.user_id}</span>
-              <span id='reviewcontentrating'>평점: {reply.camp_rating}</span>
+              <Row md={6}>
+                <span id="reviewcontentuserid">유저 ID: {reply.user_id}</span>
+                <span id="reviewcontentrating">
+                  <StarRated value={reply.camp_rating} />
+                </span>
+              </Row>
             </div>
-            <p id='reviewcontent'>{reply.camp_review}</p>
-            <div id='reviewcontentupdatedelete'>
-              <div id='reviewcontentupdatedelete'>
+            <p id="reviewcontent" style={{marginTop:'30px'}}>{reply.camp_review}</p>
+            <div id="reviewcontentupdatedelete">
+              <div id="reviewcontentupdatedelete">
                 <p>
                   {reply.user_id === userId && (
                     <Button
-                      id='reviewcontentdelete'
                       variant="danger"
                       onClick={() => handleDeleteReply(reply.camp_reviewnumber)}
                     >
@@ -142,7 +144,7 @@ function ReplyComponent() {
                 </p>
               </div>
             </div>
-            <hr id='reviewhrBar'/>
+            <hr id="reviewhrBar" />
           </div>
         ))}
       </div>

@@ -38,7 +38,6 @@ import Chair from './Component/pages/shop/Category/Table';
 import CreateProduct from './Component/pages/shop/ShopOrder/CreateProduct';
 import SellerProduct from './Component/pages/shop/ShopOrder/SellerProduct';
 import UpdateProduct from './Component/pages/shop/ShopOrder/UpdateProduct';
-import OrderProduct from './Component/pages/shop/ShopOrder/OrderProduct';
 import ShopMore from './Component/pages/shop/ShopDetail/ShopMore/ShopMore';
 import ShopInquiry from './Component/pages/shop/ShopDetail/ShopInquiry/ShopInquiry';
 import ButtonUp from './Component/pages/shop/ButtonUp';
@@ -68,6 +67,7 @@ import CampBoardSite from './Component/pages/camp/CampBoard/CampBoardSite';
 import MyShopping from './Component/pages/common/MyShopping';
 import MyCamping from './Component/pages/common/MyCamping';
 import CartList from './Component/pages/shop/ShopCart/Cartlist';
+import OrderList from './Component/pages/shop/ShopOrder/Order/OrderMain';
 import './Component/pages/camp/CampStyle.css';
 import './CampApp.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -82,9 +82,6 @@ function App() {
 
     return () => clearTimeout(timer);
   }, []);
-
-  // 탭 상태 관리
-  const [activeTab, setActiveTab] = useState('list');
 
   return (
     <Router>
@@ -127,48 +124,57 @@ function App() {
             <div>
               <Navbar />
               <h1 style={{ marginTop: '100px' }}></h1>
+
+              <h1 style={{ marginTop: '100px' }}></h1>
               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="sellermanagement" role="presentation">
+                <li class="nav-item" role="presentation">
                   <button
-                    class={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('home')}
+                    class="nav-link active"
+                    id="home-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#home-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="home-tab-pane"
+                    aria-selected="true"
                   >
-                    판매자 관리
+                    <h className="custom-product">상품관리</h>
                   </button>
                 </li>
-                <li class="sellermanagement" role="presentation">
+                <li class="nav-item" role="presentation">
                   <button
-                    class={`nav-link ${activeTab === 'sell' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('sell')}
+                    class="nav-link"
+                    id="profile-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#profile-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="profile-tab-pane"
+                    aria-selected="false"
                   >
-                    상품등록
+                    <Link to="/shop/seller/sell" className="custom-link">
+                      상품등록
+                    </Link>
                   </button>
                 </li>
-                <li class="sellermanagement" role="presentation">
+                <li class="nav-item" role="presentation">
                   <button
-                    class={`nav-link ${activeTab === 'list' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('list')}
+                    class="nav-link"
+                    id="contact-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#contact-tab-pane"
+                    type="button"
+                    role="tab"
+                    aria-controls="contact-tab-pane"
+                    aria-selected="false"
                   >
-                    상품리스트
-                  </button>
-                </li>
-                <li class="sellermanagement" role="presentation">
-                  <button
-                    class={`nav-link ${
-                      activeTab === 'orderlist' ? 'active' : ''
-                    }`}
-                    onClick={() => setActiveTab('orderlist')}
-                  >
-                    주문관리
+                    <Link to="/shop/seller/list" className="custom-link">
+                      상품리스트
+                    </Link>
                   </button>
                 </li>
               </ul>
-              <div className="tab-content" id="nav-tabContent">
-                {activeTab === 'home' && <div></div>}
-                {activeTab === 'sell' && <CreateProduct />}
-                {activeTab === 'list' && <SellerProduct />}
-                {activeTab === 'orderlist' && <OrderProduct />}
-              </div>
+
               {/* <Link to="/shop/seller/sell">상품등록</Link>
               <Link to="/shop/seller/list">상품리스트</Link> */}
             </div>
@@ -184,8 +190,10 @@ function App() {
                 <Routes>
                   <Route path="/sell" element={<CreateProduct />} />
                   <Route path="/list" element={<SellerProduct />} />
-                  <Route path="/edit/:productId" element={<UpdateProduct />} />
-                  <Route path="/orderlist" element={<OrderProduct />} />
+                  <Route
+                    path="/product/edit/:productId"
+                    element={<UpdateProduct />}
+                  />
                 </Routes>
               </div>
             </>
@@ -263,7 +271,10 @@ function App() {
 
         <Route path="/shop/mycart/:userId" element={<CartList />} />
         <Route path="/shop/order/:productId" element={<OrderCart />} />
-
+        <Route
+          path="/shop/mypage/general/myorder/view:userId"
+          element={<OrderList />}
+        />
         <Route path="/shop/detail/:productId/more" element={<ShopMore />} />
         <Route path="/shop/detail/:productId/review" element={<ShopReview />} />
 

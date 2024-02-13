@@ -1,75 +1,74 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import React from "react";
-import { Container } from "react-bootstrap";
-import "./css/CampBoard.css";
-import CampNavbar from "../CampNavbar";
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import './css/CampBoard.css';
+import CampNavbar from '../CampNavbar';
 
 function BbsWrite() {
   const navigate = useNavigate();
-  const [userId, setUserId] = useState("");
-  const [USER_BUSINESSADDRESS, setUserBusinessAddress] = useState("");
-  const [USER_BUSINESSPHONE, setUserBusinessPhone] = useState("");
-  const { camp_id } = useParams();
+  const [userId, setUserId] = useState('');
+  const [USER_BUSINESSADDRESS, setUserBusinessAddress] = useState('');
+  const [USER_BUSINESSPHONE, setUserBusinessPhone] = useState('');
   const [newBoard, setNewBoard] = useState({
-    user_id: "",
+    user_id: '',
     camp_id: 0,
-    camp_select: "",
-    camp_location: "",
-    camp_name: "",
-    camp_address: "",
-    camp_phone: "",
+    camp_select: '',
+    camp_location: '',
+    camp_name: '',
+    camp_address: '',
+    camp_phone: '',
     camp_adult: 0,
     camp_child: 0,
     camp_price: 0,
     camp_images: [],
-    camp_description: "",
-    camp_facility: "",
+    camp_description: '',
+    camp_facility: '',
   });
 
   const boardAdd = () => {
     const selectedFacilities = Object.entries(facilities)
       .filter(([facility, checked]) => checked)
       .map(([facility]) => facility)
-      .join(", ");
+      .join(', ');
 
-    const campImagesString = newBoard.camp_images.join(";");
+    const campImagesString = newBoard.camp_images.join(';');
 
     if (
-      newBoard.camp_select === "" ||
-      newBoard.camp_location === "" ||
-      newBoard.camp_name === "" ||
+      newBoard.camp_select === '' ||
+      newBoard.camp_location === '' ||
+      newBoard.camp_name === '' ||
       newBoard.camp_adult === 0 ||
       newBoard.camp_price === 0 ||
       newBoard.camp_images.length === 0
     ) {
-      alert("모든 필수 입력 항목을 채워주세요.");
+      alert('모든 필수 입력 항목을 채워주세요.');
       return;
     }
 
     axios
-      .post("http://localhost:8080/camp/board/add", {
+      .post('http://localhost:8080/camp/board/add', {
         ...newBoard,
         camp_facility: selectedFacilities,
         camp_images: campImagesString,
       })
       .then((response) => {
-        console.log("성공", response.data);
+        console.log('성공', response.data);
         setNewBoard({
-          user_id: "",
+          user_id: '',
           camp_id: 0,
-          camp_select: "",
-          camp_location: "",
-          camp_name: "",
-          camp_address: "",
-          camp_phone: "",
+          camp_select: '',
+          camp_location: '',
+          camp_name: '',
+          camp_address: '',
+          camp_phone: '',
           camp_adult: 0,
           camp_child: 0,
           camp_price: 0,
           camp_images: [],
-          camp_description: "",
-          camp_facility: "",
+          camp_description: '',
+          camp_facility: '',
         });
         setFacilities({
           수영장: false,
@@ -83,11 +82,10 @@ function BbsWrite() {
           마트: false,
           바베큐장: false,
         });
-        navigate(`/camp/board/all`);
-        
+        navigate('/camp/board/all');
       })
       .catch((error) => {
-        console.error("실패", error);
+        console.error('실패', error);
       });
   };
 
@@ -119,19 +117,19 @@ function BbsWrite() {
 
   const addImageInputField = () => {
     if (newBoard.camp_images.length < 5) {
-      setNewBoard({ ...newBoard, camp_images: [...newBoard.camp_images, ""] });
+      setNewBoard({ ...newBoard, camp_images: [...newBoard.camp_images, ''] });
     } else {
-      alert("이미지는 최대 5장까지 저장 가능합니다.");
+      alert('이미지는 최대 5장까지 저장 가능합니다.');
     }
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("yourTokenKey");
+    const token = localStorage.getItem('yourTokenKey');
 
     const parseJwt = (token) => {
       try {
         return JSON.parse(
-          decodeURIComponent(escape(atob(token.split(".")[1])))
+          decodeURIComponent(escape(atob(token.split('.')[1])))
         );
       } catch (e) {
         return null;
@@ -149,19 +147,19 @@ function BbsWrite() {
     if (token) {
       try {
         const decodedToken = parseJwt(token);
-        console.log("Decoded Token:", decodedToken);
+        console.log('Decoded Token:', decodedToken);
 
-        setUserId(decodedToken.user_id || "");
-        setUserBusinessAddress(decodedToken.USER_BUSINESSADDRESS || "");
-        setUserBusinessPhone(decodedToken.USER_BUSINESSPHONE || "");
+        setUserId(decodedToken.user_id || '');
+        setUserBusinessAddress(decodedToken.USER_BUSINESSADDRESS || '');
+        setUserBusinessPhone(decodedToken.USER_BUSINESSPHONE || '');
         setNewBoard((prevNewBoard) => ({
           ...prevNewBoard,
-          user_id: decodedToken.user_id || "",
-          camp_address: decodedToken.USER_BUSINESSADDRESS || "",
-          camp_phone: decodedToken.USER_BUSINESSPHONE || "",
+          user_id: decodedToken.user_id || '',
+          camp_address: decodedToken.USER_BUSINESSADDRESS || '',
+          camp_phone: decodedToken.USER_BUSINESSPHONE || '',
         }));
       } catch (error) {
-        console.error("Error decoding token:", error);
+        console.error('Error decoding token:', error);
       }
     }
   }, []);
@@ -169,207 +167,214 @@ function BbsWrite() {
   return (
     <section>
       <CampNavbar />
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
 
       <div>
-        <table className="table">
-          <tbody>
-            <tr>
-              <th className="table-primary">
-                캠핑장 카테고리<span className="required"> *필수 입력</span>
+        <table id='campBoardContainer' className='table'>
+          <div id='campBoardTitleBox'>
+            <span id='campBoardTitle'>캠핑장 등록하기</span>
+            <span id='campBoardTitledescription'>
+              *표시는 필수 입력 항목입니다.
+            </span>
+          </div>
+
+          <tbody id='campBoardtbody'>
+            <tr id='campboardTR'>
+              <th id='campBoardcategory'>
+                <span className='required'>*</span>캠핑장 카테고리
               </th>
-              <td className="radio-buttons-container">
+              <td className='radio-buttons-container'>
                 <div>
                   <input
-                    type="radio"
-                    id="tent"
-                    name="campCategory"
-                    value="tent"
-                    checked={newBoard.camp_select === "텐트"}
+                    type='radio'
+                    id='tent'
+                    name='campCategory'
+                    value='tent'
+                    checked={newBoard.camp_select === '텐트'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_select: "텐트" })
+                      setNewBoard({ ...newBoard, camp_select: '텐트' })
                     }
                   />
-                  <label htmlFor="tent">텐트</label>
+                  <label htmlFor='tent'>텐트</label>
                 </div>
                 <div>
                   <input
-                    type="radio"
-                    id="glamping"
-                    name="campCategory"
-                    value="glamping"
-                    checked={newBoard.camp_select === "글램핑"}
+                    type='radio'
+                    id='glamping'
+                    name='campCategory'
+                    value='glamping'
+                    checked={newBoard.camp_select === '글램핑'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_select: "글램핑" })
+                      setNewBoard({ ...newBoard, camp_select: '글램핑' })
                     }
                   />
-                  <label htmlFor="glamping">글램핑</label>
+                  <label htmlFor='glamping'>글램핑</label>
                 </div>
                 <div>
                   <input
-                    type="radio"
-                    id="caravan"
-                    name="campCategory"
-                    value="caravan"
-                    checked={newBoard.camp_select === "카라반"}
+                    type='radio'
+                    id='caravan'
+                    name='campCategory'
+                    value='caravan'
+                    checked={newBoard.camp_select === '카라반'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_select: "카라반" })
+                      setNewBoard({ ...newBoard, camp_select: '카라반' })
                     }
                   />
-                  <label htmlFor="caravan">카라반</label>
+                  <label htmlFor='caravan'>카라반</label>
                 </div>
                 <div>
                   <input
-                    type="radio"
-                    id="site"
-                    name="campCategory"
-                    value="site"
-                    checked={newBoard.camp_select === "야영장"}
+                    type='radio'
+                    id='site'
+                    name='campCategory'
+                    value='site'
+                    checked={newBoard.camp_select === '야영장'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_select: "야영장" })
+                      setNewBoard({ ...newBoard, camp_select: '야영장' })
                     }
                   />
-                  <label htmlFor="site">사이트</label>
+                  <label htmlFor='site'>사이트</label>
                 </div>
                 <div>
                   <input
-                    type="radio"
-                    id="pension"
-                    name="campCategory"
-                    value="pension"
-                    checked={newBoard.camp_select === "펜션"}
+                    type='radio'
+                    id='pension'
+                    name='campCategory'
+                    value='pension'
+                    checked={newBoard.camp_select === '펜션'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_select: "펜션" })
+                      setNewBoard({ ...newBoard, camp_select: '펜션' })
                     }
                   />
-                  <label htmlFor="pension">펜션</label>
+                  <label htmlFor='pension'>펜션</label>
                 </div>
               </td>
             </tr>
 
             <tr>
-              <th className="table-primary">
-                캠핑장 위치 <span className="required"> *필수 입력</span>
+              <th id='campBoardcategory'>
+                <span className='required'>*</span>캠핑장 위치
               </th>
-              <td className="radio-buttons-container">
+              <td className='radio-buttons-container'>
                 <div>
                   <input
-                    type="radio"
-                    id="seoul"
-                    name="campLocation"
-                    value="서울"
-                    checked={newBoard.camp_location === "서울"}
+                    type='radio'
+                    id='seoul'
+                    name='campLocation'
+                    value='서울'
+                    checked={newBoard.camp_location === '서울'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "서울" })
+                      setNewBoard({ ...newBoard, camp_location: '서울' })
                     }
                   />
-                  <label htmlFor="seoul">서울</label>
+                  <label htmlFor='seoul'>서울</label>
                 </div>
                 <div>
                   <input
-                    type="radio"
-                    id="gyeonggi"
-                    name="campLocation"
-                    value="경기"
-                    checked={newBoard.camp_location === "경기"}
+                    type='radio'
+                    id='gyeonggi'
+                    name='campLocation'
+                    value='경기'
+                    checked={newBoard.camp_location === '경기'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "경기" })
+                      setNewBoard({ ...newBoard, camp_location: '경기' })
                     }
                   />
-                  <label htmlFor="gyeonggi">경기</label>
+                  <label htmlFor='gyeonggi'>경기</label>
                 </div>
                 <div>
                   <input
-                    type="radio"
-                    id="incheon"
-                    name="campLocation"
-                    value="인천"
-                    checked={newBoard.camp_location === "인천"}
+                    type='radio'
+                    id='incheon'
+                    name='campLocation'
+                    value='인천'
+                    checked={newBoard.camp_location === '인천'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "인천" })
+                      setNewBoard({ ...newBoard, camp_location: '인천' })
                     }
                   />
-                  <label htmlFor="incheon">인천</label>
+                  <label htmlFor='incheon'>인천</label>
                 </div>
                 <div>
                   <input
-                    type="radio"
-                    id="gangwon"
-                    name="campLocation"
-                    value="강원"
-                    checked={newBoard.camp_location === "강원"}
+                    type='radio'
+                    id='gangwon'
+                    name='campLocation'
+                    value='강원'
+                    checked={newBoard.camp_location === '강원'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "강원" })
+                      setNewBoard({ ...newBoard, camp_location: '강원' })
                     }
                   />
-                  <label htmlFor="gangwon">강원</label>
+                  <label htmlFor='gangwon'>강원</label>
                 </div>
                 <div>
                   <input
-                    type="radio"
-                    id="chungcheong"
-                    name="campLocation"
-                    value="충청"
-                    checked={newBoard.camp_location === "충청"}
+                    type='radio'
+                    id='chungcheong'
+                    name='campLocation'
+                    value='충청'
+                    checked={newBoard.camp_location === '충청'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "충청" })
+                      setNewBoard({ ...newBoard, camp_location: '충청' })
                     }
                   />
-                  <label htmlFor="chungcheong">충청</label>
+                  <label htmlFor='chungcheong'>충청</label>
                 </div>
                 <div>
                   <input
-                    type="radio"
-                    id="jeolla"
-                    name="campLocation"
-                    value="전라"
-                    checked={newBoard.camp_location === "전라"}
+                    type='radio'
+                    id='jeolla'
+                    name='campLocation'
+                    value='전라'
+                    checked={newBoard.camp_location === '전라'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "전라" })
+                      setNewBoard({ ...newBoard, camp_location: '전라' })
                     }
                   />
-                  <label htmlFor="jeolla">전라</label>
+                  <label htmlFor='jeolla'>전라</label>
                 </div>
                 <div>
                   <input
-                    type="radio"
-                    id="gyeongsang"
-                    name="campLocation"
-                    value="경상"
-                    checked={newBoard.camp_location === "경상"}
+                    type='radio'
+                    id='gyeongsang'
+                    name='campLocation'
+                    value='경상'
+                    checked={newBoard.camp_location === '경상'}
                     onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "경상" })
+                      setNewBoard({ ...newBoard, camp_location: '경상' })
                     }
                   />
-                  <label htmlFor="gyeongsang">경상</label>
+                  <label htmlFor='gyeongsang'>경상</label>
                 </div>
               </td>
             </tr>
 
             <tr>
-              <th className="table-primary">
-                캠핑장 주소 <span className="required"> *필수 입력</span>
+              <th id='campBoardcategory'>
+                <span className='required'>*</span>캠핑장 주소
               </th>
               <td>
                 <input
-                  type="text"
-                  className="form-control"
-                  value={USER_BUSINESSADDRESS || ""}
+                  type='text'
+                  className='form-control'
+                  value={USER_BUSINESSADDRESS || ''}
                   readOnly
                 />
               </td>
             </tr>
 
             <tr>
-              <th className="table-primary">
-                캠핑장 이름 <span className="required"> *필수 입력</span>
+              <th id='campBoardcategory'>
+                <span className='required'>*</span>캠핑장 이름
               </th>
               <td>
                 <input
-                  type="text"
-                  className="form-control"
+                  type='text'
+                  className='form-control'
                   value={newBoard.camp_name}
                   onChange={(e) =>
                     setNewBoard({ ...newBoard, camp_name: e.target.value })
@@ -379,33 +384,33 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">
-                캠핑장 전화번호 <span className="required"> *필수 입력</span>
+              <th id='campBoardcategory'>
+                <span className='required'>*</span>캠핑장 전화번호
               </th>
               <td>
                 <input
-                  type="text"
-                  className="form-control"
-                  value={USER_BUSINESSPHONE || ""}
+                  type='text'
+                  className='form-control'
+                  value={USER_BUSINESSPHONE || ''}
                   readOnly
                 />
               </td>
             </tr>
 
             <tr>
-              <th className="table-primary">
-                성인 인원 <span className="required"> *필수 입력</span>
+              <th id='campBoardcategory'>
+                <span className='required'>*</span>성인 인원
               </th>
               <td>
                 <input
-                  type="number"
-                  className="form-control"
+                  type='number'
+                  className='form-control'
                   value={newBoard.camp_adult}
                   onChange={(e) =>
                     setNewBoard({
                       ...newBoard,
                       camp_adult:
-                        e.target.value !== ""
+                        e.target.value !== ''
                           ? parseInt(e.target.value, 10)
                           : 0,
                     })
@@ -415,19 +420,19 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">
-                아동 인원 <span className="required"> *필수 입력</span>
+              <th id='campBoardcategory'>
+                <span className='required'>*</span>아동 인원
               </th>
               <td>
                 <input
-                  type="number"
-                  className="form-control"
+                  type='number'
+                  className='form-control'
                   value={newBoard.camp_child}
                   onChange={(e) =>
                     setNewBoard({
                       ...newBoard,
                       camp_child:
-                        e.target.value !== ""
+                        e.target.value !== ''
                           ? parseInt(e.target.value, 10)
                           : 0,
                     })
@@ -437,13 +442,13 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">
-                1박 가격 <span className="required"> *필수 입력</span>
+              <th id='campBoardcategory'>
+                <span className='required'>*</span>1박 가격
               </th>
               <td>
                 <input
-                  type="number"
-                  className="form-control"
+                  type='number'
+                  className='form-control'
                   value={newBoard.camp_price}
                   onChange={(e) =>
                     setNewBoard({ ...newBoard, camp_price: e.target.value })
@@ -453,13 +458,14 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">
-                캠핑장 사진 추가 <span className="required"> *필수 입력</span>
+              <th id='campBoardcategory'>
+                <span className='required'>*</span>캠핑장 사진 추가
               </th>
               <td>
                 <button
-                  className="btn btn-outline-secondary"
+                  className='btn btn-outline-secondary'
                   onClick={addImageInputField}
+                  id='campaddButton'
                 >
                   사진 추가하기
                 </button>
@@ -468,11 +474,11 @@ function BbsWrite() {
 
             {newBoard.camp_images.map((image, index) => (
               <tr key={index}>
-                <th className="table-primary">{`캠핑장 사진 ${index + 1}`}</th>
-                <td>
+                <th id='campBoardimg'>{`캠핑장 사진 ${index + 1}`}</th>
+                <td id='campboardTd'>
                   <input
-                    type="text"
-                    className="form-control"
+                    type='file'
+                    className='form-control'
                     value={image}
                     onChange={(e) => handleImageChange(index, e.target.value)}
                   />
@@ -481,15 +487,15 @@ function BbsWrite() {
             ))}
 
             <tr>
-              <th className="table-primary">부대 시설</th>
+              <th id='campBoardcategory'>부대 시설</th>
               <td>
-                <div className="facilities-checkbox-container">
+                <div className='facilities-checkbox-container'>
                   {Object.entries(facilities).map(
                     ([facility, checked], index) => (
                       <div key={facility}>
                         <label>
                           <input
-                            type="checkbox"
+                            type='checkbox'
                             checked={checked}
                             onChange={() => handleCheckboxChange(facility)}
                           />
@@ -503,10 +509,10 @@ function BbsWrite() {
             </tr>
 
             <tr>
-              <th className="table-primary">캠핑장 상세설명</th>
+              <th id='campBoardcategory'>캠핑장 상세설명</th>
               <td>
                 <textarea
-                  className="form-control"
+                  className='form-control'
                   value={newBoard.camp_description}
                   onChange={(e) =>
                     setNewBoard({
@@ -521,9 +527,13 @@ function BbsWrite() {
           </tbody>
         </table>
 
-        <div className="my-5 d-flex justify-content-center">
-          <button className="btn btn-outline-secondary" onClick={boardAdd}>
-            <i className="fas fa-pen"></i> 등록하기
+        <div className='my-5 d-flex justify-content-center'>
+          <button
+            id='campaddButton2'
+            className='btn btn-outline-secondary'
+            onClick={boardAdd}
+          >
+            <i className='fas fa-pen'></i> 등록하기
           </button>
         </div>
       </div>

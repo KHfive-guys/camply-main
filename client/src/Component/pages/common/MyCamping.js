@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Button, Form, Modal, Row, Col } from "react-bootstrap";
 import CampNavbar from "../camp/CampNavbar";
 import bcrypt from "bcryptjs";
+import "../camp/CampBoard/css/MyPage.css";
 
 function MyPage() {
   const [userData, setUserData] = useState({});
@@ -12,7 +13,25 @@ function MyPage() {
   const [password, setPassword] = useState("");
   const [passwordVerified, setPasswordVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
+
+  // 캠핑정보 가져오기
+  const [campList, setCampList] = useState([]);
+  const handleShowCamp = () => {
+    axios
+      .delete(`http://localhost:8080/camp/Mypage/paymentResult`)
+      .then(() => {
+        setCampList({});
+      })
+      .catch((error) => {
+        console.error("캠핑정보를 불러오지 못했습니다 :", error);
+      });
+  };
+
+  useEffect(() => {
+    handleShowCamp();
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
@@ -132,79 +151,63 @@ function MyPage() {
         <Container className="home-content"></Container>
       </Container>
 
-      <Container>
-        <Row className="justify-content-center mb-4">
-          <Col>
-            <Button variant="primary" onClick={() => navigate("/mypage")}>
-              내 정보
-            </Button>
-          </Col>
-          <Col>
-            <Button variant="primary" onClick={() => navigate("/myshopping")}>
-              나의 쇼핑
-            </Button>
-          </Col>
-          <Col>
-            <Button variant="primary" onClick={() => navigate("/mycamping")}>
-              나의 캠핑
-            </Button>
-          </Col>
-        </Row>
-      </Container>
+      <div className="body-mypage">
+        <h1 className="mb-4" id="mypageMainTitle">
+          마이페이지
+        </h1>
+        <p>안녕하세요.</p>
+        <p>{userData.USER_NAME}님 </p>
+        <a href="MyPage2">내 정보 수정</a>
+        <div id="MypageContainer">
+          <div id="mypagebuttonbox">
+            <div>
+              <p id="MypagecampinfoTitle">쇼핑정보</p>
+              <button
+                id="Mypageinfo"
+                variant="primary"
+                onClick={() => navigate("/myshopping")}
+              >
+                쇼핑정보
+              </button>
+            </div>
+            <div>
+              <p id="MypagecampinfoTitle">캠핑정보</p>
+              <button
+                id="Mypagecampinfo"
+                variant="primary"
+                onClick={() => navigate("/mycamping")}
+              >
+                <span style={{ color: "orange" }}>▶</span>캠핑예약내역
+              </button>
+              <button
+                id="Mypageinfo"
+                variant="primary"
+                onClick={() => navigate("/MyLikeList")}
+              >
+                캠핑 찜 목록
+              </button>
+            </div>
+          </div>
+          <div>
+            <h5 id="reserveListTitle">캠핑 예약 내역</h5>
 
-      <h1 className="text-center mb-4">나의 캠핑</h1>
-      <Container>
-        <div>
-          <p>이메일: {userData.USER_EMAIL}</p>
-          <p>이름: {userData.USER_NAME}</p>
-          <p>닉네임: {userData.USER_NICKNAME}</p>
-
-          {userData.USER_TYPE === "General" && (
-            <p>주소: {userData.USER_ADDRESS}</p>
-          )}
-
-          {userData.USER_TYPE === "Admin" && (
-            <>
-              <p>사업자 번호: {userData.USER_BUSINESSNUMBER}</p>
-              <p>사업자 주소: {userData.USER_BUSINESSADDRESS}</p>
-              <p>사업자 전화번호: {userData.USER_BUSINESSPHONE}</p>
-            </>
-          )}
-
-          <Button variant="primary" onClick={handleShowModal}>
-            수정하기
-          </Button>
-
-          <button onClick={handleDeleteAccount} disabled={deleting}>
-            {deleting ? "회원 탈퇴 중..." : "회원 탈퇴"}
-          </button>
-
-          <Modal show={showModal} onHide={handleCloseModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>비밀번호 확인</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form.Group controlId="formPasswordModal">
-                <Form.Label>비밀번호를 입력하세요</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="비밀번호를 입력해주세요"
-                  value={password}
-                  onChange={handlePasswordChange}
-                />
-              </Form.Group>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseModal}>
-                취소
-              </Button>
-              <Button variant="primary" onClick={handleEdit}>
-                확인
-              </Button>
-            </Modal.Footer>
-          </Modal>
+            {campList.map((camp) => (
+              <div key={camp.CAMP_RESERVATION} id="mypagereserveList">
+                <p>캠핑장 이름 : {camp.CAMP_NAME}</p>
+                <div></div>
+                <div id="reservesecondBox">
+                  <span> 체크인 : {camp.CAMP_CHECKIN}</span>~
+                  <span> 체크아웃 : {camp.CAMP_CHECKOUT}</span>
+                  <p>결제 완료 시각 : {camp.COMPLETE_PAYMENT}</p>
+                  <span id="reserveResult">
+                    결제금액 : {camp.TOTLE_PRICE}원
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }
