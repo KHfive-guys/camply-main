@@ -9,6 +9,8 @@ import "../CampBoard/css/CampDetail.css";
 import tentIMG from "../../../img/텐트.png";
 import marker from "../../../img/마커.png";
 import copyIMG from "../../../img/공유.png";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+
 
 const parseJwt = (token) => {
   console.log("Parsed JWT:", token);
@@ -180,6 +182,7 @@ function CampBoardDetail() {
 
   // 예약페이지 이동
   const reserveMove = ({}) => {
+
     navigate("/camp/reserve", {
       state: {
         // 캠핑장 번호
@@ -194,6 +197,10 @@ function CampBoardDetail() {
         CAMP_CHECKIN: `${searchInfo.CAMP_CHECKIN}`,
         // 체크아웃 시간
         CAMP_CHECKOUT: `${searchInfo.CAMP_CHECKOUT}`,
+        // 캠핑장이름
+        CAMP_NAME: `${boardData.camp_name}`,
+        // 가격
+        CAMP_PRICE: `${boardData.camp_price}`
       },
     });
   };
@@ -222,6 +229,10 @@ function CampBoardDetail() {
         });
     };
 
+    const numberWithCommas = (x) => {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
   return (
     <section>
       <CampNavbar />
@@ -235,11 +246,8 @@ function CampBoardDetail() {
           { isCurrentUser &&<th>수정</th>}
           {isCurrentUser && <th> 삭제</th>}
         </div>
-        {/* <td>{boardData.camp_id}</td>
-            <td>{boardData.user_id}</td> */}
+
         <div id="campDetailBox">
-         
-         
             <p id="detailType">유형 | {boardData.camp_select}</p>
             <img src={tentIMG} alt="텐트" id="DetailIMG"></img>
             <span id="campdetailName"> 캠핑장 이름 | {boardData.camp_name}</span>
@@ -259,7 +267,7 @@ function CampBoardDetail() {
               <span id="campdetail">아동 |</span> {boardData.camp_child}명
             </p>
             <p id="campdetailtitle">
-              <span id="campdetail">가격 |</span> {boardData.camp_price}원
+            <span id="campdetail">가격 |</span> {numberWithCommas(boardData.camp_price)}원
             </p>
             <p id="campdetailtitle">
               <span id="campdetail">시설 | </span>
@@ -325,7 +333,8 @@ function CampBoardDetail() {
           marginTop: "50px",
         }}
       >
-        <Button onClick={handlePrevPage}>이전</Button>
+        <Button onClick={handlePrevPage}>{<FaAngleLeft size={30} />}</Button>
+
         {boardData.camp_images &&
         boardData.camp_images.length > 0 &&
         boardData.camp_images[currentPage] ? (
@@ -340,8 +349,9 @@ function CampBoardDetail() {
         ) : (
           <p>이미지가 없습니다.</p>
         )}
-        <Button onClick={handleNextPage}>다음</Button>
+        <Button onClick={handleNextPage}>{<FaAngleRight size={30} />}</Button>
       </div>
+      
       <div id="campdetailmap">
         <h1 id="campdetailMapTitle">지도</h1>
         <div id="map" style={{ width: "100%", height: "400px" }}></div>

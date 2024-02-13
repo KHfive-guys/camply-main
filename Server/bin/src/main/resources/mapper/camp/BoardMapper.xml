@@ -57,6 +57,10 @@
         SELECT * FROM camp_posting WHERE camp_select = #{camp_select} ORDER BY camp_id DESC
     </select>
 
+    <select id="getBoardLocation"  resultMap="CampPostingMap">
+        SELECT * FROM camp_posting WHERE camp_location = #{camp_location}
+    </select>
+
     <select id="getBoardById"  resultMap="CampPostingMap" parameterType="java.lang.Long">
         SELECT * FROM camp_posting WHERE camp_id = #{camp_id}
     </select>

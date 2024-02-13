@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../../../shop/ShopLayout";
 import "../../css/ShopOrder/OrderMain.css";
 import axios from "axios";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
 import { TbCamper } from "react-icons/tb";
+import Nav from '../../../camp/CampNavbar';
 
 const OrderCart = () => {
   const [product, setProduct] = useState("");
   const [map, setMap] = useState({});
   const [marker, setMarker] = useState(null);
   const [userIds, setUserIds] = useState(null);
+  
   const [order, setOrder] = useState({
     userId: "", // userId로 변경
     orderOrdererName: "",
@@ -23,6 +24,8 @@ const OrderCart = () => {
     orderReceiverMessage: "",
     orderReceiverDeleveryMsg: "",
   });
+
+
   const [quantity, setQuantity] = useState(() => {
     const savedQuantity = sessionStorage.getItem("selectedQuantity");
     return savedQuantity ? JSON.parse(savedQuantity) : 0;
@@ -277,9 +280,13 @@ const OrderCart = () => {
   };
 
   return (
+    <>
+    <Nav/>
     <div className='root'>
+      
       <div className='order-main'>
         <main className='main-container'>
+        <h2 style={{textAlign:'center'}}>결제페이지</h2>
           {product && Object.keys(product).length > 0 ? (
             <>
               <h3>
@@ -378,7 +385,6 @@ const OrderCart = () => {
                           </strong>
                         </div>
                       </td>
-                      s
                     </tr>
                   </tbody>
                 </table>
@@ -735,6 +741,7 @@ const OrderCart = () => {
         </main>
       </div>
     </div>
+    </>
   );
 };
 export default OrderCart;

@@ -24,7 +24,7 @@ function SearchPage() {
 
   const [searchCamp, setSearchCamp] = useState({
     CAMP_ID: '0',
-    CAMP_SELECT: '',
+    CAMP_SELECT: '글램핑',
     CAMP_LOCATION: '서울',
     CAMP_ADULT: '1',
     CAMP_CHILD: '1',
@@ -42,6 +42,7 @@ function SearchPage() {
       console.log('response.data' + response.data);
 
       setSearchResults(response.data);
+
     } catch (error) {
       console.error('Error during search:', error.message);
     }
@@ -89,7 +90,7 @@ function SearchPage() {
                       }}
                     >
                       <option value='글램핑'>글램핑</option>
-                      <option value='팬션'>팬션</option>
+                      <option value='펜션'>펜션</option>
                       <option value='텐트'>텐트</option>
                       <option value='카라반'>카라반</option>
                       <option value='야영장'>야영장</option>
@@ -110,10 +111,13 @@ function SearchPage() {
                     >
                       <option value='서울'>서울</option>
                       <option value='경기'>경기</option>
+                      <option value='인천'>인천</option>
                       <option value='강원'>강원</option>
                       <option value='춘천'>춘천</option>
                       <option value='대전'>대전</option>
                       <option value='충청'>충청</option>
+                      <option value='전라'>전라</option>
+                      <option value='경상'>경상</option>
                       <option value='부산'>부산</option>
                     </Form.Control>
                   </Form.Group>
@@ -197,16 +201,17 @@ function SearchPage() {
             {searchResults.map((site) => (
               <Col
                 key={site.CAMP_ID}
-                md={4}
+                md={3}
                 className='mb-3'
                 onClick={() => handleRowClick(site.CAMP_ID)}
               >
                 <Card>
-                  <Card.Body>
+                  <Card.Body >
+                    <Card.Img src={site.CAMP_IMAGES.split(";")}></Card.Img>
                     <Card.Title>{site.CAMP_SELECT}</Card.Title>
+                    <Card.Text>{site.CAMP_NAME}</Card.Text>
                     <Card.Text>{site.CAMP_LOCATION}</Card.Text>
-                    <Card.Text>{site.CAMP_ADULT}</Card.Text>
-                    <Card.Text>인원: {site.CAMP_CHILD}</Card.Text>
+                    <Card.Text>{site.CAMP_PRICE}원</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>

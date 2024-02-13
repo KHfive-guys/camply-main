@@ -1,9 +1,10 @@
-// Tent.js
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import '../../shop/css/ShopMain.css';
 import Pagination from "react-js-pagination";
+import ShopLayout from "../ShopLayout";
 
 
 const Tent = () => {
@@ -14,27 +15,30 @@ const Tent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
         const response = await axios.get("http://localhost:8080/shop/category/main/lamp");
-        setProducts(response.data.slice(startIndex, endIndex));
+        setProducts(response.data);
       } catch (error) {
         console.error("상품을 불러오는 중 에러 발생", error);
       }
     };
 
     fetchData();
-  }, [currentPage]);
+  }, []);
+
+  const startIndex = (currentPage -1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedProducts = products.slice(startIndex, endIndex);
 
   return (
     <>
+    <ShopLayout/>
     <div className='category-item' style={{ display: 'flex', justifyContent: 'center' }}>
-      {products.length > 0 ? (
+      {displayedProducts.length > 0 ? (
         <div>
           <section>
             <h2 style={{ display: 'flex', justifyContent: 'center' }}>램프</h2><br />
             <ul className='swiper-wrapper'>
-              {products.map((product) => (
+              {displayedProducts.map((product) => (
                 <li key={product.productId} className='swiper-slide swiper-slide-active' style={{
                   width: "272.5px",
                   marginRight: "30px",

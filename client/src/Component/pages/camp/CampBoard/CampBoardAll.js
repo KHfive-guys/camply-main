@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./css/CampBoardAll.css";
 import { Container } from "react-bootstrap";
 import CampNavbar from "../CampNavbar";
 import tentIMG from '../../../img/텐트.png';
 import '../CampBoard/css/SearchList.css';
 import Menu from '../CampMain/Home/Menu';
+
 
 
 function CampBoardAll() {
@@ -32,6 +33,7 @@ function CampBoardAll() {
         console.error("Error fetching data:", error);
       });
   }, []);
+  
 
   const parseJwt = (token) => {
     try {
@@ -65,6 +67,10 @@ function CampBoardAll() {
     window.location.href = `/camp/board/get/${camp_id}`;
   };
 
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
     <section>
       <CampNavbar />
@@ -90,7 +96,7 @@ function CampBoardAll() {
                 </div>
                 <div>
                 <p id='Campdescription'>(1박기준)</p>
-                <p id='tentPrice'>{board.camp_price}원</p>
+                <p id='tentPrice'>{numberWithCommas(board.camp_price)}원</p>
                 </div>
                 <hr id='tentHrbar'/>
               </div>

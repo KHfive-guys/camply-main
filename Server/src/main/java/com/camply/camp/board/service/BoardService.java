@@ -27,8 +27,11 @@ public class BoardService {
     public List<BoardVO> getAllBoard() {
         return boardDAO.getAllBoard();
     }
-    public List<BoardVO> getBoardCategory(String camp_location) {
-        return boardDAO.getBoardCategory(camp_location);
+    public List<BoardVO> getBoardCategory(String camp_select) {
+        return boardDAO.getBoardCategory(camp_select);
+    }
+    public List<BoardVO> getBoardLocation(String camp_location) {
+        return boardDAO.getBoardLocation(camp_location);
     }
 
     public BoardVO getBoardById(Long campId) {

@@ -1,21 +1,19 @@
 package com.camply.user.config;
 
-import com.camply.user.security.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -25,8 +23,6 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
-import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 
 import java.util.Arrays;
@@ -58,19 +54,32 @@ public class camplyUserSecurityConfig {
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
 								.requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
-
-
 				)
 				.oauth2Login(oauth2Login ->
 						oauth2Login
-								.successHandler(new SimpleUrlAuthenticationSuccessHandler("/home")))
+								.successHandler((request, response, authentication) -> {
+									if (authentication != null && authentication instanceof OAuth2AuthenticationToken) {
+										OAuth2AuthenticationToken oauth2Authentication = (OAuth2AuthenticationToken) authentication;
+										OAuth2User oauth2User = oauth2Authentication.getPrincipal();
 
+										if (oauth2User != null) {
+											String account_email = oauth2User.getAttribute("account_email");
+											String profileNickname = oauth2User.getAttribute("profile_nickname");
+											String name = oauth2User.getAttribute("name");
+
+											response.sendRedirect("/login");
+										} else {
+										}
+									} else {
+									}
+								})
+				)
 				.formLogin(formLogin ->
 						formLogin
 								.loginPage("/login")
 								.usernameParameter("USER_EMAIL")
 								.passwordParameter("USER_PASSWORD")
-								.defaultSuccessUrl("/home")
+								.defaultSuccessUrl("/")
 								.failureUrl("/login")
 				)
 				.logout(logout ->
@@ -103,12 +112,12 @@ public class camplyUserSecurityConfig {
 	public OAuth2AuthorizedClientManager authorizedClientManager(
 			ClientRegistrationRepository clientRegistrationRepository,
 			OAuth2AuthorizedClientRepository authorizedClientRepository) {
-		//클라이언트 인증 처리
+		// 클라이언트 인증 처리 설정
 		OAuth2AuthorizedClientProvider authorizedClientProvider =
 				OAuth2AuthorizedClientProviderBuilder.builder()
 						.authorizationCode()
 						.build();
-		// 클라이언트 등록 정보와 인증된 클라이언트 저장소를 설정
+		// 클라이언트 등록 정보와 인증된 클라이언트 저장소를 설정하여 OAuth2AuthorizedClientManager를 생성
 		DefaultOAuth2AuthorizedClientManager authorizedClientManager =
 				new DefaultOAuth2AuthorizedClientManager(
 						clientRegistrationRepository, authorizedClientRepository);
@@ -148,10 +157,10 @@ public class camplyUserSecurityConfig {
 		return ClientRegistration.withRegistrationId("kakao")
 				.clientId("cfc1a70784e87ec9b6cd4654f31990d2")
 				.clientSecret("k8XO2jG62S2alyjciSZsVQvmQHHIzVwG")
-				.redirectUri("http://localhost:8080/login/oauth2/code/kakao")
+				.redirectUri("http://localhost:8080/kakao/register")
 				.clientName("Kakao")
-				.authorizationUri("https://koauth.kakao.com/oauth/authorize")
-				.tokenUri("https://koauth.kakao.com/oauth/token")
+				.authorizationUri("https://kauth.kakao.com/oauth/authorize")
+				.tokenUri("https://kauth.kakao.com/oauth/token")
 				.userInfoUri("https://kapi.kakao.com/v2/user/me")
 				.userNameAttributeName("id")
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)

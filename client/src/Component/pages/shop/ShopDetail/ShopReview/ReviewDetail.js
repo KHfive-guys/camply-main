@@ -114,17 +114,17 @@ const ReviewDetail1 = () => {
                 <>
                   <div style={{marginTop:'30px',marginRight:'10px'}} className="Detail-btn">
                     <div style={{marginRight:'10px'}} className="edit-btn">
-                      <Button
-                      type='button' variant="contained" color="success"
+                      <button
+                      type='button' className="btn-update"
                         onClick={() => navigate(`/review/update/${reviewNo}`)} // inquiry -> review로 변경
                       >
                         수정
-                      </Button>
+                      </button>
                     </div>
                     <div className="delete-btn">
-                      <Button
-                      variant="outlined" color="error"
-                      onClick={handleDeleteClick}>삭제</Button>
+                      <button
+                      className="delete-btn1"
+                      onClick={handleDeleteClick}>삭제</button>
                       </div>
                   </div>
                 </>

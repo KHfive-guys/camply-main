@@ -25,7 +25,7 @@ function CampBoardTent() {
     const encodedCampSelect = encodeURIComponent(camp_select);
 
     axios
-      .get(`http://localhost:8080/camp/board/${encodedCampSelect}`, {
+      .get(`http://localhost:8080/camp/board/category/${encodedCampSelect}`, {
         responseType: "arraybuffer",
       })
       .then((response) => {
@@ -73,6 +73,10 @@ function CampBoardTent() {
     window.location.href = `/camp/board/get/${camp_id}`;
   };
 
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
     <section>
       <CampNavbar />
@@ -98,7 +102,7 @@ function CampBoardTent() {
                 </div>
                 <div>
                 <p id='Campdescription'>(1박기준)</p>
-                <p id='tentPrice'>{board.camp_price}원</p>
+                <p id='tentPrice'>{numberWithCommas(board.camp_price)}원</p>
                 </div>
                 <hr id='tentHrbar'/>
               </div>

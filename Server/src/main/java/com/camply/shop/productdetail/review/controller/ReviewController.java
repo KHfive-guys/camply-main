@@ -35,7 +35,6 @@ public class ReviewController {
 	// 후기 조회
 	@GetMapping("/view/{productId}")
 	public ResponseEntity<List<ReviewVO>> getReview(@PathVariable int productId) {
-		reviewService.incrementReviewHit(productId);
 		List<ReviewVO> reviewVO = reviewService.getReview(productId);
 
 		if (reviewVO != null) {
@@ -48,6 +47,7 @@ public class ReviewController {
 	// 업데이트용 후기 조회
 	@GetMapping("/{reviewNo}")
 	public ResponseEntity<ReviewVO> getReviewNo(@PathVariable int reviewNo) {
+		reviewService.incrementReviewHit(reviewNo);
 		ReviewVO reviewVO = reviewService.getReviewNo(reviewNo);
 
 		if (reviewVO != null) {

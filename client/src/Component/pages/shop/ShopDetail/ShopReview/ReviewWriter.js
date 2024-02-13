@@ -16,7 +16,13 @@ const ReviewPost = () => {
   });
   const location = useLocation(); // URL 정보 사용
   const navigate = useNavigate();
-
+  const decodeBase64 = (str) => {
+    // Base64 디코딩과 동시에 encodeURIComponent 함수를 사용하여 UTF-8 문자열을 올바르게 디코딩
+    const decodedUri = decodeURIComponent(Array.prototype.map.call(window.atob(str), (c) => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(decodedUri);
+  };
   useEffect(() => {
     // URL에서 productId 추출
     const query = new URLSearchParams(location.search);
@@ -45,7 +51,7 @@ const ReviewPost = () => {
     const token = localStorage.getItem("yourTokenKey");
     let userName, userId;
     if (token) {
-      const decodedToken = JSON.parse(window.atob(token.split(".")[1]));
+      const decodedToken = decodeBase64(token.split(".")[1]);
       userName = decodedToken.USER_NAME; // 토큰에서 추출한 사용자 이름
       userId = decodedToken.user_id; // 토큰에서 추출한 사용자 ID
     }
@@ -100,10 +106,10 @@ const ReviewPost = () => {
       />
       </div>
         <div className="writer-btn">
-                  <Button color="success" variant="contained" type="submit">작성하기 <FaCheck/></Button>
-                  <Button variant="outlined" color="error" onClick={handleback}>
+                  <button className="btn-writer" type="submit">작성하기 <FaCheck/></button>
+                  <button className="back-btn" onClick={handleback}>
                   <IoIosArrowBack/> 목록보기
-                  </Button>
+                  </button>
         </div> 
     </div>
     </form>

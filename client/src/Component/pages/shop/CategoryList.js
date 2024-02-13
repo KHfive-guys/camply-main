@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom';
 import '../shop/css/ShopMain.css';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-
 const CategoryList = () => {
   const [categoryProducts, setCategoryProducts] = useState({});
   const [productCategorys] = useState(["tent", "kitchen", "fireplace", "lamp", "sleepingbag", "chair"]);
   const navigate = useNavigate();
-
   const navigateToCategory = (category) => {
     if(category === "tent"){
       navigate(`/shop/tent`);
@@ -24,9 +22,7 @@ const CategoryList = () => {
     }else if(category === "chair"){
       navigate(`/shop/chair`);
     }
-
   }
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,10 +32,9 @@ const CategoryList = () => {
             return { category: productCategory, products: response.data };
           })
         );
-
         const categoryProductMap = {};
         productData.forEach(({ category, products }) => {
-          categoryProductMap[category] = products.slice(0, 10); 
+          categoryProductMap[category] = products.slice(0, 4);
         });
         setCategoryProducts(categoryProductMap);
       } catch (error) {
@@ -48,11 +43,9 @@ const CategoryList = () => {
     };
     fetchData();
   }, [productCategorys]);
-
   const handleSlide = (category, direction) => {
     const updatedProducts = [...categoryProducts[category]];
-    const visibleProducts = updatedProducts.slice(0, 4);
-
+    const visibleProducts = updatedProducts.slice(0, 10);
     if (direction === 'left') {
       const firstProduct = updatedProducts.shift();
       updatedProducts.push(firstProduct);
@@ -60,13 +53,11 @@ const CategoryList = () => {
       const lastProduct = updatedProducts.pop();
       updatedProducts.unshift(lastProduct);
     }
-
     setCategoryProducts((prev) => ({
       ...prev,
       [category]: updatedProducts,
     }));
   };
-
   return (
     <div className='category-item'>
       <section>
@@ -110,5 +101,4 @@ const CategoryList = () => {
     </div>
   );
 };
-
 export default CategoryList;
