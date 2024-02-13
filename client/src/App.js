@@ -38,6 +38,7 @@ import Chair from './Component/pages/shop/Category/Table';
 import CreateProduct from './Component/pages/shop/ShopOrder/CreateProduct';
 import SellerProduct from './Component/pages/shop/ShopOrder/SellerProduct';
 import UpdateProduct from './Component/pages/shop/ShopOrder/UpdateProduct';
+import OrderProduct from './Component/pages/shop/ShopOrder/OrderProduct';
 import ShopMore from './Component/pages/shop/ShopDetail/ShopMore/ShopMore';
 import ShopInquiry from './Component/pages/shop/ShopDetail/ShopInquiry/ShopInquiry';
 import ButtonUp from './Component/pages/shop/ButtonUp';
@@ -83,6 +84,9 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  // 탭 상태 관리
+  const [activeTab, setActiveTab] = useState('list');
+
   return (
     <Router>
       <Routes>
@@ -124,57 +128,48 @@ function App() {
             <div>
               <Navbar />
               <h1 style={{ marginTop: '100px' }}></h1>
-
-              <h1 style={{ marginTop: '100px' }}></h1>
               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
+                <li class="sellermanagement" role="presentation">
                   <button
-                    class="nav-link active"
-                    id="home-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#home-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="home-tab-pane"
-                    aria-selected="true"
+                    class={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('home')}
                   >
-                    <h className="custom-product">상품관리</h>
+                    판매자 관리
                   </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="sellermanagement" role="presentation">
                   <button
-                    class="nav-link"
-                    id="profile-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#profile-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="profile-tab-pane"
-                    aria-selected="false"
+                    class={`nav-link ${activeTab === 'sell' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('sell')}
                   >
-                    <Link to="/shop/seller/sell" className="custom-link">
-                      상품등록
-                    </Link>
+                    상품등록
                   </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="sellermanagement" role="presentation">
                   <button
-                    class="nav-link"
-                    id="contact-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#contact-tab-pane"
-                    type="button"
-                    role="tab"
-                    aria-controls="contact-tab-pane"
-                    aria-selected="false"
+                    class={`nav-link ${activeTab === 'list' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('list')}
                   >
-                    <Link to="/shop/seller/list" className="custom-link">
-                      상품리스트
-                    </Link>
+                    상품리스트
+                  </button>
+                </li>
+                <li class="sellermanagement" role="presentation">
+                  <button
+                    class={`nav-link ${
+                      activeTab === 'orderlist' ? 'active' : ''
+                    }`}
+                    onClick={() => setActiveTab('orderlist')}
+                  >
+                    주문관리
                   </button>
                 </li>
               </ul>
-
+              <div className="tab-content" id="nav-tabContent">
+                {activeTab === 'home' && <div></div>}
+                {activeTab === 'sell' && <CreateProduct />}
+                {activeTab === 'list' && <SellerProduct />}
+                {activeTab === 'orderlist' && <OrderProduct />}
+              </div>
               {/* <Link to="/shop/seller/sell">상품등록</Link>
               <Link to="/shop/seller/list">상품리스트</Link> */}
             </div>
@@ -190,10 +185,8 @@ function App() {
                 <Routes>
                   <Route path="/sell" element={<CreateProduct />} />
                   <Route path="/list" element={<SellerProduct />} />
-                  <Route
-                    path="/product/edit/:productId"
-                    element={<UpdateProduct />}
-                  />
+                  <Route path="/edit/:productId" element={<UpdateProduct />} />
+                  <Route path="/orderlist" element={<OrderProduct />} />
                 </Routes>
               </div>
             </>
