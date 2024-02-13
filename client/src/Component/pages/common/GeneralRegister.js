@@ -6,6 +6,7 @@ import { Container } from "react-bootstrap";
 import KakaoLogin from "react-kakao-login";
 import CampNavBar from "../camp/CampNavbar";
 import { PiTShirt } from "react-icons/pi";
+import KakaoGeneral from "./KakaoGeneral";
 
 function Register() {
   const handleNaverLogin = () => {
@@ -26,26 +27,6 @@ function Register() {
     });
   };
 
-  const navigate = useNavigate();
-  
-  const handleKakaoLoginSuccess = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/kakao/register");
-      console.log()
-
-      if (response.status !== 200) {
-        throw new Error(
-          `Failed to fetch  login URL. Status: ${response.status}`
-        );
-      }
-
-      const Url = await response.text();
-      window.location.href = Url;
-    } catch (error) {
-      console.error(" login error:", error);
-    }
-  };
-
   return (
     <section>
       <CampNavBar />
@@ -64,9 +45,7 @@ function Register() {
             <Title>회원가입 방법 선택하기</Title>
             <LoginSns className="wrap">
               <Item>
-                <p>
-                 <button onClick={handleKakaoLoginSuccess}>카카오로그인 </button>
-                </p>
+                <KakaoGeneral/>
               </Item>
               <Item>
                 <button onClick={handleNaverLogin}>

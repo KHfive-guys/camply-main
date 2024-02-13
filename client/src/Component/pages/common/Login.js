@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import KakaoLogin from "react-kakao-login";
 import { Container } from "react-bootstrap";
 import CampNavbar from '../camp/CampNavbar';
-import Kakao from "./Kakao";
+import Kakao from "./KakaoGeneral";
 
 function Login() {
   const navigate = useNavigate();
@@ -89,8 +89,8 @@ function Login() {
                 Naver Login
               </CustomNaverButton>
 
-                  <CustomKakaoButton className="kakao" href="">
-                    Kakao Login <Kakao/>
+                  <CustomKakaoButton className="kakao">
+                    Kakao Login
                   </CustomKakaoButton>
 
 

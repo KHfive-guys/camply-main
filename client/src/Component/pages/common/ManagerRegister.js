@@ -4,6 +4,7 @@ import logo from '../../img/Logo.png';
 import { Link } from "react-router-dom";
 import { Container } from 'react-bootstrap';
 import CampNavbar from '../camp/CampNavbar';
+import KakaoAdmin from './KakaoAdmin';
 
 function Register() {
 
@@ -28,11 +29,8 @@ function Register() {
 
             <Title>회원가입 방법 선택하기</Title>
             <LoginSns className="wrap">
-              <Item>
-                <Kakaotalk href="">
-                  <SpIcon className="Kakaotalk" />
-                  "카카오톡으로 가입하기"
-                </Kakaotalk>
+            <Item>
+                <KakaoAdmin/>
               </Item>
               <Item>
                 <Naver href="">

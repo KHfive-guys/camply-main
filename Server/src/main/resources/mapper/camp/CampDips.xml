@@ -2,23 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//myBatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camply.camp.dips.dao.DipsDAO">
 
-    <resultMap id="CampPostingMap" type="com.camply.camp.dips.vo.DipsVO">
-        <id column="CAMP_ID" property="camp_id"/>
-        <result column="USER_ID" property="user_id"/>
+    <resultMap id="CampDipsMap" type="com.camply.camp.dips.vo.DipsVO">
+        <id column="USER_ID" property="USER_ID"/>
+        <result column="CAMP_ID" property="CAMP_ID"/>
+        <result column="STATUS" property="STATUS"/>
     </resultMap>
 
     <insert id="insertCampDips" parameterType="com.camply.camp.dips.vo.DipsVO">
-        INSERT INTO camp_dips (
-            CAMP_ID,
-            USER_ID
-        )
-        VALUES (
-                   #{camp_id},
-                   #{user_id}
-               )
+        INSERT INTO CAMP_DIPS (USER_ID,CAMP_ID) VALUES (#{USER_ID}, #{CAMP_ID})
     </insert>
 
-    <delete id="deleteCampDips" parameterType="Long">
-        DELETE FROM camp_dips WHERE CAMP_ID = #{camp_id}
+    <delete id="deleteCampDips" parameterType="com.camply.camp.dips.vo.DipsVO">
+        DELETE FROM CAMP_DIPS WHERE USER_ID = #{USER_ID} AND CAMP_ID = #{CAMP_ID}
     </delete>
+	
+    <select id="selectCampDips" resultMap="CampDipsMap" parameterType="com.camply.camp.dips.vo.DipsVO">
+    	SELECT * FROM CAMP_DIPS WHERE USER_ID = #{USER_ID} AND CAMP_ID = #{CAMP_ID}
+    </select>
 </mapper>
+
