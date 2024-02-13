@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { NavDropdown } from "react-bootstrap";
-import ReactPaginate from "react-paginate";
-import "../css/ShopSell/SellerProduct.css";
-import Nav from "../../camp/CampNavbar";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { NavDropdown } from 'react-bootstrap';
+import ReactPaginate from 'react-paginate';
+import '../css/ShopSell/SellerProduct.css';
+import Nav from '../../camp/CampNavbar';
+import UpdateProduct from './UpdateProduct';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
+  useNavigate,
   Link,
-} from "react-router-dom";
+} from 'react-router-dom';
 
-const ProductMyPage = () => {
+const SellerProduct = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // 상품 조회 시 0번째에서 1번째로 넘어가기 위한 로딩 변수
   const [selectedProducts, setSelectedProducts] = useState([]); // 선택된 제품을 저장할 상태 변수
@@ -20,14 +22,15 @@ const ProductMyPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(20); // 페이지당 표시할 아이템 수
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [pageCount, setPageCount] = useState(0);
-  const token = localStorage.getItem("yourTokenKey"); // 토큰을 로컬 스토리지에서 가져옵니다.
+  const token = localStorage.getItem('yourTokenKey'); // 토큰을 로컬 스토리지에서 가져옴
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   //등록 상품 리스트 조회
   useEffect(() => {
     if (token) {
       // 토큰이 존재하는 경우에만 요청을 보냅니다.
       axios
-        .get("http://localhost:8080/shop/mypage/productList", {
+        .get('http://localhost:8080/shop/mypage/productList', {
           headers: {
             Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
           },
@@ -39,13 +42,17 @@ const ProductMyPage = () => {
           setLoading(false);
         })
         .catch((error) => {
-          console.error(":", error);
+          console.error(':', error);
           setLoading(false);
         });
     } else {
       // 토큰이 없으면 로그인 페이지로 리다이렉트
     }
   }, [itemsPerPage, token]);
+
+  const handleEditClick = (productId) => {
+    navigate(`/shop/seller/edit/${productId}`);
+  };
 
   // 페이지네이션 컨트롤 (예: 페이지 번호 변경)
   const handlePageClick = (data) => {
@@ -66,7 +73,7 @@ const ProductMyPage = () => {
 
   //상품 삭제하기(드롭다운)
   const handleDeleteClick = async (productId) => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
         if (token) {
           await axios.delete(
@@ -80,7 +87,7 @@ const ProductMyPage = () => {
           setProducts(products.filter((p) => p.productId !== productId));
         }
       } catch (error) {
-        console.error("Error deleting product: ", error);
+        console.error('Error deleting product: ', error);
       }
     }
   };
@@ -89,11 +96,11 @@ const ProductMyPage = () => {
   const handleDeleteSelected = async () => {
     // 선택된 상품이 없으면 경고 메시지를 표시하고 함수를 종료합니다.
     if (selectedProducts.length === 0) {
-      alert("삭제할 상품을 선택해주세요.");
+      alert('삭제할 상품을 선택해주세요.');
       return;
     }
 
-    if (window.confirm("정말 삭제하시겠습니까?")) {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
         // 선택된 모든 상품에 대해 삭제 요청을 보냅니다.
         await Promise.all(
@@ -116,10 +123,10 @@ const ProductMyPage = () => {
         setProducts(newProducts);
         setSelectedProducts([]); // 선택된 상품 목록을 초기화합니다.
 
-        alert("선택한 상품이 삭제되었습니다.");
+        alert('선택한 상품이 삭제되었습니다.');
       } catch (error) {
-        console.error("Error deleting selected products: ", error);
-        alert("상품 삭제 중 오류가 발생했습니다.");
+        console.error('Error deleting selected products: ', error);
+        alert('상품 삭제 중 오류가 발생했습니다.');
       }
     }
   };
@@ -152,7 +159,7 @@ const ProductMyPage = () => {
       const changedProducts = products.filter((product) => product.isChanged);
 
       if (changedProducts.length === 0) {
-        alert("변경할 내용을 선택해주세요.");
+        alert('변경할 내용을 선택해주세요.');
         return;
       }
 
@@ -165,7 +172,7 @@ const ProductMyPage = () => {
           },
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("yourTokenKey")}`, // 토큰을 헤더에 추가
+              Authorization: `Bearer ${localStorage.getItem('yourTokenKey')}`, // 토큰을 헤더에 추가
             },
           }
         )
@@ -174,7 +181,7 @@ const ProductMyPage = () => {
       // 모든 요청이 성공적으로 처리됐는지 확인
       await Promise.all(updatePromises);
 
-      alert("저장되었습니다.");
+      alert('저장되었습니다.');
       // 성공적으로 변경 사항을 저장한 후에는 모든 상품의 isChanged 플래그와 originalStatus를 리셋
       setProducts(
         products.map((product) => ({
@@ -184,8 +191,8 @@ const ProductMyPage = () => {
         }))
       );
     } catch (error) {
-      console.error("상태 업데이트 중 오류가 발생했습니다:", error);
-      alert("변경사항 저장에 실패했습니다.");
+      console.error('상태 업데이트 중 오류가 발생했습니다:', error);
+      alert('변경사항 저장에 실패했습니다.');
     }
   };
 
@@ -229,58 +236,9 @@ const ProductMyPage = () => {
   return (
     <>
       <Nav />
-      <h1 style={{ marginTop: "100px" }}></h1>
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="home-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#home-tab-pane"
-            type="button"
-            role="tab"
-            aria-controls="home-tab-pane"
-            aria-selected="true"
-          >
-            <h className="custom-product">상품관리</h>
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="profile-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#profile-tab-pane"
-            type="button"
-            role="tab"
-            aria-controls="profile-tab-pane"
-            aria-selected="false"
-          >
-            <Link to="/shop/seller/sell" className="custom-link">
-              상품등록
-            </Link>
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="contact-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#contact-tab-pane"
-            type="button"
-            role="tab"
-            aria-controls="contact-tab-pane"
-            aria-selected="false"
-          >
-            <Link to="/shop/seller/list" className="custom-link">
-              상품리스트
-            </Link>
-          </button>
-        </li>
-      </ul>
-      {/* ************고정 화면 ****************** */}
+
       <div className="sellerProduct">
-        <h2 style={{ display: "inline-block" }}>등록상품 조회</h2>
+        <h2>등록상품 조회</h2>
 
         <span className="itemsPerPage-position">
           <button
@@ -309,15 +267,15 @@ const ProductMyPage = () => {
         <table>
           <thead>
             <tr>
-              <th>
+              <th className="checkbox-no-th">
                 <input
                   type="checkbox"
                   checked={selectAll}
                   onChange={handleSelectAllChange}
                 />
               </th>
-              <th>No</th>
-              <th>상품명</th>
+              <th className="checkbox-no-th">No</th>
+              <th className="productname-th">상품명</th>
               <th>판매가</th>
               <th>카테고리</th>
               <th>상태</th>
@@ -334,7 +292,7 @@ const ProductMyPage = () => {
               )
               .map((ShopProduct, index) => (
                 <tr key={ShopProduct.productId || index}>
-                  <td>
+                  <td className="checkbox-td">
                     <input
                       type="checkbox"
                       checked={selectedProducts.includes(ShopProduct.productId)}
@@ -383,8 +341,7 @@ const ProductMyPage = () => {
                   <td>
                     <NavDropdown title="···" id="basic-nav-dropdown">
                       <NavDropdown.Item
-                        as={Link}
-                        to={`/shop/seller/product/edit/${ShopProduct.productId}`}
+                        onClick={() => handleEditClick(ShopProduct.productId)}
                       >
                         수정
                       </NavDropdown.Item>
@@ -400,13 +357,13 @@ const ProductMyPage = () => {
           </tbody>
         </table>
         <ReactPaginate
-          previousLabel={"이전"}
-          nextLabel={"다음"}
-          breakLabel={"..."}
+          previousLabel={'이전'}
+          nextLabel={'다음'}
+          breakLabel={'...'}
           pageCount={pageCount}
           onPageChange={handlePageClick}
-          containerClassName={"pagination"}
-          activeClassName={"active"}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
           forcePage={currentPage - 1} // 현재 페이지를 강제로 설정
         />
       </div>
@@ -414,7 +371,7 @@ const ProductMyPage = () => {
   );
 };
 
-export default ProductMyPage;
+export default SellerProduct;
 /*
 .filter() 메서드:
 

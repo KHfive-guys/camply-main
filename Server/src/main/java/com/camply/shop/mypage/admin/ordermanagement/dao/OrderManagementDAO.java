@@ -10,5 +10,5 @@ import com.camply.shop.common.vo.OrderVO;
 @Mapper
 public interface OrderManagementDAO {
 
-	List<OrderVO> getOrderList(@Param("userId") int userId);
+	List<OrderVO> getOrderList(@Param("userId") Long userId);
 }

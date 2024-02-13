@@ -52,10 +52,6 @@ public class ProductVO {
 	private String productStatus;
 	private String productCode;
 	
-	 // 실제 숫자값에 대한 getter
-    public int getProductPrice() {
-        return productPrice;
-    }
 	
 	public String getFormattedProductPrice() {
         return NumberFormat.getNumberInstance(Locale.KOREA).format(this.productPrice) + "원";

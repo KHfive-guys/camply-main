@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import { IoMdSunny } from "react-icons/io";
-import { AiOutlineHome } from "react-icons/ai";
-import { FaClipboardList } from "react-icons/fa";
-import { Modal } from "react-bootstrap";
-import { CgChevronDownO } from "react-icons/cg";
-import { CgCloseO } from "react-icons/cg";
-import { FiShoppingCart } from "react-icons/fi";
-import logo from "../../Assets/logo.png";
-import OpenWeatherMap from "../camp/CampMain/Home/openWeatherMap";
-import { GiCampingTent } from "react-icons/gi";
-import { MdAddShoppingCart } from "react-icons/md";
-import { PiShoppingBagOpenLight } from "react-icons/pi";
-import { MdFormatListBulletedAdd } from "react-icons/md";
-import { LuUserCircle2 } from "react-icons/lu";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import { IoMdSunny } from 'react-icons/io';
+import { AiOutlineHome } from 'react-icons/ai';
+import { FaClipboardList } from 'react-icons/fa';
+import { Modal } from 'react-bootstrap';
+import { CgChevronDownO } from 'react-icons/cg';
+import { CgCloseO } from 'react-icons/cg';
+import { FiShoppingCart } from 'react-icons/fi';
+import logo from '../../Assets/logo.png';
+import OpenWeatherMap from '../camp/CampMain/Home/openWeatherMap';
+import { GiCampingTent } from 'react-icons/gi';
+import { MdAddShoppingCart } from 'react-icons/md';
+import { PiShoppingBagOpenLight } from 'react-icons/pi';
+import { MdFormatListBulletedAdd } from 'react-icons/md';
+import { LuUserCircle2 } from 'react-icons/lu';
+import axios from 'axios';
 
 function NavBar() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const isShopPath = currentPath.startsWith("/shop");
-  const isCampPath = currentPath.startsWith("/camp");
+  const isShopPath = currentPath.startsWith('/shop');
+  const isCampPath = currentPath.startsWith('/camp');
   const [isLoggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
@@ -40,15 +40,15 @@ function NavBar() {
   const [decodedToken, setDecodedToken] = useState({});
 
   const parseUserIdFromToken = (token) => {
-    const payloadBase64 = token.split(".")[1];
+    const payloadBase64 = token.split('.')[1];
     const payload = JSON.parse(atob(payloadBase64));
     return payload.user_id;
   };
 
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem("yourTokenKey");
+    const token = localStorage.getItem('yourTokenKey');
 
     if (token) {
       const USER_ID = parseUserIdFromToken(token);
@@ -60,11 +60,11 @@ function NavBar() {
           },
         })
         .then((response) => {
-          console.log("User Data Response:", response.data);
+          console.log('User Data Response:', response.data);
           setUserData(response.data || {});
         })
         .catch((error) => {
-          console.error("사용자 정보 가져오기 실패:", error);
+          console.error('사용자 정보 가져오기 실패:', error);
         });
     }
   }, []);
@@ -78,27 +78,27 @@ function NavBar() {
   }
 
   useEffect(() => {
-    window.addEventListener("scroll", scrollHandler);
+    window.addEventListener('scroll', scrollHandler);
     return () => {
-      window.removeEventListener("scroll", scrollHandler);
+      window.removeEventListener('scroll', scrollHandler);
     };
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem("yourTokenKey");
+    const token = localStorage.getItem('yourTokenKey');
     if (token) {
       setLoggedIn(true);
     }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("yourTokenKey");
+    localStorage.removeItem('yourTokenKey');
     setLoggedIn(false);
-    navigate("/login");
+    navigate('/login');
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("yourTokenKey");
+    const token = localStorage.getItem('yourTokenKey');
 
     if (token) {
       const USER_ID = parseUserIdFromToken(token);
@@ -110,79 +110,79 @@ function NavBar() {
           },
         })
         .then((response) => {
-          console.log("User Data Response:", response.data);
+          console.log('User Data Response:', response.data);
           setUserData(response.data || {});
           setUserType(response.data.USER_TYPE);
         })
         .catch((error) => {
-          console.error("사용자 정보 가져오기 실패:", error);
+          console.error('사용자 정보 가져오기 실패:', error);
         });
     }
   }, []);
 
   useEffect(() => {
-    console.log("isLoggedIn:", isLoggedIn);
-    console.log("USER_TYPE:", decodedToken.USER_TYPE);
+    console.log('isLoggedIn:', isLoggedIn);
+    console.log('USER_TYPE:', decodedToken.USER_TYPE);
   }, [isLoggedIn, decodedToken.USER_TYPE]);
 
   return (
     <Navbar
       expanded={expand}
-      fixed='top'
-      expand='md'
-      className={navColour ? "sticky" : "navbar"}
+      fixed="top"
+      expand="md"
+      className={navColour ? 'sticky' : 'navbar'}
     >
       <Container>
-        <Navbar.Brand href='/' className='d-flex'>
+        <Navbar.Brand href="/" className="d-flex">
           <img
             src={logo}
-            className='logo'
-            alt='brand'
-            style={{ width: "250px", height: "auto" }}
+            className="logo"
+            alt="brand"
+            style={{ width: '250px', height: 'auto' }}
           />
         </Navbar.Brand>
 
         <Navbar.Toggle
-          aria-controls='responsive-navbar-nav'
-          onClick={() => updateExpanded(expand ? false : "expanded")}
+          aria-controls="responsive-navbar-nav"
+          onClick={() => updateExpanded(expand ? false : 'expanded')}
         >
           <span></span>
           <span></span>
           <span></span>
         </Navbar.Toggle>
 
-        <Navbar.Collapse id='responsive-navbar-nav'>
-          <Nav className='ms-auto' defaultActiveKey='#home'>
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ms-auto" defaultActiveKey="#home">
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to={isCampPath ? "/camp" : "/shop/main"}
+                to={isCampPath ? '/camp' : '/shop/main'}
                 onClick={() => updateExpanded(false)}
               >
-                <AiOutlineHome style={{ marginBottom: "2px" }} /> 홈페이지
+                <AiOutlineHome style={{ marginBottom: '2px' }} /> 홈페이지
               </Nav.Link>
             </Nav.Item>
 
             {isCampPath && (
               <>
-                {isLoggedIn && userType === "Admin" && (
+                {isLoggedIn && userType === 'Admin' && (
                   <Nav.Item>
                     <Nav.Link
                       as={Link}
-                      to='/camp/board/add'
+                      to="/camp/board/add"
                       onClick={() => updateExpanded(false)}
                     >
                       <MdFormatListBulletedAdd
-                        style={{ marginBottom: "2px" }}
-                      />{" "}
+                        style={{ marginBottom: '2px' }}
+                      />{' '}
                       캠핑장 등록
                     </Nav.Link>
                   </Nav.Item>
                 )}
 
                 <Nav.Item>
-                  <Nav.Link href='#' onClick={handleWeatherModalShow}>
-                    <IoMdSunny style={{ marginBottom: "2px" }} /> 날씨
+                  <Nav.Link href="#" onClick={handleWeatherModalShow}>
+                    <IoMdSunny style={{ marginBottom: '2px' }} /> 날씨
                   </Nav.Link>
                 </Nav.Item>
 
@@ -195,7 +195,7 @@ function NavBar() {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button
-                      variant='secondary'
+                      variant="secondary"
                       onClick={handleWeatherModalClose}
                     >
                       Close
@@ -206,10 +206,10 @@ function NavBar() {
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to='/shop/main'
+                    to="/shop/main"
                     onClick={() => updateExpanded(false)}
                   >
-                    <PiShoppingBagOpenLight style={{ marginBottom: "2px" }} />{" "}
+                    <PiShoppingBagOpenLight style={{ marginBottom: '2px' }} />{' '}
                     쇼핑몰
                   </Nav.Link>
                 </Nav.Item>
@@ -219,45 +219,45 @@ function NavBar() {
               <>
                 {isLoggedIn && (
                   <>
-                    {isLoggedIn && userType === "Admin" && (
+                    {isLoggedIn && userType === 'Admin' && (
                       <Nav.Item>
                         <Nav.Link
                           as={Link}
-                          to='/shop/seller'
+                          to="/shop/seller"
                           onClick={() => updateExpanded(false)}
                         >
-                          <MdAddShoppingCart style={{ marginBottom: "2px" }} />{" "}
+                          <MdAddShoppingCart style={{ marginBottom: '2px' }} />{' '}
                           상품 관리
                         </Nav.Link>
                       </Nav.Item>
                     )}
                     <>
-                    {isLoggedIn && userType === "General" && (
-                    <Nav.Item>
-                      <Nav.Link
-                        as={Link}
-                        to='/shop/mycart/:userId'
-                        onClick={() => updateExpanded(false)}
-                      >
-                        <FiShoppingCart style={{ marginBottom: "2px" }} />{" "}
-                        장바구니
-                      </Nav.Link>
-                    </Nav.Item>
-                    )}
-                    <>
-                    {isLoggedIn && userType === "General" && (
-                    <Nav.Item>
-                      <Nav.Link
-                        as={Link}
-                        to='/shop/mypage/general/myorder/view:userId'
-                        onClick={() => updateExpanded(false)}
-                      >
-                        <FiShoppingCart style={{ marginBottom: "2px" }} />{" "}
-                        결제관리
-                      </Nav.Link>
-                    </Nav.Item>
-                    )}
-                    </>
+                      {isLoggedIn && userType === 'General' && (
+                        <Nav.Item>
+                          <Nav.Link
+                            as={Link}
+                            to="/shop/mycart/:userId"
+                            onClick={() => updateExpanded(false)}
+                          >
+                            <FiShoppingCart style={{ marginBottom: '2px' }} />{' '}
+                            장바구니
+                          </Nav.Link>
+                        </Nav.Item>
+                      )}
+                      <>
+                        {isLoggedIn && userType === 'General' && (
+                          <Nav.Item>
+                            <Nav.Link
+                              as={Link}
+                              to="/shop/mypage/general/myorder/view:userId"
+                              onClick={() => updateExpanded(false)}
+                            >
+                              <FiShoppingCart style={{ marginBottom: '2px' }} />{' '}
+                              결제관리
+                            </Nav.Link>
+                          </Nav.Item>
+                        )}
+                      </>
                     </>
                   </>
                 )}
@@ -265,10 +265,10 @@ function NavBar() {
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to='/camp'
+                    to="/camp"
                     onClick={() => updateExpanded(false)}
                   >
-                    <GiCampingTent style={{ marginBottom: "2px" }} /> 캠핑장
+                    <GiCampingTent style={{ marginBottom: '2px' }} /> 캠핑장
                     예약
                   </Nav.Link>
                 </Nav.Item>
@@ -279,10 +279,10 @@ function NavBar() {
               <Nav.Item>
                 <Nav.Link
                   as={Link}
-                  to='/mypage'
+                  to="/mypage"
                   onClick={() => updateExpanded(false)}
                 >
-                  <LuUserCircle2 style={{ marginBottom: "2px" }} /> 마이페이지
+                  <LuUserCircle2 style={{ marginBottom: '2px' }} /> 마이페이지
                 </Nav.Link>
               </Nav.Item>
             )}
@@ -290,15 +290,15 @@ function NavBar() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to={isLoggedIn ? "/login" : "/login"}
+                to={isLoggedIn ? '/login' : '/login'}
                 onClick={handleLogout}
               >
                 {isLoggedIn ? (
-                  <CgCloseO style={{ marginBottom: "2px" }} />
+                  <CgCloseO style={{ marginBottom: '2px' }} />
                 ) : (
-                  <CgChevronDownO style={{ marginBottom: "2px" }} />
+                  <CgChevronDownO style={{ marginBottom: '2px' }} />
                 )}
-                {isLoggedIn ? "로그아웃" : "로그인"}
+                {isLoggedIn ? '로그아웃' : '로그인'}
               </Nav.Link>
             </Nav.Item>
           </Nav>

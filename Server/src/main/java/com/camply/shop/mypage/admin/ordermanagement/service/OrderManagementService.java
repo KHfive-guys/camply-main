@@ -14,7 +14,7 @@ public class OrderManagementService {
 	@Autowired
 	private OrderManagementDAO orderManagementDAO;
 
-	public List<OrderVO> getOrderList(int userId) {
+	public List<OrderVO> getOrderList(Long userId) {
 		return orderManagementDAO.getOrderList(userId);
 	}
 }
