@@ -124,8 +124,6 @@ function App() {
             <div>
               <Navbar />
               <h1 style={{ marginTop: '100px' }}></h1>
-
-              <h1 style={{ marginTop: '100px' }}></h1>
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button
