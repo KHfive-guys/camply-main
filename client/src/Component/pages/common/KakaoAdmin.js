@@ -17,7 +17,7 @@ const SocialKakao = () => {
         },
       } = data.profile;
 
-      const sendData = { email, name, nickname };
+      const sendData = { email, name, nickname, userType: 'Admin' }; // userType 추가
       console.log('sendData : ', sendData);
 
       const response = await axios.post(
