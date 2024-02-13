@@ -28,23 +28,35 @@ function CampBoardDetail() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
+  const [USER_ID , setUserID] = useState();
+  const [like, setLike] = useState("");
+
   const handleHeart = () => {
     setLike(!like);
+
     const userId = parseJwt(userToken)?.user_id;
+    
+    console.log("userId : " + USER_ID);
+    console.log("userToken : " + userToken);
+    console.log("like : " + like);
+    console.log("camp_id : " + camp_id);
     axios
-      .post(`http://localhost:8080/camp/board/add/dips`, {
-        camp_id: camp_id,
-        user_id: userId,
+      .post(`http://localhost:8080/camp/board/changDips`, {
+        CAMP_ID: camp_id,
+        USER_ID: USER_ID,
+        STATUS: like,
       })
       .then((response) => {
-        alert("좋아요!.");
+        if (response.data === "addlike") {
+          alert("좋아요!.");
+        } else {
+          alert("싫어요!.");
+        }
       })
       .catch((error) => {
         alert("좋아요 실패: " + error.response.data.message);
       });
   };
-
-  const [like, setLike] = useState(false);
 
   const initializeMap = useCallback(() => {
     if (window.kakao && boardData.camp_address) {
@@ -129,10 +141,29 @@ function CampBoardDetail() {
 
           const currentUser =
             response.data.user_id === userTokenPayload?.user_id;
+
+            setUserID(userTokenPayload?.user_id);
           console.log("Is current user:", currentUser);
           setIsCurrentUser(currentUser ? userTokenPayload?.user_id : null);
 
           setLoading(false);
+          axios
+            .post(`http://localhost:8080/camp/board/checkDips`, {
+              CAMP_ID: camp_id,
+              USER_ID: userTokenPayload?.user_id,
+            })
+            .then((response) => {
+              if (response.data === true) {
+                console.log("true");
+                setLike(!like);
+              } else {
+                console.log("false");
+                setLike(like);
+              }
+            })
+            .catch((error) => {
+              console.log("찜하기 조회 실패" + error.response.data.message);
+            });
         } catch (error) {
           console.error("Error decoding JWT token:", error);
         }
@@ -283,13 +314,15 @@ function CampBoardDetail() {
               >
                 예약하기
               </Button>
-              <button className="like" id="heartButton" onClick={handleHeart}>
+              <checkbox className="like" id="heartButton" onClick={handleHeart}>
                 {like ? (
                   <AiFillHeart style={{ color: "#FEA92A", fontSize: "30px" }} />
+                  
                 ) : (
                   <AiOutlineHeart style={{ fontSize: "30px" }} />
+
                 )}
-              </button>
+              </checkbox>
               <button id='linkCopy' onClick={handleCopy}><img src={copyIMG} id='copyIMG' alt='링크 복사'/></button>
             </div>
             <div id="updateAnddeleteButton2">
