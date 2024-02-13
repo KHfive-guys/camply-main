@@ -20,7 +20,7 @@ const ShopDetail = () => {
   const [product, setProduct] = useState(null);
   const [like, setLike] = useState(false);
   const [quantity, setQuantity] = useState(1);
-
+  const [userType, setUserType] = useState("");
   const [userToken, setUserToken] = useState("");
   const [isCurrentUser, setIsCurrentUser] = useState(false);
   const navigate = useNavigate();
@@ -46,13 +46,20 @@ const ShopDetail = () => {
           `http://localhost:8080/shop/detail/${productId}`
         );
         setProduct(response.data);
+        
       } catch (error) {
         console.error("상품 세부 정보를 불러오는 중 오류 발생", error);
       }
     };
 
+
+    
+  
+
     fetchData();
   }, [productId]);
+
+
 
   useEffect(() => {
     setUserToken(localStorage.getItem("yourTokenKey"));
@@ -98,6 +105,11 @@ const ShopDetail = () => {
     } catch (error) {
       console.error("상품을 장바구니에 추가하는 중 오류 발생", error);
     }
+
+
+    if(!isUserLoggedIn) {
+      alert('로그인 해주세요.')
+    }
   };
 
   const handleOrderClick = () => {
@@ -107,6 +119,7 @@ const ShopDetail = () => {
     navigate(`/shop/order/${productId}`, { state: { product, quantity } });
   };
 
+  
   
 
 
@@ -253,14 +266,12 @@ const ShopDetail = () => {
                         className='right-section-footer-button-div-button'
                         type='button'
                       >
-                        
                           <span
                             className='right-section-footer-button-span2'
                             onClick={addToCart}
                           >
                             장바구니
                           </span>
-                        
                       </button>
                       <button
                        style={{marginLeft:'20px'}}
@@ -276,7 +287,7 @@ const ShopDetail = () => {
                         <span
                           className='right-section-footer-button-span2'
                           onClick={handleOrderClick}
-                        >
+                        > 
                           결제하기
                         </span>
                       </Link>

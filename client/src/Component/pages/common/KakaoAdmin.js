@@ -1,6 +1,8 @@
 import KakaoLogin from 'react-kakao-login';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import kakaoRegister from '../../img/Register/kakao_login_medium_narrow.png';
+
 
 const SocialKakao = () => {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ const SocialKakao = () => {
         },
       } = data.profile;
 
-      const sendData = { email, name, nickname, userType: 'Admin' }; // userType 추가
+      const sendData = { email, name, nickname, userType: 'Admin' };
       console.log('sendData : ', sendData);
 
       const response = await axios.post(
@@ -32,6 +34,7 @@ const SocialKakao = () => {
         }
       );
       console.log(response.data);
+
       navigate('/login');
     } catch (error) {
       console.error(error);
@@ -44,11 +47,16 @@ const SocialKakao = () => {
 
   return (
     <>
-      <KakaoLogin
-        token={kakaoClientId}
-        onSuccess={kakaoOnSuccess}
-        onFail={kakaoOnFailure}
-      />
+    <div>
+     
+    <KakaoLogin
+      token={kakaoClientId}
+      onSuccess={kakaoOnSuccess}
+      onFail={kakaoOnFailure}
+    >
+      <img src={kakaoRegister} alt="Kakao Register" />
+    </KakaoLogin>
+      </div>
     </>
   );
 };

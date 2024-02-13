@@ -23,7 +23,7 @@ function Register() {
           <LoginHeadLogo>
             <h1></h1>
           </LoginHeadLogo>
-          <img src={logo} width="300px" />
+          
           <LoginSection>
             <LoginTitle>판매자 회원가입하기</LoginTitle>
 
@@ -32,23 +32,18 @@ function Register() {
             <Item>
                 <KakaoAdmin/>
               </Item>
-              <Item>
-                <Naver href="">
-                  <SpIcon className="" />
-                  네이버로 가입하기
-                </Naver>
-              </Item>
+              
               <Item>
                 <Link to="/register/manager/email">
                   <Email>
                     <SpIcon className="Email" />
-                    "이메일로 가입하기"
+                    이메일로 가입하기
                   </Email>
                 </Link>
               </Item>
               <AdditionTxt>
                 이미 가입하셨다면
-                <a href="/login">바로 로그인하기</a>
+                <a style={{color:'#f1c333', marginLeft:'5px'}} href="/login">   바로 로그인하기</a>
               </AdditionTxt>
             </LoginSns>
           </LoginSection>
@@ -58,15 +53,29 @@ function Register() {
   );
 }
 const AdditionTxt = styled.button`
-  margin-top: 30px;
-  color: #666;
-  font-size: 14px;
-  a {
-    text-decoration: underline;
-  }
+
+margin-top: 6px;
+width: 100%;
+height: 44px;
+border-radius: 2px;
+border: none;
+background: green;
+color: #000;
+font-size: 16px;
+line-height: 30px;
+padding: 0 16px;
+display: inline-block;
+box-shadow: 0 1px 3px 0 rgb(220 220 220 / 30%);
+box-sizing: border-box;
+cursor: pointer;
+font-weight: 400;
+text-align: center;
+text-decoration: none;
+transition: border-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+vertical-align: middle;
+
 `;
 const Email = styled.a``;
-const Naver = styled.a``;
 const Hidden = styled.div`
   &.HiddenTag {
     display: none !important; */
@@ -100,16 +109,28 @@ const LoginSns = styled.div`
       }
 
       ${Email} {
-        border: 2px solid #f1c333;
-        background: #fff;
-        color: #f1c333;
-        line-height: 28px;
+        margin-top: 6px;
+      width: 100%;
+      height: 44px;
+      border-radius: 2px;
+      border: none;
+      background: #f1c333;
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 30px;
+      
+      display: inline-block;
+      box-shadow: 0 1px 3px 0 rgb(220 220 220 / 30%);
+      box-sizing: border-box;
+      cursor: pointer;
+      font-weight: 400;
+      text-align: center;
+      text-decoration: none;
+      transition: border-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+      vertical-align: middle;
       }
 
-      ${Naver} {
-        background: #63c33d;
-      }
-
+      
       ${Kakaotalk} {
         background: #fce84d;
         color: #333;
@@ -199,11 +220,7 @@ const LoginSection = styled.section`
 `;
 
 const SpIcon = styled.span`
-  &.SpNaver {
-    background-position: -689px 0px;
-    width: 32px;
-    padding-top: 32px;
-  }
+  
 
   &.Kakaotalk {
     background-position: -631px -626px;
