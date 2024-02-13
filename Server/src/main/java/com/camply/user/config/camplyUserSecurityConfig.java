@@ -164,7 +164,7 @@ public class camplyUserSecurityConfig {
 				.userInfoUri("https://kapi.kakao.com/v2/user/me")
 				.userNameAttributeName("id")
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-				.scope("account_email", "profile_nickname", "name")
+				.scope("account_email", "profile_nickname", "name", "access_token")
 				.build();
 	}
 }
