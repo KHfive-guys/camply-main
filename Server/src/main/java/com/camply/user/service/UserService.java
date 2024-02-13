@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.camply.user.dao.UserDao;
 import com.camply.user.vo.UserVO;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -25,10 +27,9 @@ public class UserService {
 		userdao.managerRegister(userVO);
 	}
 
-	public void registerKakao(UserVO userVO) {
-		userdao.emailRegister(userVO);
+	public void kakaoRegister(UserVO userVO) {
+		userdao.kakaoRegister(userVO);
 	}
-
 	public UserVO getMemberByUsername(String USER_EMAIL) {
 		return userdao.selectEmail(USER_EMAIL);
 	}
@@ -52,4 +53,5 @@ public class UserService {
 	public void updateUserById(UserVO user) {
 		userdao.updateUserById(user);
 	}
+
 }

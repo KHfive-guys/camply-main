@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import KakaoLogin from "react-kakao-login";
 import { Container } from "react-bootstrap";
 import CampNavbar from '../camp/CampNavbar';
-import Kakao from "./KakaoGeneral";
-import kakaobuttonimg1 from '../../img/Login/kakao_login_medium_narrow.png'
+import KakaoLogin from './KakaoLogin';
 
 function Login() {
   const navigate = useNavigate();
@@ -13,6 +11,7 @@ function Login() {
   const [USER_PASSWORD, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [userType, setUserType] = useState("");
+  
 
   const emailLogin = async () => {
     console.log("login button USER_EMAIL" + USER_EMAIL);
@@ -47,18 +46,50 @@ function Login() {
     }
   };
 
-  const handleSuccess = (response) => {
-    console.log("카카오 로그인 성공:", response);
+  const handleKakaoSuccess = (response) => {
+    console.log('카카오 로그인 성공:', response);
+    loginWithKakao(response.token);
   };
 
-  const handleFailure = (error) => {
-    console.error("카카오 로그인 실패:", error);
+  const handleKakaoFailure = (error) => {
+    console.error('카카오 로그인 실패:', error);
   };
 
   const handleLogout = () => {
     localStorage.removeItem("yourTokenKey");
     setLoggedIn(false);
     navigate("/login");
+  };
+
+  const loginWithKakao = async (kakaoToken) => {
+    try {
+      const response = await fetch("http://localhost:8080/getKakaoUserData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Origin: "http://localhost:3000",
+        },
+        body: JSON.stringify({
+          kakaoToken: kakaoToken,
+        }),
+      });
+
+      if (response.ok) {
+        const user_info = await response.json();
+        console.log("Kakao Login successful. Member info:", user_info);
+
+        setUserType(user_info.USER_TYPE);
+
+        localStorage.setItem("yourTokenKey", user_info.token);
+        setLoggedIn(true);
+        navigate("/");
+      } else {
+        alert("카카오 로그인에 실패하였습니다.");
+        console.error("Kakao Login failed");
+      }
+    } catch (error) {
+      console.error("Error during Kakao login:", error);
+    }
   };
   
   return (
@@ -86,11 +117,7 @@ function Login() {
           </LoginHeadText>
           <LoginSignupContent>
             <HorizontalButtons>
-                  <div className="kakao">
-                  <img src={kakaobuttonimg1}/>
-                  </div>
-
-
+            <KakaoLogin onSuccess={handleKakaoSuccess} onFailure={handleKakaoFailure} />
             </HorizontalButtons>
           </LoginSignupContent>
           <LoginSigninContent>
