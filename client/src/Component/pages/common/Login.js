@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import KakaoLogin from "react-kakao-login";
 import { Container } from "react-bootstrap";
 import CampNavbar from '../camp/CampNavbar';
+import Kakao from "./Kakao";
 
 function Login() {
   const navigate = useNavigate();
@@ -88,16 +89,11 @@ function Login() {
                 Naver Login
               </CustomNaverButton>
 
-              <KakaoLogin
-                token="e4e518b34dec41360511f03ad7a9ac61"
-                onSuccess={handleSuccess}
-                onFail={handleFailure}
-                render={({ onClick }) => (
-                  <CustomKakaoButton className="kakao" onClick={onClick}>
-                    Kakao Login
+                  <CustomKakaoButton className="kakao" href="">
+                    Kakao Login <Kakao/>
                   </CustomKakaoButton>
-                )}
-              />
+
+
             </HorizontalButtons>
           </LoginSignupContent>
           <LoginSigninContent>

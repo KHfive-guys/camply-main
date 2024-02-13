@@ -157,7 +157,7 @@ public class camplyUserSecurityConfig {
 		return ClientRegistration.withRegistrationId("kakao")
 				.clientId("cfc1a70784e87ec9b6cd4654f31990d2")
 				.clientSecret("k8XO2jG62S2alyjciSZsVQvmQHHIzVwG")
-				.redirectUri("http://localhost:8080/kakao/register")
+				.redirectUri("http://localhost:8080/getKakaoUserData")
 				.clientName("Kakao")
 				.authorizationUri("https://kauth.kakao.com/oauth/authorize")
 				.tokenUri("https://kauth.kakao.com/oauth/token")
