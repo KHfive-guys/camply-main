@@ -84,7 +84,7 @@ function App() {
   }, []);
 
   // 탭 상태 관리
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState('list');
 
   return (
     <Router>
@@ -128,7 +128,7 @@ function App() {
               <Navbar />
               <h1 style={{ marginTop: '100px' }}></h1>
               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
+                <li class="sellermanagement" role="presentation">
                   <button
                     class={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
                     onClick={() => setActiveTab('home')}
@@ -136,7 +136,7 @@ function App() {
                     판매자 관리
                   </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="sellermanagement" role="presentation">
                   <button
                     class={`nav-link ${activeTab === 'sell' ? 'active' : ''}`}
                     onClick={() => setActiveTab('sell')}
@@ -144,7 +144,7 @@ function App() {
                     상품등록
                   </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="sellermanagement" role="presentation">
                   <button
                     class={`nav-link ${activeTab === 'list' ? 'active' : ''}`}
                     onClick={() => setActiveTab('list')}
@@ -152,7 +152,7 @@ function App() {
                     상품리스트
                   </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="sellermanagement" role="presentation">
                   <button
                     class={`nav-link ${
                       activeTab === 'orderlist' ? 'active' : ''
@@ -164,7 +164,7 @@ function App() {
                 </li>
               </ul>
               <div className="tab-content" id="nav-tabContent">
-                {activeTab === 'home' && <div>Home Content</div>}
+                {activeTab === 'home' && <div></div>}
                 {activeTab === 'sell' && <CreateProduct />}
                 {activeTab === 'list' && <SellerProduct />}
                 {activeTab === 'orderlist' && <OrderProduct />}
@@ -184,11 +184,8 @@ function App() {
                 <Routes>
                   <Route path="/sell" element={<CreateProduct />} />
                   <Route path="/list" element={<SellerProduct />} />
+                  <Route path="/edit/:productId" element={<UpdateProduct />} />
                   <Route path="/orderlist" element={<OrderProduct />} />
-                  <Route
-                    path="/product/edit/:productId"
-                    element={<UpdateProduct />}
-                  />
                 </Routes>
               </div>
             </>

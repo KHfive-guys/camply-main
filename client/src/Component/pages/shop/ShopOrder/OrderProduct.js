@@ -102,7 +102,7 @@ const OrderProduct = () => {
               <th>총결제금액</th>
               <th>주문수량</th>
               <th>상품금액</th>
-              <th>주문상태</th>
+              {/* <th>주문상태</th> */}
             </tr>
           </thead>
           <tbody>
@@ -128,7 +128,7 @@ const OrderProduct = () => {
                 </td>
                 <td> {order.orderProductAmount}</td>
                 <td> {order.product.formattedProductPrice}</td>
-                <td>
+                {/* <td>
                   {order.orderStatus}
                   <NavDropdown title=" " id="basic-nav-dropdown">
                     <NavDropdown.Item
@@ -152,7 +152,7 @@ const OrderProduct = () => {
                       취소
                     </NavDropdown.Item>
                   </NavDropdown>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

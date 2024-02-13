@@ -212,26 +212,8 @@ tbody tr:hover {
   font-weight: 600;
 }
 
-.custom-link {
-  color: #5c657b; /* 빨간색으로 설정, 원하는 색상 코드로 변경 가능 */
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.checkbox-no-th {
-  width: 80px;
-}
-
-.checkbox-no-th input {
-  position: relative;
-  top: 5px;
-}
-
-.checkbox-td input {
-  position: relative;
-  top: 5px;
-}
-
-.productname-th {
-  width: 380px;
+.sellermanagement {
+  color: #480101; /* 빨간색으로 설정, 원하는 색상 코드로 변경 가능 */
+  font-size: 17px;
+  font-weight: bold;
 }

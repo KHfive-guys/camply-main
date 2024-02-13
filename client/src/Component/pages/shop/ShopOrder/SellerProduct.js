@@ -4,15 +4,17 @@ import { NavDropdown } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
 import '../css/ShopSell/SellerProduct.css';
 import Nav from '../../camp/CampNavbar';
+import UpdateProduct from './UpdateProduct';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
+  useNavigate,
   Link,
 } from 'react-router-dom';
 
-const ProductMyPage = () => {
+const SellerProduct = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // 상품 조회 시 0번째에서 1번째로 넘어가기 위한 로딩 변수
   const [selectedProducts, setSelectedProducts] = useState([]); // 선택된 제품을 저장할 상태 변수
@@ -20,7 +22,8 @@ const ProductMyPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(20); // 페이지당 표시할 아이템 수
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [pageCount, setPageCount] = useState(0);
-  const token = localStorage.getItem('yourTokenKey'); // 토큰을 로컬 스토리지에서 가져옵니다.
+  const token = localStorage.getItem('yourTokenKey'); // 토큰을 로컬 스토리지에서 가져옴
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   //등록 상품 리스트 조회
   useEffect(() => {
@@ -46,6 +49,10 @@ const ProductMyPage = () => {
       // 토큰이 없으면 로그인 페이지로 리다이렉트
     }
   }, [itemsPerPage, token]);
+
+  const handleEditClick = (productId) => {
+    navigate(`/shop/seller/edit/${productId}`);
+  };
 
   // 페이지네이션 컨트롤 (예: 페이지 번호 변경)
   const handlePageClick = (data) => {
@@ -334,8 +341,7 @@ const ProductMyPage = () => {
                   <td>
                     <NavDropdown title="···" id="basic-nav-dropdown">
                       <NavDropdown.Item
-                        as={Link}
-                        to={`/shop/seller/product/edit/${ShopProduct.productId}`}
+                        onClick={() => handleEditClick(ShopProduct.productId)}
                       >
                         수정
                       </NavDropdown.Item>
@@ -365,7 +371,7 @@ const ProductMyPage = () => {
   );
 };
 
-export default ProductMyPage;
+export default SellerProduct;
 /*
 .filter() 메서드:
 

@@ -11,6 +11,10 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import '../css/ShopSell/CreateProduct.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import CreateProduct from './CreateProduct';
+import SellerProduct from './SellerProduct';
+import OrderProduct from './OrderProduct';
 
 const UpdateProduct = () => {
   const navigate = useNavigate();
@@ -150,7 +154,7 @@ const UpdateProduct = () => {
         }
       );
       alert('상품이 성공적으로 수정되었습니다.');
-      navigate('/shop/seller/list');
+      navigate('/shop/seller');
     } catch (error) {
       console.error('Error updating product:', error);
       alert('상품 수정에 실패했습니다.');
@@ -159,11 +163,15 @@ const UpdateProduct = () => {
 
   //조회 페이지로 되돌아가기
   const handleCancel = () => {
-    navigate('/shop/seller/list');
+    navigate('/shop/seller');
   };
 
   if (!product) {
-    return <div>Loading...</div>; // 데이터 로딩 중 표시
+    return (
+      <div class="spinner-border m-5" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    );
   }
 
   return (
