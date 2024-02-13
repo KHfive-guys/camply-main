@@ -56,7 +56,7 @@ const CartList = () => {
   }, []);
   //뒤로 가기
   const backtodetail = () => {
-    navigate(-1); // 뒤로 가기
+    navigate('/shop/main'); // 뒤로 가기
   };
   // 장바구니 정보 가져오기
   const fetchCartItems = async () => {
@@ -92,20 +92,19 @@ const CartList = () => {
         <div style={{ maxWidth: "900px" }} id='content'>
           <div id='cartWrap'>
             <h2 className='tit-page'>장바구니</h2>
-
-            <Button onClick={handleRemoveSelected}>선택 항목 삭제</Button>
+            <button className="order-btn" onClick={handleRemoveSelected}>선택 항목 삭제</button>
             <div className='page-body'>
               <div className='table-cart table-fill-prd'>
                 <div className='cart-list'>
-                  <table summary='사진, 제품명, 수량, 가격, 취소'>
+                  <table summary='선택,사진, 제품명, 수량, 가격, 취소'>
                     <colgroup>
+                      <col width={20}></col>
+                      <col width={80}></col>
+                      <col width={20}></col>
                       <col width={150}></col>
-                      <col width={100}></col>
-                      <col width={100}></col>
-                      <col width={"*"}></col>
-                      <col width={110}></col>
-                      <col width={100}></col>
-                      <col width={100}></col>
+                      <col width={20}></col>
+                      <col width={20}></col>
+                      <col width={50}></col>
                     </colgroup>
                     <thead>
                       <tr>
@@ -116,10 +115,11 @@ const CartList = () => {
                           <div className='tb-center'>사진</div>
                         </th>
                         <th scope='col'></th>
-                        <th scope='col'></th>
                         <th scope='col'>
                           <div className='tb-center'>상품명</div>
                         </th>
+                        
+                        <th scope='col'></th>
                         <th scope='col'>
                           <div className='tb-center'>수량</div>
                         </th>
@@ -159,12 +159,15 @@ const CartList = () => {
                       {cartItems.map((item) => (
                         <tr key={item.cartId}>
                           <td>
-                            <input
-                              type='radio'
-                              name='selectCartItem'
-                              checked={selectedCartId === item.cartId}
-                              onChange={() => handleSelectChange(item.cartId)}
-                            />
+                            <div className="tb-center">
+                              <input
+                                
+                                type='radio'
+                                name='selectCartItem'
+                                checked={selectedCartId === item.cartId}
+                                onChange={() => handleSelectChange(item.cartId)}
+                              />
+                            </div>
                           </td>
                           <td>
                             <div className='tb-center'>
@@ -172,8 +175,8 @@ const CartList = () => {
                                 <img
                                   style={{
                                     display: "block",
-                                    width: "100px",
-                                    height: "100px",
+                                    width: "194.59px",
+                                    height: "181px",
                                   }}
                                   src={item.productThumbnail}
                                   alt='상품 이미지'
@@ -182,13 +185,13 @@ const CartList = () => {
                             </div>
                           </td>
                           <td></td>
-                          <td></td>
                           <td>
                             <div className='tb-left'>
                               {item.productName}
                               <div className='tb-opt'></div>
                             </div>
                           </td>
+                          <td></td>
                           <td>
                             <div className='tb-center'>
                               {item.productAmount}
