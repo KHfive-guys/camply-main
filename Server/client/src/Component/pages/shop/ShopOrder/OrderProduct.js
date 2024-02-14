@@ -22,6 +22,8 @@ const OrderProduct = () => {
   const token = localStorage.getItem('yourTokenKey'); // 토큰을 로컬 스토리지에서 가져옵니다.
   const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태
   const [searchType, setSearchType] = useState('productName'); // 검색 유형 상태 초기화
+  const [totalOrderAmount, setTotalOrderAmount] = useState(0);
+  const [totalOrderCount, setTotalOrderCount] = useState(0);
   // const [selectedProducts, setSelectedProducts] = useState([]); // 선택된 제품을 저장할 상태 변수
   // const [selectAll, setSelectAll] = useState(false); // 전체 선택 상태
   //주문 리스트 조회
@@ -41,10 +43,22 @@ const OrderProduct = () => {
         // 응답 데이터를 state에 저장합니다.
         setOrders(response.data);
         console.log(response.data);
+
+        // 총 주문액과 주문 건수 계산
+        const totalAmount = response.data.reduce(
+          (acc, order) => acc + order.totalPrice,
+          0
+        );
+        const orderCount = response.data.length;
+
+        setTotalOrderAmount(totalAmount);
+        setTotalOrderCount(orderCount);
+
+        // 페이지 네이션 숫자 계산식
         setPageCount(Math.ceil(response.data.length / itemsPerPage));
         setLoading(false);
       } catch (error) {
-        // 오류가 발생한 경우 콘솔에 오류를 출력합니다.
+        // 오류가 발생한 경우 콘솔에 오류를 출력
         console.error('주문 목록을 불러오는데 실패했습니다:', error);
       }
     };
@@ -85,6 +99,18 @@ const OrderProduct = () => {
         console.error(response);
       }
       setOrders(response.data); // 검색 결과로 주문 목록 업데이트
+
+      // 검색 결과에 기반한 총 주문 건수와 총 주문액 계산
+      const totalAmount = response.data.reduce(
+        (acc, order) => acc + order.totalPrice,
+        0
+      );
+      const orderCount = response.data.length;
+
+      // 총 주문 건수와 총 주문액 상태 업데이트
+      setTotalOrderAmount(totalAmount);
+      setTotalOrderCount(orderCount);
+
       setPageCount(Math.ceil(response.data.length / itemsPerPage)); // 페이지 수 업데이트
     } catch (error) {
       console.error('검색 실패:', error);
@@ -188,6 +214,19 @@ const OrderProduct = () => {
           </button>
         </div>
 
+        {/* 총 주문액과 주문 건수 표시 */}
+
+        <div className="totalOrderInfo">
+          <span class="badge text-bg-light custom-badge">총 주문 건수</span>{' '}
+          &nbsp;
+          <span class="order-text">{totalOrderCount}건</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="badge text-bg-light custom-badge">총 주문액 </span>{' '}
+          &nbsp;
+          <span class="order-text">
+            {totalOrderAmount.toLocaleString('ko-KR')}원
+          </span>
+        </div>
         <span className="itemsPerPage-position">
           <select value={itemsPerPage} onChange={handleItemsPerPageChange}>
             <option value={10}>10개씩 보기</option>

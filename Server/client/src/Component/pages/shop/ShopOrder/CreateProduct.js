@@ -234,6 +234,7 @@ const CreateProduct = () => {
               onChange={handleInputChange}
               value={product.productCategory}
               className="form-control"
+              class="form-select"
             >
               <option value="tent">tent</option>
               <option value="sleepingbag">sleepingbag</option>
@@ -242,7 +243,6 @@ const CreateProduct = () => {
               <option value="chair">chair</option>
               <option value="kitchen">kitchen</option>
             </select>
-            <div className="dropdown-icon">&#9660;</div>
           </div>
         </div>
 
@@ -325,12 +325,12 @@ const CreateProduct = () => {
               onChange={handleInputChange}
               value={product.productStatus}
               className="form-control"
+              class="form-select"
             >
               <option value="판매중">판매중</option>
               <option value="판매중지">판매중지</option>
               <option value="판매종료">품절</option>
             </select>
-            <div className="dropdown-icon">&#9660;</div>
           </div>
         </div>
         <div className="form-group">
