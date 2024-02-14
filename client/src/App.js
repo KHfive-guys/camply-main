@@ -96,10 +96,9 @@ function App() {
             <h1 className='main-camply'>
               Camply
             </h1>
-              <h2 className="display-4">
+              <h2 style={{marginBottom:'70px'}} className="display-4">
                 안녕하세요. 캠플리에 오신걸 환영합니다.
               </h2>
-              <p style={{marginBottom:'100px'}} className="lead">캠핑 예약 또는 쇼핑 몰로 이동하세요.</p>
               <div className="d-flex justify-content-center">
                 <Link to="/camp" className="btn btn-primary m-2">
                   <img
