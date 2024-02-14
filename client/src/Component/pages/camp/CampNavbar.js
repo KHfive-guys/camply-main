@@ -11,7 +11,7 @@ import { Modal } from "react-bootstrap";
 import { CgChevronDownO } from "react-icons/cg";
 import { CgCloseO } from "react-icons/cg";
 import { FiShoppingCart } from "react-icons/fi";
-import logo from "../../Assets/logo.png";
+import logo from "../../img/MainImg/logo-removebg-preview.png";
 import OpenWeatherMap from "../camp/CampMain/Home/openWeatherMap";
 import { GiCampingTent } from "react-icons/gi";
 import { MdAddShoppingCart } from "react-icons/md";
