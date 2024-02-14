@@ -203,7 +203,7 @@ function SearchPage() {
               >
                 <Card>
                   <Card.Body >
-                    <Card.Img src={site.CAMP_IMAGES.split(";")}></Card.Img>
+                  <Card.Img src={site.CAMP_IMAGES.split(";")} style={{ width: '270px', height: '250px' }} />
                     <Card.Title>{site.CAMP_SELECT}</Card.Title>
                     <Card.Text>{site.CAMP_NAME}</Card.Text>
                     <Card.Text>{site.CAMP_LOCATION}</Card.Text>
