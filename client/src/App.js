@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, Component } from 'react';
 import ShopDetail from './Component/pages/shop/ShopDetail/ShopDetail';
 import {
@@ -51,8 +52,7 @@ import InquiryUpdate from './Component/pages/shop/ShopDetail/ShopInquiry/Inquiry
 import InquiryWriter from './Component/pages/shop/ShopDetail/ShopInquiry/InquiryWriter';
 import ReviewWriter from './Component/pages/shop/ShopDetail/ShopReview/ReviewWriter';
 import ShopCart from './Component/pages/shop/ShopCart';
-import OrderCart from './Component/pages/shop/ShopOrder/Order/OrderCart';
-import MyPage from './Component/pages/common/MyPage';
+import OrderCart from './Component/pages/shop/ShopOrder/Order/OrderCart';import MyPage from './Component/pages/common/MyPage';
 import EditUser from './Component/pages/common/EditUser';
 import campMainImg from './Component/img/MainImg/메인페이지 이미지2.jpeg';
 import CampBoard from './Component/pages/camp/CampBoard/CampBoard';
@@ -68,6 +68,7 @@ import CampBoardSite from './Component/pages/camp/CampBoard/CampBoardSite';
 import MyShopping from './Component/pages/common/MyShopping';
 import MyCamping from './Component/pages/common/MyCamping';
 import SellerMypage from './Component/pages/common/SellerMypage';
+import MypageupdateAnddelete from './Component/pages/common/MypageupdateAnddelete';
 import MyLikeList from './Component/pages/common/MyLikeList';
 import CartList from './Component/pages/shop/ShopCart/Cartlist';
 import OrderList from './Component/pages/shop/ShopOrder/Order/OrderMain';
@@ -133,10 +134,10 @@ function App() {
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="sellermanagement" role="presentation">
                   <button
-                    class={`nav-link ${activeTab === 'list' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('list')}
+                    class={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('home')}
                   >
-                    상품리스트
+                    판매자 관리
                   </button>
                 </li>
                 <li class="sellermanagement" role="presentation">
@@ -145,6 +146,14 @@ function App() {
                     onClick={() => setActiveTab('sell')}
                   >
                     상품등록
+                  </button>
+                </li>
+                <li class="sellermanagement" role="presentation">
+                  <button
+                    class={`nav-link ${activeTab === 'list' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('list')}
+                  >
+                    상품리스트
                   </button>
                 </li>
                 <li class="sellermanagement" role="presentation">
@@ -159,6 +168,7 @@ function App() {
                 </li>
               </ul>
               <div className="tab-content" id="nav-tabContent">
+                {activeTab === 'home' && <div></div>}
                 {activeTab === 'sell' && <CreateProduct />}
                 {activeTab === 'list' && <SellerProduct />}
                 {activeTab === 'orderlist' && <OrderProduct />}
@@ -220,13 +230,14 @@ function App() {
         <Route path="/camp/board/add" element={<CampBoard />} />
         <Route path="/camp/board/all" element={<CampBoardAll />} />
         <Route path="/camp/board/get/:camp_id" element={<CampBoardDetail />} />
-        <Route path="/camp/board/edit/:camp_id" element={<CampBoardUpdate />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/camp/board/edit/:camp_id" element={<CampBoardUpdate />} />        <Route path="/mypage" element={<MyPage />} />
         <Route path="/myshopping" element={<MyShopping />} />
         <Route path="/mycamping" element={<MyCamping />} />
         <Route path="/mylikelist" element={<MyLikeList />} />
         <Route path="/sellermypage" element={<SellerMypage />} />
+        <Route path="/mypageupdate" element={<MypageupdateAnddelete />} />
 
+        
         <Route path="/mypage/edit" element={<EditUser />} />
         <Route path="/camp/searchList" element={<CampSearch />} />
         <Route path="/camp/reserve" element={<CampReserve />} />
