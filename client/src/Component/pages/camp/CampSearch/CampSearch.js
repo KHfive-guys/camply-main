@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -39,8 +39,6 @@ function SearchPage() {
         searchCamp
       );
 
-      console.log('response.data' + response.data);
-
       setSearchResults(response.data);
 
     } catch (error) {
@@ -59,6 +57,9 @@ function SearchPage() {
       },
     });
   };
+  useEffect(() => {
+    campSearch();
+  }, [searchCamp]);
 
   return (
     <section>
@@ -85,8 +86,9 @@ function SearchPage() {
                       onChange={(e) => {
                         setSearchCamp({
                           ...searchCamp,
-                          CAMP_SELECT: e.target.value,
-                        });
+                          CAMP_SELECT: e.target.value, 
+                        } );
+                       
                       }}
                     >
                       <option value='전체'>전체</option>
@@ -186,14 +188,6 @@ function SearchPage() {
                   />
                 </Form.Group>
               </Form>
-              <Button
-                id='campSearchButton'
-                variant='primary'
-                onClick={campSearch}
-                className='mt-3'
-              >
-                검색하기
-              </Button>
             </Col>
           </div>
         </Row>
