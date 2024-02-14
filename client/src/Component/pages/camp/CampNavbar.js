@@ -1,30 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import { IoMdSunny } from 'react-icons/io';
-import { AiOutlineHome } from 'react-icons/ai';
-import { FaClipboardList } from 'react-icons/fa';
-import { Modal } from 'react-bootstrap';
-import { CgChevronDownO } from 'react-icons/cg';
-import { CgCloseO } from 'react-icons/cg';
-import { FiShoppingCart } from 'react-icons/fi';
-import logo from '../../img/MainImg/logo-removebg-preview.png';
-import OpenWeatherMap from '../camp/CampMain/Home/openWeatherMap';
-import { GiCampingTent } from 'react-icons/gi';
-import { MdAddShoppingCart } from 'react-icons/md';
-import { PiShoppingBagOpenLight } from 'react-icons/pi';
-import { MdFormatListBulletedAdd } from 'react-icons/md';
-import { LuUserCircle2 } from 'react-icons/lu';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import { IoMdSunny } from "react-icons/io";
+import { AiOutlineHome } from "react-icons/ai";
+import { FaClipboardList } from "react-icons/fa";
+import { Modal } from "react-bootstrap";
+import { CgChevronDownO } from "react-icons/cg";
+import { CgCloseO } from "react-icons/cg";
+import { FiShoppingCart } from "react-icons/fi";
+import logo from "../../Assets/logo.png";
+import OpenWeatherMap from "../camp/CampMain/Home/openWeatherMap";
+import { GiCampingTent } from "react-icons/gi";
+import { MdAddShoppingCart } from "react-icons/md";
+import { PiShoppingBagOpenLight } from "react-icons/pi";
+import { MdFormatListBulletedAdd } from "react-icons/md";
+import { LuUserCircle2 } from "react-icons/lu";
+import { VscInfo } from "react-icons/vsc";
+import axios from "axios";
+
 
 function NavBar() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const isShopPath = currentPath.startsWith('/shop');
-  const isCampPath = currentPath.startsWith('/camp');
+  const isShopPath = currentPath.startsWith("/shop");
+  const isCampPath = currentPath.startsWith("/camp");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
@@ -41,7 +43,7 @@ function NavBar() {
 
   const parseUserIdFromToken = (token) => {
     try {
-      const payloadBase64 = token.split('.')[1];
+      const payloadBase64 = token.split(".")[1];
       const payload = JSON.parse(atob(payloadBase64));
       return payload.user_id;
     } catch (error) {
@@ -49,12 +51,11 @@ function NavBar() {
       return null;
     }
   };
-  
 
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem('yourTokenKey');
+    const token = localStorage.getItem("yourTokenKey");
 
     if (token) {
       const USER_ID = parseUserIdFromToken(token);
@@ -66,11 +67,11 @@ function NavBar() {
           },
         })
         .then((response) => {
-          console.log('User Data Response:', response.data);
+          console.log("User Data Response:", response.data);
           setUserData(response.data || {});
         })
         .catch((error) => {
-          console.error('사용자 정보 가져오기 실패:', error);
+          console.error("사용자 정보 가져오기 실패:", error);
         });
     }
   }, []);
@@ -84,27 +85,27 @@ function NavBar() {
   }
 
   useEffect(() => {
-    window.addEventListener('scroll', scrollHandler);
+    window.addEventListener("scroll", scrollHandler);
     return () => {
-      window.removeEventListener('scroll', scrollHandler);
+      window.removeEventListener("scroll", scrollHandler);
     };
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem('yourTokenKey');
+    const token = localStorage.getItem("yourTokenKey");
     if (token) {
       setLoggedIn(true);
     }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('yourTokenKey');
+    localStorage.removeItem("yourTokenKey");
     setLoggedIn(false);
-    navigate('/login');
+    navigate("/login");
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('yourTokenKey');
+    const token = localStorage.getItem("yourTokenKey");
 
     if (token) {
       const USER_ID = parseUserIdFromToken(token);
@@ -116,59 +117,59 @@ function NavBar() {
           },
         })
         .then((response) => {
-          console.log('User Data Response:', response.data);
+          console.log("User Data Response:", response.data);
           setUserData(response.data || {});
-          console.log('User Data Response USER_TYPE:', response.data.USER_TYPE);
+          console.log("User Data Response USER_TYPE:", response.data.USER_TYPE);
           setUserType(response.data.USER_TYPE);
         })
         .catch((error) => {
-          console.error('사용자 정보 가져오기 실패:', error);
+          console.error("사용자 정보 가져오기 실패:", error);
         });
     }
   }, []);
 
   useEffect(() => {
-    console.log('isLoggedIn:', isLoggedIn);
-    console.log('USER_TYPE:', decodedToken.USER_TYPE);
+    console.log("isLoggedIn:", isLoggedIn);
+    console.log("USER_TYPE:", decodedToken.USER_TYPE);
   }, [isLoggedIn, decodedToken.USER_TYPE]);
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
     if (token) {
-        setLoggedIn(true);
-        axios
-            .get("https://kapi.kakao.com/v2/user/me", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            })
-            .then((userInfoResponse) => {
-                const email = userInfoResponse.data.kakao_account.email;
-                console.log("User Email:", email);
-                axios
-                    .get(`http://localhost:8080/api/user/kakao/${email}`)
-                    .then((response) => {
-                        const userType = response.data.USER_TYPE;
-                        console.log("User Type:", userType);
-                        setUserType(userType);
-                    })
-                    .catch((error) => {
-                        console.error("Error fetching user type:", error);
-                    });
+      setLoggedIn(true);
+      axios
+        .get("https://kapi.kakao.com/v2/user/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((userInfoResponse) => {
+          const email = userInfoResponse.data.kakao_account.email;
+          console.log("User Email:", email);
+          axios
+            .get(`http://localhost:8080/api/user/kakao/${email}`)
+            .then((response) => {
+              const userType = response.data.USER_TYPE;
+              console.log("User Type:", userType);
+              setUserType(userType);
             })
             .catch((error) => {
-                console.error("Error fetching user information:", error);
+              console.error("Error fetching user type:", error);
             });
+        })
+        .catch((error) => {
+          console.error("Error fetching user information:", error);
+        });
     }
-}, []);
+  }, []);
 
   return (
     <Navbar
       expanded={expand}
       fixed="top"
       expand="md"
-      className={navColour ? 'sticky' : 'navbar'}
+      className={navColour ? "sticky" : "navbar"}
     >
       <Container>
         <Navbar.Brand href="/" className="d-flex">
@@ -182,7 +183,7 @@ function NavBar() {
 
         <Navbar.Toggle
           aria-controls="responsive-navbar-nav"
-          onClick={() => updateExpanded(expand ? false : 'expanded')}
+          onClick={() => updateExpanded(expand ? false : "expanded")}
         >
           <span></span>
           <span></span>
@@ -197,13 +198,13 @@ function NavBar() {
                 to="/camp"
                 onClick={() => updateExpanded(false)}
               >
-                <AiOutlineHome style={{ marginBottom: '2px' }} /> 홈페이지
+                <AiOutlineHome style={{ marginBottom: "2px" }} /> 홈페이지
               </Nav.Link>
             </Nav.Item>
 
             {isCampPath && (
               <>
-                {isLoggedIn && userType === 'Admin' && (
+                {isLoggedIn && userType === "Admin" && (
                   <Nav.Item>
                     <Nav.Link
                       as={Link}
@@ -211,8 +212,8 @@ function NavBar() {
                       onClick={() => updateExpanded(false)}
                     >
                       <MdFormatListBulletedAdd
-                        style={{ marginBottom: '2px' }}
-                      />{' '}
+                        style={{ marginBottom: "2px" }}
+                      />{" "}
                       캠핑장 등록
                     </Nav.Link>
                   </Nav.Item>
@@ -220,7 +221,7 @@ function NavBar() {
 
                 <Nav.Item>
                   <Nav.Link href="#" onClick={handleWeatherModalShow}>
-                    <IoMdSunny style={{ marginBottom: '2px' }} /> 날씨
+                    <IoMdSunny style={{ marginBottom: "2px" }} /> 날씨
                   </Nav.Link>
                 </Nav.Item>
 
@@ -247,7 +248,7 @@ function NavBar() {
                     to="/shop/main"
                     onClick={() => updateExpanded(false)}
                   >
-                    <PiShoppingBagOpenLight style={{ marginBottom: '2px' }} />{' '}
+                    <PiShoppingBagOpenLight style={{ marginBottom: "2px" }} />{" "}
                     쇼핑몰
                   </Nav.Link>
                 </Nav.Item>
@@ -257,40 +258,40 @@ function NavBar() {
               <>
                 {isLoggedIn && (
                   <>
-                    {isLoggedIn && userType === 'Admin' && (
+                    {isLoggedIn && userType === "Admin" && (
                       <Nav.Item>
                         <Nav.Link
                           as={Link}
                           to="/shop/seller"
                           onClick={() => updateExpanded(false)}
                         >
-                          <MdAddShoppingCart style={{ marginBottom: '2px' }} />{' '}
+                          <MdAddShoppingCart style={{ marginBottom: "2px" }} />{" "}
                           판매자 관리
                         </Nav.Link>
                       </Nav.Item>
                     )}
                     <>
-                      {isLoggedIn && userType === 'General' && (
+                      {isLoggedIn && userType === "General" && (
                         <Nav.Item>
                           <Nav.Link
                             as={Link}
                             to="/shop/mycart/:userId"
                             onClick={() => updateExpanded(false)}
                           >
-                            <FiShoppingCart style={{ marginBottom: '2px' }} />{' '}
+                            <FiShoppingCart style={{ marginBottom: "2px" }} />{" "}
                             장바구니
                           </Nav.Link>
                         </Nav.Item>
                       )}
                       <>
-                        {isLoggedIn && userType === 'General' && (
+                        {isLoggedIn && userType === "General" && (
                           <Nav.Item>
                             <Nav.Link
                               as={Link}
                               to="/shop/mypage/general/myorder/view:userId"
                               onClick={() => updateExpanded(false)}
                             >
-                              <FiShoppingCart style={{ marginBottom: '2px' }} />{' '}
+                              <FiShoppingCart style={{ marginBottom: "2px" }} />{" "}
                               결제관리
                             </Nav.Link>
                           </Nav.Item>
@@ -306,7 +307,7 @@ function NavBar() {
                     to="/camp"
                     onClick={() => updateExpanded(false)}
                   >
-                    <GiCampingTent style={{ marginBottom: '2px' }} /> 캠핑장
+                    <GiCampingTent style={{ marginBottom: "2px" }} /> 캠핑장
                     예약
                   </Nav.Link>
                 </Nav.Item>
@@ -315,50 +316,78 @@ function NavBar() {
 
             {isLoggedIn && (
               <>
-                {isLoggedIn && userType === 'General' && (
+                {isLoggedIn && userType === "General" && (
                   <Nav.Item>
-                  <Nav.Link
-
-
-                    as={Link}
-                    to="/myCamping"
-                    onClick={() => updateExpanded(false)}
-                  >
-                    <LuUserCircle2 style={{ marginBottom: '2px' }} /> 마이페이지
-                  </Nav.Link>
+                    <Nav.Link
+                      as={Link}
+                      to="/myCamping/info"
+                      onClick={() => updateExpanded(false)}
+                    >
+                      <VscInfo style={{ marginBottom: "2px" }} />{" "}
+                      캠핑정보
+                    </Nav.Link>
                   </Nav.Item>
                 )}
                 <>
-                {isLoggedIn && userType === 'Admin' && (
-                  <Nav.Item>
-                  <Nav.Link
-
-
-                    as={Link}
-                    to="/sellermypage"
-                    onClick={() => updateExpanded(false)}
-                  >
-                    <LuUserCircle2 style={{ marginBottom: '2px' }} /> 마이페이지
-                  </Nav.Link>
-                  </Nav.Item>
-                )}
+                  {isLoggedIn && userType === "Admin" && (
+                    <Nav.Item>
+                      <Nav.Link
+                        as={Link}
+                        to="/sellermypage/info"
+                        onClick={() => updateExpanded(false)}
+                      >
+                        <VscInfo style={{ marginBottom: "2px" }} />{" "}
+                        캠핑정보
+                      </Nav.Link>
+                    </Nav.Item>
+                  )}
                 </>
               </>
-             
+            )}
+
+            {isLoggedIn && (
+              <>
+                {isLoggedIn && userType === "General" && (
+                  <Nav.Item>
+                    <Nav.Link
+                      as={Link}
+                      to="/myCamping"
+                      onClick={() => updateExpanded(false)}
+                    >
+                      <LuUserCircle2 style={{ marginBottom: "2px" }} />{" "}
+                      마이페이지
+                    </Nav.Link>
+                  </Nav.Item>
+                )}
+                <>
+                  {isLoggedIn && userType === "Admin" && (
+                    <Nav.Item>
+                      <Nav.Link
+                        as={Link}
+                        to="/sellermypage"
+                        onClick={() => updateExpanded(false)}
+                      >
+                        <LuUserCircle2 style={{ marginBottom: "2px" }} />{" "}
+                        마이페이지
+                      </Nav.Link>
+                    </Nav.Item>
+                  )}
+                </>
+              </>
             )}
 
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to={isLoggedIn ? '/login' : '/login'}
+                to={isLoggedIn ? "/login" : "/login"}
                 onClick={handleLogout}
               >
                 {isLoggedIn ? (
-                  <CgCloseO style={{ marginBottom: '2px' }} />
+                  <CgCloseO style={{ marginBottom: "2px" }} />
                 ) : (
-                  <CgChevronDownO style={{ marginBottom: '2px' }} />
+                  <CgChevronDownO style={{ marginBottom: "2px" }} />
                 )}
-                {isLoggedIn ? '로그아웃' : '로그인'}
+                {isLoggedIn ? "로그아웃" : "로그인"}
               </Nav.Link>
             </Nav.Item>
           </Nav>

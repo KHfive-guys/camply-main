@@ -231,7 +231,7 @@ function App() {
         <Route path="/camp/board/get/:camp_id" element={<CampBoardDetail />} />
         <Route path="/camp/board/edit/:camp_id" element={<CampBoardUpdate />} />        <Route path="/mypage" element={<MyPage />} />
         <Route path="/myshopping" element={<MyShopping />} />
-        <Route path="/mycamping" element={<MyCamping />} />
+        <Route path="/mycamping" element={<MypageupdateAnddelete />} />
         <Route path="/mylikelist" element={<MyLikeList />} />
         <Route path="/sellermypage" element={<SellerMypage />} />
         <Route path="/mypageupdate" element={<MypageupdateAnddelete />} />
