@@ -41,13 +41,13 @@ function CampBoardDetail() {
       })
       .then((response) => {
         if (response.data === "addlike") {
-          alert("좋아요!.");
+          alert("찜하기 등록 완료");
         } else {
-          alert("싫어요!.");
+          alert("찜하기 등록 해제");
         }
       })
       .catch((error) => {
-        alert("좋아요 실패: " + error.response.data.message);
+        alert("찜하기 실행 실패: " + error.response.data.message);
       });
   };
 
