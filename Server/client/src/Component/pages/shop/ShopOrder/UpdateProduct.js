@@ -248,6 +248,7 @@ const UpdateProduct = () => {
                 value={product.productCategory || ''}
                 readOnly
                 className="form-control"
+                class="form-select"
               >
                 <option value="tent">tent</option>
                 <option value="sleepingbag">sleepingbag</option>
@@ -256,7 +257,6 @@ const UpdateProduct = () => {
                 <option value="chair">chair</option>
                 <option value="kitchen">kitchen</option>
               </select>
-              <div className="dropdown-icon">&#9660;</div>
             </div>
           </div>
           {/* 색상 입력 필드 */}
@@ -345,12 +345,12 @@ const UpdateProduct = () => {
                 onChange={handleInputChange}
                 value={product.productStatus || ''}
                 className="form-control"
+                class="form-select"
               >
                 <option value="판매중">판매중</option>
                 <option value="판매중지">판매중지</option>
                 <option value="품절">품절</option>
               </select>
-              <div className="dropdown-icon">&#9660;</div>
             </div>
           </div>
           {/* 버튼 그룹 */}

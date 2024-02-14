@@ -266,3 +266,17 @@ tbody tr:hover {
   width: 50px;
   height: auto;
 }
+
+/* App.js 판매자 관리 내부 탭 스타일 */
+/* sellermanagement 버튼 공통 스타일 */
+.sellermanagement .nav-link {
+  font-size: 20px; /* 글자 크기 */
+  color: rgb(59, 59, 59); /* 글자 색상 */
+  font-family: 'Arial', sans-serif; /* 글씨체 */
+}
+
+/* 활성 탭에 대한 스타일 */
+.sellermanagement .nav-link.active {
+  color: rgb(211, 102, 87); /* 활성 탭의 글자 색상 변경 */
+  background-color: #ffffff; /* 활성 탭의 배경 색상 변경 */
+}
