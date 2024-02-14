@@ -313,8 +313,9 @@ function NavBar() {
                 </Nav.Item>
               </>
             )}
-
-            {isLoggedIn && (
+      
+                          
+            {isCampPath && (
               <>
                 {isLoggedIn && userType === "General" && (
                   <Nav.Item>
