@@ -1,16 +1,16 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import { Container } from "react-bootstrap";
 import "./css/CampBoard.css";
 import CampNavbar from "../CampNavbar";
 
+
 function BbsWrite() {
   const navigate = useNavigate();
   const [userId, setUserId] = useState("");
-  const [USER_BUSINESSADDRESS, setUserBusinessAddress] = useState("");
-  const [USER_BUSINESSPHONE, setUserBusinessPhone] = useState("");
+  const { camp_id } = useParams();
   const [newBoard, setNewBoard] = useState({
     user_id: "",
     camp_id: 0,
@@ -82,7 +82,8 @@ function BbsWrite() {
           마트: false,
           바베큐장: false,
         });
-        navigate("/camp/board/all");
+        navigate(`/camp`);
+        alert("캠핑장 등록 완료!");
       })
       .catch((error) => {
         console.error("실패", error);
@@ -150,8 +151,6 @@ function BbsWrite() {
         console.log("Decoded Token:", decodedToken);
 
         setUserId(decodedToken.user_id || "");
-        setUserBusinessAddress(decodedToken.USER_BUSINESSADDRESS || "");
-        setUserBusinessPhone(decodedToken.USER_BUSINESSPHONE || "");
         setNewBoard((prevNewBoard) => ({
           ...prevNewBoard,
           user_id: decodedToken.user_id || "",
@@ -164,6 +163,41 @@ function BbsWrite() {
     }
   }, []);
 
+  const [map, setMap] = useState({});
+  const [marker, setMarker] = useState(null);
+
+  useEffect(() => {
+    const initializeMap = () => {
+      window.kakao.maps.load(() => {
+        const container = document.getElementById("map");
+        const options = {
+          center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+          level: 3,
+        };
+        setMap(new window.kakao.maps.Map(container, options));
+        setMarker(new window.kakao.maps.Marker());
+      });
+    };
+
+    return () => {
+      window.onload = null;
+    };
+  }, []);
+
+  const onClickAddr = () => {
+    new window.daum.Postcode({
+      oncomplete: function (addrData) {
+        var geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.addressSearch(addrData.address, function (result, status) {
+          setNewBoard({
+            ...newBoard,
+            camp_address: addrData.address,
+          });
+        });
+      },
+    }).open();
+  };
+
   return (
     <section>
       <CampNavbar />
@@ -174,6 +208,25 @@ function BbsWrite() {
       <div>
         <table className="table">
           <tbody>
+
+          <tr>
+              <th className="table-primary">
+                캠핑장 주소 <span className="required"> *필수 입력</span>
+              </th>
+              <td>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={newBoard.camp_address}
+                  onClick={onClickAddr}
+                  onChange={(e) =>
+                    setNewBoard({ ...newBoard, camp_address: e.target.value })
+                  }
+                />
+              </td>
+            </tr>
+
+
             <tr>
               <th className="table-primary">
                 캠핑장 카테고리<span className="required"> *필수 입력</span>
@@ -346,20 +399,7 @@ function BbsWrite() {
               </td>
             </tr>
 
-            <tr>
-              <th className="table-primary">
-                캠핑장 주소 <span className="required"> *필수 입력</span>
-              </th>
-              <td>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={USER_BUSINESSADDRESS || ""}
-                  readOnly
-                />
-              </td>
-            </tr>
-
+            
             <tr>
               <th className="table-primary">
                 캠핑장 이름 <span className="required"> *필수 입력</span>
@@ -384,8 +424,10 @@ function BbsWrite() {
                 <input
                   type="text"
                   className="form-control"
-                  value={USER_BUSINESSPHONE || ""}
-                  readOnly
+                  value={newBoard.camp_phone}
+                  onChange={(e) =>
+                    setNewBoard({ ...newBoard, camp_phone: e.target.value })
+                  }
                 />
               </td>
             </tr>
