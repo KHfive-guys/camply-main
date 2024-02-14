@@ -28,12 +28,14 @@ public class DipsController {
 	// 찜하기 추가 및 삭제
 	@PostMapping("/changDips")
 	public ResponseEntity<String> changDips(@RequestBody DipsVO dipsvo) {
-	    	
+
 		if (!dipsvo.isSTATUS()) { 
+	    	
 			try {
 
 				dipsService.addCampDips(dipsvo);
-		      
+
+		    	
 				return ResponseEntity.status(HttpStatus.CREATED).body("addlike");
 			
 			} catch (Exception e) {
@@ -61,7 +63,7 @@ public class DipsController {
 		}
 	}
 	
-	// 찜하기 체크
+	// 찜하기 확인
 	@PostMapping("/checkDips")
 	public ResponseEntity<?> checkDips(@RequestBody DipsVO dipsvo) {
 

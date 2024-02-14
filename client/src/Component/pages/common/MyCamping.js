@@ -5,6 +5,8 @@ import { Container, Button, Form, Modal, Row, Col } from "react-bootstrap";
 import CampNavbar from "../camp/CampNavbar";
 import bcrypt from "bcryptjs";
 import "../camp/CampBoard/css/MyPage.css";
+import { format } from 'date-fns';
+import { fontSize, margin, padding } from "@mui/system";
 
 function MyPage() {
   const [userData, setUserData] = useState({});
@@ -14,24 +16,10 @@ function MyPage() {
   const [passwordVerified, setPasswordVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const [campList, setCampList] = useState([]);
+
   const navigate = useNavigate();
 
-  // 캠핑정보 가져오기
-  const [campList, setCampList] = useState([]);
-  const handleShowCamp = () => {
-    axios
-      .delete(`http://localhost:8080/camp/Mypage/paymentResult`)
-      .then(() => {
-        setCampList({});
-      })
-      .catch((error) => {
-        console.error("캠핑정보를 불러오지 못했습니다 :", error);
-      });
-  };
-
-  useEffect(() => {
-    handleShowCamp();
-  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
@@ -48,7 +36,20 @@ function MyPage() {
         .then((response) => {
           console.log("User Data Response:", response.data);
           setUserData(response.data || {});
+
           setLoading(false);
+
+          axios.post(`http://localhost:8080/camp/Mypage/paymentResult`, {
+            USER_ID: USER_ID,
+          })
+          .then((responseData) => {
+           setCampList(responseData.data);
+          })
+          .catch ((error) => {
+            console.log("항목조회실패" + error.response.data.message);
+          });
+
+          console.log("campList length : " + campList);
         })
         .catch((error) => {
           console.error("사용자 정보 가져오기 실패:", error);
@@ -118,6 +119,7 @@ function MyPage() {
       );
 
       const storedPassword = response.data.USER_PASSWORD;
+  
       console.log("Entered Password:", password);
       console.log("Stored Password:", storedPassword);
 
@@ -161,50 +163,53 @@ function MyPage() {
         <div id="MypageContainer">
           <div id="mypagebuttonbox">
             <div>
-              <p id="MypagecampinfoTitle">쇼핑정보</p>
-              <button
-                id="Mypageinfo"
-                variant="primary"
-                onClick={() => navigate("/myshopping")}
-              >
-                쇼핑정보
-              </button>
-            </div>
-            <div>
               <p id="MypagecampinfoTitle">캠핑정보</p>
-              <button
-                id="Mypagecampinfo"
-                variant="primary"
-                onClick={() => navigate("/mycamping")}
-              >
-                <span style={{ color: "orange" }}>▶</span>캠핑예약내역
-              </button>
-              <button
-                id="Mypageinfo"
-                variant="primary"
-                onClick={() => navigate("/MyLikeList")}
-              >
-                캠핑 찜 목록
-              </button>
+                <div>
+                  <button
+                    id="Mypagecampinfo"
+                    variant="primary"
+                    onClick={() => navigate("/mycamping")}
+                  >
+                    <span style={{ color: "orange" }}>▶</span>캠핑예약내역
+                  </button>
+                  <button
+                    id="Mypageinfo"
+                    variant="primary"
+                    onClick={() => navigate("/mylikelist")}
+                  >
+                    캠핑 찜 목록
+                  </button>
+                </div>
             </div>
           </div>
           <div>
             <h5 id="reserveListTitle">캠핑 예약 내역</h5>
 
-            {campList.map((camp) => (
-              <div key={camp.CAMP_RESERVATION} id="mypagereserveList">
-                <p>캠핑장 이름 : {camp.CAMP_NAME}</p>
-                <div></div>
-                <div id="reservesecondBox">
-                  <span> 체크인 : {camp.CAMP_CHECKIN}</span>~
-                  <span> 체크아웃 : {camp.CAMP_CHECKOUT}</span>
-                  <p>결제 완료 시각 : {camp.COMPLETE_PAYMENT}</p>
-                  <span id="reserveResult">
-                    결제금액 : {camp.TOTLE_PRICE}원
-                  </span>
+              { campList.length > 0 ?
+                <div>
+                  {campList.map((camp) => (
+                  <div key={camp.CAMP_RESERVATION} id="mypagereserveList" >
+                    <p>{camp.CAMP_NAME}</p>
+                    <div></div>
+                    <div id="reservesecondBox">
+                      <span> 체크인 : {format(camp.CAMP_CHECKIN, 'yyyy-MM-dd')}</span><br/>
+                      <span> 체크아웃 : {format(camp.CAMP_CHECKOUT, 'yyyy-MM-dd')}</span><br/>
+                      <p>결제 완료 시각 : {format(camp.COMPLETE_PAYMENT, 'yyyy-MM-dd HH:mm')}</p>
+                      <span id="reserveResult">
+                        결제금액 : {camp.TOTAL_PRICE}원
+                      </span>
+                    </div>
+                  </div>
+                ))}
                 </div>
-              </div>
-            ))}
+                :
+                <div>
+                
+                    <p style={{margin:'200px' , fontSize:'20px'}}>예약한 캠핑장 내역이 없습니다.</p>
+                
+                </div>
+              } 
+
           </div>
         </div>
       </div>

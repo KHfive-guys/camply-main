@@ -67,6 +67,8 @@ import CampBoardPension from './Component/pages/camp/CampBoard/CampBoardPension'
 import CampBoardSite from './Component/pages/camp/CampBoard/CampBoardSite';
 import MyShopping from './Component/pages/common/MyShopping';
 import MyCamping from './Component/pages/common/MyCamping';
+import SellerMypage from './Component/pages/common/SellerMypage';
+import MyLikeList from './Component/pages/common/MyLikeList';
 import CartList from './Component/pages/shop/ShopCart/Cartlist';
 import OrderList from './Component/pages/shop/ShopOrder/Order/OrderMain';
 import './Component/pages/camp/CampStyle.css';
@@ -129,20 +131,12 @@ function App() {
               <Navbar />
               <h1 style={{ marginTop: '100px' }}></h1>
               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                {/* <li class="sellermanagement" role="presentation">
+                <li class="sellermanagement" role="presentation">
                   <button
                     class={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
                     onClick={() => setActiveTab('home')}
                   >
                     판매자 관리
-                  </button>
-                </li> */}
-                <li class="sellermanagement" role="presentation">
-                  <button
-                    class={`nav-link ${activeTab === 'list' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('list')}
-                  >
-                    상품리스트
                   </button>
                 </li>
                 <li class="sellermanagement" role="presentation">
@@ -151,6 +145,14 @@ function App() {
                     onClick={() => setActiveTab('sell')}
                   >
                     상품등록
+                  </button>
+                </li>
+                <li class="sellermanagement" role="presentation">
+                  <button
+                    class={`nav-link ${activeTab === 'list' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('list')}
+                  >
+                    상품리스트
                   </button>
                 </li>
                 <li class="sellermanagement" role="presentation">
@@ -165,9 +167,9 @@ function App() {
                 </li>
               </ul>
               <div className="tab-content" id="nav-tabContent">
-                {/* {activeTab === 'home' && <div></div>} */}
-                {activeTab === 'list' && <SellerProduct />}
+                {activeTab === 'home' && <div></div>}
                 {activeTab === 'sell' && <CreateProduct />}
+                {activeTab === 'list' && <SellerProduct />}
                 {activeTab === 'orderlist' && <OrderProduct />}
               </div>
               {/* <Link to="/shop/seller/sell">상품등록</Link>
@@ -231,6 +233,10 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/myshopping" element={<MyShopping />} />
         <Route path="/mycamping" element={<MyCamping />} />
+        <Route path="/mylikelist" element={<MyLikeList />} />
+        <Route path="/sellermypage" element={<SellerMypage />} />
+
+        
         <Route path="/mypage/edit" element={<EditUser />} />
         <Route path="/camp/searchList" element={<CampSearch />} />
         <Route path="/camp/reserve" element={<CampReserve />} />
