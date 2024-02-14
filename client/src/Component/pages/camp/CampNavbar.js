@@ -40,10 +40,17 @@ function NavBar() {
   const [decodedToken, setDecodedToken] = useState({});
 
   const parseUserIdFromToken = (token) => {
-    const payloadBase64 = token.split('.')[1];
-    const payload = JSON.parse(atob(payloadBase64));
-    return payload.user_id;
+    try {
+      const tokenPayload = token.split('.')[1]; // Extract the payload part of the JWT
+      const decodedPayload = atob(tokenPayload); // Decode the base64-encoded payload
+      const parsedPayload = JSON.parse(decodedPayload); // Parse the JSON-encoded payload
+      return parsedPayload.userId; // Extract the userId from the payload
+    } catch (error) {
+      console.error('Error parsing user ID from token:', error);
+      return null; // Return null or handle the error appropriately
+    }
   };
+  
 
   const [userType, setUserType] = useState('');
 

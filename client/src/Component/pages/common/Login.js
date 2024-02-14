@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import CampNavbar from '../camp/CampNavbar';
 import KakaoLogin from './KakaoLogin';
+import axios from 'axios';
+
 
 function Login() {
   const navigate = useNavigate();
@@ -46,51 +48,12 @@ function Login() {
     }
   };
 
-  const handleKakaoSuccess = (response) => {
-    console.log('카카오 로그인 성공:', response);
-    loginWithKakao(response.token);
-  };
-
-  const handleKakaoFailure = (error) => {
-    console.error('카카오 로그인 실패:', error);
-  };
-
   const handleLogout = () => {
     localStorage.removeItem("yourTokenKey");
     setLoggedIn(false);
     navigate("/login");
   };
 
-  const loginWithKakao = async (kakaoToken) => {
-    try {
-      const response = await fetch("http://localhost:8080/getKakaoUserData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Origin: "http://localhost:3000",
-        },
-        body: JSON.stringify({
-          kakaoToken: kakaoToken,
-        }),
-      });
-  
-      if (response.ok) {
-        const user_info = await response.json();
-        console.log("Kakao Login successful. Member info:", user_info);
-  
-        localStorage.setItem("yourTokenKey", user_info.token);
-        setLoggedIn(true);
-        navigate("/");
-      } else {
-        alert("카카오 로그인에 실패하였습니다.");
-        console.error("Kakao Login failed");
-      }
-    } catch (error) {
-      console.error("Error during Kakao login:", error);
-    }
-  };
-  
-  
   return (
     <>
     <section>
@@ -116,7 +79,9 @@ function Login() {
           </LoginHeadText>
           <LoginSignupContent>
             <HorizontalButtons>
-            <KakaoLogin onSuccess={handleKakaoSuccess} onFailure={handleKakaoFailure} />
+            
+            <KakaoLogin/>
+
             </HorizontalButtons>
           </LoginSignupContent>
           <LoginSigninContent>
