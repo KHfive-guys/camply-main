@@ -45,7 +45,7 @@
     	
     	<!-- 판매자가 업로드한 캠핑장 정보를 개별적으로 불러와야 하기때문에 USER_ID를 조건으로 건다 -->
     	<select id="uploadProductList" resultMap="UploadProductListMap" parameterType="com.camply.camp.mypage.vo.CampUploadProductListVO">
-    		SELECT * FROM CAMP_POSTING
+    		SELECT * FROM CAMP_POSTING WHERE USER_ID = #{USER_ID}
     	</select>
     	
     	<select id="dipsList" resultMap="DipsListMap" parameterType="com.camply.camp.mypage.vo.CampDipsListVO">
