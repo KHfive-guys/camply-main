@@ -41,13 +41,13 @@ function NavBar() {
 
   const parseUserIdFromToken = (token) => {
     try {
-      const tokenPayload = token.split('.')[1]; // Extract the payload part of the JWT
-      const decodedPayload = atob(tokenPayload); // Decode the base64-encoded payload
-      const parsedPayload = JSON.parse(decodedPayload); // Parse the JSON-encoded payload
-      return parsedPayload.userId; // Extract the userId from the payload
+      const tokenPayload = token.split('.')[1];
+      const decodedPayload = atob(tokenPayload); 
+      const parsedPayload = JSON.parse(decodedPayload);
+      return parsedPayload.userId; 
     } catch (error) {
       console.error('Error parsing user ID from token:', error);
-      return null; // Return null or handle the error appropriately
+      return null;
     }
   };
   
@@ -75,6 +75,8 @@ function NavBar() {
         });
     }
   }, []);
+
+
 
   function scrollHandler() {
     if (window.scrollY >= 20) {
@@ -164,10 +166,10 @@ function NavBar() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/camp"
+                to={isCampPath ? "/camp" : "/shop/main"}
                 onClick={() => updateExpanded(false)}
               >
-                <AiOutlineHome style={{ marginBottom: '2px' }} /> 홈페이지
+                <AiOutlineHome style={{ marginBottom: "2px" }} /> 홈페이지
               </Nav.Link>
             </Nav.Item>
 
