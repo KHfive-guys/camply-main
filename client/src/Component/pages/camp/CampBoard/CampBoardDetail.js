@@ -264,11 +264,6 @@ function CampBoardDetail() {
       <div id="detailContainer">
         <h1 id="campdetailTitle">상세보기</h1>
 
-        <div id="updateAnddeleteButton">
-          { isCurrentUser &&<th>수정</th>}
-          {isCurrentUser && <th> 삭제</th>}
-        </div>
-
         <div id="campDetailBox">
             <p id="detailType">유형 | {boardData.camp_select}</p>
             <img src={tentIMG} alt="텐트" id="DetailIMG"></img>
