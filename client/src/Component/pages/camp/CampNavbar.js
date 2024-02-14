@@ -132,6 +132,37 @@ function NavBar() {
     console.log('USER_TYPE:', decodedToken.USER_TYPE);
   }, [isLoggedIn, decodedToken.USER_TYPE]);
 
+  useEffect(() => {
+    const token = localStorage.getItem("yourTokenKey");
+    if (token) {
+        setLoggedIn(true);
+        axios
+            .get("https://kapi.kakao.com/v2/user/me", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((userInfoResponse) => {
+                const email = userInfoResponse.data.kakao_account.email;
+                console.log("User Email:", email);
+                axios
+                    .get(`http://localhost:8080/api/user/kakao/${email}`)
+                    .then((response) => {
+                        const userType = response.data.USER_TYPE;
+                        console.log("User Type:", userType);
+                        setUserType(userType);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching user type:", error);
+                    });
+            })
+            .catch((error) => {
+                console.error("Error fetching user information:", error);
+            });
+    }
+}, []);
+
   return (
     <Navbar
       expanded={expand}
