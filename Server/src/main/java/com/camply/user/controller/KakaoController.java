@@ -6,43 +6,48 @@ import com.camply.user.vo.UserVO;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
-@AllArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class KakaoController {
 
-    // 멤버(필드)변수
     @Autowired
     private UserService userService;
 
-    // 카카오 로그인 정보 DB & 세션에 저장
-    @PostMapping("/kakao/register")
-    public ResponseEntity<String> handleKakaoLogin(@RequestBody KakaoVO kakaoVO, HttpSession session) {
+    @PostMapping("/getKakaoUserData")
+    public ResponseEntity<String> getKakaoUserData(@RequestBody KakaoVO kakaoData) {
+        String email = kakaoData.getEmail();
+        String name = kakaoData.getName();
+        String nickname = kakaoData.getNickname();
+        String userType = kakaoData.getUserType();
+        String access_token = kakaoData.getAccess_token();
 
-        String email = kakaoVO.getAccount_email();
-        String nickname = kakaoVO.getProfile_nickname();
-        String name = kakaoVO.getName();
+        Optional<UserVO> userExist = userService.getMember(email);
 
-        UserVO user = new UserVO();
-        user.setUSER_EMAIL(email);
-        user.setUSER_NICKNAME(nickname);
-        user.setUSER_NAME(name);
+        if (userExist.isPresent()) {
+            userService.getKakao(email);
+            System.out.println("카카오 로그인: " + email);
+        } else {
+            UserVO userVO = new UserVO();
+            userVO.setUSER_EMAIL(email);
+            userVO.setUSER_NAME(name);
+            userVO.setUSER_NICKNAME(nickname);
+            userVO.setUSER_TYPE(userType);
 
-
-        userService.registerKakao(user);
-
-        session.setAttribute("user", email);
-
+            userService.kakaoRegister(userVO);
+            System.out.println("카카오 회원가입: " + email);
+            System.out.println("Email: " + email);
+            System.out.println("Name: " + name);
+            System.out.println("Nickname: " + nickname);
+        }
         return ResponseEntity.ok("카카오 회원가입 성공");
     }
 }
-
-
 
 

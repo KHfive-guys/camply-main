@@ -1,6 +1,7 @@
 package com.camply.user.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.camply.camp.board.vo.BoardVO;
 import com.camply.user.security.JwtTokenProvider;
@@ -103,6 +104,16 @@ public class UserController {
 			return ResponseEntity.ok(userVO);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("유저 정보 가져오기 실패: " + user_id);
+		}
+	}
+
+	@GetMapping("/kakao/{user_email}")
+	public ResponseEntity<?> getUserById(@PathVariable String user_email) {
+		try {
+			UserVO userVO = userservice.getKakao(user_email);
+			return ResponseEntity.ok(userVO);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("유저 정보 가져오기 실패: " + user_email);
 		}
 	}
 

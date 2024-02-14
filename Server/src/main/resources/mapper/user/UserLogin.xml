@@ -15,4 +15,5 @@
     <select id="findByEmail" parameterType="com.camply.user.vo.UserLoginVO">
         SELECT * FROM USER_INFO WHERE USER_EMAIL = #{USER_EMAIL}
     </select>
+
 </mapper>

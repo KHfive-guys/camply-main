@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.camply.user.dao.UserDao;
 import com.camply.user.vo.UserVO;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -25,16 +27,19 @@ public class UserService {
 		userdao.managerRegister(userVO);
 	}
 
-	public void registerKakao(UserVO userVO) {
-		userdao.emailRegister(userVO);
+	public void kakaoRegister(UserVO userVO) {
+		userdao.kakaoRegister(userVO);
 	}
-
 	public UserVO getMemberByUsername(String USER_EMAIL) {
 		return userdao.selectEmail(USER_EMAIL);
 	}
 
 	public UserVO getUserVOByUsername(String USER_EMAIL) {
 		return userdao.selectEmail(USER_EMAIL);
+	}
+
+	public UserVO getKakao(String USER_EMAIL) {
+		return userdao.getKakao(USER_EMAIL);
 	}
 
 	public Long getUserIdFromUserVO(UserVO userVO) {
@@ -52,4 +57,16 @@ public class UserService {
 	public void updateUserById(UserVO user) {
 		userdao.updateUserById(user);
 	}
+
+	public Optional<UserVO> getMember(String userEmail) {
+		UserVO user = userdao.selectEmail(userEmail);
+		if (user == null) {
+			// 사용자가 존재하지 않는 경우, Optional.empty()를 반환합니다.
+			return Optional.empty();
+		} else {
+			// 사용자가 존재하는 경우, 해당 사용자를 Optional.of()로 감싸 반환합니다.
+			return Optional.of(user);
+		}
+	}
+
 }

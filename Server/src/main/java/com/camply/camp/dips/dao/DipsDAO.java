@@ -1,10 +1,14 @@
 package com.camply.camp.dips.dao;
 
-import com.camply.camp.board.vo.BoardVO;
 import org.apache.ibatis.annotations.Mapper;
+
+import com.camply.camp.dips.vo.DipsVO;
 
 @Mapper
 public interface DipsDAO {
-    void insertCampDips(BoardVO boardVO);
-    void deleteCampDips(Long camp_id);
+	
+    void insertCampDips(DipsVO dipsvo);
+    void deleteCampDips(DipsVO dipsvo);
+    
+    DipsVO selectCampDips(DipsVO dipsvo);
 }
