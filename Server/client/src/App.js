@@ -13,6 +13,7 @@ import GeneralRegister from './Component/pages/common/GeneralRegister';
 import ManagerRegister from './Component/pages/common/ManagerRegister';
 import GeneralEmailRegister from './Component/pages/common/GeneralEmailRegister';
 import ManagerEmailRegister from './Component/pages/common/ManagerEmailRegister';
+import ManagerKakaoRegister from './Component/pages/common/ManagerKakaoRegister';
 import Login from './Component/pages/common/Login';
 import Preloader from './Pre';
 import Navbar from './Component/pages/camp/CampNavbar';
@@ -222,6 +223,10 @@ function App() {
         <Route
           path="/register/manager/email"
           element={<ManagerEmailRegister />}
+        />
+         <Route
+          path="/register/manager/kakao"
+          element={<ManagerKakaoRegister />}
         />
 
         <Route path="/login" element={<Login />} />

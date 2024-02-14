@@ -10,6 +10,7 @@ import tentIMG from "../../../img/텐트.png";
 import marker from "../../../img/마커.png";
 import copyIMG from "../../../img/공유.png";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import noImage from "../../../img/펜션.png";
 
 
 const parseJwt = (token) => {
@@ -186,7 +187,7 @@ function CampBoardDetail() {
         .delete(`http://localhost:8080/camp/board/delete/${camp_id}`)
         .then(() => {
           alert("삭제되었습니다.");
-          navigate("/camp/board/all");
+          navigate("/camp");
         })
         .catch((error) => {
           alert("게시글 삭제 실패: " + error.response.data.message);
@@ -366,7 +367,7 @@ function CampBoardDetail() {
             }}
           />
         ) : (
-          <p>이미지가 없습니다.</p>
+          <img src={noImage} />
         )}
         <button className="button" onClick={handleNextPage}>{<FaAngleRight size={30} />}</button>
       </div>
