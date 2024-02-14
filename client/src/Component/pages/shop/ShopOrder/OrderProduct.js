@@ -3,6 +3,7 @@ import axios from 'axios';
 import { NavDropdown } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
 import Nav from '../../camp/CampNavbar';
+import '../css/ShopSell/OrderProduct.css';
 import OrderMangement from '../../../img/Seller/주문관리.png';
 import {
   BrowserRouter as Router,
@@ -15,12 +16,14 @@ import {
 const OrderProduct = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true); // 상품 조회 시 0번째에서 1번째로 넘어가기 위한 로딩 변수
-  const [selectedProducts, setSelectedProducts] = useState([]); // 선택된 제품을 저장할 상태 변수
-  const [selectAll, setSelectAll] = useState(false); // 전체 선택 상태
   const [itemsPerPage, setItemsPerPage] = useState(20); // 페이지당 표시할 아이템 수
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [pageCount, setPageCount] = useState(0);
   const token = localStorage.getItem('yourTokenKey'); // 토큰을 로컬 스토리지에서 가져옵니다.
+  const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태
+  const [searchType, setSearchType] = useState('productName'); // 검색 유형 상태 초기화
+  // const [selectedProducts, setSelectedProducts] = useState([]); // 선택된 제품을 저장할 상태 변수
+  // const [selectAll, setSelectAll] = useState(false); // 전체 선택 상태
   //주문 리스트 조회
   useEffect(() => {
     const fetchOrders = async () => {
@@ -48,6 +51,46 @@ const OrderProduct = () => {
 
     fetchOrders();
   }, [itemsPerPage, token]);
+
+  // 검색 유형 변경 핸들러
+  const handleSearchTypeChange = (event) => {
+    setSearchType(event.target.value);
+    setSearchTerm(''); // 검색 유형이 변경되면 검색어 초기화
+  };
+
+  // 검색어 변경 핸들러
+  const handleSearchTermChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchSubmit = async () => {
+    setLoading(true); // 검색 시작 시 로딩 상태 활성화
+    try {
+      let response;
+      if (
+        searchType === 'productName' ||
+        searchType === 'orderOrdererName' ||
+        searchType === 'orderNo'
+      ) {
+        // 검색 유형에 따른 URL 매개변수 설정
+        response = await axios.get(
+          `http://localhost:8080/shop/mypage/search/orders?searchType=${searchType}&searchTerm=${encodeURIComponent(
+            searchTerm
+          )}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+      } else {
+        console.error(response);
+      }
+      setOrders(response.data); // 검색 결과로 주문 목록 업데이트
+      setPageCount(Math.ceil(response.data.length / itemsPerPage)); // 페이지 수 업데이트
+    } catch (error) {
+      console.error('검색 실패:', error);
+    }
+    setLoading(false); // 로딩 상태 비활성화
+  };
 
   // 페이지네이션 컨트롤 (예: 페이지 번호 변경)
   const handlePageClick = (data) => {
@@ -104,13 +147,47 @@ const OrderProduct = () => {
   return (
     <>
       <Nav />
-
       <div className="orderList">
         <h2>
           &nbsp;&nbsp;
           <img src={OrderMangement} alt="ordermanagement" />
           주문관리
         </h2>
+        <div className="searchTop">
+          <h3>&nbsp;주문내역검색</h3>
+          <hr></hr>
+        </div>
+        <div className="search-bar">
+          &nbsp; <label htmlFor="orderSearch">검색조건 </label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <select
+            name="searchType"
+            onChange={handleSearchTypeChange}
+            value={searchType}
+            class="form-select"
+          >
+            <option value="productName">상품명</option>
+            <option value="orderOrdererName">주문자</option>
+            <option value="orderNo">주문번호</option>
+          </select>
+          <div className="searchInput">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={handleSearchTermChange}
+              style={{ width: '330px', height: '38px' }}
+              class="form-control"
+            />
+          </div>
+          <button
+            onClick={handleSearchSubmit}
+            type="button"
+            class="btn btn-outline-secondary custom-btn"
+          >
+            검색
+          </button>
+        </div>
+
         <span className="itemsPerPage-position">
           <select value={itemsPerPage} onChange={handleItemsPerPageChange}>
             <option value={10}>10개씩 보기</option>
@@ -142,7 +219,7 @@ const OrderProduct = () => {
           </thead>
           <tbody>
             {currentItems
-              .filter((order) => order !== null && order !== undefined)
+              .filter((order) => order !== null && order !== null)
               .map((order, index) => (
                 <tr key={order.orderNo || index}>
                   {/* <td className="checkbox-td">
@@ -169,7 +246,7 @@ const OrderProduct = () => {
                     원
                   </td>
                   <td> {order.orderProductAmount}</td>
-                  <td> {order.product.formattedProductPrice}</td>
+                  <td> {order.product?.formattedProductPrice}</td>
                   {/* <td>
                   {order.orderStatus}
                   <NavDropdown title=" " id="basic-nav-dropdown">

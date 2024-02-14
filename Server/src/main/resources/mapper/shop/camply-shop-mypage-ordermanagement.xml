@@ -43,6 +43,7 @@
 			<result property="productCode" column="PRODUCT_CODE"/>
 		</association>
 	</resultMap>
+    <!--내 등록상품 주문정보 조회-->
 	<select id="getOrderList" resultMap="OrderListResultMap">
         SELECT
             o.ORDER_DATE, o.ORDER_NO, o.ORDER_ORDERER_NAME, o.PRODUCT_NAME, o.TOTAL_PRICE, o.ORDER_PRODUCT_AMOUNT, o.PRODUCT_PRICE
@@ -55,24 +56,36 @@
             o.ORDER_DATE DESC
     </select>
     
-	<!-- <select id="getOrderList" resultMap="OrderListResultMap">
-    SELECT
-        p.PRODUCT_ID, p.PRODUCT_NAME, p.PRODUCT_DESCRIPTION, p.PRODUCT_PRICE, p.PRODUCT_CATEGORY, p.PRODUCT_COLOR, p.PRODUCT_THUMBNAIL, p.PRODUCT_MAIN, p.PRODUCT_MAIN2, p.PRODUCT_MAIN3,  p.PRODUCT_CONTENT,  p.PRODUCT_CREATE_DATE, p.PRODUCT_STOCK,
-        p.USER_ID AS SELLER_ID,
-        o.ORDER_ID,
-        o.USER_ID AS BUYER_ID,
-        o.ORDER_ORDERER_NAME, o.ORDER_ORDERER_EMAIL, o.ORDER_ORDERER_PHONE, o.ORDER_RECEIVER_NAME, o.ORDER_RECEIVER_ADDRESS, o.ORDER_RECEIVER_ADDRESSDETAIL, o.ORDER_RECEIVER_PHONE, o.ORDER_RECEIVER_MESSAGE, o.ORDER_RECEIVER_DELIVERY_MESSAGE,
-        o.ORDER_PRODUCT_IMG, o.ORDER_PRODUCT_NAME, o.ORDER_PRODUCT_AMOUNT, o.ORDER_PRODCUT_QUANTITY, o.ORDER_DATE, o.ORDER_PRODUCT_PRICE, o.ORDER_STATUS
-    FROM
-        SHOP_PRODUCT p
-    INNER JOIN
-        SHOP_ORDER o ON p.PRODUCT_ID = o.PRODUCT_ID
-    WHERE
-        p.USER_ID = #{userId}
-    ORDER BY
-        o.ORDER_DATE DESC
-</select> -->
+	
+	<!-- 주문조회 중 상품명으로 검색 -->
+	<select id="selectOrdersBySellerAndProductName" parameterType="map" resultType="com.camply.shop.common.vo.OrderVO">
+	    SELECT 
+			o.ORDER_DATE, o.ORDER_NO, o.ORDER_ORDERER_NAME, o.PRODUCT_NAME, o.TOTAL_PRICE, o.ORDER_PRODUCT_AMOUNT, o.PRODUCT_PRICE
+		FROM SHOP_ORDER o
+		    JOIN SHOP_PRODUCT p ON o.PRODUCT_ID = p.PRODUCT_ID
+		    WHERE p.USER_ID = #{userId}
+	    AND p.PRODUCT_NAME LIKE '%' || #{productName} || '%'
+	</select>
 		
+	<!-- 주문조회 중 주문자명으로 검색 -->
+	<select id="selectOrdersBySellerAndOrderName" parameterType="map" resultType="com.camply.shop.common.vo.OrderVO">
+	    SELECT 
+			o.ORDER_DATE, o.ORDER_NO, o.ORDER_ORDERER_NAME, o.PRODUCT_NAME, o.TOTAL_PRICE, o.ORDER_PRODUCT_AMOUNT, o.PRODUCT_PRICE
+		FROM SHOP_ORDER o
+		    JOIN SHOP_PRODUCT p ON o.PRODUCT_ID = p.PRODUCT_ID
+		    WHERE p.USER_ID = #{userId}
+	    AND o.ORDER_ORDERER_NAME LIKE '%' || #{orderOrdererName} || '%'
+	</select>	
+	
+    <!-- 주문번호별 조회 -->
+    <select id="selectOrderByOrderNo" parameterType="map" resultMap="OrderListResultMap">
+	    SELECT
+	       o.ORDER_DATE, o.ORDER_NO, o.ORDER_ORDERER_NAME, o.PRODUCT_NAME, o.TOTAL_PRICE, o.ORDER_PRODUCT_AMOUNT, o.PRODUCT_PRICE
+	    FROM
+	        SHOP_ORDER o
+	        JOIN SHOP_PRODUCT p ON o.PRODUCT_ID = p.PRODUCT_ID
+	    WHERE
+	        o.ORDER_NO = #{orderNo}
+	        AND p.USER_ID = #{userId} 
+	</select>
 </mapper>
-
-<!--주문일, 주문번호(오더), 주문자, 상품명, 총결제금액, 상품금액, 주문상태(오더)-->
