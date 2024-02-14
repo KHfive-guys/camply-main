@@ -81,7 +81,7 @@ tbody tr:hover {
 
 .create-update-Product .form-group .form-control {
   flex: 0 0 72%; /* flex-grow, flex-shrink, flex-basis를 설정 */
-  width: 633px; /*상태창 크기 */
+  width: 631px; /*상태창 크기 */
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 4px;
