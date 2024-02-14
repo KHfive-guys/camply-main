@@ -157,6 +157,7 @@ function ManagerEmailRegister() {
         );
         if (response.ok) {
           console.log("Registration successful");
+          alert("일반 회원가입 완료!");
           navigate("/login");
         } else {
           console.error("Registration failed");
