@@ -38,8 +38,8 @@ public class UserService {
 		return userdao.selectEmail(USER_EMAIL);
 	}
 
-	public UserVO kakaoLogin(String USER_EMAIL) {
-		return userdao.kakaoLogin(USER_EMAIL);
+	public UserVO getKakao(String USER_EMAIL) {
+		return userdao.getKakao(USER_EMAIL);
 	}
 
 	public Long getUserIdFromUserVO(UserVO userVO) {

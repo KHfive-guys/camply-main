@@ -107,6 +107,16 @@ public class UserController {
 		}
 	}
 
+	@GetMapping("/kakao/{user_email}")
+	public ResponseEntity<?> getUserById(@PathVariable String user_email) {
+		try {
+			UserVO userVO = userservice.getKakao(user_email);
+			return ResponseEntity.ok(userVO);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("유저 정보 가져오기 실패: " + user_email);
+		}
+	}
+
 	@PutMapping("/update/{user_id}")
 	public void updateUserById(@PathVariable Long user_id, @RequestBody UserVO user) {
 		user.setUSER_ID(user_id);

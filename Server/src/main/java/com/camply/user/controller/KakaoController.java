@@ -31,7 +31,7 @@ public class KakaoController {
         Optional<UserVO> userExist = userService.getMember(email);
 
         if (userExist.isPresent()) {
-            userService.kakaoLogin(email);
+            userService.getKakao(email);
             System.out.println("카카오 로그인: " + email);
         } else {
             UserVO userVO = new UserVO();
