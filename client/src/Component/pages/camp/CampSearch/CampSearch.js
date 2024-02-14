@@ -24,8 +24,8 @@ function SearchPage() {
 
   const [searchCamp, setSearchCamp] = useState({
     CAMP_ID: '0',
-    CAMP_SELECT: '글램핑',
-    CAMP_LOCATION: '서울',
+    CAMP_SELECT: '전체',
+    CAMP_LOCATION: '전체',
     CAMP_ADULT: '1',
     CAMP_CHILD: '1',
     CAMP_CHECKIN: year + '-' + month + '-' + day,
@@ -89,6 +89,7 @@ function SearchPage() {
                         });
                       }}
                     >
+                      <option value='전체'>전체</option>
                       <option value='글램핑'>글램핑</option>
                       <option value='펜션'>펜션</option>
                       <option value='텐트'>텐트</option>
@@ -109,6 +110,7 @@ function SearchPage() {
                         });
                       }}
                     >
+                      <option value='전체'>전체</option>
                       <option value='서울'>서울</option>
                       <option value='경기'>경기</option>
                       <option value='인천'>인천</option>
