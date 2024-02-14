@@ -94,7 +94,7 @@ function CampBoardTent() {
                 key={board.camp_id}
                 onClick={() => handleRowClick(board.camp_id)}
               >
-                <img src={tentIMG} alt='텐트' id='tentIMG'></img>
+                <img src={board.camp_images.split(";")} alt='텐트' id='tentIMG'></img>
                <div id='firstTentBox'>
                 <p id='tentType'>{board.camp_select}</p>
                 <p id='tentName'>{board.camp_name}</p>
