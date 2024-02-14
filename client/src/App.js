@@ -8,7 +8,6 @@ import {
   Navigate,
   Link,
 } from 'react-router-dom';
-
 import Register from './Component/pages/common/Register';
 import GeneralRegister from './Component/pages/common/GeneralRegister';
 import ManagerRegister from './Component/pages/common/ManagerRegister';
@@ -54,7 +53,8 @@ import ReviewWriter from './Component/pages/shop/ShopDetail/ShopReview/ReviewWri
 import ShopCart from './Component/pages/shop/ShopCart';
 import OrderCart from './Component/pages/shop/ShopOrder/Order/OrderCart';import MyPage from './Component/pages/common/MyPage';
 import EditUser from './Component/pages/common/EditUser';
-import campMainImg from './Component/img/MainImg/메인페이지 이미지2.jpeg';
+import campMainImg from './Component/img/MainImg/ai-generated-8541462_1280.jpg';
+import ShopMainImg from './Component/img/MainImg/camping-7947056_1280.jpg'
 import CampBoard from './Component/pages/camp/CampBoard/CampBoard';
 import CampBoardAll from './Component/pages/camp/CampBoard/CampBoardAll';
 import CampBoardDetail from './Component/pages/camp/CampBoard/CampBoardDetail';
@@ -75,32 +75,31 @@ import OrderList from './Component/pages/shop/ShopOrder/Order/OrderMain';
 import './Component/pages/camp/CampStyle.css';
 import './CampApp.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 function App() {
   const [load, upadateLoad] = useState(true);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       upadateLoad(false);
     }, 1200);
-
     return () => clearTimeout(timer);
   }, []);
-
   // 탭 상태 관리
   const [activeTab, setActiveTab] = useState('list');
-
   return (
     <Router>
       <Routes>
         <Route
           path="/"
           element={
+            <div style={{marginTop:'100px',marginBottom:'200px'}}>
             <div className="container text-center mt-5">
-              <h1 className="display-4">
+            <h1 className='main-camply'>
+              Camply
+            </h1>
+              <h2 className="display-4">
                 안녕하세요. 캠플리에 오신걸 환영합니다.
-              </h1>
-              <p className="lead">캠핑 예약 또는 쇼핑 몰로 이동하세요.</p>
+              </h2>
+              <p style={{marginBottom:'100px'}} className="lead">캠핑 예약 또는 쇼핑 몰로 이동하세요.</p>
               <div className="d-flex justify-content-center">
                 <Link to="/camp" className="btn btn-primary m-2">
                   <img
@@ -111,10 +110,9 @@ function App() {
                   />
                   <p>캠핑 예약</p>
                 </Link>
-
                 <Link to="/shop/main" className="btn btn-success m-2">
                   <img
-                    src={campMainImg}
+                    src={ShopMainImg}
                     alt="Shopping Image"
                     className="img-thumbnail"
                     style={{ width: '200px', height: '200px' }}
@@ -123,6 +121,7 @@ function App() {
                 </Link>
               </div>
             </div>
+          </div>
           }
         />
         <Route

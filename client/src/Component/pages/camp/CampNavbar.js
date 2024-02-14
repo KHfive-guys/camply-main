@@ -21,6 +21,7 @@ import { LuUserCircle2 } from "react-icons/lu";
 import { VscInfo } from "react-icons/vsc";
 import axios from "axios";
 
+
 function NavBar() {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -176,7 +177,7 @@ function NavBar() {
             src={logo}
             className="logo"
             alt="brand"
-            style={{ width: "250px", height: "auto" }}
+            style={{ width: '130px', height: 'auto' }}
           />
         </Navbar.Brand>
 
