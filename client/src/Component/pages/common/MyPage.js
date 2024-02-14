@@ -13,7 +13,43 @@ function MyPage() {
   const [password, setPassword] = useState("");
   const [passwordVerified, setPasswordVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [userType, setUserType] = useState("");
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("yourTokenKey");
+    if (token) {
+        setLoggedIn(true);
+        axios
+            .get("https://kapi.kakao.com/v2/user/me", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((userInfoResponse) => {
+                const email = userInfoResponse.data.kakao_account.email;
+                console.log("User Email:", email);
+                axios
+                    .get(`http://localhost:8080/kakao/${email}`)
+                    .then((response) => {
+                        const userType = response.data.USER_TYPE;
+                        console.log("User Type:", userType);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching user type:", error);
+                    });
+            })
+            .catch((error) => {
+                console.error("Error fetching user information:", error);
+            });
+    }
+}, []);
+
+  
+  
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");

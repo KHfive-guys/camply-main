@@ -42,6 +42,10 @@
 		SELECT * FROM USER_INFO WHERE USER_ID = #{USER_ID}
 	</select>
 
+	<select id="getKakao" resultMap="UserVO" parameterType="String">
+		SELECT * FROM USER_INFO WHERE USER_EMAIL = #{USER_EMAIL}
+	</select>
+
 	<delete id="deleteUserById" parameterType="Long">
 		DELETE FROM USER_INFO WHERE USER_ID = #{USER_ID}
 	</delete>
