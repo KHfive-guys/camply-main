@@ -351,7 +351,7 @@ function NavBar() {
                   <Nav.Item>
                     <Nav.Link
                       as={Link}
-                      to="/myCamping"
+                      to="/mypage"
                       onClick={() => updateExpanded(false)}
                     >
                       <LuUserCircle2 style={{ marginBottom: "2px" }} />{" "}
@@ -364,7 +364,7 @@ function NavBar() {
                     <Nav.Item>
                       <Nav.Link
                         as={Link}
-                        to="/sellermypage"
+                        to="/mypage"
                         onClick={() => updateExpanded(false)}
                       >
                         <LuUserCircle2 style={{ marginBottom: "2px" }} />{" "}
