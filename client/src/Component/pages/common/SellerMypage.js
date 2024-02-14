@@ -53,11 +53,15 @@ function SellerMypage() {
   }, []);
 
   const parseUserIdFromToken = (token) => {
-    const payloadBase64 = token.split(".")[1];
-    const payload = JSON.parse(atob(payloadBase64));
-    return payload.user_id;
+    try {
+      const payloadBase64 = token.split('.')[1];
+      const payload = JSON.parse(atob(payloadBase64));
+      return payload.user_id;
+    } catch (error) {
+      console.error("parseUserIdFromToken", error);
+      return null;
+    }
   };
-
   if (loading) {
     return <p>Loading...</p>;
   }
