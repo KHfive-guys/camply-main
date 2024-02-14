@@ -18,7 +18,6 @@ public class DipsService {
     private DipsDAO dipsDAO;
     
     public void addCampDips(DipsVO dipsvo) {
-
         dipsDAO.insertCampDips(dipsvo);
     }
 
@@ -28,7 +27,6 @@ public class DipsService {
     
     // 찜하기 찾기
     public DipsVO selectCampDips(DipsVO dipsvo) {
-    	
     	return dipsDAO.selectCampDips(dipsvo);
     }
 }

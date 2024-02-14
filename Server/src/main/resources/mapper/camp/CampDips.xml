@@ -5,7 +5,6 @@
     <resultMap id="CampDipsMap" type="com.camply.camp.dips.vo.DipsVO">
         <id column="USER_ID" property="USER_ID"/>
         <result column="CAMP_ID" property="CAMP_ID"/>
-        <result column="STATUS" property="STATUS"/>
     </resultMap>
 
     <insert id="insertCampDips" parameterType="com.camply.camp.dips.vo.DipsVO">

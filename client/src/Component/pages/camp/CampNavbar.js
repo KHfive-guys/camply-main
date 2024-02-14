@@ -112,6 +112,7 @@ function NavBar() {
         .then((response) => {
           console.log('User Data Response:', response.data);
           setUserData(response.data || {});
+          console.log('User Data Response USER_TYPE:', response.data.USER_TYPE);
           setUserType(response.data.USER_TYPE);
         })
         .catch((error) => {
@@ -156,7 +157,7 @@ function NavBar() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to={isCampPath ? '/camp' : '/shop/main'}
+                to="/camp"
                 onClick={() => updateExpanded(false)}
               >
                 <AiOutlineHome style={{ marginBottom: '2px' }} /> 홈페이지
@@ -276,15 +277,37 @@ function NavBar() {
             )}
 
             {isLoggedIn && (
-              <Nav.Item>
-                <Nav.Link
-                  as={Link}
-                  to="/mypage"
-                  onClick={() => updateExpanded(false)}
-                >
-                  <LuUserCircle2 style={{ marginBottom: '2px' }} /> 마이페이지
-                </Nav.Link>
-              </Nav.Item>
+              <>
+                {isLoggedIn && userType === 'General' && (
+                  <Nav.Item>
+                  <Nav.Link
+
+
+                    as={Link}
+                    to="/myCamping"
+                    onClick={() => updateExpanded(false)}
+                  >
+                    <LuUserCircle2 style={{ marginBottom: '2px' }} /> 마이페이지
+                  </Nav.Link>
+                  </Nav.Item>
+                )}
+                <>
+                {isLoggedIn && userType === 'Admin' && (
+                  <Nav.Item>
+                  <Nav.Link
+
+
+                    as={Link}
+                    to="/sellermypage"
+                    onClick={() => updateExpanded(false)}
+                  >
+                    <LuUserCircle2 style={{ marginBottom: '2px' }} /> 마이페이지
+                  </Nav.Link>
+                  </Nav.Item>
+                )}
+                </>
+              </>
+             
             )}
 
             <Nav.Item>

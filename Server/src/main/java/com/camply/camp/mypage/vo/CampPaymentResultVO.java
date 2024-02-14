@@ -35,6 +35,6 @@ public class CampPaymentResultVO {
 	@JsonProperty("COMPLETE_PAYMENT")
     private Date COMPLETE_PAYMENT;
 	// 상품 결제 가격
-	@JsonProperty("TOTLE_PRICE")
-    private String TOTLE_PRICE;
+	@JsonProperty("TOTAL_PRICE")
+    private String TOTAL_PRICE;
 }

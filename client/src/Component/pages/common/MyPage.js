@@ -142,23 +142,13 @@ function MyPage() {
         <div id="MypageContainer">
           <div id="mypagebuttonbox">
             <div>
-              <p id="MypagecampinfoTitle">쇼핑정보</p>
+              <p id="MypagecampinfoTitle">캠핑정보</p>
               <button
                 id="Mypagecampinfo"
                 variant="primary"
-                onClick={() => navigate("/myshopping")}
-              >
-                <span style={{ color: "orange" }}>▶</span> 쇼핑정보
-              </button>
-            </div>
-            <div>
-              <p id="MypagecampinfoTitle">캠핑정보</p>
-              <button
-                id="Mypageinfo"
-                variant="primary"
                 onClick={() => navigate("/mycamping")}
               >
-                캠핑예약내역
+                <span style={{ color: "orange" }}>▶</span> 캠핑예약내역
               </button>
             </div>
             <div>
@@ -166,8 +156,7 @@ function MyPage() {
                 id="Mypageinfo"
                 variant="primary"
                 onClick={() => navigate("/MyLikeList")}
-              >
-                캠핑 찜 목록
+              >   캠핑 찜 목록
               </button>
             </div>
           </div>

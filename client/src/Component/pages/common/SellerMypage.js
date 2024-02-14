@@ -13,25 +13,13 @@ function SellerMypage() {
   const [password, setPassword] = useState("");
   const [passwordVerified, setPasswordVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  
+  
+  const [campList, setCampList] = useState([]);
+
   const navigate = useNavigate();
 
-  // 캠핑게시글정보 가져오기
-  const [campList, setCampList] = useState([]);
-  const handleShowCamp = () => {
-    axios
-      .delete(`http://localhost:8080/camp/Mypage/campUploadList`)
-      .then(() => {
-        setCampList({});
-      })
-      .catch((error) => {
-        console.error("캠핑정보를 불러오지 못했습니다 :", error);
-      });
-  };
-
-  useEffect(() => {
-    handleShowCamp();
-  }, []);
-
+  
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
 
@@ -48,6 +36,17 @@ function SellerMypage() {
           console.log("User Data Response:", response.data);
           setUserData(response.data || {});
           setLoading(false);
+          axios.post(`http://localhost:8080/camp/Mypage/campUploadList`, {
+            USER_ID: USER_ID,
+          })
+          .then((responseData) => {
+           setCampList(responseData.data);
+          })
+          .catch ((error) => {
+            console.log("항목조회실패" + error.response.data.message);
+          });
+          
+          
         })
         .catch((error) => {
           console.error("사용자 정보 가져오기 실패:", error);
@@ -160,36 +159,24 @@ function SellerMypage() {
         <div id="MypageContainer">
           <div id="mypagebuttonbox">
             <div>
-              <p id="MypagecampinfoTitle">쇼핑정보</p>
+              <p id="MypagecampinfoTitle">캠핑정보</p>
               <button
                 id="Mypagecampinfo"
                 variant="primary"
-                onClick={() => navigate("/myshopping")}
-              >
-                <span style={{ color: "orange" }}>▶</span> 게시글 내역
-              </button>
-            </div>
-            <div>
-              <p id="MypagecampinfoTitle">캠핑정보</p>
-              <button
-                id="Mypageinfo"
-                variant="primary"
                 onClick={() => navigate("/mycamping")}
-              >
-                게시글 내역
+              > <span style={{ color: "orange" }}>▶</span> 캠핑 등록 내역
               </button>
             </div>
           </div>
           <div>
-            <h5 id="reserveListTitle">캠핑 게시글 내역</h5>
+            <h5 id="reserveListTitle">캠핑 등록 내역</h5>
             {campList.map((camp) => (
               <div key={camp.CAMP_ID} id="mypagereserveList">
-                <p>캠핑장 이름 : {camp.CAMP_NAME}</p>
+                <p>{camp.CAMP_NAME}</p>
                 <div></div>
                 <div id="reservesecondBox">
-                  <span> 지역 : {camp.CAMP_LOCATION}</span>
-                  <span> 가격 : {camp.CAMP_PRICE}</span>
-                  <img src={camp.CAMP_IMAGES} alt="캠프사진" />
+                  <span> {camp.CAMP_LOCATION}</span><br/>
+                  <span> (1박 기준) {camp.CAMP_PRICE} 원</span>
                 </div>
               </div>
             ))}

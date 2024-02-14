@@ -18,26 +18,14 @@ function MyPage() {
 
   // 캠핑정보 가져오기
   const [campList, setCampList] = useState([]);
-  // 캠핑좋아요정보 가져오기
-  const handleShowLikeList = () => {
-    axios
-      .delete(`http://localhost:8080/camp/Mypage/campDipsList`)
-      .then(() => {
-        setCampList({});
-      })
-      .catch((error) => {
-        console.error("캠핑정보를 불러오지 못했습니다 :", error);
-      });
-  };
-  useEffect(() => {
-    handleShowLikeList();
-  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
 
     if (token) {
       const USER_ID = parseUserIdFromToken(token);
+
+      console.log("USER_ID : " + USER_ID)
 
       axios
         .get(`http://localhost:8080/api/user/get/${USER_ID}`, {
@@ -49,6 +37,18 @@ function MyPage() {
           console.log("User Data Response:", response.data);
           setUserData(response.data || {});
           setLoading(false);
+
+          axios.post(`http://localhost:8080/camp/Mypage/campDipsList`, {
+            USER_ID: USER_ID,
+          })
+          .then((responseData) => {
+           setCampList(responseData.data);
+
+           console.log("test : " + responseData.data[0].USER_ID);
+          })
+          .catch ((error) => {
+            console.log("항목조회실패" + error.response.data.message);
+          });
         })
         .catch((error) => {
           console.error("사용자 정보 가져오기 실패:", error);
@@ -160,16 +160,6 @@ function MyPage() {
         <div id="MypageContainer">
           <div id="mypagebuttonbox">
             <div>
-              <p id="MypagecampinfoTitle">쇼핑정보</p>
-              <button
-                id="Mypageinfo"
-                variant="primary"
-                onClick={() => navigate("/myshopping")}
-              >
-                쇼핑정보
-              </button>
-            </div>
-            <div>
               <p id="MypagecampinfoTitle">캠핑정보</p>
               <button
                 id="Mypageinfo"
@@ -189,18 +179,32 @@ function MyPage() {
           </div>
           <div>
             <h5 id="reserveListTitle">캠핑 찜 목록</h5>
-
-            {campList.map((camp) => (
-              <div key={camp.CAMP_RESERVATION} id="mypagereserveList">
-                <p>캠핑장 이름 : {camp.CAMP_NAME}</p>
-                <div></div>
-                <div id="reservesecondBox">
-                  <span> 체크인 : {camp.CAMP_CHECKIN}</span>~
-                  <span> 체크아웃 : {camp.CAMP_CHECKOUT}</span>
-                  <p id="reserveResult">결제금액 : {camp.TOTLE_PRICE}원</p>
+            { campList.length > 0 ?
+             <div>
+            {
+            campList.map((camp) => (
+               
+              <div key={camp.USER_ID}>
+               {camp.campDipsProductList.map((product) => (
+                <div key={product.CAMP_ID} id="mypagereserveList">
+                  <p>{product.CAMP_NAME}</p>
+                  <div></div>
+                  <div id="reservesecondBox">
+                    <p id="reserveResult">가격 : (1박 기준) {product.CAMP_PRICE}원</p>
+                  </div>
                 </div>
+              ))}
               </div>
+              
             ))}
+             </div>
+                :
+                <div>
+                
+                    <p style={{margin:'200px' , fontSize:'20px'}}>찜한 목록이 없습니다.</p>
+                
+                </div>
+              } 
           </div>
         </div>
       </div>

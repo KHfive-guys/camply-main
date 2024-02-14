@@ -12,7 +12,7 @@
 	        <result property="CAMP_CHECKIN" column="CAMP_CHECKIN"/>
 	        <result property="CAMP_CHECKOUT" column="CAMP_CHECKOUT"/>
 	        <result property="COMPLETE_PAYMENT" column="COMPLETE_PAYMENT"/>
-	        <result property="TOTLE_PRICE" column="TOTLE_PRICE"/>
+	        <result property="TOTAL_PRICE" column="TOTAL_PRICE"/>
     	</resultMap>
     	
     	<!-- 업로드리스트 -->
@@ -37,11 +37,10 @@
 		    <result property="CAMP_PRICE" column="CAMP_PRICE"/>
 		</resultMap>
 	        
-	        
     
     	<!-- 사용자 각각의 예약한 캠핑장정보를 개별적으로 불러와야 하기때문에 USER_ID를 조건으로 건다-->
     	<select id="pamentResultList" resultMap="PaymentResultMap" parameterType="com.camply.camp.mypage.vo.CampPaymentResultVO">
-    		SELECT * FROM CAMP_RESERVATION WHERE USER_ID = #{USER_ID}
+    		SELECT * FROM CAMP_RESERVATION WHERE USER_ID = #{USER_ID} ORDER BY COMPLETE_PAYMENT DESC
     	</select>
     	
     	<!-- 판매자가 업로드한 캠핑장 정보를 개별적으로 불러와야 하기때문에 USER_ID를 조건으로 건다 -->

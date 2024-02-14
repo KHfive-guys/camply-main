@@ -33,13 +33,6 @@ function CampBoardDetail() {
 
   const handleHeart = () => {
     setLike(!like);
-
-    const userId = parseJwt(userToken)?.user_id;
-    
-    console.log("userId : " + USER_ID);
-    console.log("userToken : " + userToken);
-    console.log("like : " + like);
-    console.log("camp_id : " + camp_id);
     axios
       .post(`http://localhost:8080/camp/board/changDips`, {
         CAMP_ID: camp_id,
@@ -154,10 +147,8 @@ function CampBoardDetail() {
             })
             .then((response) => {
               if (response.data === true) {
-                console.log("true");
                 setLike(!like);
               } else {
-                console.log("false");
                 setLike(like);
               }
             })
