@@ -21,28 +21,32 @@ public class KakaoController {
     private UserService userService;
 
     @PostMapping("/getKakaoUserData")
-    public ResponseEntity<String> getKakaoUserData(@RequestBody Map<String, Object> data) {
-        String email = (String) data.get("email");
-        String name = (String) data.get("name");
-        String nickname = (String) data.get("nickname");
-        String userType = (String) data.get("userType");
-        String token = (String) data.get("access_token");
+    public ResponseEntity<String> getKakaoUserData(@RequestBody KakaoVO kakaoData) {
+        String email = kakaoData.getEmail();
+        String name = kakaoData.getName();
+        String nickname = kakaoData.getNickname();
+        String userType = kakaoData.getUserType();
+        String access_token = kakaoData.getAccess_token();
 
-        UserVO userVO = new UserVO();
-        userVO.setUSER_EMAIL(email);
-        userVO.setUSER_NAME(name);
-        userVO.setUSER_NICKNAME(nickname);
-        userVO.setUSER_TYPE(userType);
-        userVO.setUSER_PASSWORD(token);
+        Optional<UserVO> userExist = userService.getMember(email);
 
-        userService.kakaoRegister(userVO);
+        if (userExist.isPresent()) {
+            userService.kakaoLogin(email);
+            System.out.println("카카오 로그인: " + email);
+        } else {
+            UserVO userVO = new UserVO();
+            userVO.setUSER_EMAIL(email);
+            userVO.setUSER_NAME(name);
+            userVO.setUSER_NICKNAME(nickname);
+            userVO.setUSER_TYPE(userType);
 
-        System.out.println("Email: " + email);
-        System.out.println("Name: " + name);
-        System.out.println("Nickname: " + nickname);
-        System.out.println("Token: " + token);
-
-        return ResponseEntity.ok("Kakao user registration Success");
+            userService.kakaoRegister(userVO);
+            System.out.println("카카오 회원가입: " + email);
+            System.out.println("Email: " + email);
+            System.out.println("Name: " + name);
+            System.out.println("Nickname: " + nickname);
+        }
+        return ResponseEntity.ok("카카오 회원가입 성공");
     }
 }
 

@@ -67,7 +67,7 @@ public class camplyUserSecurityConfig {
 											String profileNickname = oauth2User.getAttribute("profile_nickname");
 											String name = oauth2User.getAttribute("name");
 
-											response.sendRedirect("/login");
+											response.sendRedirect("/");
 										} else {
 										}
 									} else {
@@ -164,7 +164,7 @@ public class camplyUserSecurityConfig {
 				.userInfoUri("https://kapi.kakao.com/v2/user/me")
 				.userNameAttributeName("id")
 				.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-				.scope("account_email", "profile_nickname", "name", "access_token")
+				.scope("account_email", "profile_nickname", "name")
 				.build();
 	}
 }

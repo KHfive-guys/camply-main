@@ -38,6 +38,10 @@ public class UserService {
 		return userdao.selectEmail(USER_EMAIL);
 	}
 
+	public UserVO kakaoLogin(String USER_EMAIL) {
+		return userdao.kakaoLogin(USER_EMAIL);
+	}
+
 	public Long getUserIdFromUserVO(UserVO userVO) {
 		return userVO.getUSER_ID();
 	}
@@ -52,6 +56,17 @@ public class UserService {
 
 	public void updateUserById(UserVO user) {
 		userdao.updateUserById(user);
+	}
+
+	public Optional<UserVO> getMember(String userEmail) {
+		UserVO user = userdao.selectEmail(userEmail);
+		if (user == null) {
+			// 사용자가 존재하지 않는 경우, Optional.empty()를 반환합니다.
+			return Optional.empty();
+		} else {
+			// 사용자가 존재하는 경우, 해당 사용자를 Optional.of()로 감싸 반환합니다.
+			return Optional.of(user);
+		}
 	}
 
 }

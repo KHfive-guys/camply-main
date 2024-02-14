@@ -11,9 +11,11 @@ import lombok.*;
 @Data
 public class KakaoVO{
 
-    private String account_email;
-    private String profile_nickname;
-    private String name	;
+    private String email;
+    private String name;
+    private String nickname;
+    private String userType;
+    private String access_token;
 
 
 }

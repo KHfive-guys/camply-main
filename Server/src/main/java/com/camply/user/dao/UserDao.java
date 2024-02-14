@@ -11,6 +11,7 @@ public interface UserDao {
 	void kakaoRegister(@Param("uservo") UserVO uservo);
 	void managerRegister(UserVO Uservo);
 	UserVO selectEmail(String USER_EMAIL);
+	UserVO kakaoLogin(String USER_EMAIL);
 	void deleteUserById(Long USER_ID);
 	UserVO selectUserById(Long USER_ID);
 	void updateUserById(UserVO Uservo);
