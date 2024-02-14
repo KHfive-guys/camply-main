@@ -16,11 +16,10 @@
 .Reserve-container {
   width : 100%;
   display: flex;
-  justify-content: center;
   margin-top: 200px;
   border: 2px solid #d6d5d5; /* Adjusted border width to 1px */
-  padding-left: 17px;
-  padding-right: 350px;
+  padding-left: 20%;
+  padding-right: 20%;
   margin: 0;
 }
 
