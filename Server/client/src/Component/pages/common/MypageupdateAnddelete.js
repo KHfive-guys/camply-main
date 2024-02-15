@@ -140,43 +140,15 @@ function MyPage() {
       </Container>
 
       <div className="body-mypage">
-        <h1 className="mb-4" id="mypageMainTitle">
-          마이페이지
-        </h1>
-        <p>안녕하세요.</p>
-        <p>{userData.USER_NAME}님 </p>
+        <div id="Check">
+          <h1 className="mb-4" id="mypageMainTitle">
+            마이페이지
+          </h1>
+          <p>안녕하세요.</p>
+          <p id="updateUserinfo">{userData.USER_NAME}님 </p>
+        </div>
 
         <div id="MypageContainer">
-          <div id="mypagebuttonbox">
-            <div>
-              <p id="MypagecampinfoTitle">쇼핑정보</p>
-              <button
-                id="Mypageinfo"
-                variant="primary"
-                onClick={() => navigate("/myshopping")}
-              >
-                {" "}
-                쇼핑정보
-              </button>
-            </div>
-            <div>
-              <p id="MypagecampinfoTitle">캠핑정보</p>
-              <button
-                id="Mypageinfo"
-                variant="primary"
-                onClick={() => navigate("/mycamping")}
-              >
-                캠핑예약내역
-              </button>
-              <button
-                id="Mypageinfo"
-                variant="primary"
-                onClick={() => navigate("/MyLikeList")}
-              >
-                캠핑 찜 목록
-              </button>
-            </div>
-          </div>
           <div>
             <div>
               <h4 id="MypageTitle">내정보 수정</h4>
