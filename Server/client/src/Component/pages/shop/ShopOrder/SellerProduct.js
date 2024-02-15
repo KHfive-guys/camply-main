@@ -336,13 +336,13 @@ const SellerProduct = () => {
                             )
                           }
                           value={ShopProduct.productStatus}
-                          className="form-control"
+                          class="form-select"
                         >
                           <option value="판매중">판매중</option>
                           <option value="판매중지">판매중지</option>
                           <option value="품절">품절</option>
                         </select>
-                        <div className="dropdown-icon">&#9660;</div>
+                       
                       </div>
                     </div>
                   </td>

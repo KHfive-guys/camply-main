@@ -91,36 +91,35 @@ function App() {
         <Route
           path="/"
           element={
-            <div style={{marginTop:'100px',marginBottom:'200px'}}>
-            <div className="container text-center mt-5">
-            <h1 className='main-camply'>
-              Camply
-            </h1>
-              <h2 style={{marginBottom:'70px'}} className="display-4">
-                안녕하세요. 캠플리에 오신걸 환영합니다.
-              </h2>
-              <div className="d-flex justify-content-center">
-                <Link to="/camp" className="btn btn-primary m-2">
-                  <img
-                    src={campMainImg}
-                    alt="Camping Image"
-                    className="img-thumbnail"
-                    style={{ width: '200px', height: '200px' }}
-                  />
-                  <p>캠핑 예약</p>
-                </Link>
-                <Link to="/shop/main" className="btn btn-success m-2">
-                  <img
-                    src={ShopMainImg}
-                    alt="Shopping Image"
-                    className="img-thumbnail"
-                    style={{ width: '200px', height: '200px' }}
-                  />
-                  <p>쇼핑몰</p>
-                </Link>
+            <div style={{ marginTop: '150px', marginBottom: '8%' }}>
+              <div className="container text-center mt-5">
+                <h1 className='main-camply'>
+                  Camply<p className='main-camply-p' >Camp is your life</p>
+                </h1>
+                <h2 style={{marginBottom: '100px'}} className="display-4" id='main-h2'>
+                </h2>
+                  <div style={{gap:'100px'}} className="d-flex justify-content-center">
+                    <Link to="/camp" className="btn btn-primary m-2">
+                      <img
+                        src={campMainImg}
+                        alt="Camping Image"
+                        className="img-thumbnail"
+                        style={{ width: '350px', height: '300px' }}
+                      />
+                      <p id='main-h2' style={{ fontWeight: 'bold',fontSize:'16px'}}>캠핑 예약</p>
+                    </Link>
+                    <Link to="/shop/main" className="btn btn-success m-2">
+                      <img
+                        src={ShopMainImg}
+                        alt="Shopping Image"
+                        className="img-thumbnail"
+                        style={{ width:'350px', height:'300px'}}
+                      />
+                      <p id='main-h2' style={{ fontWeight: 'bold',fontSize:'16px'}}>쇼핑몰</p>
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
           }
         />
         <Route
@@ -128,22 +127,16 @@ function App() {
           element={
             <div>
               <Navbar />
-              <h1 style={{ marginTop: '100px' }}></h1>
+              <h1 style={{ marginTop: '160px' }}></h1>
               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="sellermanagement" role="presentation">
+              <li class="sellermanagement" role="presentation">
                   <button
-                    class={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('home')}
+                    class={`nav-link ${
+                      activeTab === 'orderlist' ? 'active' : ''
+                    }`}
+                    onClick={() => setActiveTab('orderlist')}
                   >
-                    판매자 관리
-                  </button>
-                </li>
-                <li class="sellermanagement" role="presentation">
-                  <button
-                    class={`nav-link ${activeTab === 'sell' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('sell')}
-                  >
-                    상품등록
+                    주문관리
                   </button>
                 </li>
                 <li class="sellermanagement" role="presentation">
@@ -156,12 +149,10 @@ function App() {
                 </li>
                 <li class="sellermanagement" role="presentation">
                   <button
-                    class={`nav-link ${
-                      activeTab === 'orderlist' ? 'active' : ''
-                    }`}
-                    onClick={() => setActiveTab('orderlist')}
+                    class={`nav-link ${activeTab === 'sell' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('sell')}
                   >
-                    주문관리
+                    상품등록
                   </button>
                 </li>
               </ul>
