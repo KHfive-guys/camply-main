@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../css/ShopCart/ShopCart.css";
 import { Button } from "@mui/material";
 import Nav from "../../camp/CampNavbar";
-import CartImg from '../../../img/ShopImg/icons8-쇼핑-카트.gif'
+import CartImg from "../../../img/ShopImg/icons8-쇼핑-카트.gif";
 
 const CartList = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -40,7 +40,7 @@ const CartList = () => {
     }
     try {
       await axios.delete(
-        `http://43.203.173.70:8080/shop/cart/delete/${selectedCartId}`
+        `http://camply.shop/shop/cart/delete/${selectedCartId}`
       );
       setCartItems(cartItems.filter((item) => item.cartId !== selectedCartId));
       setSelectedCartId(null); // 선택 상태 초기화
@@ -57,7 +57,7 @@ const CartList = () => {
   }, []);
   //뒤로 가기
   const backtodetail = () => {
-    navigate('/shop/main'); // 뒤로 가기
+    navigate("/shop/main"); // 뒤로 가기
   };
   // 장바구니 정보 가져오기
   const fetchCartItems = async () => {
@@ -65,7 +65,7 @@ const CartList = () => {
     if (userId) {
       try {
         const response = await axios.get(
-          `http://43.203.173.70:8080/shop/cart/mycart/${userId}`
+          `http://camply.shop/shop/cart/mycart/${userId}`
         );
         setCartItems(response.data);
       } catch (error) {
@@ -92,8 +92,13 @@ const CartList = () => {
       >
         <div style={{ maxWidth: "900px" }} id='content'>
           <div id='cartWrap'>
-            <h2 className='tit-page'><img src={CartImg}/>장바구니</h2>
-            <button className="order-btn" onClick={handleRemoveSelected}>선택 항목 삭제</button>
+            <h2 className='tit-page'>
+              <img src={CartImg} />
+              장바구니
+            </h2>
+            <button className='order-btn' onClick={handleRemoveSelected}>
+              선택 항목 삭제
+            </button>
             <div className='page-body'>
               <div className='table-cart table-fill-prd'>
                 <div className='cart-list'>
@@ -119,7 +124,7 @@ const CartList = () => {
                         <th scope='col'>
                           <div className='tb-center'>상품명</div>
                         </th>
-                        
+
                         <th scope='col'></th>
                         <th scope='col'>
                           <div className='tb-center'>수량</div>
@@ -160,9 +165,8 @@ const CartList = () => {
                       {cartItems.map((item) => (
                         <tr key={item.cartId}>
                           <td>
-                            <div className="tb-center">
+                            <div className='tb-center'>
                               <input
-                                
                                 type='radio'
                                 name='selectCartItem'
                                 checked={selectedCartId === item.cartId}

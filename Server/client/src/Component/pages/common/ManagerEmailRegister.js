@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logo from "../../img/Logo.png";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import CampNavbar from '../camp/CampNavbar';
+import CampNavbar from "../camp/CampNavbar";
 
 function ManagerEmailRegister() {
   const [email, setEmail] = useState("");
@@ -137,7 +137,7 @@ function ManagerEmailRegister() {
     if (validateForm()) {
       try {
         const response = await fetch(
-          "http://43.203.173.70:8080/api/user/admin/register",
+          "http://camply.shop/api/user/admin/register",
           {
             method: "POST",
             headers: {
@@ -191,18 +191,17 @@ function ManagerEmailRegister() {
       oncomplete: function (addrData) {
         var geocoder = new window.kakao.maps.services.Geocoder();
         geocoder.addressSearch(addrData.address, function (result, status) {
-            setCompanyAddress(addrData.address);
+          setCompanyAddress(addrData.address);
         });
       },
     }).open();
   };
-  
 
   return (
     <section>
-      <CampNavbar/>
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <CampNavbar />
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
 
       <WrapLogin>
@@ -211,7 +210,7 @@ function ManagerEmailRegister() {
           <LoginWrap>
             <LoginSection>
               <LoginTitle>정말 간단한 회원가입하기</LoginTitle>
-              <SignupStep className="wrap">
+              <SignupStep className='wrap'>
                 <Title>판매자 가입하기</Title>
               </SignupStep>
               <FormBlock>
@@ -222,10 +221,10 @@ function ManagerEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeW>
                     <EmailInput
-                      id="email"
-                      type="email"
+                      id='email'
+                      type='email'
                       value={email}
-                      placeholder="이메일을 입력해주세요."
+                      placeholder='이메일을 입력해주세요.'
                       required
                       onChange={(e) => {
                         setEmail(e.target.value);
@@ -244,10 +243,10 @@ function ManagerEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeW>
                     <PasswordInput
-                      id="password"
-                      type="password"
+                      id='password'
+                      type='password'
                       value={password}
-                      placeholder="비밀번호 (영문+숫자 8자 이상)"
+                      placeholder='비밀번호 (영문+숫자 8자 이상)'
                       required
                       onChange={(e) => {
                         setPassword(e.target.value);
@@ -263,9 +262,9 @@ function ManagerEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeW>
                     <PasswordInput
-                      id="passwordConfirm"
-                      type="password"
-                      placeholder="비밀번호 확인"
+                      id='passwordConfirm'
+                      type='password'
+                      placeholder='비밀번호 확인'
                       required
                       onBlur={() => passwordCheck2()}
                     />
@@ -281,10 +280,10 @@ function ManagerEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeWTypeL>
                     <NameInput
-                      id="name"
+                      id='name'
                       value={name}
-                      type="text"
-                      placeholder="이름을 입력해 주세요"
+                      type='text'
+                      placeholder='이름을 입력해 주세요'
                       required
                       onChange={(e) => {
                         setName(e.target.value);
@@ -303,10 +302,10 @@ function ManagerEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeWTypeL>
                     <NicknameInput
-                      id="nickname"
+                      id='nickname'
                       value={nickname}
-                      type="text"
-                      placeholder="닉네임을 입력해 주세요"
+                      type='text'
+                      placeholder='닉네임을 입력해 주세요'
                       required
                       onChange={(e) => {
                         setNickname(e.target.value);
@@ -325,10 +324,10 @@ function ManagerEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeWTypeL>
                     <NicknameInput
-                      id="companyNumber"
+                      id='companyNumber'
                       value={companyNumber}
-                      type="text"
-                      placeholder="사업자 번호를 입력해 주세요"
+                      type='text'
+                      placeholder='사업자 번호를 입력해 주세요'
                       required
                       onChange={(e) => {
                         setCompanyNumber(e.target.value);
@@ -347,10 +346,10 @@ function ManagerEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeWTypeL>
                     <NicknameInput
-                      id="companyAddress"
+                      id='companyAddress'
                       value={companyAddress}
-                      type="text"
-                      placeholder="사업자 주소를 입력해 주세요"
+                      type='text'
+                      placeholder='사업자 주소를 입력해 주세요'
                       required
                       onClick={onClickAddr}
                       onBlur={() => companyAddressCheck()}
@@ -367,10 +366,10 @@ function ManagerEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeWTypeL>
                     <NicknameInput
-                      id="companyPhone"
+                      id='companyPhone'
                       value={companyPhone}
-                      type="text"
-                      placeholder="사업자 전화번호를 입력해 주세요"
+                      type='text'
+                      placeholder='사업자 전화번호를 입력해 주세요'
                       required
                       onChange={(e) => {
                         setCompanyPhone(e.target.value);
@@ -385,7 +384,7 @@ function ManagerEmailRegister() {
               <FormBlockSubmit>
                 <FormBlockBody>
                   <BtnLogin
-                    type="button"
+                    type='button'
                     onClick={() => {
                       onSubmit();
                     }}

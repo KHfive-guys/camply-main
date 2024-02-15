@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { NavDropdown } from 'react-bootstrap';
-import ReactPaginate from 'react-paginate';
-import '../css/ShopSell/SellerProduct.css';
-import Nav from '../../camp/CampNavbar';
-import UpdateProduct from './UpdateProduct';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { NavDropdown } from "react-bootstrap";
+import ReactPaginate from "react-paginate";
+import "../css/ShopSell/SellerProduct.css";
+import Nav from "../../camp/CampNavbar";
+import UpdateProduct from "./UpdateProduct";
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,9 +12,9 @@ import {
   Navigate,
   useNavigate,
   Link,
-} from 'react-router-dom';
-import ProductList from '../../../img/Seller/상품리스트.png';
-import DropdownIcon from '../../../img/Seller/더보기아이콘.png';
+} from "react-router-dom";
+import ProductList from "../../../img/Seller/상품리스트.png";
+import DropdownIcon from "../../../img/Seller/더보기아이콘.png";
 
 const SellerProduct = () => {
   const [products, setProducts] = useState([]);
@@ -24,7 +24,7 @@ const SellerProduct = () => {
   const [itemsPerPage, setItemsPerPage] = useState(20); // 페이지당 표시할 아이템 수
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [pageCount, setPageCount] = useState(0);
-  const token = localStorage.getItem('yourTokenKey'); // 토큰을 로컬 스토리지에서 가져옴
+  const token = localStorage.getItem("yourTokenKey"); // 토큰을 로컬 스토리지에서 가져옴
   const navigate = useNavigate(); // useNavigate 훅 사용
 
   //등록 상품 리스트 조회
@@ -32,7 +32,7 @@ const SellerProduct = () => {
     if (token) {
       // 토큰이 존재하는 경우에만 요청을 보냅니다.
       axios
-        .get('http://43.203.173.70:8080/shop/mypage/productList', {
+        .get("http://camply.shop/shop/mypage/productList", {
           headers: {
             Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
           },
@@ -44,7 +44,7 @@ const SellerProduct = () => {
           setLoading(false);
         })
         .catch((error) => {
-          console.error(':', error);
+          console.error(":", error);
           setLoading(false);
         });
     } else {
@@ -75,11 +75,11 @@ const SellerProduct = () => {
 
   //상품 삭제하기(드롭다운)
   const handleDeleteClick = async (productId) => {
-    if (window.confirm('정말 삭제하시겠습니까?')) {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
         if (token) {
           await axios.delete(
-            `http://43.203.173.70:8080/shop/mypage/productDelete/${productId}`,
+            `http://camply.shop/shop/mypage/productDelete/${productId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -89,7 +89,7 @@ const SellerProduct = () => {
           setProducts(products.filter((p) => p.productId !== productId));
         }
       } catch (error) {
-        console.error('Error deleting product: ', error);
+        console.error("Error deleting product: ", error);
       }
     }
   };
@@ -98,17 +98,17 @@ const SellerProduct = () => {
   const handleDeleteSelected = async () => {
     // 선택된 상품이 없으면 경고 메시지를 표시하고 함수를 종료합니다.
     if (selectedProducts.length === 0) {
-      alert('삭제할 상품을 선택해주세요.');
+      alert("삭제할 상품을 선택해주세요.");
       return;
     }
 
-    if (window.confirm('정말 삭제하시겠습니까?')) {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
         // 선택된 모든 상품에 대해 삭제 요청을 보냅니다.
         await Promise.all(
           selectedProducts.map((productId) =>
             axios.delete(
-              `http://43.203.173.70:8080/shop/mypage/productDelete/${productId}`,
+              `http://camply.shop/shop/mypage/productDelete/${productId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -125,10 +125,10 @@ const SellerProduct = () => {
         setProducts(newProducts);
         setSelectedProducts([]); // 선택된 상품 목록을 초기화합니다.
 
-        alert('선택한 상품이 삭제되었습니다.');
+        alert("선택한 상품이 삭제되었습니다.");
       } catch (error) {
-        console.error('Error deleting selected products: ', error);
-        alert('상품 삭제 중 오류가 발생했습니다.');
+        console.error("Error deleting selected products: ", error);
+        alert("상품 삭제 중 오류가 발생했습니다.");
       }
     }
   };
@@ -161,20 +161,20 @@ const SellerProduct = () => {
       const changedProducts = products.filter((product) => product.isChanged);
 
       if (changedProducts.length === 0) {
-        alert('변경할 내용을 선택해주세요.');
+        alert("변경할 내용을 선택해주세요.");
         return;
       }
 
       // 변경된 모든 상품에 대해 PUT 요청을 전송
       const updatePromises = changedProducts.map((product) =>
         axios.put(
-          `http://43.203.173.70:8080/shop/mypage/product/statusEdit/${product.productId}`,
+          `http://camply.shop/shop/mypage/product/statusEdit/${product.productId}`,
           {
             productStatus: product.productStatus,
           },
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('yourTokenKey')}`, // 토큰을 헤더에 추가
+              Authorization: `Bearer ${localStorage.getItem("yourTokenKey")}`, // 토큰을 헤더에 추가
             },
           }
         )
@@ -183,7 +183,7 @@ const SellerProduct = () => {
       // 모든 요청이 성공적으로 처리됐는지 확인
       await Promise.all(updatePromises);
 
-      alert('저장되었습니다.');
+      alert("저장되었습니다.");
       // 성공적으로 변경 사항을 저장한 후에는 모든 상품의 isChanged 플래그와 originalStatus를 리셋
       setProducts(
         products.map((product) => ({
@@ -193,8 +193,8 @@ const SellerProduct = () => {
         }))
       );
     } catch (error) {
-      console.error('상태 업데이트 중 오류가 발생했습니다:', error);
-      alert('변경사항 저장에 실패했습니다.');
+      console.error("상태 업데이트 중 오류가 발생했습니다:", error);
+      alert("변경사항 저장에 실패했습니다.");
     }
   };
 
@@ -228,8 +228,8 @@ const SellerProduct = () => {
   //조회 시 0번째 빈 배열에서 1번째 값으로 넘어가기 위한 로딩
   if (loading) {
     return (
-      <div class="spinner-border m-5" role="status">
-        <span class="visually-hidden">Loading...</span>
+      <div class='spinner-border m-5' role='status'>
+        <span class='visually-hidden'>Loading...</span>
       </div>
     );
   }
@@ -239,26 +239,26 @@ const SellerProduct = () => {
     <>
       <Nav />
 
-      <div className="sellerProduct">
+      <div className='sellerProduct'>
         <h2>
           &nbsp;&nbsp;
-          <img src={ProductList} alt="product" />
-          상품리스트{' '}
+          <img src={ProductList} alt='product' />
+          상품리스트{" "}
         </h2>
 
-        <span className="itemsPerPage-position">
+        <span className='itemsPerPage-position'>
           <button
-            type="button"
+            type='button'
             onClick={handleSaveChanges}
-            className="savebutton"
+            className='savebutton'
           >
             저장
           </button>
           &nbsp;
           <button
-            type="button"
+            type='button'
             onClick={handleDeleteSelected}
-            className="savebutton"
+            className='savebutton'
           >
             삭제
           </button>
@@ -273,16 +273,16 @@ const SellerProduct = () => {
         <table>
           <thead>
             <tr>
-              <th className="checkbox-th-size">
+              <th className='checkbox-th-size'>
                 <input
-                  type="checkbox"
+                  type='checkbox'
                   checked={selectAll}
                   onChange={handleSelectAllChange}
-                  className="checkbox-th-position"
+                  className='checkbox-th-position'
                 />
               </th>
-              <th className="no-th-size">No</th>
-              <th className="productname-th-size">상품명</th>
+              <th className='no-th-size'>No</th>
+              <th className='productname-th-size'>상품명</th>
               <th>판매가</th>
               <th>카테고리</th>
               <th>상태</th>
@@ -301,34 +301,34 @@ const SellerProduct = () => {
                 <tr key={ShopProduct.productId || index}>
                   <td>
                     <input
-                      type="checkbox"
+                      type='checkbox'
                       checked={selectedProducts.includes(ShopProduct.productId)}
                       onChange={() =>
                         handleCheckboxChange(ShopProduct.productId)
                       }
-                      className="checkbox-td-position"
+                      className='checkbox-td-position'
                     />
                   </td>
                   {/* 고유 식별자 product_id는 유지하되 프론트에 보여지기 위한 No 값 */}
-                  <td className="no-td-size">
+                  <td className='no-td-size'>
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
                   <td>
                     <img
                       src={ShopProduct.productThumbnail}
                       alt={`Thumbnail for ${ShopProduct.productName}`}
-                      width="60"
-                      height="60"
+                      width='60'
+                      height='60'
                     />
                     {ShopProduct.productName}
                   </td>
                   <td>{ShopProduct.formattedProductPrice}</td>
                   <td>{ShopProduct.productCategory}</td>
-                  <td htmlFor="productStatus">
-                    <div className="form-group">
-                      <div className="dropdown">
+                  <td htmlFor='productStatus'>
+                    <div className='form-group'>
+                      <div className='dropdown'>
                         <select
-                          name="productStatus"
+                          name='productStatus'
                           onChange={(e) =>
                             handleInputChange(
                               ShopProduct.productId,
@@ -336,13 +336,12 @@ const SellerProduct = () => {
                             )
                           }
                           value={ShopProduct.productStatus}
-                          class="form-select"
+                          class='form-select'
                         >
-                          <option value="판매중">판매중</option>
-                          <option value="판매중지">판매중지</option>
-                          <option value="품절">품절</option>
+                          <option value='판매중'>판매중</option>
+                          <option value='판매중지'>판매중지</option>
+                          <option value='품절'>품절</option>
                         </select>
-                       
                       </div>
                     </div>
                   </td>
@@ -353,11 +352,11 @@ const SellerProduct = () => {
                       title={
                         <img
                           src={DropdownIcon}
-                          alt="dropdown icon"
-                          style={{ width: '20px', height: '20px' }}
+                          alt='dropdown icon'
+                          style={{ width: "20px", height: "20px" }}
                         />
                       }
-                      id="basic-nav-dropdown"
+                      id='basic-nav-dropdown'
                     >
                       <NavDropdown.Item
                         onClick={() => handleEditClick(ShopProduct.productId)}
@@ -376,13 +375,13 @@ const SellerProduct = () => {
           </tbody>
         </table>
         <ReactPaginate
-          previousLabel={'이전'}
-          nextLabel={'다음'}
-          breakLabel={'...'}
+          previousLabel={"이전"}
+          nextLabel={"다음"}
+          breakLabel={"..."}
           pageCount={pageCount}
           onPageChange={handlePageClick}
-          containerClassName={'pagination'}
-          activeClassName={'active'}
+          containerClassName={"pagination"}
+          activeClassName={"active"}
           forcePage={currentPage - 1} // 현재 페이지를 강제로 설정
         />
       </div>

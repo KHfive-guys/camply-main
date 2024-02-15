@@ -21,7 +21,6 @@ import { LuUserCircle2 } from "react-icons/lu";
 import { VscInfo } from "react-icons/vsc";
 import axios from "axios";
 
-
 function NavBar() {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -61,7 +60,7 @@ function NavBar() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
+        .get(`http://camply.shop/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -111,7 +110,7 @@ function NavBar() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
+        .get(`http://camply.shop/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -148,7 +147,7 @@ function NavBar() {
           const email = userInfoResponse.data.kakao_account.email;
           console.log("User Email:", email);
           axios
-            .get(`http://43.203.173.70:8080/api/user/kakao/${email}`)
+            .get(`http://camply.shop/api/user/kakao/${email}`)
             .then((response) => {
               const userType = response.data.USER_TYPE;
               console.log("User Type:", userType);
@@ -167,22 +166,22 @@ function NavBar() {
   return (
     <Navbar
       expanded={expand}
-      fixed="top"
-      expand="md"
+      fixed='top'
+      expand='md'
       className={navColour ? "sticky" : "navbar"}
     >
       <Container>
-        <Navbar.Brand href="/" className="d-flex">
+        <Navbar.Brand href='/' className='d-flex'>
           <img
             src={logo}
-            className="logo"
-            alt="brand"
-            style={{ width: '130px', height: 'auto' }}
+            className='logo'
+            alt='brand'
+            style={{ width: "130px", height: "auto" }}
           />
         </Navbar.Brand>
 
         <Navbar.Toggle
-          aria-controls="responsive-navbar-nav"
+          aria-controls='responsive-navbar-nav'
           onClick={() => updateExpanded(expand ? false : "expanded")}
         >
           <span></span>
@@ -190,12 +189,12 @@ function NavBar() {
           <span></span>
         </Navbar.Toggle>
 
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="ms-auto" defaultActiveKey="#home">
+        <Navbar.Collapse id='responsive-navbar-nav'>
+          <Nav className='ms-auto' defaultActiveKey='#home'>
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/camp"
+                to='/camp'
                 onClick={() => updateExpanded(false)}
               >
                 <AiOutlineHome style={{ marginBottom: "2px" }} /> 홈페이지
@@ -208,7 +207,7 @@ function NavBar() {
                   <Nav.Item>
                     <Nav.Link
                       as={Link}
-                      to="/camp/board/add"
+                      to='/camp/board/add'
                       onClick={() => updateExpanded(false)}
                     >
                       <MdFormatListBulletedAdd
@@ -220,7 +219,7 @@ function NavBar() {
                 )}
 
                 <Nav.Item>
-                  <Nav.Link href="#" onClick={handleWeatherModalShow}>
+                  <Nav.Link href='#' onClick={handleWeatherModalShow}>
                     <IoMdSunny style={{ marginBottom: "2px" }} /> 날씨
                   </Nav.Link>
                 </Nav.Item>
@@ -234,7 +233,7 @@ function NavBar() {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button
-                      variant="secondary"
+                      variant='secondary'
                       onClick={handleWeatherModalClose}
                     >
                       Close
@@ -245,7 +244,7 @@ function NavBar() {
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to="/shop/main"
+                    to='/shop/main'
                     onClick={() => updateExpanded(false)}
                   >
                     <PiShoppingBagOpenLight style={{ marginBottom: "2px" }} />{" "}
@@ -262,7 +261,7 @@ function NavBar() {
                       <Nav.Item>
                         <Nav.Link
                           as={Link}
-                          to="/shop/seller"
+                          to='/shop/seller'
                           onClick={() => updateExpanded(false)}
                         >
                           <MdAddShoppingCart style={{ marginBottom: "2px" }} />{" "}
@@ -275,7 +274,7 @@ function NavBar() {
                         <Nav.Item>
                           <Nav.Link
                             as={Link}
-                            to="/shop/mycart/:userId"
+                            to='/shop/mycart/:userId'
                             onClick={() => updateExpanded(false)}
                           >
                             <FiShoppingCart style={{ marginBottom: "2px" }} />{" "}
@@ -288,7 +287,7 @@ function NavBar() {
                           <Nav.Item>
                             <Nav.Link
                               as={Link}
-                              to="/shop/mypage/general/myorder/view:userId"
+                              to='/shop/mypage/general/myorder/view:userId'
                               onClick={() => updateExpanded(false)}
                             >
                               <FiShoppingCart style={{ marginBottom: "2px" }} />{" "}
@@ -304,7 +303,7 @@ function NavBar() {
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to="/camp"
+                    to='/camp'
                     onClick={() => updateExpanded(false)}
                   >
                     <GiCampingTent style={{ marginBottom: "2px" }} /> 캠핑장
@@ -313,19 +312,17 @@ function NavBar() {
                 </Nav.Item>
               </>
             )}
-      
-                          
+
             {isCampPath && (
               <>
                 {isLoggedIn && userType === "General" && (
                   <Nav.Item>
                     <Nav.Link
                       as={Link}
-                      to="/myCamping"
+                      to='/myCamping'
                       onClick={() => updateExpanded(false)}
                     >
-                      <VscInfo style={{ marginBottom: "2px" }} />{" "}
-                      캠핑정보
+                      <VscInfo style={{ marginBottom: "2px" }} /> 캠핑정보
                     </Nav.Link>
                   </Nav.Item>
                 )}
@@ -334,11 +331,10 @@ function NavBar() {
                     <Nav.Item>
                       <Nav.Link
                         as={Link}
-                        to="/sellermypage"
+                        to='/sellermypage'
                         onClick={() => updateExpanded(false)}
                       >
-                        <VscInfo style={{ marginBottom: "2px" }} />{" "}
-                        캠핑정보
+                        <VscInfo style={{ marginBottom: "2px" }} /> 캠핑정보
                       </Nav.Link>
                     </Nav.Item>
                   )}
@@ -352,7 +348,7 @@ function NavBar() {
                   <Nav.Item>
                     <Nav.Link
                       as={Link}
-                      to="/mypageupdate"
+                      to='/mypageupdate'
                       onClick={() => updateExpanded(false)}
                     >
                       <LuUserCircle2 style={{ marginBottom: "2px" }} />{" "}
@@ -365,7 +361,7 @@ function NavBar() {
                     <Nav.Item>
                       <Nav.Link
                         as={Link}
-                        to="/mypageupdate"
+                        to='/mypageupdate'
                         onClick={() => updateExpanded(false)}
                       >
                         <LuUserCircle2 style={{ marginBottom: "2px" }} />{" "}

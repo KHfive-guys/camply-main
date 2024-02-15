@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import CampNavbar from '../camp/CampNavbar';
-import KakaoLogin from './KakaoLogin';
-import axios from 'axios';
-
+import CampNavbar from "../camp/CampNavbar";
+import KakaoLogin from "./KakaoLogin";
+import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
@@ -13,12 +12,11 @@ function Login() {
   const [USER_PASSWORD, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [userType, setUserType] = useState("");
-  
 
   const emailLogin = async () => {
     console.log("login button USER_EMAIL" + USER_EMAIL);
     try {
-      const response = await fetch("http://43.203.173.70:8080/api/user/login", {
+      const response = await fetch("http://camply.shop/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,86 +54,83 @@ function Login() {
 
   return (
     <>
-    <section>
-    <CampNavbar />
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
-      </Container>
+      <section>
+        <CampNavbar />
+        <Container fluid className='home-section' id='home'>
+          <Container className='home-content'></Container>
+        </Container>
 
-      <LoginWrap>
-        <LoginContainer>
-          <LoginHeadLogo>
-            <h1>
-            </h1>
-          </LoginHeadLogo>
-          <LoginHeadText>
-            <NeedLogin>
-              <BackgroundText>
-                <Text>로그인</Text>
-                <Background></Background>
-              </BackgroundText>
-              이 필요한 서비스 입니다.
-            </NeedLogin>
-          </LoginHeadText>
-          <LoginSignupContent>
-            <HorizontalButtons>
-            
-            <KakaoLogin/>
-
-            </HorizontalButtons>
-          </LoginSignupContent>
-          <LoginSigninContent>
-            <BorderAndText>
-              <span>이메일 로그인</span>
-            </BorderAndText>
-            <EmailLoginContainer>
-              <div>
-                <EmailLoginInput
-                  id="email"
-                  type="email"
-                  value={USER_EMAIL}
-                  placeholder="이메일"
-                  required
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                />
-                <EmailLoginInput
-                  id="password"
-                  type="password"
-                  value={USER_PASSWORD}
-                  placeholder="비밀번호"
-                  required
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                />
-              </div>
-              <EmailLoginOption>
+        <LoginWrap>
+          <LoginContainer>
+            <LoginHeadLogo>
+              <h1></h1>
+            </LoginHeadLogo>
+            <LoginHeadText>
+              <NeedLogin>
+                <BackgroundText>
+                  <Text>로그인</Text>
+                  <Background></Background>
+                </BackgroundText>
+                이 필요한 서비스 입니다.
+              </NeedLogin>
+            </LoginHeadText>
+            <LoginSignupContent>
+              <HorizontalButtons>
+                <KakaoLogin />
+              </HorizontalButtons>
+            </LoginSignupContent>
+            <LoginSigninContent>
+              <BorderAndText>
+                <span>이메일 로그인</span>
+              </BorderAndText>
+              <EmailLoginContainer>
                 <div>
-                  <InputCheckbox>
-                    <Bp type="checkbox"></Bp>
-                  </InputCheckbox>
-                  <label>이메일 저장하기</label>
+                  <EmailLoginInput
+                    id='email'
+                    type='email'
+                    value={USER_EMAIL}
+                    placeholder='이메일'
+                    required
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                  <EmailLoginInput
+                    id='password'
+                    type='password'
+                    value={USER_PASSWORD}
+                    placeholder='비밀번호'
+                    required
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  />
                 </div>
-                <a>아이디 / 비밀번호 찾기</a>
-              </EmailLoginOption>
-            </EmailLoginContainer>
-            <CommonButton
-              type="button"
-              onClick={() => {
-                emailLogin();
-              }}
-            >
-              로그인
-            </CommonButton>
+                <EmailLoginOption>
+                  <div>
+                    <InputCheckbox>
+                      <Bp type='checkbox'></Bp>
+                    </InputCheckbox>
+                    <label>이메일 저장하기</label>
+                  </div>
+                  <a>아이디 / 비밀번호 찾기</a>
+                </EmailLoginOption>
+              </EmailLoginContainer>
+              <CommonButton
+                type='button'
+                onClick={() => {
+                  emailLogin();
+                }}
+              >
+                로그인
+              </CommonButton>
 
-            <RegisterButton type="button">
-              <Link to="/register">회원가입</Link>
-            </RegisterButton>
-          </LoginSigninContent>
-        </LoginContainer>
-      </LoginWrap>
+              <RegisterButton type='button'>
+                <Link to='/register'>회원가입</Link>
+              </RegisterButton>
+            </LoginSigninContent>
+          </LoginContainer>
+        </LoginWrap>
       </section>
     </>
   );
@@ -268,8 +263,6 @@ const RadiusButton = styled.a`
     margin-right: 0;
   }
 
-  
-
   &.kaako {
     padding-right: 4px;
     background: #3c5b96;
@@ -368,6 +361,5 @@ const LoginWrap = styled.div`
   min-height: 100%;
   background: #fff;
 `;
-
 
 export default Login;

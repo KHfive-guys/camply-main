@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import '../../css/ShopDetail/ShopReview/ReviewWriter.css';
-import Nav from '../../../camp/CampNavbar';
-import {Button} from '@mui/material';
+import "../../css/ShopDetail/ShopReview/ReviewWriter.css";
+import Nav from "../../../camp/CampNavbar";
+import { Button } from "@mui/material";
 import { FaCheck } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
-
 
 const ReviewPost = () => {
   const [reviewData, setReviewData] = useState({
@@ -18,9 +17,13 @@ const ReviewPost = () => {
   const navigate = useNavigate();
   const decodeBase64 = (str) => {
     // Base64 디코딩과 동시에 encodeURIComponent 함수를 사용하여 UTF-8 문자열을 올바르게 디코딩
-    const decodedUri = decodeURIComponent(Array.prototype.map.call(window.atob(str), (c) => {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+    const decodedUri = decodeURIComponent(
+      Array.prototype.map
+        .call(window.atob(str), (c) => {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
     return JSON.parse(decodedUri);
   };
   useEffect(() => {
@@ -43,7 +46,7 @@ const ReviewPost = () => {
   // 클릭시 뒤로 가기
   const handleback = () => {
     navigate(-1);
-  }
+  };
 
   // 리뷰 작성 핸들러
   const handleSubmit = async (e) => {
@@ -63,7 +66,7 @@ const ReviewPost = () => {
     };
 
     try {
-      await axios.post("http://43.203.173.70:8080/shop/review/post", postData);
+      await axios.post("http://camply.shop/shop/review/post", postData);
       alert("리뷰가 작성되었습니다.");
       navigate(`/shop/detail/${reviewData.productId}`);
     } catch (error) {
@@ -74,45 +77,45 @@ const ReviewPost = () => {
 
   return (
     <>
-    <Nav/>
-    <form onSubmit={handleSubmit}>
-    <h2 style={{textAlign:'center',marginTop:'60px'}}>리뷰작성</h2>
-      {/* productId 필드는 hidden 유형으로 유지 */}
-      <input type='hidden' name='productId' value={reviewData.productId} />
-      <div className="writer-container">
-        <div className="inquiry-title">
-        
-        제목  
-        <br/>
-      <input
-        type='text'
-        name='reviewTitle'
-        placeholder='리뷰 제목'
-        value={reviewData.reviewTitle}
-        onChange={handleChange}
-      />
-      </div>
-      <br/>
+      <Nav />
+      <form onSubmit={handleSubmit}>
+        <h2 style={{ textAlign: "center", marginTop: "60px" }}>리뷰작성</h2>
+        {/* productId 필드는 hidden 유형으로 유지 */}
+        <input type='hidden' name='productId' value={reviewData.productId} />
+        <div className='writer-container'>
+          <div className='inquiry-title'>
+            제목
+            <br />
+            <input
+              type='text'
+              name='reviewTitle'
+              placeholder='리뷰 제목'
+              value={reviewData.reviewTitle}
+              onChange={handleChange}
+            />
+          </div>
+          <br />
 
-      <div className="inquiry-content">
-
-        내용
-        <br/>
-      <textarea
-        name='reviewText'
-        placeholder='리뷰 내용'
-        value={reviewData.reviewText}
-        onChange={handleChange}
-      />
-      </div>
-        <div className="writer-btn">
-                  <button className="btn-writer" type="submit">작성하기 <FaCheck/></button>
-                  <button className="back-btn" onClick={handleback}>
-                  <IoIosArrowBack/> 목록보기
-                  </button>
-        </div> 
-    </div>
-    </form>
+          <div className='inquiry-content'>
+            내용
+            <br />
+            <textarea
+              name='reviewText'
+              placeholder='리뷰 내용'
+              value={reviewData.reviewText}
+              onChange={handleChange}
+            />
+          </div>
+          <div className='writer-btn'>
+            <button className='btn-writer' type='submit'>
+              작성하기 <FaCheck />
+            </button>
+            <button className='back-btn' onClick={handleback}>
+              <IoIosArrowBack /> 목록보기
+            </button>
+          </div>
+        </div>
+      </form>
     </>
   );
 };

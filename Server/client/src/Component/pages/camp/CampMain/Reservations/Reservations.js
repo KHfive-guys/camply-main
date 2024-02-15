@@ -28,13 +28,13 @@ function Reservations() {
     const fetchCampingData = async () => {
       try {
         const seoulResponse = await axios.get(
-          `http://43.203.173.70:8080/camp/board/location/서울`
+          `http://camply.shop/camp/board/location/서울`
         );
         const gyeonggiResponse = await axios.get(
-          `http://43.203.173.70:8080/camp/board/location/경기`
+          `http://camply.shop/camp/board/location/경기`
         );
         const kangwonResponse = await axios.get(
-          `http://43.203.173.70:8080/camp/board/location/강원`
+          `http://camply.shop/camp/board/location/강원`
         );
 
         setSeoulData(seoulResponse.data);
@@ -51,9 +51,7 @@ function Reservations() {
   useEffect(() => {
     const fetchRecentData = async () => {
       try {
-        const response = await axios.get(
-          "http://43.203.173.70:8080/camp/board/all"
-        );
+        const response = await axios.get("http://camply.shop/camp/board/all");
         setRecentData(response.data);
       } catch (error) {
         console.error("Error fetching recent data:", error);
@@ -131,18 +129,17 @@ function Reservations() {
   };
 
   return (
-    <Container fluid className="project-section">
-      <h1 className="project-heading">
-        최근 <strong className="purple">캠핑장</strong> 예약하자
+    <Container fluid className='project-section'>
+      <h1 className='project-heading'>
+        최근 <strong className='purple'>캠핑장</strong> 예약하자
       </h1>
       <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
-        <div class="project-card col-md-2">
+        <div class='project-card col-md-2'>
           <button
-            variant="primary"
+            variant='primary'
             onClick={handlePrev}
             disabled={currentPage === 1}
-            className="button1"
-            
+            className='button1'
           >
             {<FaAngleLeft size={30} />}
           </button>{" "}
@@ -150,7 +147,7 @@ function Reservations() {
         {recentData
           .slice((currentPage - 1) * 3, currentPage * 3)
           .map((camp) => (
-            <Col key={camp.camp_id} md={2} className="project-card">
+            <Col key={camp.camp_id} md={2} className='project-card'>
               <ReservationCard
                 camp_id={camp.camp_id}
                 camp_images={camp.camp_images}
@@ -158,33 +155,33 @@ function Reservations() {
                 address={camp.camp_address}
                 price={camp.camp_price}
                 introduceLink={handleRecentCampClick}
-                reservationsLink="#"
+                reservationsLink='#'
               />
             </Col>
           ))}
 
-        <div class="project-card col-md-2">
+        <div class='project-card col-md-2'>
           <button
-            variant="primary"
+            variant='primary'
             onClick={handleNext}
             disabled={currentPage === Math.ceil(recentData.length / 3)}
-            className="button2"
+            className='button2'
           >
             {<FaAngleRight size={30} />}
           </button>
         </div>
       </Row>
 
-      <h1 className="project-heading">
-        서울 <strong className="purple">캠핑장</strong> 예약하자
+      <h1 className='project-heading'>
+        서울 <strong className='purple'>캠핑장</strong> 예약하자
       </h1>
       <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
-        <div class="project-card col-md-2">
+        <div class='project-card col-md-2'>
           <button
-            variant="primary"
+            variant='primary'
             onClick={handleSeoulPrev}
             disabled={seoulCurrentPage === 1}
-            className="button1"
+            className='button1'
           >
             {<FaAngleLeft size={30} />}
           </button>{" "}
@@ -192,7 +189,7 @@ function Reservations() {
         {seoulData
           .slice((seoulCurrentPage - 1) * 3, seoulCurrentPage * 3)
           .map((camp) => (
-            <Col key={camp.camp_id} md={2} className="project-card">
+            <Col key={camp.camp_id} md={2} className='project-card'>
               <ReservationCard
                 camp_id={camp.camp_id}
                 camp_images={camp.camp_images}
@@ -200,32 +197,32 @@ function Reservations() {
                 address={camp.camp_address}
                 price={camp.camp_price}
                 introduceLink={handleRecentCampClick}
-                reservationsLink="#"
+                reservationsLink='#'
               />
             </Col>
           ))}
-        <div class="project-card col-md-2">
+        <div class='project-card col-md-2'>
           <button
-            variant="primary"
+            variant='primary'
             onClick={handleSeoulNext}
             disabled={seoulCurrentPage === Math.ceil(seoulData.length / 3)}
-            className="button2"
+            className='button2'
           >
             {<FaAngleRight size={30} />}
           </button>
         </div>
       </Row>
 
-      <h1 className="project-heading">
-        경기 <strong className="purple">캠핑장</strong> 예약하자
+      <h1 className='project-heading'>
+        경기 <strong className='purple'>캠핑장</strong> 예약하자
       </h1>
       <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
-        <div class="project-card col-md-2">
+        <div class='project-card col-md-2'>
           <button
-            variant="primary"
+            variant='primary'
             onClick={handleGyeonggiPrev}
             disabled={gyeonggiCurrentPage === 1}
-            className="button1"
+            className='button1'
           >
             {<FaAngleLeft size={30} />}
           </button>{" "}
@@ -233,7 +230,7 @@ function Reservations() {
         {gyeonggiData
           .slice((gyeonggiCurrentPage - 1) * 3, gyeonggiCurrentPage * 3)
           .map((camp) => (
-            <Col key={camp.camp_id} md={2} className="project-card">
+            <Col key={camp.camp_id} md={2} className='project-card'>
               <ReservationCard
                 camp_id={camp.camp_id}
                 camp_images={camp.camp_images}
@@ -241,35 +238,35 @@ function Reservations() {
                 address={camp.camp_address}
                 price={camp.camp_price}
                 introduceLink={handleRecentCampClick}
-                reservationsLink="#"
+                reservationsLink='#'
               />
             </Col>
           ))}
-        <div class="project-card col-md-2">
+        <div class='project-card col-md-2'>
           <button
-            variant="primary"
+            variant='primary'
             onClick={handleGyeonggiNext}
             disabled={
               gyeonggiCurrentPage === Math.ceil(gyeonggiData.length / 3)
             }
-            className="button2"
+            className='button2'
           >
             {<FaAngleRight size={30} />}
           </button>
         </div>
       </Row>
 
-      <h1 className="project-heading">
-        강원 <strong className="purple">캠핑장</strong> 예약하자
+      <h1 className='project-heading'>
+        강원 <strong className='purple'>캠핑장</strong> 예약하자
       </h1>
 
       <Row style={{ justifyContent: "center", paddingBottom: "10px" }}>
-        <div class="project-card col-md-2">
+        <div class='project-card col-md-2'>
           <button
-            variant="primary"
+            variant='primary'
             onClick={handleKangwonPrev}
             disabled={kangwonCurrentPage === 1}
-            className="button1"
+            className='button1'
           >
             {<FaAngleLeft size={30} />}
           </button>{" "}
@@ -277,7 +274,7 @@ function Reservations() {
         {kangwonData
           .slice((kangwonCurrentPage - 1) * 3, kangwonCurrentPage * 3)
           .map((camp) => (
-            <Col key={camp.camp_id} md={2} className="project-card">
+            <Col key={camp.camp_id} md={2} className='project-card'>
               <ReservationCard
                 camp_id={camp.camp_id}
                 camp_images={camp.camp_images}
@@ -285,17 +282,17 @@ function Reservations() {
                 address={camp.camp_address}
                 price={camp.camp_price}
                 introduceLink={handleRecentCampClick}
-                reservationsLink="#"
+                reservationsLink='#'
               />
             </Col>
           ))}
 
-        <div class="project-card col-md-2">
+        <div class='project-card col-md-2'>
           <button
-            variant="primary"
+            variant='primary'
             onClick={handleKangwonNext}
             disabled={kangwonCurrentPage === Math.ceil(kangwonData.length / 3)}
-            className="button2"
+            className='button2'
           >
             {<FaAngleRight size={30} />}
           </button>

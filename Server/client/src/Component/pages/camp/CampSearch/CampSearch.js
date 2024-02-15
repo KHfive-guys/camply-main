@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import CampNavbar from '../CampNavbar';
-import '../CampBoard/css/campSearch.css';
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import CampNavbar from "../CampNavbar";
+import "../CampBoard/css/campSearch.css";
 
 function SearchPage() {
   const navigate = useNavigate();
@@ -12,37 +12,36 @@ function SearchPage() {
   // 날짜
   const now = new Date();
   const year = now.getFullYear();
-  const month = ('0' + (now.getMonth() + 1)).slice(-2);
-  const day = ('0' + now.getDate()).slice(-2);
+  const month = ("0" + (now.getMonth() + 1)).slice(-2);
+  const day = ("0" + now.getDate()).slice(-2);
 
   // 다음 날짜 계산
   const nextDay = new Date(now);
   nextDay.setDate(nextDay.getDate() + 1);
-  const nextDayOfMonth = ('0' + nextDay.getDate()).slice(-2);
-  const Month = ('0' + (nextDay.getMonth() + 1)).slice(-2);
+  const nextDayOfMonth = ("0" + nextDay.getDate()).slice(-2);
+  const Month = ("0" + (nextDay.getMonth() + 1)).slice(-2);
   const nextYear = nextDay.getFullYear();
 
   const [searchCamp, setSearchCamp] = useState({
-    CAMP_ID: '0',
-    CAMP_SELECT: '전체',
-    CAMP_LOCATION: '전체',
-    CAMP_ADULT: '1',
-    CAMP_CHILD: '1',
-    CAMP_CHECKIN: year + '-' + month + '-' + day,
-    CAMP_CHECKOUT: nextYear + '-' + Month + '-' + nextDayOfMonth,
+    CAMP_ID: "0",
+    CAMP_SELECT: "전체",
+    CAMP_LOCATION: "전체",
+    CAMP_ADULT: "1",
+    CAMP_CHILD: "1",
+    CAMP_CHECKIN: year + "-" + month + "-" + day,
+    CAMP_CHECKOUT: nextYear + "-" + Month + "-" + nextDayOfMonth,
   });
 
   const campSearch = async () => {
     try {
       const response = await axios.post(
-        'http://43.203.173.70:8080/camp/search/campList',
+        "http://camply.shop/camp/search/campList",
         searchCamp
       );
 
       setSearchResults(response.data);
-
     } catch (error) {
-      console.error('Error during search:', error.message);
+      console.error("Error during search:", error.message);
     }
   };
 
@@ -86,9 +85,8 @@ function SearchPage() {
                       onChange={(e) => {
                         setSearchCamp({
                           ...searchCamp,
-                          CAMP_SELECT: e.target.value, 
-                        } );
-                       
+                          CAMP_SELECT: e.target.value,
+                        });
                       }}
                     >
                       <option value='전체'>전체</option>
@@ -202,8 +200,11 @@ function SearchPage() {
                 onClick={() => handleRowClick(site.CAMP_ID)}
               >
                 <Card>
-                  <Card.Body >
-                  <Card.Img src={site.CAMP_IMAGES.split(";")} style={{ width: '270px', height: '250px' }} />
+                  <Card.Body>
+                    <Card.Img
+                      src={site.CAMP_IMAGES.split(";")}
+                      style={{ width: "270px", height: "250px" }}
+                    />
                     <Card.Title>{site.CAMP_SELECT}</Card.Title>
                     <Card.Text>{site.CAMP_NAME}</Card.Text>
                     <Card.Text>{site.CAMP_LOCATION}</Card.Text>
@@ -218,7 +219,9 @@ function SearchPage() {
         {searchResults.length === 0 && (
           <Row id='campSearchFooterbox' className='mt-3 justify-content-center'>
             <Col md={6} className='text-center'>
-              <p id='campSearchFooter' className='lead text-muted'>검색 결과가 없습니다.</p>
+              <p id='campSearchFooter' className='lead text-muted'>
+                검색 결과가 없습니다.
+              </p>
             </Col>
           </Row>
         )}

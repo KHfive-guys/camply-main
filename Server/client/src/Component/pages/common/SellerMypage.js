@@ -9,12 +9,11 @@ import "../camp/CampBoard/css/MyPage.css";
 function SellerMypage() {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
-  
+
   const [campList, setCampList] = useState([]);
 
   const navigate = useNavigate();
 
-  
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
 
@@ -22,7 +21,7 @@ function SellerMypage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
+        .get(`http://camply.shop/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -31,17 +30,16 @@ function SellerMypage() {
           console.log("User Data Response:", response.data);
           setUserData(response.data || {});
           setLoading(false);
-          axios.post(`http://43.203.173.70:8080/camp/Mypage/campUploadList`, {
-            USER_ID: USER_ID,
-          })
-          .then((responseData) => {
-           setCampList(responseData.data);
-          })
-          .catch ((error) => {
-            console.log("항목조회실패" + error.response.data.message);
-          });
-          
-          
+          axios
+            .post(`http://camply.shop/camp/Mypage/campUploadList`, {
+              USER_ID: USER_ID,
+            })
+            .then((responseData) => {
+              setCampList(responseData.data);
+            })
+            .catch((error) => {
+              console.log("항목조회실패" + error.response.data.message);
+            });
         })
         .catch((error) => {
           console.error("사용자 정보 가져오기 실패:", error);
@@ -54,7 +52,7 @@ function SellerMypage() {
 
   const parseUserIdFromToken = (token) => {
     try {
-      const payloadBase64 = token.split('.')[1];
+      const payloadBase64 = token.split(".")[1];
       const payload = JSON.parse(atob(payloadBase64));
       return payload.user_id;
     } catch (error) {
@@ -69,51 +67,52 @@ function SellerMypage() {
   return (
     <section>
       <CampNavbar />
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
 
-      <div className="body-mypage">
-        <h1 className="mb-4" id="mypageMainTitle">
-        캠핑정보
+      <div className='body-mypage'>
+        <h1 className='mb-4' id='mypageMainTitle'>
+          캠핑정보
         </h1>
         <p>안녕하세요.</p>
         <p>{userData.USER_NAME}님 </p>
-        <div id="MypageContainer">
-          <div id="mypagebuttonbox">
+        <div id='MypageContainer'>
+          <div id='mypagebuttonbox'>
             <div>
               <button
-                id="Mypagecampinfo"
-                variant="primary"
+                id='Mypagecampinfo'
+                variant='primary'
                 onClick={() => navigate("/mycamping")}
-              > <span style={{ color: "orange" }}>▶ </span> 캠핑 등록 내역
+              >
+                {" "}
+                <span style={{ color: "orange" }}>▶ </span> 캠핑 등록 내역
               </button>
             </div>
           </div>
           <div>
-            <h5 id="reserveListTitle">캠핑 등록 내역</h5>
-            { campList.length > 0 ?
-              <div> 
-                {
-                  campList.map((camp) => (
-                    <div key={camp.CAMP_ID} id="mypagereserveList">
-                      <p>{camp.CAMP_NAME}</p>
-                      <div></div>
-                      <div id="reservesecondBox">
-                        <span> {camp.CAMP_LOCATION}</span><br/>
-                        <span> (1박 기준) {camp.CAMP_PRICE} 원</span>
-                      </div>
+            <h5 id='reserveListTitle'>캠핑 등록 내역</h5>
+            {campList.length > 0 ? (
+              <div>
+                {campList.map((camp) => (
+                  <div key={camp.CAMP_ID} id='mypagereserveList'>
+                    <p>{camp.CAMP_NAME}</p>
+                    <div></div>
+                    <div id='reservesecondBox'>
+                      <span> {camp.CAMP_LOCATION}</span>
+                      <br />
+                      <span> (1박 기준) {camp.CAMP_PRICE} 원</span>
                     </div>
-                  ))}
-                
+                  </div>
+                ))}
               </div>
-            : 
-            <div>
-                
-              <p style={{margin:'200px' , fontSize:'20px'}}>등록한 캠핑장이 없습니다.</p>
-        
-            </div>
-            } 
+            ) : (
+              <div>
+                <p style={{ margin: "200px", fontSize: "20px" }}>
+                  등록한 캠핑장이 없습니다.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

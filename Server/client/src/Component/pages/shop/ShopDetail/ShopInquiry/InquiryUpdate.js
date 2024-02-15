@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import Nav from '../../../camp/CampNavbar';
+import Nav from "../../../camp/CampNavbar";
 import { Button } from "@mui/material";
 import { FaCheck } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
@@ -19,7 +19,7 @@ const InquiryUpdate = () => {
   const getQuestion = async () => {
     try {
       const response = await axios.get(
-        `http://43.203.173.70:8080/shop/question/${questionNo}` // 수정: 문의글 단건 조회 경로로 변경
+        `http://camply.shop/shop/question/${questionNo}` // 수정: 문의글 단건 조회 경로로 변경
       );
       setQuestion(response.data);
     } catch (error) {
@@ -30,7 +30,7 @@ const InquiryUpdate = () => {
     event.preventDefault();
     try {
       await axios.patch(
-        `http://43.203.173.70:8080/shop/question/update/${questionNo}`,
+        `http://camply.shop/shop/question/update/${questionNo}`,
         {
           questionTitle: question.questionTitle,
           questionText: question.questionText,
@@ -50,41 +50,43 @@ const InquiryUpdate = () => {
   }, [questionNo]);
   return (
     <>
-    <Nav/>
-    <div>
-    <h2 style={{textAlign:'center',marginTop:'60px'}}> 문의 수정</h2>
-      <form onSubmit={updateQuestion}>
-      <div className="writer-container">
-        <div className="inquiry-title">
-          제목
-          <br/>
-          <input
-            type='text'
-            name='questionTitle'
-            value={question.questionTitle}
-            onChange={onChange}
-          />
-        </div>
-        <br />
-        <div className="inquiry-content">
-          내용
-          <br/>
-          <textarea
-            name='questionText'
-            value={question.questionText}
-            onChange={onChange}
-          />
-        </div>
-        <br />
-        <div className="writer-btn">
-          <button className="btn-writer" type="submit">수정 <FaCheck/></button>
-          <button className="back-btn"  onClick={backToList}>
-          <IoIosArrowBack/> 취소
-          </button>
-        </div>
-        </div>
-      </form>
-    </div>
+      <Nav />
+      <div>
+        <h2 style={{ textAlign: "center", marginTop: "60px" }}> 문의 수정</h2>
+        <form onSubmit={updateQuestion}>
+          <div className='writer-container'>
+            <div className='inquiry-title'>
+              제목
+              <br />
+              <input
+                type='text'
+                name='questionTitle'
+                value={question.questionTitle}
+                onChange={onChange}
+              />
+            </div>
+            <br />
+            <div className='inquiry-content'>
+              내용
+              <br />
+              <textarea
+                name='questionText'
+                value={question.questionText}
+                onChange={onChange}
+              />
+            </div>
+            <br />
+            <div className='writer-btn'>
+              <button className='btn-writer' type='submit'>
+                수정 <FaCheck />
+              </button>
+              <button className='back-btn' onClick={backToList}>
+                <IoIosArrowBack /> 취소
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </>
   );
 };

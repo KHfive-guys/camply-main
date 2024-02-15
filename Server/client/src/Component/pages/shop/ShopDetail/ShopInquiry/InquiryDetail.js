@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CommentWriter from "./InquiryComment/CommentWriter";
 import "../../css/ShopDetail/ShopInquiry/InquiryDetail.css";
-import Nav from '../../../camp/CampNavbar';
+import Nav from "../../../camp/CampNavbar";
 import { Button } from "@mui/material";
 
 const InquiryDetail1 = () => {
@@ -30,7 +30,7 @@ const InquiryDetail1 = () => {
     const fetchData = async () => {
       try {
         const questionResponse = await axios.get(
-          `http://43.203.173.70:8080/shop/question/${questionNo}`
+          `http://camply.shop/shop/question/${questionNo}`
         );
         setQuestion(questionResponse.data);
         await updateComments(); // 댓글 목록 가져오기도 이 함수를 사용
@@ -40,13 +40,13 @@ const InquiryDetail1 = () => {
         console.error("데이터를 불러오는 중 오류 발생", error);
       }
     };
-  
+
     fetchData();
   }, [questionNo]);
   const updateComments = async () => {
     try {
       const commentsResponse = await axios.get(
-        `http://43.203.173.70:8080/shop/question/comment/list/${questionNo}`
+        `http://camply.shop/shop/question/comment/list/${questionNo}`
       );
       setComments(commentsResponse.data); // 댓글 목록 상태를 업데이트
     } catch (error) {
@@ -58,7 +58,7 @@ const InquiryDetail1 = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
         await axios.delete(
-          `http://43.203.173.70:8080/shop/question/delete/${questionNo}`
+          `http://camply.shop/shop/question/delete/${questionNo}`
         );
         alert("삭제 완료");
         navigate("/shop/main");
@@ -70,104 +70,144 @@ const InquiryDetail1 = () => {
 
   return (
     <>
-    <Nav/>
-    <h2 style={{marginTop:'100px'}}>상품문의</h2>
-    <div className="review-table-view">
-        <table summary="게시글 보기">
-            {question ? (
-                <>
-            <thead>
-                <tr>
-                    <th>
-                        <div className="tb-center">{question.questionTitle}</div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td className="line">
-                        <div className="content-sub">
-                            <div>
-                            <span>
-  <em>Date :</em>
-  {question.questionDate.split('T')[0]}
-</span>
-                            </div>
-                            <div>
-                                <span className="writer">
-                                   <em>작성자 :</em>
-                                   {question.userName}
-                                </span>
-                                <span>
-                                    <em>조회수:</em>
-                                    {question.questionHit}
-                                </span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div className="data-content">
-                            {question.questionText}
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-            <div>
-          {question.userId === currentUser && ( // question -> review로 변경
+      <Nav />
+      <h2 style={{ marginTop: "100px" }}>상품문의</h2>
+      <div className='review-table-view'>
+        <table summary='게시글 보기'>
+          {question ? (
             <>
-              <div style={{marginTop:'30px',marginRight:'10px'}} className="Detail-btn">
-                <div style={{marginRight:'10px'}} className="edit-btn">
-                  <button
-                  type='button'className="btn-update"
-                    onClick={() => navigate(`/inquiry/update/${questionNo}`)} // inquiry -> review로 변경
-                  >
-                    수정
-                  </button>
-                </div>
-                <div className="delete-btn">
-                  <button
-                  className="delete-btn1"
-                  onClick={handleDeleteClick}>삭제</button>
-                  </div>
+              <thead>
+                <tr>
+                  <th>
+                    <div className='tb-center'>{question.questionTitle}</div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className='line'>
+                    <div className='content-sub'>
+                      <div>
+                        <span>
+                          <em>Date :</em>
+                          {question.questionDate.split("T")[0]}
+                        </span>
+                      </div>
+                      <div>
+                        <span className='writer'>
+                          <em>작성자 :</em>
+                          {question.userName}
+                        </span>
+                        <span>
+                          <em>조회수:</em>
+                          {question.questionHit}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div className='data-content'>{question.questionText}</div>
+                  </td>
+                </tr>
+              </tbody>
+              <div>
+                {question.userId === currentUser && ( // question -> review로 변경
+                  <>
+                    <div
+                      style={{ marginTop: "30px", marginRight: "10px" }}
+                      className='Detail-btn'
+                    >
+                      <div style={{ marginRight: "10px" }} className='edit-btn'>
+                        <button
+                          type='button'
+                          className='btn-update'
+                          onClick={() =>
+                            navigate(`/inquiry/update/${questionNo}`)
+                          } // inquiry -> review로 변경
+                        >
+                          수정
+                        </button>
+                      </div>
+                      <div className='delete-btn'>
+                        <button
+                          className='delete-btn1'
+                          onClick={handleDeleteClick}
+                        >
+                          삭제
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </>
-          )}
-        </div>
-            </>
-            ):(
+          ) : (
             <p>리뷰를 찾을 수 없습니다.</p>
-            )}
+          )}
         </table>
-    </div>
-    <br/>
-    <div className="comment-container">
-        <div style={{marginTop:'70px'}}>
-        
-        <div className='comment-list'>
+      </div>
+      <br />
+      <div className='comment-container'>
+        <div style={{ marginTop: "70px" }}>
+          <div className='comment-list'>
             <h3>덧글</h3>
             {comments.map((comment) => (
-                <div style={{marginBottom:'10px'}} key={comment.commentNo} className='inquiry-comment-list'>
-                  <div style={{border:'1px solid #e9e9e9', borderRadius:'10px', marginBottom:'50px'}}>
-                <div style={{display:'flex', justifyContent:'flex-end', marginRight:'20px', marginTop:'10px'}} className="commentDate">
+              <div
+                style={{ marginBottom: "10px" }}
+                key={comment.commentNo}
+                className='inquiry-comment-list'
+              >
+                <div
+                  style={{
+                    border: "1px solid #e9e9e9",
+                    borderRadius: "10px",
+                    marginBottom: "50px",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      marginRight: "20px",
+                      marginTop: "10px",
+                    }}
+                    className='commentDate'
+                  >
                     <p>{comment.commentDate}</p>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      fontWeight: "bold",
+                      marginBottom: "100px",
+                    }}
+                    className='commentText'
+                  >
+                    <p>{comment.commentText}</p>
+                  </div>
                 </div>
-                <div style={{display:'flex',justifyContent:'center',fontWeight:'bold',marginBottom:'100px'}} className="commentText">
-                <p>{comment.commentText}</p>
-                </div>
-
-                </div>
-                </div>
+              </div>
             ))}
+          </div>
+          <div
+            style={{
+              marginTop: "30px",
+              marginBottom: "100px",
+              borderBottom: "1px solid #e9e9e9",
+            }}
+          >
+            <CommentWriter
+              questionNo={questionNo}
+              updateComments={updateComments}
+            />
+          </div>
         </div>
-        <div style={{marginTop:'30px',marginBottom:'100px', borderBottom:'1px solid #e9e9e9'}}>
-        <CommentWriter questionNo={questionNo} updateComments={updateComments} />
-        </div>
-        </div>
-    </div>
+      </div>
     </>
-)
+  );
 };
 
 export default InquiryDetail1;

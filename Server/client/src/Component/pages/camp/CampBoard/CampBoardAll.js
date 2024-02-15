@@ -4,11 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "./css/CampBoardAll.css";
 import { Container } from "react-bootstrap";
 import CampNavbar from "../CampNavbar";
-import tentIMG from '../../../img/텐트.png';
-import '../CampBoard/css/SearchList.css';
-import Menu from '../CampMain/Home/Menu';
-
-
+import tentIMG from "../../../img/텐트.png";
+import "../CampBoard/css/SearchList.css";
+import Menu from "../CampMain/Home/Menu";
 
 function CampBoardAll() {
   const [boardData, setBoardData] = useState([]);
@@ -23,7 +21,7 @@ function CampBoardAll() {
     }
 
     axios
-      .get("http://43.203.173.70:8080/camp/board/all", { responseType: "arraybuffer" })
+      .get("http://camply.shop/camp/board/all", { responseType: "arraybuffer" })
       .then((response) => {
         const decodedData = new TextDecoder("utf-8").decode(response.data);
         const jsonData = JSON.parse(decodedData);
@@ -33,7 +31,6 @@ function CampBoardAll() {
         console.error("Error fetching data:", error);
       });
   }, []);
-  
 
   const parseJwt = (token) => {
     try {
@@ -41,7 +38,10 @@ function CampBoardAll() {
 
       const decodeUTF8Fields = (fields) => {
         return Object.fromEntries(
-          Object.entries(fields).map(([key, value]) => [key, decodeURIComponent(escape(value))])
+          Object.entries(fields).map(([key, value]) => [
+            key,
+            decodeURIComponent(escape(value)),
+          ])
         );
       };
 
@@ -74,35 +74,36 @@ function CampBoardAll() {
   return (
     <section>
       <CampNavbar />
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
 
-      <Menu/>
+      <Menu />
 
       <h1 id='tentSearchTitle'>캠플리 한눈에 보기</h1>
       <div id='tentContainer'>
-          {boardData.map((board) =>
-            board?(
-              <div id='tentResultBox'
-                key={board.camp_id}
-                onClick={() => handleRowClick(board.camp_id)}
-              >
-                <img src={tentIMG} alt='텐트' id='tentIMG'></img>
-               <div id='firstTentBox'>
+        {boardData.map((board) =>
+          board ? (
+            <div
+              id='tentResultBox'
+              key={board.camp_id}
+              onClick={() => handleRowClick(board.camp_id)}
+            >
+              <img src={tentIMG} alt='텐트' id='tentIMG'></img>
+              <div id='firstTentBox'>
                 <p id='tentType'>{board.camp_select}</p>
                 <p id='tentName'>{board.camp_name}</p>
                 <p id='tentLocation'>{board.camp_location}</p>
-                </div>
-                <div>
+              </div>
+              <div>
                 <p id='Campdescription'>(1박기준)</p>
                 <p id='tentPrice'>{numberWithCommas(board.camp_price)}원</p>
-                </div>
-                <hr id='tentHrbar'/>
               </div>
-            ) : null
-          )}
-          </div>
+              <hr id='tentHrbar' />
+            </div>
+          ) : null
+        )}
+      </div>
     </section>
   );
 }

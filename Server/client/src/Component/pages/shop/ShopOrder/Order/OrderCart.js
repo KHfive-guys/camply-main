@@ -4,14 +4,14 @@ import axios from "axios";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
 import { TbCamper } from "react-icons/tb";
-import Nav from '../../../camp/CampNavbar';
+import Nav from "../../../camp/CampNavbar";
 
 const OrderCart = () => {
   const [product, setProduct] = useState("");
   const [map, setMap] = useState({});
   const [marker, setMarker] = useState(null);
   const [userIds, setUserIds] = useState(null);
-  
+
   const [order, setOrder] = useState({
     userId: "", // userId로 변경
     orderOrdererName: "",
@@ -24,7 +24,6 @@ const OrderCart = () => {
     orderReceiverMessage: "",
     orderReceiverDeleveryMsg: "",
   });
-
 
   const [quantity, setQuantity] = useState(() => {
     const savedQuantity = sessionStorage.getItem("selectedQuantity");
@@ -102,7 +101,7 @@ const OrderCart = () => {
         const numericProductId = parseInt(productId, 10);
         if (!isNaN(numericProductId)) {
           const response = await axios.get(
-            `http://43.203.173.70:8080/shop/detail/${numericProductId}`
+            `http://camply.shop/shop/detail/${numericProductId}`
           );
           setProduct(response.data);
         } else {
@@ -253,7 +252,7 @@ const OrderCart = () => {
       console.log("orderData:", orderData);
 
       const response = await axios.post(
-        "http://43.203.173.70:8080/shop/order/post",
+        "http://camply.shop/shop/order/post",
         orderData
       );
 
@@ -263,7 +262,7 @@ const OrderCart = () => {
       alert("주문이 성공적으로 완료되었습니다.");
       if (location.state?.product) {
         const { cartId } = location.state.product;
-        await axios.delete(`http://43.203.173.70:8080/shop/cart/delete/${cartId}`);
+        await axios.delete(`http://camply.shop/shop/cart/delete/${cartId}`);
         alert("장바구니 항목이 삭제되었습니다.");
       }
 
@@ -281,99 +280,83 @@ const OrderCart = () => {
 
   return (
     <>
-    <Nav/>
-    <div className='root'>
-      
-      <div className='order-main'>
-        <main className='main-container'>
-        <h2 style={{textAlign:'center'}}>결제페이지</h2>
-          {product && Object.keys(product).length > 0 ? (
-            <>
-              <h3>
-                <TbCamper />
-                Camply
-              </h3>
-              <div className='tbl-order-cart'>
-                <table>
-                  <colgroup>
-                    <col style={{ width: "300px" }} />
-                    <col />
-                    <col style={{ width: "300px" }} />
-                    <col style={{ width: "100px" }} />
-                  </colgroup>
-                  <thead>
-                    <tr className='nbg'>
-                      <td>&nbsp;</td>
-                      <td style={{ textAlign: "center" }}>상품정보</td>
-                      <td style={{ textAlign: "center" }}>수량</td>
-                      <td>&nbsp;</td>
-                      <td style={{ textAlign: "center" }}>주문금액</td>
+      <Nav />
+      <div className='root'>
+        <div className='order-main'>
+          <main className='main-container'>
+            <h2 style={{ textAlign: "center" }}>결제페이지</h2>
+            {product && Object.keys(product).length > 0 ? (
+              <>
+                <h3>
+                  <TbCamper />
+                  Camply
+                </h3>
+                <div className='tbl-order-cart'>
+                  <table>
+                    <colgroup>
+                      <col style={{ width: "300px" }} />
+                      <col />
+                      <col style={{ width: "300px" }} />
+                      <col style={{ width: "100px" }} />
+                    </colgroup>
+                    <thead>
+                      <tr className='nbg'>
+                        <td>&nbsp;</td>
+                        <td style={{ textAlign: "center" }}>상품정보</td>
+                        <td style={{ textAlign: "center" }}>수량</td>
+                        <td>&nbsp;</td>
+                        <td style={{ textAlign: "center" }}>주문금액</td>
 
-                      <td>&nbsp;</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className='nbg'>
-                      <td>
-                        <div className='tb-center'>
-                          <div className='thumb'>
-                            <img
-                              src={product.productThumbnail}
-                              style={{ width: "150px" }}
-                              alt='제품 이미지'
-                            />
+                        <td>&nbsp;</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className='nbg'>
+                        <td>
+                          <div className='tb-center'>
+                            <div className='thumb'>
+                              <img
+                                src={product.productThumbnail}
+                                style={{ width: "150px" }}
+                                alt='제품 이미지'
+                              />
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td>
-                        <div className='tb-center'>
-                          <p
-                            className='item-title'
-                            style={{ fontSize: "15px", fontWeight: "bold" }}
-                          >
-                            {product.productName}
-                          </p>
-                        </div>
-                      </td>
-                      <td>
-                        <div className='tb-center'>
-                          <p>
-                            <span>{quantity}</span>
-                          </p>
-                        </div>
-                      </td>
-                      <td></td>
-                      <td>
-                        <div className='tb-right tb-bold'>
-                          {formattedPrice}원
-                        </div>
-                      </td>
-                      <td></td>
-                    </tr>
-                    <tr className='total'>
-                      <td colSpan={6}>
-                        <div className='tb-right'>
-                          주문 금액
-                          <span
-                            id='pvd-total-discount-block-etc-0'
-                            className='fc-red'
-                          ></span>
-                          <strong>
-                            {(
-                              quantity *
-                              (product.productPrice ? product.productPrice : 0)
-                            ).toLocaleString()}
-                            원
-                          </strong>
-                          + 배송비
-                          <span
-                            id='pvd-total-delivery-0'
-                            className='delprice'
-                          ></span>
-                          <strong>무료</strong>=
-                          <strong>
-                            주문금액
-                            <span>
+                        </td>
+                        <td>
+                          <div className='tb-center'>
+                            <p
+                              className='item-title'
+                              style={{ fontSize: "15px", fontWeight: "bold" }}
+                            >
+                              {product.productName}
+                            </p>
+                          </div>
+                        </td>
+                        <td>
+                          <div className='tb-center'>
+                            <p>
+                              <span>{quantity}</span>
+                            </p>
+                          </div>
+                        </td>
+                        <td></td>
+                        <td>
+                          <div className='tb-right tb-bold'>
+                            {formattedPrice}원
+                          </div>
+                        </td>
+                        <td></td>
+                      </tr>
+                      <tr className='total'>
+                        <td colSpan={6}>
+                          <div className='tb-right'>
+                            주문 금액
+                            <span
+                              id='pvd-total-discount-block-etc-0'
+                              className='fc-red'
+                            ></span>
+                            <strong>
                               {(
                                 quantity *
                                 (product.productPrice
@@ -381,234 +364,357 @@ const OrderCart = () => {
                                   : 0)
                               ).toLocaleString()}
                               원
-                            </span>
-                          </strong>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <section className='order-info'>
-                <div className='order-form'>
-                  <p className='eEOGCf'>주문 정보</p>
-                  <form className='form'>
-                    <div>
-                      <p>주문자</p>
+                            </strong>
+                            + 배송비
+                            <span
+                              id='pvd-total-delivery-0'
+                              className='delprice'
+                            ></span>
+                            <strong>무료</strong>=
+                            <strong>
+                              주문금액
+                              <span>
+                                {(
+                                  quantity *
+                                  (product.productPrice
+                                    ? product.productPrice
+                                    : 0)
+                                ).toLocaleString()}
+                                원
+                              </span>
+                            </strong>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <section className='order-info'>
+                  <div className='order-form'>
+                    <p className='eEOGCf'>주문 정보</p>
+                    <form className='form'>
                       <div>
-                        <input
-                          type='text'
-                          name='userName'
-                          className='input'
-                          value={userName || ""}
-                          onChange={onChange}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <p>이메일</p>
-                      <div>
-                        <input
-                          type='email'
-                          name='userEmail'
-                          className='input'
-                          value={userEmail || ""}
-                          onChange={onChange}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <p>연락처</p>
-                      <div>
-                        <input
-                          type='tel'
-                          value={userPhone || ""}
-                          name='userPhone'
-                          className='form'
-                          maxLength={13}
-                          placeholder='010-0000-0000'
-                        />
-                      </div>
-                    </div>
-                  </form>
-                  <form className='form'>
-                    <p className='eEOGCf'>배송지</p>
-                    <div>
-                      <p>받는사람</p>
-                      <div>
-                        <input
-                          type='text'
-                          value={orderReceiverName || ""}
-                          name='orderReceiverName'
-                          onChange={onChange}
-                        />
-                      </div>
-                    </div>
-                    <div className='address-form'>
-                      <p>주소</p>
-                      <div className='address-search'>
-                        <div className='address-num'>
+                        <p>주문자</p>
+                        <div>
                           <input
                             type='text'
-                            placeholder='우편번호'
-                            id='companyAddress'
-                            value={zipCode}
-                            required
-                            className='address-number-01 from'
+                            name='userName'
+                            className='input'
+                            value={userName || ""}
+                            onChange={onChange}
                           />
-                          <button type='button' onClick={onClickAddr}>
-                            주소검색
-                          </button>
                         </div>
-                        <input
-                          type='text'
-                          placeholder='기본주소'
-                          value={userAddress}
-                          name='orderReceiverAddress'
-                          onChange={onChange}
-                          className='default-address-01 form'
-                        ></input>
-                        <input
-                          type='text'
-                          placeholder='상세주소'
-                          value={orderReceiverAddressDetail}
-                          name='orderReceiverAddressDetail'
-                          onChange={onChange}
-                          className='default-address-01 form'
-                        ></input>
                       </div>
-                    </div>
-                    <div>
-                      <p>휴대전화</p>
-                      <div
-                        value={orderReceiverPhone}
-                        name='orderReceiverPhone'
-                        onChange={onChange}
-                      >
-                        <input
-                          type='tel'
-                          value={orderReceiverPhoneParts.part1}
-                          name='part1'
-                          onChange={onChangeReceiverPhone}
-                          className='form'
-                          maxLength={3}
-                        />
-                        <input
-                          type='tel'
-                          value={orderReceiverPhoneParts.part2}
-                          name='part2'
-                          onChange={onChangeReceiverPhone}
-                          className='form'
-                          maxLength={4}
-                        />
-                        <input
-                          type='tel'
-                          value={orderReceiverPhoneParts.part3}
-                          name='part3'
-                          onChange={onChangeReceiverPhone}
-                          className='form'
-                          maxLength={4}
-                        />
+                      <div>
+                        <p>이메일</p>
+                        <div>
+                          <input
+                            type='email'
+                            name='userEmail'
+                            className='input'
+                            value={userEmail || ""}
+                            onChange={onChange}
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <hr></hr>
-                    <div>
-                      <section className='order-msg'>
-                        <p>주문메세지</p>
-                        <textarea
-                          className='order-text'
-                          rows='6'
-                          cols='50'
-                          name='orderReceiverMessage'
-                          value={orderReceiverMessage}
+                      <div>
+                        <p>연락처</p>
+                        <div>
+                          <input
+                            type='tel'
+                            value={userPhone || ""}
+                            name='userPhone'
+                            className='form'
+                            maxLength={13}
+                            placeholder='010-0000-0000'
+                          />
+                        </div>
+                      </div>
+                    </form>
+                    <form className='form'>
+                      <p className='eEOGCf'>배송지</p>
+                      <div>
+                        <p>받는사람</p>
+                        <div>
+                          <input
+                            type='text'
+                            value={orderReceiverName || ""}
+                            name='orderReceiverName'
+                            onChange={onChange}
+                          />
+                        </div>
+                      </div>
+                      <div className='address-form'>
+                        <p>주소</p>
+                        <div className='address-search'>
+                          <div className='address-num'>
+                            <input
+                              type='text'
+                              placeholder='우편번호'
+                              id='companyAddress'
+                              value={zipCode}
+                              required
+                              className='address-number-01 from'
+                            />
+                            <button type='button' onClick={onClickAddr}>
+                              주소검색
+                            </button>
+                          </div>
+                          <input
+                            type='text'
+                            placeholder='기본주소'
+                            value={userAddress}
+                            name='orderReceiverAddress'
+                            onChange={onChange}
+                            className='default-address-01 form'
+                          ></input>
+                          <input
+                            type='text'
+                            placeholder='상세주소'
+                            value={orderReceiverAddressDetail}
+                            name='orderReceiverAddressDetail'
+                            onChange={onChange}
+                            className='default-address-01 form'
+                          ></input>
+                        </div>
+                      </div>
+                      <div>
+                        <p>휴대전화</p>
+                        <div
+                          value={orderReceiverPhone}
+                          name='orderReceiverPhone'
                           onChange={onChange}
-                          placeholder='주문메세지를 입력해주세요.'
-                        />
-                      </section>
-                    </div>
-                    <hr></hr>
-                    <div>
-                      <section className='delivery-msg'>
-                        <p>배송메시지</p>
-                        <textarea
-                          className='deli-text'
-                          rows='6'
-                          cols='50'
-                          name='orderReceiverDeleveryMsg'
-                          value={orderReceiverDeleveryMsg}
-                          onChange={onChange}
-                          placeholder='배송메시지 입력해주세요.'
-                        />
-                      </section>
-                    </div>
-                  </form>
-                </div>
-              </section>
-              <div className='order'>
-                <h3>주문 금액</h3>
-                <div className='tbl-pay'>
-                  <table>
-                    <colgroup>
-                      <col style={{ width: "24%" }} />
-                      <col style={{ width: "18%" }} />
-                      <col style={{ width: "22%" }} />
-                    </colgroup>
-                    <thead>
-                      <tr>
-                        <th scope='col' style={{ textAlign: "center" }}>
-                          상품금액
-                        </th>
-                        <th scope='col' style={{ textAlign: "center" }}>
-                          배송비
-                        </th>
-                        <th scope='col' style={{ textAlign: "center" }}>
-                          결제 예정금액
-                        </th>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className='base'>
-                            <strong>
-                              <em>
-                                <span className='op-total'>
-                                  {(
-                                    quantity *
-                                    (product.productPrice
-                                      ? product.productPrice
-                                      : 0)
-                                  ).toLocaleString()}{" "}
+                        >
+                          <input
+                            type='tel'
+                            value={orderReceiverPhoneParts.part1}
+                            name='part1'
+                            onChange={onChangeReceiverPhone}
+                            className='form'
+                            maxLength={3}
+                          />
+                          <input
+                            type='tel'
+                            value={orderReceiverPhoneParts.part2}
+                            name='part2'
+                            onChange={onChangeReceiverPhone}
+                            className='form'
+                            maxLength={4}
+                          />
+                          <input
+                            type='tel'
+                            value={orderReceiverPhoneParts.part3}
+                            name='part3'
+                            onChange={onChangeReceiverPhone}
+                            className='form'
+                            maxLength={4}
+                          />
+                        </div>
+                      </div>
+                      <hr></hr>
+                      <div>
+                        <section className='order-msg'>
+                          <p>주문메세지</p>
+                          <textarea
+                            className='order-text'
+                            rows='6'
+                            cols='50'
+                            name='orderReceiverMessage'
+                            value={orderReceiverMessage}
+                            onChange={onChange}
+                            placeholder='주문메세지를 입력해주세요.'
+                          />
+                        </section>
+                      </div>
+                      <hr></hr>
+                      <div>
+                        <section className='delivery-msg'>
+                          <p>배송메시지</p>
+                          <textarea
+                            className='deli-text'
+                            rows='6'
+                            cols='50'
+                            name='orderReceiverDeleveryMsg'
+                            value={orderReceiverDeleveryMsg}
+                            onChange={onChange}
+                            placeholder='배송메시지 입력해주세요.'
+                          />
+                        </section>
+                      </div>
+                    </form>
+                  </div>
+                </section>
+                <div className='order'>
+                  <h3>주문 금액</h3>
+                  <div className='tbl-pay'>
+                    <table>
+                      <colgroup>
+                        <col style={{ width: "24%" }} />
+                        <col style={{ width: "18%" }} />
+                        <col style={{ width: "22%" }} />
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th scope='col' style={{ textAlign: "center" }}>
+                            상품금액
+                          </th>
+                          <th scope='col' style={{ textAlign: "center" }}>
+                            배송비
+                          </th>
+                          <th scope='col' style={{ textAlign: "center" }}>
+                            결제 예정금액
+                          </th>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div className='base'>
+                              <strong>
+                                <em>
+                                  <span className='op-total'>
+                                    {(
+                                      quantity *
+                                      (product.productPrice
+                                        ? product.productPrice
+                                        : 0)
+                                    ).toLocaleString()}{" "}
+                                  </span>
+                                </em>
+                                원
+                              </strong>
+                            </div>
+                          </td>
+                          <td>
+                            <div className='base'>
+                              <strong>
+                                <em>
+                                  <span className='op-total'>무료</span>
+                                </em>
+                              </strong>
+                              <a
+                                className='plus'
+                                style={{ marginRight: "50px" }}
+                              >
+                                <img
+                                  src='https://www.ocamall.com/images/common/bul_h23_plus.png'
+                                  alt='plus'
+                                />
+                              </a>
+                            </div>
+                          </td>
+                          <td>
+                            <div className='base'>
+                              <a className='equal'>
+                                <img
+                                  src='https://www.ocamall.com/images/common/bul_h23_equal.png'
+                                  alt='equal'
+                                />
+                              </a>
+                              <strong>
+                                <em className='fc-red'>
+                                  <span className='op-total'>
+                                    {(
+                                      quantity *
+                                      (product.productPrice
+                                        ? product.productPrice
+                                        : 0)
+                                    ).toLocaleString()}
+                                  </span>
+                                </em>
+                                원
+                              </strong>
+                            </div>
+                          </td>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
+                  <h3>결제 정보</h3>
+                  <div className='tbl-order'>
+                    <table>
+                      <colgroup>
+                        <col style={{ width: "110px" }} />
+                      </colgroup>
+                      <tbody>
+                        <tr>
+                          <th scope='row'>
+                            <div className='text-l'>결제방법</div>
+                          </th>
+                          <td>
+                            <ul className='payment'>
+                              <li>
+                                <input
+                                  type='radio'
+                                  className='chk-rdo'
+                                  name='radio_payment'
+                                />
+                                신용카드
+                                <em>
+                                  <span className='op-card-dc-price fc-red'></span>
+                                </em>
+                                <em>
+                                  <span className='op-c-dc-price fc-red'></span>
+                                </em>
+                              </li>
+                            </ul>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: "13px" }}>
+                      · 안심클릭 및 인터넷안전결제(ISP)서비스로
+                      <font color='blue'>128bit SSL</font>로 암호화된 결제 창이
+                      새로 뜹니다.
+                    </p>
+                    <p style={{ fontSize: "13px" }}>
+                      · 결제후, 카드명세서에 [
+                      <font color='red'>KG모빌리언스(Mobilians)</font>
+                      ]로 표시되며, 카드 정보는 상점에 남지 않습니다.
+                    </p>
+                  </div>
+                  <h3>주문자 동의</h3>
+                  <div className='tbl-order policy'>
+                    <table>
+                      <colgroup>
+                        <col style={{ width: "130px" }} />
+                      </colgroup>
+                      <tbody>
+                        <tr>
+                          <th scope='row'>
+                            <div className='text-l'>주문자동의</div>
+                          </th>
+                          <td>
+                            <div className='order-agree-each'>
+                              <label className='label'>
+                                <input
+                                  className='order-input'
+                                  type='checkbox'
+                                />
+                                <span className='text'>
+                                  {" "}
+                                  주문 / 결제 정보를 확인하여 구매 진행에
+                                  동의합니다.
                                 </span>
-                              </em>
-                              원
-                            </strong>
-                          </div>
-                        </td>
-                        <td>
-                          <div className='base'>
-                            <strong>
+                              </label>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className='tbl-order tot-order'>
+                    <table>
+                      <colgroup>
+                        <col style={{ width: "100px" }}></col>
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th>총 결제금액</th>
+                          <td>
+                            <strong className='totalprice'>
                               <em>
-                                <span className='op-total'>무료</span>
-                              </em>
-                            </strong>
-                            <a className='plus' style={{ marginRight: "50px" }}>
-                              <img
-                                src='https://www.ocamall.com/images/common/bul_h23_plus.png'
-                                alt='plus'
-                              />
-                            </a>
-                          </div>
-                        </td>
-                        <td>
-                          <div className='base'>
-                            <a className='equal'>
-                              <img
-                                src='https://www.ocamall.com/images/common/bul_h23_equal.png'
-                                alt='equal'
-                              />
-                            </a>
-                            <strong>
-                              <em className='fc-red'>
-                                <span className='op-total'>
+                                <span className='op=total-price'>
                                   {(
                                     quantity *
                                     (product.productPrice
@@ -617,130 +723,30 @@ const OrderCart = () => {
                                   ).toLocaleString()}
                                 </span>
                               </em>
-                              원
+                              <span className='block-unit-won'>원</span>
                             </strong>
-                          </div>
-                        </td>
-                      </tr>
-                    </thead>
-                  </table>
+                            &nbsp;
+                          </td>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
+                  <div className='paybutton'>
+                    <button className='CSSbuttonBlack' onClick={saveOrder}>
+                      주문하기
+                    </button>
+                    <button className='CSSbuttonWhite' onClick={backToList}>
+                      주문취소
+                    </button>
+                  </div>
                 </div>
-                <h3>결제 정보</h3>
-                <div className='tbl-order'>
-                  <table>
-                    <colgroup>
-                      <col style={{ width: "110px" }} />
-                    </colgroup>
-                    <tbody>
-                      <tr>
-                        <th scope='row'>
-                          <div className='text-l'>결제방법</div>
-                        </th>
-                        <td>
-                          <ul className='payment'>
-                            <li>
-                              <input
-                                type='radio'
-                                className='chk-rdo'
-                                name='radio_payment'
-                              />
-                              신용카드
-                              <em>
-                                <span className='op-card-dc-price fc-red'></span>
-                              </em>
-                              <em>
-                                <span className='op-c-dc-price fc-red'></span>
-                              </em>
-                            </li>
-                          </ul>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div>
-                  <p style={{ fontSize: "13px" }}>
-                    · 안심클릭 및 인터넷안전결제(ISP)서비스로
-                    <font color='blue'>128bit SSL</font>로 암호화된 결제 창이
-                    새로 뜹니다.
-                  </p>
-                  <p style={{ fontSize: "13px" }}>
-                    · 결제후, 카드명세서에 [
-                    <font color='red'>KG모빌리언스(Mobilians)</font>
-                    ]로 표시되며, 카드 정보는 상점에 남지 않습니다.
-                  </p>
-                </div>
-                <h3>주문자 동의</h3>
-                <div className='tbl-order policy'>
-                  <table>
-                    <colgroup>
-                      <col style={{ width: "130px" }} />
-                    </colgroup>
-                    <tbody>
-                      <tr>
-                        <th scope='row'>
-                          <div className='text-l'>주문자동의</div>
-                        </th>
-                        <td>
-                          <div className='order-agree-each'>
-                            <label className='label'>
-                              <input className='order-input' type='checkbox' />
-                              <span className='text'>
-                                {" "}
-                                주문 / 결제 정보를 확인하여 구매 진행에
-                                동의합니다.
-                              </span>
-                            </label>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div className='tbl-order tot-order'>
-                  <table>
-                    <colgroup>
-                      <col style={{ width: "100px" }}></col>
-                    </colgroup>
-                    <thead>
-                      <tr>
-                        <th>총 결제금액</th>
-                        <td>
-                          <strong className='totalprice'>
-                            <em>
-                              <span className='op=total-price'>
-                                {(
-                                  quantity *
-                                  (product.productPrice
-                                    ? product.productPrice
-                                    : 0)
-                                ).toLocaleString()}
-                              </span>
-                            </em>
-                            <span className='block-unit-won'>원</span>
-                          </strong>
-                          &nbsp;
-                        </td>
-                      </tr>
-                    </thead>
-                  </table>
-                </div>
-                <div className='paybutton'>
-                  <button className='CSSbuttonBlack' onClick={saveOrder}>
-                    주문하기
-                  </button>
-                  <button className='CSSbuttonWhite' onClick={backToList}>
-                    주문취소
-                  </button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <p>상품을 찾을 수 없습니다.</p>
-          )}
-        </main>
+              </>
+            ) : (
+              <p>상품을 찾을 수 없습니다.</p>
+            )}
+          </main>
+        </div>
       </div>
-    </div>
     </>
   );
 };

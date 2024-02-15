@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logo from "../../img/Logo.png";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import CampNavbar from '../camp/CampNavbar';
+import CampNavbar from "../camp/CampNavbar";
 import axios from "axios";
 
 function ManagerEmailRegister() {
@@ -41,7 +41,6 @@ function ManagerEmailRegister() {
     }
   };
 
-
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
     if (token) {
@@ -56,7 +55,7 @@ function ManagerEmailRegister() {
           const email = userInfoResponse.data.kakao_account.email;
           console.log("User Email:", email);
           axios
-            .get(`http://43.203.173.70:8080/api/user/kakao/${email}`)
+            .get(`http://camply.shop/api/user/kakao/${email}`)
             .then((response) => {
               const userType = response.data.USER_TYPE;
               console.log("User Type:", userType);
@@ -95,31 +94,29 @@ function ManagerEmailRegister() {
       oncomplete: function (addrData) {
         var geocoder = new window.kakao.maps.services.Geocoder();
         geocoder.addressSearch(addrData.address, function (result, status) {
-            setCompanyAddress(addrData.address);
+          setCompanyAddress(addrData.address);
         });
       },
     }).open();
   };
-  
 
   return (
     <section>
-      <CampNavbar/>
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <CampNavbar />
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
 
       <WrapLogin>
         <HeadBannerGroup />
         <ReauthPhone>
           <LoginWrap>
-
             <LoginSection>
               <LoginTitle>정말 간단한 회원가입하기</LoginTitle>
-              <SignupStep className="wrap">
+              <SignupStep className='wrap'>
                 <Title>판매자 가입하기</Title>
               </SignupStep>
-              
+
               <FormBlock>
                 <FormBlockHead>
                   <AsteriskRed>*</AsteriskRed> 사업자 번호
@@ -127,10 +124,10 @@ function ManagerEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeWTypeL>
                     <NicknameInput
-                      id="companyNumber"
+                      id='companyNumber'
                       value={companyNumber}
-                      type="text"
-                      placeholder="사업자 번호를 입력해 주세요"
+                      type='text'
+                      placeholder='사업자 번호를 입력해 주세요'
                       required
                       onChange={(e) => {
                         setCompanyNumber(e.target.value);
@@ -149,10 +146,10 @@ function ManagerEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeWTypeL>
                     <NicknameInput
-                      id="companyAddress"
+                      id='companyAddress'
                       value={companyAddress}
-                      type="text"
-                      placeholder="사업자 주소를 입력해 주세요"
+                      type='text'
+                      placeholder='사업자 주소를 입력해 주세요'
                       required
                       onClick={onClickAddr}
                       onBlur={() => companyAddressCheck()}
@@ -169,10 +166,10 @@ function ManagerEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeWTypeL>
                     <NicknameInput
-                      id="companyPhone"
+                      id='companyPhone'
                       value={companyPhone}
-                      type="text"
-                      placeholder="사업자 전화번호를 입력해 주세요"
+                      type='text'
+                      placeholder='사업자 전화번호를 입력해 주세요'
                       required
                       onChange={(e) => {
                         setCompanyPhone(e.target.value);
@@ -186,11 +183,7 @@ function ManagerEmailRegister() {
 
               <FormBlockSubmit>
                 <FormBlockBody>
-                  <BtnLogin
-                    type="button"
-                    onClick={() => {
-                    }}
-                  >
+                  <BtnLogin type='button' onClick={() => {}}>
                     회원가입하기
                   </BtnLogin>
                 </FormBlockBody>

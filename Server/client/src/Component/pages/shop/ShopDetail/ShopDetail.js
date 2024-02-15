@@ -7,13 +7,11 @@ import Nav from "../../camp/CampNavbar";
 import ShopMore from "./ShopMore/ShopMore";
 import ShopInquiry from "./ShopInquiry/ShopInquiry";
 import ShopReview from "./ShopReview/ShopReview";
-import ShopLayout from '../ShopLayout';
+import ShopLayout from "../ShopLayout";
 import { useRef } from "react";
 import { Link as ScrollLink, Element } from "react-scroll";
 import ShopNav from "../ShopNav";
-import ButtonUp from '../ButtonUp';
-
-
+import ButtonUp from "../ButtonUp";
 
 const ShopDetail = () => {
   const { productId } = useParams();
@@ -43,25 +41,17 @@ const ShopDetail = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://43.203.173.70:8080/shop/detail/${productId}`
+          `http://camply.shop/shop/detail/${productId}`
         );
         setProduct(response.data);
-        setUserType(response.data.USER_TYPE)
+        setUserType(response.data.USER_TYPE);
       } catch (error) {
         console.error("상품 세부 정보를 불러오는 중 오류 발생", error);
       }
     };
 
-
-
-
-
-
-
     fetchData();
   }, [productId]);
-
-
 
   useEffect(() => {
     setUserToken(localStorage.getItem("yourTokenKey"));
@@ -99,7 +89,7 @@ const ShopDetail = () => {
       };
 
       const response = await axios.post(
-        "http://43.203.173.70:8080/shop/cart/post",
+        "http://camply.shop/shop/cart/post",
         cartData
       );
       alert("상품이 장바구니에 추가되었습니다.");
@@ -108,9 +98,8 @@ const ShopDetail = () => {
       console.error("상품을 장바구니에 추가하는 중 오류 발생", error);
     }
 
-
     if (!isUserLoggedIn) {
-      alert('로그인 후 이용이 가능합니다.')
+      alert("로그인 후 이용이 가능합니다.");
     }
   };
 
@@ -120,7 +109,7 @@ const ShopDetail = () => {
 
     if (!isUserLoggedIn) {
       // 로그인하지 않은 경우
-      alert('로그인 후 이용이 가능합니다.');
+      alert("로그인 후 이용이 가능합니다.");
       // 함수 종료
       return;
     }
@@ -128,18 +117,14 @@ const ShopDetail = () => {
     navigate(`/shop/order/${productId}`, { state: { product, quantity } });
   };
 
-
-
-
-
   const isUserLoggedIn = !!userToken;
 
-    return (
+  return (
     <>
       <Nav />
-      <div style={{ marginTop: '100px' }}>
+      <div style={{ marginTop: "100px" }}>
         <ShopNav />
-        <div style={{ marginTop: '100px' }} className='main-shopping'>
+        <div style={{ marginTop: "100px" }} className='main-shopping'>
           <div className='main-section1'>
             <div className='main-section2'>
               <main className='main-section3'>
@@ -199,7 +184,9 @@ const ShopDetail = () => {
                         <li className='right-section-li'>
                           <dt className='right-section-dt'>판매자</dt>
                           <dd className='right-section-dd'>
-                            <p className='right-section-dd-p'>{product.userId}</p>
+                            <p className='right-section-dd-p'>
+                              {product.userId}
+                            </p>
                           </dd>
                         </li>
 
@@ -244,7 +231,9 @@ const ShopDetail = () => {
                                 )}
                                 {!isUserLoggedIn && (
                                   <Link to='/login'>
-                                    <span>로그인 후, 적립 혜택이 제공됩니다.</span>
+                                    <span>
+                                      로그인 후, 적립 혜택이 제공됩니다.
+                                    </span>
                                   </Link>
                                 )}
                               </span>
@@ -283,20 +272,16 @@ const ShopDetail = () => {
                             </span>
                           </button>
                           <button
-                            style={{ marginLeft: '20px'}}
-                            className="right-section-footer-button-div-button"
-                            type="button"
-                          
+                            style={{ marginLeft: "20px" }}
+                            className='right-section-footer-button-div-button'
+                            type='button'
                           >
-                            
-                              <span
-                                className='right-section-footer-button-span2'
-                                onClick={handleOrderClick}
-                               
-                              >
-                                결제하기
-                              </span>
-                          
+                            <span
+                              className='right-section-footer-button-span2'
+                              onClick={handleOrderClick}
+                            >
+                              결제하기
+                            </span>
                           </button>
                         </div>
                       </div>
@@ -308,7 +293,10 @@ const ShopDetail = () => {
               </main>
               <nav className='nav-first'>
                 <ul className='nav-first-ul'>
-                  <li style={{display:'flex',justifyContent:'center'}} className='nav-first-ul-li'>
+                  <li
+                    style={{ display: "flex", justifyContent: "center" }}
+                    className='nav-first-ul-li'
+                  >
                     <ScrollLink
                       to='product'
                       spy={true}
@@ -316,10 +304,15 @@ const ShopDetail = () => {
                       offset={-70}
                       duration={500}
                     >
-                      <span style={{ fontSize: '20px',marginTop:'20px'}}>상세정보</span>
+                      <span style={{ fontSize: "20px", marginTop: "20px" }}>
+                        상세정보
+                      </span>
                     </ScrollLink>
                   </li>
-                  <li style={{display:'flex',justifyContent:'center'}} className='nav-first-ul-li'>
+                  <li
+                    style={{ display: "flex", justifyContent: "center" }}
+                    className='nav-first-ul-li'
+                  >
                     <ScrollLink
                       to='review'
                       spy={true}
@@ -327,10 +320,15 @@ const ShopDetail = () => {
                       offset={-70}
                       duration={500}
                     >
-                      <span style={{ fontSize: '20px',marginTop:'20px' }}>리뷰</span>
+                      <span style={{ fontSize: "20px", marginTop: "20px" }}>
+                        리뷰
+                      </span>
                     </ScrollLink>
                   </li>
-                  <li style={{display:'flex',justifyContent:'center'}} className='nav-first-ul-li'>
+                  <li
+                    style={{ display: "flex", justifyContent: "center" }}
+                    className='nav-first-ul-li'
+                  >
                     <ScrollLink
                       to='inquiry'
                       spy={true}
@@ -338,7 +336,9 @@ const ShopDetail = () => {
                       offset={-70}
                       duration={500}
                     >
-                      <span style={{ fontSize: '20px',marginTop:'20px' }}>문의</span>
+                      <span style={{ fontSize: "20px", marginTop: "20px" }}>
+                        문의
+                      </span>
                     </ScrollLink>
                   </li>
                 </ul>
