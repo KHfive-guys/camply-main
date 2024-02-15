@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="maven-antrun-" default="main">
   <target name="main">
-<<<<<<< HEAD
     <copy todir="C:\Users\user1\Desktop\Camply_FiveGuys\camply-main\Server\target/classes/public">
       <fileset dir="C:\Users\user1\Desktop\Camply_FiveGuys\camply-main\Server/client/build" />
-=======
-    <copy todir="C:\Users\user1\Desktop\final2\camply-main\Server\target/classes/public">
-      <fileset dir="C:\Users\user1\Desktop\final2\camply-main\Server/client/build" />
->>>>>>> 0a8f66ac63de0125f1a46515e4e7e042a0eca65a
     </copy>
   </target>
 </project>
