@@ -150,10 +150,6 @@ function GeneralEmailRegister() {
         <HeadBannerGroup />
         <ReauthPhone>
           <LoginWrap>
-            <LoginLogo>
-              <img src={logo} width="300px" />
-            </LoginLogo>
-
             <LoginSection>
               <LoginTitle>정말 간단한 회원가입하기</LoginTitle>
               <SignupStep className="wrap">
