@@ -12,7 +12,7 @@ const Search = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `http://camply.shop/shop/main/search/${productName}`
+        `http://camply.store/shop/main/search/${productName}`
       );
       setSearchResults(response.data);
       setCurrentPage(1); // 새로운 검색 시 첫 페이지로 리셋

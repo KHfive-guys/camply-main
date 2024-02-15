@@ -47,7 +47,7 @@ function BbsWrite() {
     }
 
     axios
-      .post("http://camply.shop/camp/board/add", {
+      .post("http://camply.store/camp/board/add", {
         ...newBoard,
         camp_facility: selectedFacilities,
         camp_images: campImagesString,

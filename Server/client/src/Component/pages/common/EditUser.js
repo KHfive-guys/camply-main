@@ -26,7 +26,7 @@ function EditUser() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://camply.shop/api/user/get/${USER_ID}`, {
+        .get(`http://camply.store/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -80,7 +80,7 @@ function EditUser() {
     const USER_ID = parseUserIdFromToken(token);
 
     axios
-      .put(`http://camply.shop/api/user/update/${USER_ID}`, formValues, {
+      .put(`http://camply.store/api/user/update/${USER_ID}`, formValues, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

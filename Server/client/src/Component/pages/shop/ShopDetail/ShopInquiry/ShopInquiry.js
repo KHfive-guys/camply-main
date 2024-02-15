@@ -20,7 +20,7 @@ const ShopInquiry = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
         const response = await axios.get(
-          `http://camply.shop/shop/question/view/${productId}`,
+          `http://camply.store/shop/question/view/${productId}`,
           {
             params: {
               startIndex,

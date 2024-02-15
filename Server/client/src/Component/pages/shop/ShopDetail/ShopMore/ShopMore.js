@@ -11,7 +11,7 @@ const ShopMore = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://camply.shop/shop/detail/${productId}`
+          `http://camply.store/shop/detail/${productId}`
         );
         setProduct(response.data);
       } catch (error) {

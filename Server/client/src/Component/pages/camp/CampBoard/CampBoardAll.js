@@ -21,7 +21,9 @@ function CampBoardAll() {
     }
 
     axios
-      .get("http://camply.shop/camp/board/all", { responseType: "arraybuffer" })
+      .get("http://camply.store/camp/board/all", {
+        responseType: "arraybuffer",
+      })
       .then((response) => {
         const decodedData = new TextDecoder("utf-8").decode(response.data);
         const jsonData = JSON.parse(decodedData);

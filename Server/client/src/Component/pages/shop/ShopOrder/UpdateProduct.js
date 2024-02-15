@@ -44,7 +44,7 @@ const UpdateProduct = () => {
       }
       try {
         const response = await axios.get(
-          `http://camply.shop/shop/mypage/product/${productId}`,
+          `http://camply.store/shop/mypage/product/${productId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
@@ -146,7 +146,7 @@ const UpdateProduct = () => {
 
     try {
       await axios.put(
-        `http://camply.shop/shop/mypage/product/edit/${productId}`,
+        `http://camply.store/shop/mypage/product/edit/${productId}`,
         product,
         {
           headers: {

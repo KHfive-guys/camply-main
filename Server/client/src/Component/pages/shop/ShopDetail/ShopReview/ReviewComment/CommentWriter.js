@@ -22,7 +22,7 @@ const CommentWriter = ({ reviewNo, updateComments }) => {
   const saveComment = async () => {
     try {
       const response = await axios.post(
-        `http://camply.shop/shop/review/comment/post`,
+        `http://camply.store/shop/review/comment/post`,
         {
           ...comment,
           reviewNo: reviewNo,

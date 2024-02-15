@@ -23,7 +23,7 @@ const SocialKakao = () => {
       console.log("sendData : ", sendData);
 
       const response = await axios.post(
-        "http://camply.shop/getKakaoUserData",
+        "http://camply.store/getKakaoUserData",
         sendData,
         {
           headers: {

@@ -60,7 +60,7 @@ function NavBar() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://camply.shop/api/user/get/${USER_ID}`, {
+        .get(`http://camply.store/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -110,7 +110,7 @@ function NavBar() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://camply.shop/api/user/get/${USER_ID}`, {
+        .get(`http://camply.store/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -147,7 +147,7 @@ function NavBar() {
           const email = userInfoResponse.data.kakao_account.email;
           console.log("User Email:", email);
           axios
-            .get(`http://camply.shop/api/user/kakao/${email}`)
+            .get(`http://camply.store/api/user/kakao/${email}`)
             .then((response) => {
               const userType = response.data.USER_TYPE;
               console.log("User Type:", userType);

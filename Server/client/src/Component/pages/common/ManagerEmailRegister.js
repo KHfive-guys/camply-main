@@ -137,7 +137,7 @@ function ManagerEmailRegister() {
     if (validateForm()) {
       try {
         const response = await fetch(
-          "http://camply.shop/api/user/admin/register",
+          "http://camply.store/api/user/admin/register",
           {
             method: "POST",
             headers: {

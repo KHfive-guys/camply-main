@@ -16,7 +16,7 @@ function Login() {
   const emailLogin = async () => {
     console.log("login button USER_EMAIL" + USER_EMAIL);
     try {
-      const response = await fetch("http://camply.shop/api/user/login", {
+      const response = await fetch("http://camply.store/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

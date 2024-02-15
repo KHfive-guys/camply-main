@@ -18,7 +18,7 @@ const ShopReview = () => {
       try {
         // productId를 사용하여 해당 제품의 리뷰만 가져오는 엔드포인트로 수정
         const response = await axios.get(
-          `http://camply.shop/shop/review/view/${productId}` // 경로 변경: question -> review
+          `http://camply.store/shop/review/view/${productId}` // 경로 변경: question -> review
         );
         setReviews(response.data); // 상태 변경 함수명 수정: setQuestions -> setReviews
       } catch (error) {

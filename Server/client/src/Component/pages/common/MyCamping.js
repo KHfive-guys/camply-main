@@ -23,7 +23,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://camply.shop/api/user/get/${USER_ID}`, {
+        .get(`http://camply.store/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -35,7 +35,7 @@ function MyPage() {
           setLoading(false);
 
           axios
-            .post(`http://camply.shop/camp/Mypage/paymentResult`, {
+            .post(`http://camply.store/camp/Mypage/paymentResult`, {
               USER_ID: USER_ID,
             })
             .then((responseData) => {

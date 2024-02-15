@@ -28,7 +28,7 @@ const OrderList = () => {
     if (userId) {
       try {
         const response = await axios.get(
-          `http://camply.shop/shop/mypage/general/myorder/view/${userId}`
+          `http://camply.store/shop/mypage/general/myorder/view/${userId}`
         );
         setOrder(response.data); // 주문 정보 상태 업데이트
       } catch (error) {
@@ -43,7 +43,7 @@ const OrderList = () => {
   const handleDeleteMyOrder = async (orderNo) => {
     try {
       await axios.delete(
-        `http://camply.shop/shop/mypage/general/myorder/delete/${orderNo}`
+        `http://camply.store/shop/mypage/general/myorder/delete/${orderNo}`
       );
       fetchMyOrder();
       alert("주문이 삭제되었습니다."); // 사용자에게 알림

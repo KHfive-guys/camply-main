@@ -40,7 +40,7 @@ const CartList = () => {
     }
     try {
       await axios.delete(
-        `http://camply.shop/shop/cart/delete/${selectedCartId}`
+        `http://camply.store/shop/cart/delete/${selectedCartId}`
       );
       setCartItems(cartItems.filter((item) => item.cartId !== selectedCartId));
       setSelectedCartId(null); // 선택 상태 초기화
@@ -65,7 +65,7 @@ const CartList = () => {
     if (userId) {
       try {
         const response = await axios.get(
-          `http://camply.shop/shop/cart/mycart/${userId}`
+          `http://camply.store/shop/cart/mycart/${userId}`
         );
         setCartItems(response.data);
       } catch (error) {

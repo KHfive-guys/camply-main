@@ -31,7 +31,7 @@ const ReviewDetail1 = () => {
     const fetchData = async () => {
       try {
         const reviewResponse = await axios.get(
-          `http://camply.shop/shop/review/${reviewNo}`
+          `http://camply.store/shop/review/${reviewNo}`
         );
         setReview(reviewResponse.data);
         await updateComments(); // 댓글 목록 가져오기도 이 함수를 사용
@@ -47,7 +47,7 @@ const ReviewDetail1 = () => {
   const updateComments = async () => {
     try {
       const commentsResponse = await axios.get(
-        `http://camply.shop/shop/review/comment/list/${reviewNo}`
+        `http://camply.store/shop/review/comment/list/${reviewNo}`
       );
       setComments(commentsResponse.data); // 댓글 목록 상태를 업데이트
     } catch (error) {
@@ -59,7 +59,7 @@ const ReviewDetail1 = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
         await axios.delete(
-          `http://camply.shop/shop/review/delete/${reviewNo}` // question -> review로 변경
+          `http://camply.store/shop/review/delete/${reviewNo}` // question -> review로 변경
         );
         alert("삭제 완료");
         navigate("/shop/main");

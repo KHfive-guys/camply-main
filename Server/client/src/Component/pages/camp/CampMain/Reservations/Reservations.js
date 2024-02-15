@@ -28,13 +28,13 @@ function Reservations() {
     const fetchCampingData = async () => {
       try {
         const seoulResponse = await axios.get(
-          `http://camply.shop/camp/board/location/서울`
+          `http://camply.store/camp/board/location/서울`
         );
         const gyeonggiResponse = await axios.get(
-          `http://camply.shop/camp/board/location/경기`
+          `http://camply.store/camp/board/location/경기`
         );
         const kangwonResponse = await axios.get(
-          `http://camply.shop/camp/board/location/강원`
+          `http://camply.store/camp/board/location/강원`
         );
 
         setSeoulData(seoulResponse.data);
@@ -51,7 +51,7 @@ function Reservations() {
   useEffect(() => {
     const fetchRecentData = async () => {
       try {
-        const response = await axios.get("http://camply.shop/camp/board/all");
+        const response = await axios.get("http://camply.store/camp/board/all");
         setRecentData(response.data);
       } catch (error) {
         console.error("Error fetching recent data:", error);
