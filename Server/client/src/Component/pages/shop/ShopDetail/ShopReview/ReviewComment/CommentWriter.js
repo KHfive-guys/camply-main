@@ -22,7 +22,7 @@ const CommentWriter = ({ reviewNo, updateComments }) => {
   const saveComment = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:8080/shop/review/comment/post`,
+        `http://43.203.173.70:8080/shop/review/comment/post`,
         {
           ...comment,
           reviewNo: reviewNo,

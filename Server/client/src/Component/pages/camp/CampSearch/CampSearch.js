@@ -35,7 +35,7 @@ function SearchPage() {
   const campSearch = async () => {
     try {
       const response = await axios.post(
-        'http://localhost:8080/camp/search/campList',
+        'http://43.203.173.70:8080/camp/search/campList',
         searchCamp
       );
 

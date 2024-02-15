@@ -26,7 +26,7 @@ function EditUser() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://localhost:8080/api/user/get/${USER_ID}`, {
+        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -81,7 +81,7 @@ function EditUser() {
     const USER_ID = parseUserIdFromToken(token);
 
     axios
-      .put(`http://localhost:8080/api/user/update/${USER_ID}`, formValues, {
+      .put(`http://43.203.173.70:8080/api/user/update/${USER_ID}`, formValues, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -59,7 +59,7 @@ function UpdateBoard() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/camp/board/get/${camp_id}`)
+      .get(`http://43.203.173.70:8080/camp/board/get/${camp_id}`)
       .then((response) => {
         setBoardData(response.data);
         const facilityArray = response.data.camp_facility.split(", ");
@@ -97,7 +97,7 @@ function UpdateBoard() {
     }
 
     axios
-      .put(`http://localhost:8080/camp/board/edit/${camp_id}`, boardData, {
+      .put(`http://43.203.173.70:8080/camp/board/edit/${camp_id}`, boardData, {
         headers: {
           "Content-Type": "application/json",
         },

@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/static/css/main.84f0ef3d.css",
+    "main.js": "/static/js/main.9dee1c7c.js",
+    "static/js/592.599f76a2.chunk.js": "/static/js/592.599f76a2.chunk.js",
+    "static/media/fire-8230528_1920.jpg": "/static/media/fire-8230528_1920.27cdd0274fe6978ae48c.jpg",
+    "static/media/role.jpg": "/static/media/role.dcaa48819e2b52189808.jpg",
+    "static/media/campfire-896196_1280.jpg": "/static/media/campfire-896196_1280.1218b59b067a3d08e700.jpg",
+    "static/media/ai-generated-8541462_1280.jpg": "/static/media/ai-generated-8541462_1280.33ec1f454662f56ca921.jpg",
+    "static/media/camping-7947056_1280.jpg": "/static/media/camping-7947056_1280.f0ac2b32d9bbcf5f31dd.jpg",
+    "static/media/manager.png": "/static/media/manager.fc0bc63b82cd5f0cc5ce.png",
+    "static/media/12312.png": "/static/media/12312.8a9528ac33d302e634bc.png",
+    "static/media/카라반.png": "/static/media/카라반.80f31c87c720492445e5.png",
+    "static/media/general.png": "/static/media/general.ddbe4d1c3ed9d2489244.png",
+    "static/media/camping-7856198_1280.jpg": "/static/media/camping-7856198_1280.dcb3d7b55c70c3397ff6.jpg",
+    "static/media/Logo.png": "/static/media/Logo.9b387f67d173e307e2df.png",
+    "static/media/icons8-구매-주문.gif": "/static/media/icons8-구매-주문.f52f0ce119b7458db5a0.gif",
+    "static/media/logo-removebg-preview.png": "/static/media/logo-removebg-preview.d19a150039552db8b086.png",
+    "static/media/상품수정.png": "/static/media/상품수정.82087771de08e2a13d91.png",
+    "static/media/주문관리.png": "/static/media/주문관리.5abb531d2fdaa082c324.png",
+    "static/media/상품리스트.png": "/static/media/상품리스트.ce391d0749ea2be2d5e3.png",
+    "static/media/상품등록.png": "/static/media/상품등록.de215436daf141630c76.png",
+    "static/media/텐트.png": "/static/media/텐트.2bd4228335bd76c65531.png",
+    "static/media/모닥불.gif": "/static/media/모닥불.e4ecd8ce40c98eb9fda8.gif",
+    "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/index.html",
+    "main.84f0ef3d.css.map": "/static/css/main.84f0ef3d.css.map",
+    "main.9dee1c7c.js.map": "/static/js/main.9dee1c7c.js.map",
+    "592.599f76a2.chunk.js.map": "/static/js/592.599f76a2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.84f0ef3d.css",
+    "static/js/main.9dee1c7c.js"
+  ]
+}

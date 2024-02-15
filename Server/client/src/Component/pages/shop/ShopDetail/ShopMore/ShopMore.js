@@ -10,7 +10,7 @@ const ShopMore = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/shop/detail/${productId}`);
+        const response = await axios.get(`http://43.203.173.70:8080/shop/detail/${productId}`);
         setProduct(response.data);
       } catch (error) {
         console.error('Error fetching product details', error);

@@ -10,7 +10,7 @@ function ReservationCard(props) {
   useEffect(() => {
     const fetchCampData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/camp/board/get/${props.camp_id}`, {
+        const response = await axios.get(`http://43.203.173.70:8080/camp/board/get/${props.camp_id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("yourTokenKey")}`,
           },

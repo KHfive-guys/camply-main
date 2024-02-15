@@ -35,7 +35,7 @@ const Main = () => {
         const endIndex = startIndex + itemsPerPage;
         const productData = await Promise.all(
           productIds.slice(startIndex, endIndex).map(async (productId) => {
-            const response = await axios.get(`http://localhost:8080/shop/main/view/${productId}`);
+            const response = await axios.get(`http://43.203.173.70:8080/shop/main/view/${productId}`);
             return response.data;
           })
         );

@@ -63,7 +63,7 @@ const ReviewPost = () => {
     };
 
     try {
-      await axios.post("http://localhost:8080/shop/review/post", postData);
+      await axios.post("http://43.203.173.70:8080/shop/review/post", postData);
       alert("리뷰가 작성되었습니다.");
       navigate(`/shop/detail/${reviewData.productId}`);
     } catch (error) {

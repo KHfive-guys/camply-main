@@ -22,7 +22,7 @@ function SellerMypage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://localhost:8080/api/user/get/${USER_ID}`, {
+        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -31,7 +31,7 @@ function SellerMypage() {
           console.log("User Data Response:", response.data);
           setUserData(response.data || {});
           setLoading(false);
-          axios.post(`http://localhost:8080/camp/Mypage/campUploadList`, {
+          axios.post(`http://43.203.173.70:8080/camp/Mypage/campUploadList`, {
             USER_ID: USER_ID,
           })
           .then((responseData) => {

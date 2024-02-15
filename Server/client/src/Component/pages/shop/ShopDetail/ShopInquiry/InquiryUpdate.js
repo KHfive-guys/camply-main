@@ -19,7 +19,7 @@ const InquiryUpdate = () => {
   const getQuestion = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/shop/question/${questionNo}` // 수정: 문의글 단건 조회 경로로 변경
+        `http://43.203.173.70:8080/shop/question/${questionNo}` // 수정: 문의글 단건 조회 경로로 변경
       );
       setQuestion(response.data);
     } catch (error) {
@@ -30,7 +30,7 @@ const InquiryUpdate = () => {
     event.preventDefault();
     try {
       await axios.patch(
-        `http://localhost:8080/shop/question/update/${questionNo}`,
+        `http://43.203.173.70:8080/shop/question/update/${questionNo}`,
         {
           questionTitle: question.questionTitle,
           questionText: question.questionText,

@@ -28,7 +28,7 @@ const CategoryList = () => {
       try {
         const productData = await Promise.all(
           productCategorys.map(async (productCategory) => {
-            const response = await axios.get(`http://localhost:8080/shop/main/category/${productCategory}`);
+            const response = await axios.get(`http://43.203.173.70:8080/shop/main/category/${productCategory}`);
             return { category: productCategory, products: response.data };
           })
         );

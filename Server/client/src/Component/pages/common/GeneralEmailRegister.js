@@ -111,7 +111,7 @@ function GeneralEmailRegister() {
     if (validateForm()) {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/user/general/register",
+          "http://43.203.173.70:8080/api/user/general/register",
           {
             method: "POST",
             headers: {

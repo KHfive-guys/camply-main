@@ -23,7 +23,7 @@ const ReviewUpdate = () => {
   const getReview = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/shop/review/${reviewNo}` // 수정: 리뷰 단건 조회 경로로 변경
+        `http://43.203.173.70:8080/shop/review/${reviewNo}` // 수정: 리뷰 단건 조회 경로로 변경
       );
       setReview(response.data);
     } catch (error) {
@@ -35,7 +35,7 @@ const ReviewUpdate = () => {
     event.preventDefault();
     try {
       await axios.patch(
-        `http://localhost:8080/shop/review/update/${reviewNo}`,
+        `http://43.203.173.70:8080/shop/review/update/${reviewNo}`,
         {
           reviewTitle: review.reviewTitle,
           reviewText: review.reviewText,

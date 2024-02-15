@@ -65,7 +65,7 @@ const QuestionPost = () => {
         };
 
         try {
-          await axios.post('http://localhost:8080/shop/question/post', postData);
+          await axios.post('http://43.203.173.70:8080/shop/question/post', postData);
           alert('문의글이 작성되었습니다.');
           navigate(`/shop/detail/${questionData.productId}`);
       } catch (error) {

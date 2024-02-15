@@ -41,7 +41,7 @@ const SellAdd = () => {
 
         try {
             // 서버로 데이터 전송
-            const response = await axios.post('http://localhost:8080/api/products', formData);
+            const response = await axios.post('http://43.203.173.70:8080/api/products', formData);
 
             console.log('상품 등록 성공', response.data);
             

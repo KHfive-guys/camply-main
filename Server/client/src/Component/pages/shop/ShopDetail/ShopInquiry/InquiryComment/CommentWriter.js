@@ -23,7 +23,7 @@ const CommentWriter = ({ questionNo, updateComments }) => {
   const saveComment = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:8080/shop/question/comment/post`,
+        `http://43.203.173.70:8080/shop/question/comment/post`,
         {
           ...comment,
           questionNo: questionNo, // 숫자형 questionNo 사용

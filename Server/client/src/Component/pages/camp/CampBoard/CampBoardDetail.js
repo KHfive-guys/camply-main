@@ -35,7 +35,7 @@ function CampBoardDetail() {
   const handleHeart = () => {
     setLike(!like);
     axios
-      .post(`http://localhost:8080/camp/board/changDips`, {
+      .post(`http://43.203.173.70:8080/camp/board/changDips`, {
         CAMP_ID: camp_id,
         USER_ID: USER_ID,
         STATUS: like,
@@ -116,7 +116,7 @@ function CampBoardDetail() {
     }
 
     axios
-      .get(`http://localhost:8080/camp/board/get/${camp_id}`, {
+      .get(`http://43.203.173.70:8080/camp/board/get/${camp_id}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -142,7 +142,7 @@ function CampBoardDetail() {
 
           setLoading(false);
           axios
-            .post(`http://localhost:8080/camp/board/checkDips`, {
+            .post(`http://43.203.173.70:8080/camp/board/checkDips`, {
               CAMP_ID: camp_id,
               USER_ID: userTokenPayload?.user_id,
             })
@@ -184,7 +184,7 @@ function CampBoardDetail() {
 
     if (confirmDelete) {
       axios
-        .delete(`http://localhost:8080/camp/board/delete/${camp_id}`)
+        .delete(`http://43.203.173.70:8080/camp/board/delete/${camp_id}`)
         .then(() => {
           alert("삭제되었습니다.");
           navigate("/camp");

@@ -19,7 +19,7 @@ function ReplyComponent() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/board/reply/${camp_id}`)
+      .get(`http://43.203.173.70:8080/board/reply/${camp_id}`)
       .then((response) => {
         setReplyData(response.data);
       })
@@ -57,7 +57,7 @@ function ReplyComponent() {
 
   const handleAddReply = () => {
     axios
-      .post(`http://localhost:8080/board/reply/add/${camp_id}`, newReply)
+      .post(`http://43.203.173.70:8080/board/reply/add/${camp_id}`, newReply)
       .then(() => {
         setNewReply({
           user_id: userId,
@@ -73,7 +73,7 @@ function ReplyComponent() {
 
   const handleDeleteReply = (replyId) => {
     axios
-      .delete(`http://localhost:8080/board/reply/delete/${replyId}`)
+      .delete(`http://43.203.173.70:8080/board/reply/delete/${replyId}`)
       .then(() => {
         setReplyData((prevReplies) =>
           prevReplies.filter((reply) => reply.camp_reviewnumber !== replyId)

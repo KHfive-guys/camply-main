@@ -43,7 +43,7 @@ const ShopDetail = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/shop/detail/${productId}`
+          `http://43.203.173.70:8080/shop/detail/${productId}`
         );
         setProduct(response.data);
         setUserType(response.data.USER_TYPE)
@@ -99,7 +99,7 @@ const ShopDetail = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:8080/shop/cart/post",
+        "http://43.203.173.70:8080/shop/cart/post",
         cartData
       );
       alert("상품이 장바구니에 추가되었습니다.");

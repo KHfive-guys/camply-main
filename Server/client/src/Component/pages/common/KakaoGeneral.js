@@ -23,7 +23,7 @@ const SocialKakao = () => {
       console.log("sendData : ", sendData);
 
       const response = await axios.post(
-        "http://localhost:8080/getKakaoUserData",
+        "http://43.203.173.70:8080/getKakaoUserData",
         sendData,
         {
           headers: {
