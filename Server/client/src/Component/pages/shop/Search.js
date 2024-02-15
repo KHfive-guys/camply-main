@@ -11,7 +11,7 @@ const Search = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/shop/main/search/${productName}`);
+      const response = await axios.get(`http://43.203.173.70:8080/shop/main/search/${productName}`);
       setSearchResults(response.data);
       setCurrentPage(1); // 새로운 검색 시 첫 페이지로 리셋
       console.log('검색 결과:', response.data);

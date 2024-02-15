@@ -24,7 +24,7 @@ function MyPage() {
       console.log("USER_ID : " + USER_ID)
 
       axios
-        .get(`http://localhost:8080/api/user/get/${USER_ID}`, {
+        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -34,7 +34,7 @@ function MyPage() {
           setUserData(response.data || {});
           setLoading(false);
 
-          axios.post(`http://localhost:8080/camp/Mypage/campDipsList`, {
+          axios.post(`http://43.203.173.70:8080/camp/Mypage/campDipsList`, {
             USER_ID: USER_ID,
           })
           .then((responseData) => {

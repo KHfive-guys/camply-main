@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/camp/board")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class BoardController {
 
 	private final BoardService boardService;

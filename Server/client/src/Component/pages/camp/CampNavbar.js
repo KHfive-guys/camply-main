@@ -61,7 +61,7 @@ function NavBar() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://localhost:8080/api/user/get/${USER_ID}`, {
+        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -111,7 +111,7 @@ function NavBar() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://localhost:8080/api/user/get/${USER_ID}`, {
+        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -148,7 +148,7 @@ function NavBar() {
           const email = userInfoResponse.data.kakao_account.email;
           console.log("User Email:", email);
           axios
-            .get(`http://localhost:8080/api/user/kakao/${email}`)
+            .get(`http://43.203.173.70:8080/api/user/kakao/${email}`)
             .then((response) => {
               const userType = response.data.USER_TYPE;
               console.log("User Type:", userType);

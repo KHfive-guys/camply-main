@@ -30,7 +30,7 @@ const InquiryDetail1 = () => {
     const fetchData = async () => {
       try {
         const questionResponse = await axios.get(
-          `http://localhost:8080/shop/question/${questionNo}`
+          `http://43.203.173.70:8080/shop/question/${questionNo}`
         );
         setQuestion(questionResponse.data);
         await updateComments(); // 댓글 목록 가져오기도 이 함수를 사용
@@ -46,7 +46,7 @@ const InquiryDetail1 = () => {
   const updateComments = async () => {
     try {
       const commentsResponse = await axios.get(
-        `http://localhost:8080/shop/question/comment/list/${questionNo}`
+        `http://43.203.173.70:8080/shop/question/comment/list/${questionNo}`
       );
       setComments(commentsResponse.data); // 댓글 목록 상태를 업데이트
     } catch (error) {
@@ -58,7 +58,7 @@ const InquiryDetail1 = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       try {
         await axios.delete(
-          `http://localhost:8080/shop/question/delete/${questionNo}`
+          `http://43.203.173.70:8080/shop/question/delete/${questionNo}`
         );
         alert("삭제 완료");
         navigate("/shop/main");

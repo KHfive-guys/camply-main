@@ -59,7 +59,7 @@ const CreateProduct = () => {
     try {
       // 백엔드에서 사용자별 상품 등록 수를 조회하는 요청
       const response = await axios.get(
-        'http://localhost:8080/shop/mypage/getUserProductCount',
+        'http://43.203.173.70:8080/shop/mypage/getUserProductCount',
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -151,7 +151,7 @@ const CreateProduct = () => {
     try {
       // Spring Boot 애플리케이션의 API 엔드포인트에 데이터 전송
       const response = await axios.post(
-        'http://localhost:8080/shop/mypage/productAdd',
+        'http://43.203.173.70:8080/shop/mypage/productAdd',
         product,
         {
           headers: {

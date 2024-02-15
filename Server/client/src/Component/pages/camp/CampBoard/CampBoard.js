@@ -48,7 +48,7 @@ function BbsWrite() {
     }
 
     axios
-      .post("http://localhost:8080/camp/board/add", {
+      .post("http://43.203.173.70:8080/camp/board/add", {
         ...newBoard,
         camp_facility: selectedFacilities,
         camp_images: campImagesString,

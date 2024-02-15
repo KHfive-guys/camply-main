@@ -23,7 +23,7 @@ const Kakao = () => {
       console.log("email", email);
       console.log("nickname", nickname);
 
-      axios.post('http://localhost:8080/getKakaoUserData', {
+      axios.post('http://43.203.173.70:8080/getKakaoUserData', {
         access_token: access_token,
         email: email,
         nickname: nickname,
@@ -33,9 +33,9 @@ const Kakao = () => {
       .then(serverResponse => {
         localStorage.setItem("yourTokenKey", access_token);
         console.log(serverResponse.data);
-        console.log("http://localhost:8080/getKakaoUserData 성공")
+        console.log("http://43.203.173.70:8080/getKakaoUserData 성공")
         alert("카카오 로그인 성공");
-        window.location.href="http://localhost:3000/";
+        window.location.href="http://43.203.173.70:8080/";
       })
       .catch(error => {
         console.error(error);

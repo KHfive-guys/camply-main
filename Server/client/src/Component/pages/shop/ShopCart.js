@@ -12,7 +12,7 @@ const ShopCart = () => {
     const fetchData = async () => {
       try {
         if (productId) {
-          const response = await axios.get(`http://localhost:8080/shop/cart/${productId}`);
+          const response = await axios.get(`http://43.203.173.70:8080/shop/cart/${productId}`);
           setProducts(response.data);
         } else {
           console.error('productId가 없습니다.');
@@ -30,7 +30,7 @@ const ShopCart = () => {
       if (currentProductId) {
         const totalPrice = cartAmount * currentCartPrice;
   
-        await axios.post(`http://localhost:8080/shop/cart/post`, {
+        await axios.post(`http://43.203.173.70:8080/shop/cart/post`, {
           productId: currentProductId,
           cartAmount: cartAmount,
           totalPrice: totalPrice,

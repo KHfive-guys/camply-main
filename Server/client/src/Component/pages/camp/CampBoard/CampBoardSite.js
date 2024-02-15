@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./css/CampBoardAll.css";
 import '../CampBoard/css/SearchList.css';
 import { Container } from "react-bootstrap";
@@ -12,6 +12,8 @@ import campfire from '../../../img/모닥불.gif';
 function CampBoardTent() {
   const [boardData, setBoardData] = useState([]);
   const [userType, setUserType] = useState("");
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
@@ -25,7 +27,7 @@ function CampBoardTent() {
     const encodedCampSelect = encodeURIComponent(camp_select);
 
     axios
-      .get(`http://localhost:8080/camp/board/category/${encodedCampSelect}`, {
+      .get(`http://43.203.173.70:8080/camp/board/category/${encodedCampSelect}`, {
         responseType: "arraybuffer",
       })
       .then((response) => {
@@ -70,7 +72,7 @@ function CampBoardTent() {
   };
 
   const handleRowClick = (camp_id) => {
-    window.location.href = `/camp/board/get/${camp_id}`;
+    navigate(`/camp/board/get/${camp_id}`);
   };
 
   const numberWithCommas = (x) => {

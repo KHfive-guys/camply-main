@@ -117,7 +117,7 @@ const CampReserve = () => {
             try {
               axios
                 .post(
-                  "http://localhost:8080/camp/reserve",
+                  "http://43.203.173.70:8080/camp/reserve",
                   {
                     USER_ID: USER_ID,
                     CAMP_CHECKIN: reserveInfo.CAMP_CHECKIN,

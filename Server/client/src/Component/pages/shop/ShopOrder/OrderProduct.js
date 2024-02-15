@@ -32,7 +32,7 @@ const OrderProduct = () => {
       try {
         // 서버에서 주문 목록을 가져옵니다. 여기서는 판매자 ID가 1이라고 가정합니다.
         const response = await axios.get(
-          'http://localhost:8080/shop/mypage/orderList',
+          'http://43.203.173.70:8080/shop/mypage/orderList',
           {
             headers: {
               Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
@@ -88,7 +88,7 @@ const OrderProduct = () => {
       ) {
         // 검색 유형에 따른 URL 매개변수 설정
         response = await axios.get(
-          `http://localhost:8080/shop/mypage/search/orders?searchType=${searchType}&searchTerm=${encodeURIComponent(
+          `http://43.203.173.70:8080/shop/mypage/search/orders?searchType=${searchType}&searchTerm=${encodeURIComponent(
             searchTerm
           )}`,
           {

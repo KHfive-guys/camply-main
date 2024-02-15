@@ -23,7 +23,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://localhost:8080/api/user/get/${USER_ID}`, {
+        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -34,7 +34,7 @@ function MyPage() {
 
           setLoading(false);
 
-          axios.post(`http://localhost:8080/camp/Mypage/paymentResult`, {
+          axios.post(`http://43.203.173.70:8080/camp/Mypage/paymentResult`, {
             USER_ID: USER_ID,
           })
           .then((responseData) => {

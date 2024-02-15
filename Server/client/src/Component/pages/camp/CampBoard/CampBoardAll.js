@@ -23,7 +23,7 @@ function CampBoardAll() {
     }
 
     axios
-      .get("http://localhost:8080/camp/board/all", { responseType: "arraybuffer" })
+      .get("http://43.203.173.70:8080/camp/board/all", { responseType: "arraybuffer" })
       .then((response) => {
         const decodedData = new TextDecoder("utf-8").decode(response.data);
         const jsonData = JSON.parse(decodedData);

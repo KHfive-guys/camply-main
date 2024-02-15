@@ -22,7 +22,7 @@ const ShopInquiry = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
         const response = await axios.get(
-          `http://localhost:8080/shop/question/view/${productId}`,
+          `http://43.203.173.70:8080/shop/question/view/${productId}`,
           {
             params: {
               startIndex,

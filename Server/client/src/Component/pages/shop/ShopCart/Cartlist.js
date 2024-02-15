@@ -40,7 +40,7 @@ const CartList = () => {
     }
     try {
       await axios.delete(
-        `http://localhost:8080/shop/cart/delete/${selectedCartId}`
+        `http://43.203.173.70:8080/shop/cart/delete/${selectedCartId}`
       );
       setCartItems(cartItems.filter((item) => item.cartId !== selectedCartId));
       setSelectedCartId(null); // 선택 상태 초기화
@@ -65,7 +65,7 @@ const CartList = () => {
     if (userId) {
       try {
         const response = await axios.get(
-          `http://localhost:8080/shop/cart/mycart/${userId}`
+          `http://43.203.173.70:8080/shop/cart/mycart/${userId}`
         );
         setCartItems(response.data);
       } catch (error) {

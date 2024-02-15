@@ -137,7 +137,7 @@ function ManagerEmailRegister() {
     if (validateForm()) {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/user/admin/register",
+          "http://43.203.173.70:8080/api/user/admin/register",
           {
             method: "POST",
             headers: {

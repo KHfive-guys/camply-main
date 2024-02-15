@@ -18,11 +18,11 @@ function Login() {
   const emailLogin = async () => {
     console.log("login button USER_EMAIL" + USER_EMAIL);
     try {
-      const response = await fetch("http://localhost:8080/api/user/login", {
+      const response = await fetch("http://43.203.173.70:8080/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Origin: "http://localhost:3000",
+          Origin: "http://43.203.173.70:8080",
         },
         body: JSON.stringify({
           USER_EMAIL: USER_EMAIL,
