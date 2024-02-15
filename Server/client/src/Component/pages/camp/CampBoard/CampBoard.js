@@ -206,7 +206,11 @@ function BbsWrite() {
       </Container>
 
       <div>
+        <div>
+      <h2 className="tit-page">캠핑장 등록하기</h2>
+      </div>
         <div className="table-content">
+
           <table className="table">
             <tbody>
 
@@ -561,14 +565,14 @@ function BbsWrite() {
             </tbody>
           </table>
 
-          
+
         </div>
       </div>
       <div className="my-5 d-flex justify-content-center">
-            <button className="btn btn-outline-secondary" onClick={boardAdd}>
-              <i className="fas fa-pen"></i> 등록하기
-            </button>
-          </div>
+        <button className="btn btn-outline-secondary" onClick={boardAdd}>
+          <i className="fas fa-pen"></i> 등록하기
+        </button>
+      </div>
     </section>
   );
 }
