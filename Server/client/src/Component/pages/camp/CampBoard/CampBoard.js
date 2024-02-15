@@ -206,367 +206,369 @@ function BbsWrite() {
       </Container>
 
       <div>
-        <table className="table">
-          <tbody>
+        <div className="table-content">
+          <table className="table">
+            <tbody>
 
-          <tr>
-              <th className="table-primary">
-                캠핑장 주소 <span className="required"> *필수 입력</span>
-              </th>
-              <td>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={newBoard.camp_address}
-                  onClick={onClickAddr}
-                  onChange={(e) =>
-                    setNewBoard({ ...newBoard, camp_address: e.target.value })
-                  }
-                />
-              </td>
-            </tr>
-
-
-            <tr>
-              <th className="table-primary">
-                캠핑장 카테고리<span className="required"> *필수 입력</span>
-              </th>
-              <td className="radio-buttons-container">
-                <div>
-                  <input
-                    type="radio"
-                    id="tent"
-                    name="campCategory"
-                    value="tent"
-                    checked={newBoard.camp_select === "텐트"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_select: "텐트" })
-                    }
-                  />
-                  <label htmlFor="tent">텐트</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="glamping"
-                    name="campCategory"
-                    value="glamping"
-                    checked={newBoard.camp_select === "글램핑"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_select: "글램핑" })
-                    }
-                  />
-                  <label htmlFor="glamping">글램핑</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="caravan"
-                    name="campCategory"
-                    value="caravan"
-                    checked={newBoard.camp_select === "카라반"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_select: "카라반" })
-                    }
-                  />
-                  <label htmlFor="caravan">카라반</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="site"
-                    name="campCategory"
-                    value="site"
-                    checked={newBoard.camp_select === "야영장"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_select: "야영장" })
-                    }
-                  />
-                  <label htmlFor="site">사이트</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="pension"
-                    name="campCategory"
-                    value="pension"
-                    checked={newBoard.camp_select === "펜션"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_select: "펜션" })
-                    }
-                  />
-                  <label htmlFor="pension">펜션</label>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <th className="table-primary">
-                캠핑장 위치 <span className="required"> *필수 입력</span>
-              </th>
-              <td className="radio-buttons-container">
-                <div>
-                  <input
-                    type="radio"
-                    id="seoul"
-                    name="campLocation"
-                    value="서울"
-                    checked={newBoard.camp_location === "서울"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "서울" })
-                    }
-                  />
-                  <label htmlFor="seoul">서울</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="gyeonggi"
-                    name="campLocation"
-                    value="경기"
-                    checked={newBoard.camp_location === "경기"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "경기" })
-                    }
-                  />
-                  <label htmlFor="gyeonggi">경기</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="incheon"
-                    name="campLocation"
-                    value="인천"
-                    checked={newBoard.camp_location === "인천"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "인천" })
-                    }
-                  />
-                  <label htmlFor="incheon">인천</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="gangwon"
-                    name="campLocation"
-                    value="강원"
-                    checked={newBoard.camp_location === "강원"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "강원" })
-                    }
-                  />
-                  <label htmlFor="gangwon">강원</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="chungcheong"
-                    name="campLocation"
-                    value="충청"
-                    checked={newBoard.camp_location === "충청"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "충청" })
-                    }
-                  />
-                  <label htmlFor="chungcheong">충청</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="jeolla"
-                    name="campLocation"
-                    value="전라"
-                    checked={newBoard.camp_location === "전라"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "전라" })
-                    }
-                  />
-                  <label htmlFor="jeolla">전라</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="gyeongsang"
-                    name="campLocation"
-                    value="경상"
-                    checked={newBoard.camp_location === "경상"}
-                    onChange={() =>
-                      setNewBoard({ ...newBoard, camp_location: "경상" })
-                    }
-                  />
-                  <label htmlFor="gyeongsang">경상</label>
-                </div>
-              </td>
-            </tr>
-
-            
-            <tr>
-              <th className="table-primary">
-                캠핑장 이름 <span className="required"> *필수 입력</span>
-              </th>
-              <td>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={newBoard.camp_name}
-                  onChange={(e) =>
-                    setNewBoard({ ...newBoard, camp_name: e.target.value })
-                  }
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <th className="table-primary">
-                캠핑장 전화번호 <span className="required"> *필수 입력</span>
-              </th>
-              <td>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={newBoard.camp_phone}
-                  onChange={(e) =>
-                    setNewBoard({ ...newBoard, camp_phone: e.target.value })
-                  }
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <th className="table-primary">
-                성인 인원 <span className="required"> *필수 입력</span>
-              </th>
-              <td>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={newBoard.camp_adult}
-                  onChange={(e) =>
-                    setNewBoard({
-                      ...newBoard,
-                      camp_adult:
-                        e.target.value !== ""
-                          ? parseInt(e.target.value, 10)
-                          : 0,
-                    })
-                  }
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <th className="table-primary">
-                아동 인원 <span className="required"> *필수 입력</span>
-              </th>
-              <td>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={newBoard.camp_child}
-                  onChange={(e) =>
-                    setNewBoard({
-                      ...newBoard,
-                      camp_child:
-                        e.target.value !== ""
-                          ? parseInt(e.target.value, 10)
-                          : 0,
-                    })
-                  }
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <th className="table-primary">
-                1박 가격 <span className="required"> *필수 입력</span>
-              </th>
-              <td>
-                <input
-                  type="number"
-                  className="form-control"
-                  value={newBoard.camp_price}
-                  onChange={(e) =>
-                    setNewBoard({ ...newBoard, camp_price: e.target.value })
-                  }
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <th className="table-primary">
-                캠핑장 사진 추가 <span className="required"> *필수 입력</span>
-              </th>
-              <td>
-                <button
-                  className="btn btn-outline-secondary"
-                  onClick={addImageInputField}
-                >
-                  사진 추가하기
-                </button>
-              </td>
-            </tr>
-
-            {newBoard.camp_images.map((image, index) => (
-              <tr key={index}>
-                <th className="table-primary">{`캠핑장 사진 ${index + 1}`}</th>
+              <tr>
+                <th className="table-primary">
+                  캠핑장 주소 <span className="required"> *필수 입력</span>
+                </th>
                 <td>
                   <input
                     type="text"
                     className="form-control"
-                    value={image}
-                    onChange={(e) => handleImageChange(index, e.target.value)}
+                    value={newBoard.camp_address}
+                    onClick={onClickAddr}
+                    onChange={(e) =>
+                      setNewBoard({ ...newBoard, camp_address: e.target.value })
+                    }
                   />
                 </td>
               </tr>
-            ))}
 
-            <tr>
-              <th className="table-primary">부대 시설</th>
-              <td>
-                <div className="facilities-checkbox-container">
-                  {Object.entries(facilities).map(
-                    ([facility, checked], index) => (
-                      <div key={facility}>
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={checked}
-                            onChange={() => handleCheckboxChange(facility)}
-                          />
-                          {facility}
-                        </label>
-                      </div>
-                    )
-                  )}
-                </div>
-              </td>
-            </tr>
 
-            <tr>
-              <th className="table-primary">캠핑장 상세설명</th>
-              <td>
-                <textarea
-                  className="form-control"
-                  value={newBoard.camp_description}
-                  onChange={(e) =>
-                    setNewBoard({
-                      ...newBoard,
-                      camp_description: e.target.value,
-                    })
-                  }
-                  style={{ whiteSpace: 'pre-wrap' }}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              <tr>
+                <th className="table-primary">
+                  캠핑장 카테고리<span className="required"> *필수 입력</span>
+                </th>
+                <td className="radio-buttons-container">
+                  <div>
+                    <input
+                      type="radio"
+                      id="tent"
+                      name="campCategory"
+                      value="tent"
+                      checked={newBoard.camp_select === "텐트"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_select: "텐트" })
+                      }
+                    />
+                    <label htmlFor="tent">텐트</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="glamping"
+                      name="campCategory"
+                      value="glamping"
+                      checked={newBoard.camp_select === "글램핑"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_select: "글램핑" })
+                      }
+                    />
+                    <label htmlFor="glamping">글램핑</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="caravan"
+                      name="campCategory"
+                      value="caravan"
+                      checked={newBoard.camp_select === "카라반"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_select: "카라반" })
+                      }
+                    />
+                    <label htmlFor="caravan">카라반</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="site"
+                      name="campCategory"
+                      value="site"
+                      checked={newBoard.camp_select === "야영장"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_select: "야영장" })
+                      }
+                    />
+                    <label htmlFor="site">사이트</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="pension"
+                      name="campCategory"
+                      value="pension"
+                      checked={newBoard.camp_select === "펜션"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_select: "펜션" })
+                      }
+                    />
+                    <label htmlFor="pension">펜션</label>
+                  </div>
+                </td>
+              </tr>
 
-        <div className="my-5 d-flex justify-content-center">
-          <button className="btn btn-outline-secondary" onClick={boardAdd}>
-            <i className="fas fa-pen"></i> 등록하기
-          </button>
+              <tr>
+                <th className="table-primary">
+                  캠핑장 위치 <span className="required"> *필수 입력</span>
+                </th>
+                <td className="radio-buttons-container">
+                  <div>
+                    <input
+                      type="radio"
+                      id="seoul"
+                      name="campLocation"
+                      value="서울"
+                      checked={newBoard.camp_location === "서울"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_location: "서울" })
+                      }
+                    />
+                    <label htmlFor="seoul">서울</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="gyeonggi"
+                      name="campLocation"
+                      value="경기"
+                      checked={newBoard.camp_location === "경기"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_location: "경기" })
+                      }
+                    />
+                    <label htmlFor="gyeonggi">경기</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="incheon"
+                      name="campLocation"
+                      value="인천"
+                      checked={newBoard.camp_location === "인천"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_location: "인천" })
+                      }
+                    />
+                    <label htmlFor="incheon">인천</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="gangwon"
+                      name="campLocation"
+                      value="강원"
+                      checked={newBoard.camp_location === "강원"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_location: "강원" })
+                      }
+                    />
+                    <label htmlFor="gangwon">강원</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="chungcheong"
+                      name="campLocation"
+                      value="충청"
+                      checked={newBoard.camp_location === "충청"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_location: "충청" })
+                      }
+                    />
+                    <label htmlFor="chungcheong">충청</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="jeolla"
+                      name="campLocation"
+                      value="전라"
+                      checked={newBoard.camp_location === "전라"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_location: "전라" })
+                      }
+                    />
+                    <label htmlFor="jeolla">전라</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="gyeongsang"
+                      name="campLocation"
+                      value="경상"
+                      checked={newBoard.camp_location === "경상"}
+                      onChange={() =>
+                        setNewBoard({ ...newBoard, camp_location: "경상" })
+                      }
+                    />
+                    <label htmlFor="gyeongsang">경상</label>
+                  </div>
+                </td>
+              </tr>
+
+
+              <tr>
+                <th className="table-primary">
+                  캠핑장 이름 <span className="required"> *필수 입력</span>
+                </th>
+                <td>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={newBoard.camp_name}
+                    onChange={(e) =>
+                      setNewBoard({ ...newBoard, camp_name: e.target.value })
+                    }
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <th className="table-primary">
+                  캠핑장 전화번호 <span className="required"> *필수 입력</span>
+                </th>
+                <td>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={newBoard.camp_phone}
+                    onChange={(e) =>
+                      setNewBoard({ ...newBoard, camp_phone: e.target.value })
+                    }
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <th className="table-primary">
+                  성인 인원 <span className="required"> *필수 입력</span>
+                </th>
+                <td>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={newBoard.camp_adult}
+                    onChange={(e) =>
+                      setNewBoard({
+                        ...newBoard,
+                        camp_adult:
+                          e.target.value !== ""
+                            ? parseInt(e.target.value, 10)
+                            : 0,
+                      })
+                    }
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <th className="table-primary">
+                  아동 인원 <span className="required"> *필수 입력</span>
+                </th>
+                <td>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={newBoard.camp_child}
+                    onChange={(e) =>
+                      setNewBoard({
+                        ...newBoard,
+                        camp_child:
+                          e.target.value !== ""
+                            ? parseInt(e.target.value, 10)
+                            : 0,
+                      })
+                    }
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <th className="table-primary">
+                  1박 가격 <span className="required"> *필수 입력</span>
+                </th>
+                <td>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={newBoard.camp_price}
+                    onChange={(e) =>
+                      setNewBoard({ ...newBoard, camp_price: e.target.value })
+                    }
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <th className="table-primary">
+                  캠핑장 사진 추가 <span className="required"> *필수 입력</span>
+                </th>
+                <td>
+                  <button
+                    className="btn btn-outline-secondary"
+                    onClick={addImageInputField}
+                  >
+                    사진 추가하기
+                  </button>
+                </td>
+              </tr>
+
+              {newBoard.camp_images.map((image, index) => (
+                <tr key={index}>
+                  <th className="table-primary">{`캠핑장 사진 ${index + 1}`}</th>
+                  <td>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={image}
+                      onChange={(e) => handleImageChange(index, e.target.value)}
+                    />
+                  </td>
+                </tr>
+              ))}
+
+              <tr>
+                <th className="table-primary">부대 시설</th>
+                <td>
+                  <div className="facilities-checkbox-container">
+                    {Object.entries(facilities).map(
+                      ([facility, checked], index) => (
+                        <div key={facility}>
+                          <label>
+                            <input
+                              type="checkbox"
+                              checked={checked}
+                              onChange={() => handleCheckboxChange(facility)}
+                            />
+                            {facility}
+                          </label>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <th className="table-primary">캠핑장 상세설명</th>
+                <td>
+                  <textarea
+                    className="form-control"
+                    value={newBoard.camp_description}
+                    onChange={(e) =>
+                      setNewBoard({
+                        ...newBoard,
+                        camp_description: e.target.value,
+                      })
+                    }
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          
         </div>
       </div>
+      <div className="my-5 d-flex justify-content-center">
+            <button className="btn btn-outline-secondary" onClick={boardAdd}>
+              <i className="fas fa-pen"></i> 등록하기
+            </button>
+          </div>
     </section>
   );
 }
