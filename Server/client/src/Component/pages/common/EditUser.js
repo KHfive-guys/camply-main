@@ -91,7 +91,7 @@ function EditUser() {
         setShowAlert(true);
         setTimeout(() => {
           setShowAlert(false);
-          navigate("/mypageupdate");
+          navigate("/mypage");
         }, 3000);
       })
       .catch((error) => {
@@ -145,12 +145,12 @@ function EditUser() {
         회원정보 수정이 완료되었습니다.
       </Alert>
 
-      <h1 style={{marginTop:'5%', marginLeft: '10%', marginRight:'10%'}}>회원정보 수정</h1>
+      <h1>회원정보 수정</h1>
       {loading ? (
         <p>Loading...</p>
       ) : (
         <>
-          <Form onSubmit={handleFormSubmit} style={{ marginTop:'3%', marginLeft: '10%', marginRight:'10%' , marginBottom:'5%'}}>
+          <Form onSubmit={handleFormSubmit}>
             <Form.Group className="mb-3" controlId="formEmail">
               <Form.Label>이메일</Form.Label>
               <Form.Control
@@ -237,7 +237,7 @@ function EditUser() {
             )}
 
             <Button variant="primary" type="submit">
-              수정
+              저장
             </Button>
           </Form>
         </>
