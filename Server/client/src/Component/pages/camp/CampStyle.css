@@ -717,7 +717,7 @@ button:focus {
 
 .main-camply {
   font-family: "Protest Riot", sans-serif;
-  font-size: 70px;
+  font-size: 100px;
   font-weight: 400;
   font-style: normal;
   color: #FEA92A;
@@ -725,4 +725,12 @@ button:focus {
 }
 .container {
   margin-top: 50px;
+}
+
+.main-camply-p {
+  font-family: "Protest Riot", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-Size: 30px;
+  color: black;
 }

@@ -134,7 +134,7 @@ const ShopDetail = () => {
 
   const isUserLoggedIn = !!userToken;
 
-  return (
+    return (
     <>
       <Nav />
       <div style={{ marginTop: '100px' }}>
@@ -308,7 +308,7 @@ const ShopDetail = () => {
               </main>
               <nav className='nav-first'>
                 <ul className='nav-first-ul'>
-                  <li className='nav-first-ul-li'>
+                  <li style={{display:'flex',justifyContent:'center'}} className='nav-first-ul-li'>
                     <ScrollLink
                       to='product'
                       spy={true}
@@ -316,10 +316,10 @@ const ShopDetail = () => {
                       offset={-70}
                       duration={500}
                     >
-                      <span style={{ fontSize: '20px' }}>상세정보</span>
+                      <span style={{ fontSize: '20px',marginTop:'20px'}}>상세정보</span>
                     </ScrollLink>
                   </li>
-                  <li className='nav-first-ul-li'>
+                  <li style={{display:'flex',justifyContent:'center'}} className='nav-first-ul-li'>
                     <ScrollLink
                       to='review'
                       spy={true}
@@ -327,10 +327,10 @@ const ShopDetail = () => {
                       offset={-70}
                       duration={500}
                     >
-                      <span style={{ fontSize: '20px' }}>리뷰</span>
+                      <span style={{ fontSize: '20px',marginTop:'20px' }}>리뷰</span>
                     </ScrollLink>
                   </li>
-                  <li className='nav-first-ul-li'>
+                  <li style={{display:'flex',justifyContent:'center'}} className='nav-first-ul-li'>
                     <ScrollLink
                       to='inquiry'
                       spy={true}
@@ -338,7 +338,7 @@ const ShopDetail = () => {
                       offset={-70}
                       duration={500}
                     >
-                      <span style={{ fontSize: '20px' }}>문의</span>
+                      <span style={{ fontSize: '20px',marginTop:'20px' }}>문의</span>
                     </ScrollLink>
                   </li>
                 </ul>

@@ -15,7 +15,6 @@ import com.camply.shop.main.service.MainService;
 
 @RestController
 @RequestMapping("/shop/main")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class MainController {
 	@Autowired
 	private MainService mainService;
