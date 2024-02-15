@@ -96,9 +96,23 @@
 .table-content{
   display: flex;
   justify-content: center;
-  margin-top: 70px;
+ 
 }
 
 .form-control{
   min-width: 200px;
+}
+
+.tit-page{
+  margin-top: 70px;
+  padding-bottom: 10px;
+  position: relative;
+  font-size: 18px;
+  color: #202020;
+  line-height: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  
 }
