@@ -22,7 +22,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
+        .get(`http://camply.store/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -43,7 +43,7 @@ function MyPage() {
 
   const parseUserIdFromToken = (token) => {
     try {
-      const payloadBase64 = token.split('.')[1];
+      const payloadBase64 = token.split(".")[1];
       const payload = JSON.parse(atob(payloadBase64));
       return payload.user_id;
     } catch (error) {
@@ -51,7 +51,6 @@ function MyPage() {
       return null;
     }
   };
-  
 
   const handleDeleteAccount = () => {
     const confirmDelete = window.confirm("정말로 회원 탈퇴하시겠습니까?");
@@ -64,7 +63,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .delete(`http://43.203.173.70:8080/api/user/delete/${USER_ID}`, {
+        .delete(`http://camply.store/api/user/delete/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -97,7 +96,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       const response = await axios.get(
-        `http://43.203.173.70:8080/api/user/get/${USER_ID}`,
+        `http://camply.store/api/user/get/${USER_ID}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -135,26 +134,26 @@ function MyPage() {
   return (
     <section>
       <CampNavbar />
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
 
-      <div className="body-mypage">
-        <div id="Check">
-          <h1 className="mb-4" id="mypageMainTitle">
+      <div className='body-mypage'>
+        <div id='Check'>
+          <h1 className='mb-4' id='mypageMainTitle'>
             마이페이지
           </h1>
           <p>안녕하세요.</p>
-          <p id="updateUserinfo">{userData.USER_NAME}님 </p>
+          <p id='updateUserinfo'>{userData.USER_NAME}님 </p>
         </div>
 
-        <div id="MypageContainer">
+        <div id='MypageContainer'>
           <div>
             <div>
-              <h4 id="MypageTitle">내정보 수정</h4>
-              <p id="updateUserinfo">이메일: {userData.USER_EMAIL}</p>
-              <p id="updateUserinfo">이름: {userData.USER_NAME}</p>
-              <p id="updateUserinfo">닉네임: {userData.USER_NICKNAME}</p>
+              <h4 id='MypageTitle'>내정보 수정</h4>
+              <p id='updateUserinfo'>이메일: {userData.USER_EMAIL}</p>
+              <p id='updateUserinfo'>이름: {userData.USER_NAME}</p>
+              <p id='updateUserinfo'>닉네임: {userData.USER_NICKNAME}</p>
 
               {userData.USER_TYPE === "General" && (
                 <p>주소: {userData.USER_ADDRESS}</p>
@@ -168,12 +167,12 @@ function MyPage() {
                 </>
               )}
 
-              <Button id="userupdateButton" onClick={handleShowModal}>
+              <Button id='userupdateButton' onClick={handleShowModal}>
                 수정하기
               </Button>
 
               <Button
-                id="userdeleteButton"
+                id='userdeleteButton'
                 onClick={handleDeleteAccount}
                 disabled={deleting}
               >
@@ -185,21 +184,21 @@ function MyPage() {
                   <Modal.Title>비밀번호 확인</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <Form.Group controlId="formPasswordModal">
+                  <Form.Group controlId='formPasswordModal'>
                     <Form.Label>비밀번호를 입력하세요</Form.Label>
                     <Form.Control
-                      type="password"
-                      placeholder="비밀번호를 입력해주세요"
+                      type='password'
+                      placeholder='비밀번호를 입력해주세요'
                       value={password}
                       onChange={handlePasswordChange}
                     />
                   </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button variant="secondary" onClick={handleCloseModal}>
+                  <Button variant='secondary' onClick={handleCloseModal}>
                     취소
                   </Button>
-                  <Button variant="primary" onClick={handleEdit}>
+                  <Button variant='primary' onClick={handleEdit}>
                     확인
                   </Button>
                 </Modal.Footer>

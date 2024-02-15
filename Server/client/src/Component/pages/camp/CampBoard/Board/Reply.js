@@ -19,7 +19,7 @@ function ReplyComponent() {
 
   useEffect(() => {
     axios
-      .get(`http://43.203.173.70:8080/board/reply/${camp_id}`)
+      .get(`http://camply.store/board/reply/${camp_id}`)
       .then((response) => {
         setReplyData(response.data);
       })
@@ -57,7 +57,7 @@ function ReplyComponent() {
 
   const handleAddReply = () => {
     axios
-      .post(`http://43.203.173.70:8080/board/reply/add/${camp_id}`, newReply)
+      .post(`http://camply.store/board/reply/add/${camp_id}`, newReply)
       .then(() => {
         setNewReply({
           user_id: userId,
@@ -73,7 +73,7 @@ function ReplyComponent() {
 
   const handleDeleteReply = (replyId) => {
     axios
-      .delete(`http://43.203.173.70:8080/board/reply/delete/${replyId}`)
+      .delete(`http://camply.store/board/reply/delete/${replyId}`)
       .then(() => {
         setReplyData((prevReplies) =>
           prevReplies.filter((reply) => reply.camp_reviewnumber !== replyId)
@@ -90,32 +90,32 @@ function ReplyComponent() {
   };
 
   return (
-    <div id="reviewContainer">
-      <div id="reviewcontentBox">
-        <h5 id="reviewListTitle">방문후기</h5>
-        <div id="reviewBox">
-          <span id="reviewType">User:</span>
+    <div id='reviewContainer'>
+      <div id='reviewcontentBox'>
+        <h5 id='reviewListTitle'>방문후기</h5>
+        <div id='reviewBox'>
+          <span id='reviewType'>User:</span>
           <input
-            id="reviewUserID"
-            className="form-control"
-            type="text"
+            id='reviewUserID'
+            className='form-control'
+            type='text'
             value={userId || ""}
             readOnly
           />
-          <label id="reviewType">평점:</label>
+          <label id='reviewType'>평점:</label>
           <StarRating onChange={handleRatingChange} />
-          <label id="reviewType">리뷰:</label>
+          <label id='reviewType'>리뷰:</label>
           <input
-            className="form-control"
-            id="reviewContent"
-            type="text"
+            className='form-control'
+            id='reviewContent'
+            type='text'
             value={newReply.camp_review}
-            placeholder="리뷰내용을 입력해주세요"
+            placeholder='리뷰내용을 입력해주세요'
             onChange={(e) =>
               setNewReply({ ...newReply, camp_review: e.target.value })
             }
           />
-          <button id="reviewButton" onClick={handleAddReply}>
+          <button id='reviewButton' onClick={handleAddReply}>
             리뷰 추가
           </button>
         </div>
@@ -123,19 +123,21 @@ function ReplyComponent() {
           <div key={reply.camp_reviewnumber}>
             <div>
               <Row md={6}>
-                <span id="reviewcontentuserid">유저 ID: {reply.user_id}</span>
-                <span id="reviewcontentrating">
+                <span id='reviewcontentuserid'>유저 ID: {reply.user_id}</span>
+                <span id='reviewcontentrating'>
                   <StarRated value={reply.camp_rating} />
                 </span>
               </Row>
             </div>
-            <p id="reviewcontent" style={{marginTop:'30px'}}>{reply.camp_review}</p>
-            <div id="reviewcontentupdatedelete">
-              <div id="reviewcontentupdatedelete">
+            <p id='reviewcontent' style={{ marginTop: "30px" }}>
+              {reply.camp_review}
+            </p>
+            <div id='reviewcontentupdatedelete'>
+              <div id='reviewcontentupdatedelete'>
                 <p>
                   {reply.user_id === userId && (
                     <Button
-                      variant="danger"
+                      variant='danger'
                       onClick={() => handleDeleteReply(reply.camp_reviewnumber)}
                     >
                       삭제
@@ -144,7 +146,7 @@ function ReplyComponent() {
                 </p>
               </div>
             </div>
-            <hr id="reviewhrBar" />
+            <hr id='reviewhrBar' />
           </div>
         ))}
       </div>

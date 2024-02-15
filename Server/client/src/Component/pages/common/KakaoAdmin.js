@@ -1,10 +1,10 @@
-import KakaoLogin from 'react-kakao-login';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import KakaoLogin from "react-kakao-login";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SocialKakao = () => {
   const navigate = useNavigate();
-  const kakaoClientId = 'e4e518b34dec41360511f03ad7a9ac61';
+  const kakaoClientId = "e4e518b34dec41360511f03ad7a9ac61";
   const kakaoOnSuccess = async (data) => {
     console.log(data);
 
@@ -19,11 +19,11 @@ const SocialKakao = () => {
         },
       } = data.profile;
 
-      const sendData = { email, name, nickname, userType: 'Admin' };
-      console.log('sendData : ', sendData);
+      const sendData = { email, name, nickname, userType: "Admin" };
+      console.log("sendData : ", sendData);
 
       const response = await axios.post(
-        'http://43.203.173.70:8080/getKakaoUserData',
+        "http://camply.store/getKakaoUserData",
         sendData,
         {
           headers: {
@@ -33,7 +33,7 @@ const SocialKakao = () => {
       );
       console.log(response.data);
       alert("카카오 회원가입 완료!");
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
       console.error(error);
     }

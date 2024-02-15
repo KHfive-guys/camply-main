@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
 const ShopMore = () => {
   const { productId } = useParams();
@@ -10,10 +10,12 @@ const ShopMore = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://43.203.173.70:8080/shop/detail/${productId}`);
+        const response = await axios.get(
+          `http://camply.store/shop/detail/${productId}`
+        );
         setProduct(response.data);
       } catch (error) {
-        console.error('Error fetching product details', error);
+        console.error("Error fetching product details", error);
       }
     };
 
@@ -21,22 +23,19 @@ const ShopMore = () => {
   }, [productId]);
 
   return (
-    <div style={{textAlign:'center'}} >
-      <h2 >상품 상세정보</h2>
+    <div style={{ textAlign: "center" }}>
+      <h2>상품 상세정보</h2>
       <container>
-        <div> 
+        <div>
           {product ? (
             <>
-            <img src={product.productContent}/>        
-            
-            </> 
-          ):(
+              <img src={product.productContent} />
+            </>
+          ) : (
             <p>이미지를 찾을 수 없습니다.</p>
-            )} 
-        </div>  
-        
-      </container>      
-     
+          )}
+        </div>
+      </container>
     </div>
   );
 };

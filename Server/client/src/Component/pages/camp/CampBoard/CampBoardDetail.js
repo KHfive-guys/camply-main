@@ -12,7 +12,6 @@ import copyIMG from "../../../img/공유.png";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import noImage from "../../../img/펜션.png";
 
-
 const parseJwt = (token) => {
   console.log("Parsed JWT:", token);
 };
@@ -29,13 +28,13 @@ function CampBoardDetail() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const [USER_ID , setUserID] = useState();
+  const [USER_ID, setUserID] = useState();
   const [like, setLike] = useState("");
 
   const handleHeart = () => {
     setLike(!like);
     axios
-      .post(`http://43.203.173.70:8080/camp/board/changDips`, {
+      .post(`http://camply.store/camp/board/changDips`, {
         CAMP_ID: camp_id,
         USER_ID: USER_ID,
         STATUS: like,
@@ -116,7 +115,7 @@ function CampBoardDetail() {
     }
 
     axios
-      .get(`http://43.203.173.70:8080/camp/board/get/${camp_id}`, {
+      .get(`http://camply.store/camp/board/get/${camp_id}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -136,13 +135,13 @@ function CampBoardDetail() {
           const currentUser =
             response.data.user_id === userTokenPayload?.user_id;
 
-            setUserID(userTokenPayload?.user_id);
+          setUserID(userTokenPayload?.user_id);
           console.log("Is current user:", currentUser);
           setIsCurrentUser(currentUser ? userTokenPayload?.user_id : null);
 
           setLoading(false);
           axios
-            .post(`http://43.203.173.70:8080/camp/board/checkDips`, {
+            .post(`http://camply.store/camp/board/checkDips`, {
               CAMP_ID: camp_id,
               USER_ID: userTokenPayload?.user_id,
             })
@@ -184,7 +183,7 @@ function CampBoardDetail() {
 
     if (confirmDelete) {
       axios
-        .delete(`http://43.203.173.70:8080/camp/board/delete/${camp_id}`)
+        .delete(`http://camply.store/camp/board/delete/${camp_id}`)
         .then(() => {
           alert("삭제되었습니다.");
           navigate("/camp");
@@ -205,7 +204,6 @@ function CampBoardDetail() {
 
   // 예약페이지 이동
   const reserveMove = ({}) => {
-
     navigate("/camp/reserve", {
       state: {
         // 캠핑장 번호
@@ -223,7 +221,7 @@ function CampBoardDetail() {
         // 캠핑장이름
         CAMP_NAME: `${boardData.camp_name}`,
         // 가격
-        CAMP_PRICE: `${boardData.camp_price}`
+        CAMP_PRICE: `${boardData.camp_price}`,
       },
     });
   };
@@ -241,106 +239,107 @@ function CampBoardDetail() {
   };
 
   // 링크 외부에 공유하기
-    const handleCopy = () => {
-      const dataToCopy = window.location.href;
-      navigator.clipboard.writeText(dataToCopy)
-        .then(() => {
-          alert('링크가 클립보드에 복사되었습니다!');
-        })
-        .catch(err => {
-          console.error('클립보드 복사 실패:', err);
-        });
-    };
+  const handleCopy = () => {
+    const dataToCopy = window.location.href;
+    navigator.clipboard
+      .writeText(dataToCopy)
+      .then(() => {
+        alert("링크가 클립보드에 복사되었습니다!");
+      })
+      .catch((err) => {
+        console.error("클립보드 복사 실패:", err);
+      });
+  };
 
-    const numberWithCommas = (x) => {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    };
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   return (
     <section>
       <CampNavbar />
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
-      <div id="detailContainer">
-        <h1 id="campdetailTitle">상세보기</h1>
+      <div id='detailContainer'>
+        <h1 id='campdetailTitle'>상세보기</h1>
 
-        <div id="campDetailBox">
-            <p id="detailType">유형 | {boardData.camp_select}</p>
-            <img src={tentIMG} alt="텐트" id="DetailIMG"></img>
-            <span id="campdetailName"> 캠핑장 이름 | {boardData.camp_name}</span>
-            <div>
-            <p id="campdetaillocation">
-            <img id='markerIMG' src={marker} alt='위치'/>
+        <div id='campDetailBox'>
+          <p id='detailType'>유형 | {boardData.camp_select}</p>
+          <img src={tentIMG} alt='텐트' id='DetailIMG'></img>
+          <span id='campdetailName'> 캠핑장 이름 | {boardData.camp_name}</span>
+          <div>
+            <p id='campdetaillocation'>
+              <img id='markerIMG' src={marker} alt='위치' />
               {boardData.camp_address}
             </p>
-            <p id="campdetailtitle">
-              <span id="campdetail">전화번호 |</span> {boardData.camp_phone}
+            <p id='campdetailtitle'>
+              <span id='campdetail'>전화번호 |</span> {boardData.camp_phone}
             </p>
 
-            <p id="campdetailtitle">
-              <span id="campdetail">성인 |</span> {boardData.camp_adult}명
+            <p id='campdetailtitle'>
+              <span id='campdetail'>성인 |</span> {boardData.camp_adult}명
             </p>
-            <p id="campdetailtitle">
-              <span id="campdetail">아동 |</span> {boardData.camp_child}명
+            <p id='campdetailtitle'>
+              <span id='campdetail'>아동 |</span> {boardData.camp_child}명
             </p>
-            <p id="campdetailtitle">
-            <span id="campdetail">가격 |</span> {numberWithCommas(boardData.camp_price)}원
+            <p id='campdetailtitle'>
+              <span id='campdetail'>가격 |</span>{" "}
+              {numberWithCommas(boardData.camp_price)}원
             </p>
-            <p id="campdetailtitle">
-              <span id="campdetail">시설 | </span>
+            <p id='campdetailtitle'>
+              <span id='campdetail'>시설 | </span>
               {boardData.camp_facility}
             </p>
 
             <div>
               <Button
-                id="detailReservationButton"
-                variant="primary"
+                id='detailReservationButton'
+                variant='primary'
                 onClick={reserveMove}
-                className="mt-3"
+                className='mt-3'
               >
                 예약하기
               </Button>
-              <checkbox className="like" id="heartButton" onClick={handleHeart}>
+              <checkbox className='like' id='heartButton' onClick={handleHeart}>
                 {like ? (
                   <AiFillHeart style={{ color: "#FEA92A", fontSize: "30px" }} />
-                  
                 ) : (
                   <AiOutlineHeart style={{ fontSize: "30px" }} />
-
                 )}
               </checkbox>
-              <button id='linkCopy' onClick={handleCopy}><img src={copyIMG} id='copyIMG' alt='링크 복사'/></button>
+              <button id='linkCopy' onClick={handleCopy}>
+                <img src={copyIMG} id='copyIMG' alt='링크 복사' />
+              </button>
             </div>
-            <div id="updateAnddeleteButton2">
-              {isCurrentUser &&(
-                <div className="d-flex ">
+            <div id='updateAnddeleteButton2'>
+              {isCurrentUser && (
+                <div className='d-flex '>
                   <button
-                    className="btn"
-                    variant="primary"
+                    className='btn'
+                    variant='primary'
                     onClick={handleUpdateClick}
-                    id="detailReservationButton2"
+                    id='detailReservationButton2'
                   >
-                    <i className="fas fa-pen"></i> 수정하기
+                    <i className='fas fa-pen'></i> 수정하기
                   </button>
                 </div>
               )}
               {isCurrentUser && (
                 <button
                   onClick={handleDelete}
-                  id="detailReservationButton2"
-                  variant="primary"
+                  id='detailReservationButton2'
+                  variant='primary'
                 >
                   삭제
                 </button>
               )}
             </div>
-            
           </div>
         </div>
-        <div id="CampdescriptionContainer">
-          <div id="CampdescriptionBox">
-            <p id="campdetaildescription">상세설명</p>
+        <div id='CampdescriptionContainer'>
+          <div id='CampdescriptionBox'>
+            <p id='campdetaildescription'>상세설명</p>
             <pre>{boardData.camp_description}</pre>
           </div>
         </div>
@@ -353,7 +352,9 @@ function CampBoardDetail() {
           marginTop: "50px",
         }}
       >
-        <button className="button" onClick={handlePrevPage}>{<FaAngleLeft size={30} />}</button>
+        <button className='button' onClick={handlePrevPage}>
+          {<FaAngleLeft size={30} />}
+        </button>
 
         {boardData.camp_images &&
         boardData.camp_images.length > 0 &&
@@ -369,12 +370,14 @@ function CampBoardDetail() {
         ) : (
           <img src={noImage} />
         )}
-        <button className="button" onClick={handleNextPage}>{<FaAngleRight size={30} />}</button>
+        <button className='button' onClick={handleNextPage}>
+          {<FaAngleRight size={30} />}
+        </button>
       </div>
-      
-      <div id="campdetailmap">
-        <h1 id="campdetailMapTitle">지도</h1>
-        <div id="map" style={{ width: "100%", height: "400px" }}></div>
+
+      <div id='campdetailmap'>
+        <h1 id='campdetailMapTitle'>지도</h1>
+        <div id='map' style={{ width: "100%", height: "400px" }}></div>
       </div>
 
       <Reply />

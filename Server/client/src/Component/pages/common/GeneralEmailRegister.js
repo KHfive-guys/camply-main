@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logo from "../../img/Logo.png";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import CampNavbar from '../camp/CampNavbar';
+import CampNavbar from "../camp/CampNavbar";
 
 function GeneralEmailRegister() {
   const [checkedEmail, setCheckedEmail] = useState("");
@@ -58,8 +58,6 @@ function GeneralEmailRegister() {
     }
   };
 
-  
-
   const validateForm = () => {
     let isValid = true;
 
@@ -111,7 +109,7 @@ function GeneralEmailRegister() {
     if (validateForm()) {
       try {
         const response = await fetch(
-          "http://43.203.173.70:8080/api/user/general/register",
+          "http://camply.store/api/user/general/register",
           {
             method: "POST",
             headers: {
@@ -141,9 +139,9 @@ function GeneralEmailRegister() {
 
   return (
     <section>
-      <CampNavbar/>
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <CampNavbar />
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
 
       <WrapLogin>
@@ -152,7 +150,7 @@ function GeneralEmailRegister() {
           <LoginWrap>
             <LoginSection>
               <LoginTitle>정말 간단한 회원가입하기</LoginTitle>
-              <SignupStep className="wrap">
+              <SignupStep className='wrap'>
                 <Title>일반회원 가입하기</Title>
               </SignupStep>
               <FormBlock>
@@ -163,10 +161,10 @@ function GeneralEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeW>
                     <EmailInput
-                      id="email"
-                      type="email"
+                      id='email'
+                      type='email'
                       value={email}
-                      placeholder="이메일을 입력해주세요."
+                      placeholder='이메일을 입력해주세요.'
                       required
                       onChange={(e) => {
                         setEmail(e.target.value);
@@ -185,10 +183,10 @@ function GeneralEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeW>
                     <PasswordInput
-                      id="password"
-                      type="password"
+                      id='password'
+                      type='password'
                       value={password}
-                      placeholder="비밀번호 (영문+숫자+8자 이상)"
+                      placeholder='비밀번호 (영문+숫자+8자 이상)'
                       required
                       onChange={(e) => {
                         setPassword(e.target.value);
@@ -204,9 +202,9 @@ function GeneralEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeW>
                     <PasswordInput
-                      id="passwordConfirm"
-                      type="password"
-                      placeholder="비밀번호 확인"
+                      id='passwordConfirm'
+                      type='password'
+                      placeholder='비밀번호 확인'
                       required
                       onBlur={() => passwordCheck2()}
                     />
@@ -222,10 +220,10 @@ function GeneralEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeWTypeL>
                     <NameInput
-                      id="name"
+                      id='name'
                       value={name}
-                      type="text"
-                      placeholder="이름을 입력해 주세요"
+                      type='text'
+                      placeholder='이름을 입력해 주세요'
                       required
                       onChange={(e) => {
                         setName(e.target.value);
@@ -244,10 +242,10 @@ function GeneralEmailRegister() {
                 <FormBlockBody>
                   <InputTextSizeWTypeL>
                     <NicknameInput
-                      id="nickname"
+                      id='nickname'
                       value={nickname}
-                      type="text"
-                      placeholder="닉네임을 입력해 주세요"
+                      type='text'
+                      placeholder='닉네임을 입력해 주세요'
                       required
                       onChange={(e) => {
                         setNickname(e.target.value);
@@ -262,7 +260,7 @@ function GeneralEmailRegister() {
               <FormBlockSubmit>
                 <FormBlockBody>
                   <BtnLogin
-                    type="button"
+                    type='button'
                     onClick={() => {
                       onSubmit();
                     }}
@@ -271,7 +269,6 @@ function GeneralEmailRegister() {
                   </BtnLogin>
                 </FormBlockBody>
               </FormBlockSubmit>
-
             </LoginSection>
           </LoginWrap>
         </ReauthPhone>

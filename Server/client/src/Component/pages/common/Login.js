@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
@@ -5,19 +6,37 @@ import { Container } from 'react-bootstrap';
 import CampNavbar from '../camp/CampNavbar';
 import KakaoLogin from './KakaoLogin';
 import axios from 'axios';
+=======
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import CampNavbar from "../camp/CampNavbar";
+import KakaoLogin from "./KakaoLogin";
+import axios from "axios";
+>>>>>>> 73e5c6d67e50be0285a668e3b52481a0835bf698
 
 function Login() {
   const navigate = useNavigate();
   const [USER_EMAIL, setEmail] = useState('');
   const [USER_PASSWORD, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+<<<<<<< HEAD
   const [userType, setUserType] = useState('');
+=======
+  const [userType, setUserType] = useState("");
+>>>>>>> 73e5c6d67e50be0285a668e3b52481a0835bf698
 
   const emailLogin = async () => {
     console.log('login button USER_EMAIL' + USER_EMAIL);
     try {
+<<<<<<< HEAD
       const response = await fetch('http://43.203.173.70:8080/api/user/login', {
         method: 'POST',
+=======
+      const response = await fetch("http://camply.store/api/user/login", {
+        method: "POST",
+>>>>>>> 73e5c6d67e50be0285a668e3b52481a0835bf698
         headers: {
           'Content-Type': 'application/json',
           Origin: 'http://43.203.173.70:8080',
@@ -56,8 +75,13 @@ function Login() {
     <>
       <section>
         <CampNavbar />
+<<<<<<< HEAD
         <Container fluid className="home-section" id="home">
           <Container className="home-content"></Container>
+=======
+        <Container fluid className='home-section' id='home'>
+          <Container className='home-content'></Container>
+>>>>>>> 73e5c6d67e50be0285a668e3b52481a0835bf698
         </Container>
 
         <LoginWrap>
@@ -86,20 +110,34 @@ function Login() {
               <EmailLoginContainer>
                 <div>
                   <EmailLoginInput
+<<<<<<< HEAD
                     id="email"
                     type="email"
                     value={USER_EMAIL}
                     placeholder="이메일"
+=======
+                    id='email'
+                    type='email'
+                    value={USER_EMAIL}
+                    placeholder='이메일'
+>>>>>>> 73e5c6d67e50be0285a668e3b52481a0835bf698
                     required
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
                   />
                   <EmailLoginInput
+<<<<<<< HEAD
                     id="password"
                     type="password"
                     value={USER_PASSWORD}
                     placeholder="비밀번호"
+=======
+                    id='password'
+                    type='password'
+                    value={USER_PASSWORD}
+                    placeholder='비밀번호'
+>>>>>>> 73e5c6d67e50be0285a668e3b52481a0835bf698
                     required
                     onChange={(e) => {
                       setPassword(e.target.value);
@@ -109,7 +147,11 @@ function Login() {
                 <EmailLoginOption>
                   <div>
                     <InputCheckbox>
+<<<<<<< HEAD
                       <Bp type="checkbox"></Bp>
+=======
+                      <Bp type='checkbox'></Bp>
+>>>>>>> 73e5c6d67e50be0285a668e3b52481a0835bf698
                     </InputCheckbox>
                     <label>이메일 저장하기</label>
                   </div>
@@ -117,7 +159,11 @@ function Login() {
                 </EmailLoginOption>
               </EmailLoginContainer>
               <CommonButton
+<<<<<<< HEAD
                 type="button"
+=======
+                type='button'
+>>>>>>> 73e5c6d67e50be0285a668e3b52481a0835bf698
                 onClick={() => {
                   emailLogin();
                 }}
@@ -125,8 +171,13 @@ function Login() {
                 로그인
               </CommonButton>
 
+<<<<<<< HEAD
               <RegisterButton type="button">
                 <Link to="/register">회원가입</Link>
+=======
+              <RegisterButton type='button'>
+                <Link to='/register'>회원가입</Link>
+>>>>>>> 73e5c6d67e50be0285a668e3b52481a0835bf698
               </RegisterButton>
             </LoginSigninContent>
           </LoginContainer>

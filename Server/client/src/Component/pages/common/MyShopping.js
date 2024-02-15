@@ -22,7 +22,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
+        .get(`http://camply.store/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -43,7 +43,7 @@ function MyPage() {
 
   const parseUserIdFromToken = (token) => {
     try {
-      const payloadBase64 = token.split('.')[1];
+      const payloadBase64 = token.split(".")[1];
       const payload = JSON.parse(atob(payloadBase64));
       return payload.user_id;
     } catch (error) {
@@ -51,7 +51,6 @@ function MyPage() {
       return null;
     }
   };
-  
 
   const handleDeleteAccount = () => {
     const confirmDelete = window.confirm("정말로 회원 탈퇴하시겠습니까?");
@@ -64,7 +63,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .delete(`http://43.203.173.70:8080/api/user/delete/${USER_ID}`, {
+        .delete(`http://camply.store/api/user/delete/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -97,7 +96,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       const response = await axios.get(
-        `http://43.203.173.70:8080/api/user/get/${USER_ID}`,
+        `http://camply.store/api/user/get/${USER_ID}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -135,41 +134,41 @@ function MyPage() {
   return (
     <section>
       <CampNavbar />
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
 
-      <div className="body-mypage">
-        <h1 className="mb-4" id="mypageMainTitle">
+      <div className='body-mypage'>
+        <h1 className='mb-4' id='mypageMainTitle'>
           마이페이지
         </h1>
         <p>안녕하세요</p>
         <p>{userData.USER_NAME}님 </p>
-        <a href="MyPage2">내 정보 수정</a>
-        <div id="MypageContainer">
-          <div id="mypagebuttonbox">
+        <a href='MyPage2'>내 정보 수정</a>
+        <div id='MypageContainer'>
+          <div id='mypagebuttonbox'>
             <div>
-              <p id="MypagecampinfoTitle">쇼핑정보</p>
+              <p id='MypagecampinfoTitle'>쇼핑정보</p>
               <button
-                id="Mypagecampinfo"
-                variant="primary"
+                id='Mypagecampinfo'
+                variant='primary'
                 onClick={() => navigate("/myshopping")}
               >
                 <span style={{ color: "orange" }}>▶</span> 쇼핑정보
               </button>
             </div>
             <div>
-              <p id="MypagecampinfoTitle">캠핑정보</p>
+              <p id='MypagecampinfoTitle'>캠핑정보</p>
               <button
-                id="Mypageinfo"
-                variant="primary"
+                id='Mypageinfo'
+                variant='primary'
                 onClick={() => navigate("/mycamping")}
               >
                 캠핑예약내역
               </button>
               <button
-                id="Mypageinfo"
-                variant="primary"
+                id='Mypageinfo'
+                variant='primary'
                 onClick={() => navigate("/MyLikeList")}
               >
                 캠핑 찜 목록
@@ -177,7 +176,7 @@ function MyPage() {
             </div>
           </div>
           <div>
-            <h5 id="reserveListTitle">쇼핑 결제 내역</h5>
+            <h5 id='reserveListTitle'>쇼핑 결제 내역</h5>
           </div>
         </div>
       </div>

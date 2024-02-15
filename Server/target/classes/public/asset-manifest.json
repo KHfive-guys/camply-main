@@ -1,9 +1,17 @@
 {
   "files": {
+<<<<<<< HEAD
     "main.css": "/static/css/main.84f0ef3d.css",
     "main.js": "/static/js/main.0d81abdd.js",
     "static/js/592.599f76a2.chunk.js": "/static/js/592.599f76a2.chunk.js",
     "static/media/fire-8230528_1920.jpg": "/static/media/fire-8230528_1920.27cdd0274fe6978ae48c.jpg",
+=======
+    "main.css": "/static/css/main.c03e4b65.css",
+    "main.js": "/static/js/main.0d9228fb.js",
+    "static/js/592.599f76a2.chunk.js": "/static/js/592.599f76a2.chunk.js",
+    "static/media/fire-8230528_1920.jpg": "/static/media/fire-8230528_1920.27cdd0274fe6978ae48c.jpg",
+    "static/media/camping-6882479_1280.jpg": "/static/media/camping-6882479_1280.2ae8d121c1360e5dda37.jpg",
+>>>>>>> 73e5c6d67e50be0285a668e3b52481a0835bf698
     "static/media/role.jpg": "/static/media/role.dcaa48819e2b52189808.jpg",
     "static/media/campfire-896196_1280.jpg": "/static/media/campfire-896196_1280.1218b59b067a3d08e700.jpg",
     "static/media/ai-generated-8541462_1280.jpg": "/static/media/ai-generated-8541462_1280.33ec1f454662f56ca921.jpg",
@@ -27,6 +35,7 @@
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
+<<<<<<< HEAD
     "main.84f0ef3d.css.map": "/static/css/main.84f0ef3d.css.map",
     "main.0d81abdd.js.map": "/static/js/main.0d81abdd.js.map",
     "592.599f76a2.chunk.js.map": "/static/js/592.599f76a2.chunk.js.map"
@@ -34,5 +43,14 @@
   "entrypoints": [
     "static/css/main.84f0ef3d.css",
     "static/js/main.0d81abdd.js"
+=======
+    "main.c03e4b65.css.map": "/static/css/main.c03e4b65.css.map",
+    "main.0d9228fb.js.map": "/static/js/main.0d9228fb.js.map",
+    "592.599f76a2.chunk.js.map": "/static/js/592.599f76a2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c03e4b65.css",
+    "static/js/main.0d9228fb.js"
+>>>>>>> 73e5c6d67e50be0285a668e3b52481a0835bf698
   ]
 }

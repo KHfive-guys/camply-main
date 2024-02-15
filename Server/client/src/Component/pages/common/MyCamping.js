@@ -5,7 +5,7 @@ import { Container, Button, Form, Modal, Row, Col } from "react-bootstrap";
 import CampNavbar from "../camp/CampNavbar";
 import bcrypt from "bcryptjs";
 import "../camp/CampBoard/css/MyPage.css";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 import { fontSize, margin, padding } from "@mui/system";
 
 function MyPage() {
@@ -23,7 +23,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
+        .get(`http://camply.store/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -34,15 +34,16 @@ function MyPage() {
 
           setLoading(false);
 
-          axios.post(`http://43.203.173.70:8080/camp/Mypage/paymentResult`, {
-            USER_ID: USER_ID,
-          })
-          .then((responseData) => {
-           setCampList(responseData.data);
-          })
-          .catch ((error) => {
-            console.log("항목조회실패" + error.response.data.message);
-          });
+          axios
+            .post(`http://camply.store/camp/Mypage/paymentResult`, {
+              USER_ID: USER_ID,
+            })
+            .then((responseData) => {
+              setCampList(responseData.data);
+            })
+            .catch((error) => {
+              console.log("항목조회실패" + error.response.data.message);
+            });
 
           console.log("campList length : " + campList);
         })
@@ -57,7 +58,7 @@ function MyPage() {
 
   const parseUserIdFromToken = (token) => {
     try {
-      const payloadBase64 = token.split('.')[1];
+      const payloadBase64 = token.split(".")[1];
       const payload = JSON.parse(atob(payloadBase64));
       return payload.user_id;
     } catch (error) {
@@ -73,65 +74,75 @@ function MyPage() {
   return (
     <section>
       <CampNavbar />
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
 
-      <div className="body-mypage">
-        <h1 className="mb-4" id="mypageMainTitle">
-        캠핑정보
+      <div className='body-mypage'>
+        <h1 className='mb-4' id='mypageMainTitle'>
+          캠핑정보
         </h1>
         <p>안녕하세요.</p>
         <p>{userData.USER_NAME}님 </p>
-        <div id="MypageContainer">
-          <div id="mypagebuttonbox">
+        <div id='MypageContainer'>
+          <div id='mypagebuttonbox'>
             <div>
-                <div>
-                  <button
-                    id="Mypagecampinfo"
-                    variant="primary"
-                    onClick={() => navigate("/mycamping")}
-                  >
-                    <span style={{ color: "orange" }}>▶ </span>캠핑예약내역
-                  </button>
-                  <button
-                    id="Mypageinfo"
-                    variant="primary"
-                    onClick={() => navigate("/mylikelist")}
-                  >
-                    캠핑 찜 목록
-                  </button>
-                </div>
+              <div>
+                <button
+                  id='Mypagecampinfo'
+                  variant='primary'
+                  onClick={() => navigate("/mycamping")}
+                >
+                  <span style={{ color: "orange" }}>▶ </span>캠핑예약내역
+                </button>
+                <button
+                  id='Mypageinfo'
+                  variant='primary'
+                  onClick={() => navigate("/mylikelist")}
+                >
+                  캠핑 찜 목록
+                </button>
+              </div>
             </div>
           </div>
           <div>
-            <h5 id="reserveListTitle">캠핑 예약 내역</h5>
+            <h5 id='reserveListTitle'>캠핑 예약 내역</h5>
 
-              { campList.length > 0 ?
-                <div>
-                  {campList.map((camp) => (
-                  <div key={camp.CAMP_RESERVATION} id="mypagereserveList" >
+            {campList.length > 0 ? (
+              <div>
+                {campList.map((camp) => (
+                  <div key={camp.CAMP_RESERVATION} id='mypagereserveList'>
                     <p>{camp.CAMP_NAME}</p>
                     <div></div>
-                    <div id="reservesecondBox">
-                      <span> 체크인 : {format(camp.CAMP_CHECKIN, 'yyyy-MM-dd')}</span><br/>
-                      <span> 체크아웃 : {format(camp.CAMP_CHECKOUT, 'yyyy-MM-dd')}</span><br/>
-                      <p>결제 완료 시각 : {format(camp.COMPLETE_PAYMENT, 'yyyy-MM-dd HH:mm')}</p>
-                      <span id="reserveResult">
+                    <div id='reservesecondBox'>
+                      <span>
+                        {" "}
+                        체크인 : {format(camp.CAMP_CHECKIN, "yyyy-MM-dd")}
+                      </span>
+                      <br />
+                      <span>
+                        {" "}
+                        체크아웃 : {format(camp.CAMP_CHECKOUT, "yyyy-MM-dd")}
+                      </span>
+                      <br />
+                      <p>
+                        결제 완료 시각 :{" "}
+                        {format(camp.COMPLETE_PAYMENT, "yyyy-MM-dd HH:mm")}
+                      </p>
+                      <span id='reserveResult'>
                         결제금액 : {camp.TOTAL_PRICE}원
                       </span>
                     </div>
                   </div>
                 ))}
-                </div>
-                :
-                <div>
-                
-                    <p style={{margin:'200px' , fontSize:'20px'}}>예약한 캠핑장 내역이 없습니다.</p>
-                
-                </div>
-              } 
-
+              </div>
+            ) : (
+              <div>
+                <p style={{ margin: "200px", fontSize: "20px" }}>
+                  예약한 캠핑장 내역이 없습니다.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

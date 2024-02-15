@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import '../../../css/ShopDetail/ShopReview/ReviewComment.css';
+import "../../../css/ShopDetail/ShopReview/ReviewComment.css";
 import { Button, radioClasses } from "@mui/material";
 
 const CommentWriter = ({ reviewNo, updateComments }) => {
@@ -22,7 +22,7 @@ const CommentWriter = ({ reviewNo, updateComments }) => {
   const saveComment = async () => {
     try {
       const response = await axios.post(
-        `http://43.203.173.70:8080/shop/review/comment/post`,
+        `http://camply.store/shop/review/comment/post`,
         {
           ...comment,
           reviewNo: reviewNo,
@@ -30,8 +30,8 @@ const CommentWriter = ({ reviewNo, updateComments }) => {
       );
       if (response.status === 200) {
         alert("덧글 등록 완료");
-        setComment({ commentText: "" }); 
-        await updateComments(); 
+        setComment({ commentText: "" });
+        await updateComments();
         navigate(`/shop/review/view/${reviewNo}`); // 상태 업데이트 후 페이지 이동
       } else {
         alert("덧글 등록에 실패했습니다.");
@@ -48,26 +48,37 @@ const CommentWriter = ({ reviewNo, updateComments }) => {
 
   return (
     <>
-    <div className="comment-container">
-      <div className="comment-writer" style={{marginTop:'0px'}}>
-        <label for="editor" className="comment-writer_tl fl">
-          <strong style={{paddingLeft:'5px'}}>댓글쓰기</strong>
-        </label>
-        <div className="bd_writer clear">
-          <div className="simple-writer">
-            <div className="text-btn">
+      <div className='comment-container'>
+        <div className='comment-writer' style={{ marginTop: "0px" }}>
+          <label for='editor' className='comment-writer_tl fl'>
+            <strong style={{ paddingLeft: "5px" }}>댓글쓰기</strong>
+          </label>
+          <div className='bd_writer clear'>
+            <div className='simple-writer'>
+              <div className='text-btn'>
                 <input
                   type='text'
                   name='commentText'
                   value={commentText}
                   onChange={onChange}
                 />
-              <button style={{marginLeft:'10px', borderRadius:'10px', width:'80px', height:'90px'}} type='button'  onClick={saveComment}>작성하기</button>
+                <button
+                  style={{
+                    marginLeft: "10px",
+                    borderRadius: "10px",
+                    width: "80px",
+                    height: "90px",
+                  }}
+                  type='button'
+                  onClick={saveComment}
+                >
+                  작성하기
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

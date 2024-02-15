@@ -26,7 +26,7 @@ function EditUser() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://43.203.173.70:8080/api/user/get/${USER_ID}`, {
+        .get(`http://camply.store/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -56,7 +56,7 @@ function EditUser() {
 
   const parseUserIdFromToken = (token) => {
     try {
-      const payloadBase64 = token.split('.')[1];
+      const payloadBase64 = token.split(".")[1];
       const payload = JSON.parse(atob(payloadBase64));
       return payload.user_id;
     } catch (error) {
@@ -64,7 +64,6 @@ function EditUser() {
       return null;
     }
   };
-  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -81,7 +80,7 @@ function EditUser() {
     const USER_ID = parseUserIdFromToken(token);
 
     axios
-      .put(`http://43.203.173.70:8080/api/user/update/${USER_ID}`, formValues, {
+      .put(`http://camply.store/api/user/update/${USER_ID}`, formValues, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -137,11 +136,11 @@ function EditUser() {
   return (
     <section>
       <CampNavbar />
-      <Container fluid className="home-section" id="home">
-        <Container className="home-content"></Container>
+      <Container fluid className='home-section' id='home'>
+        <Container className='home-content'></Container>
       </Container>
 
-      <Alert show={showAlert} variant="success">
+      <Alert show={showAlert} variant='success'>
         회원정보 수정이 완료되었습니다.
       </Alert>
 
@@ -151,46 +150,46 @@ function EditUser() {
       ) : (
         <>
           <Form onSubmit={handleFormSubmit}>
-            <Form.Group className="mb-3" controlId="formEmail">
+            <Form.Group className='mb-3' controlId='formEmail'>
               <Form.Label>이메일</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="이메일을 입력해주세요"
-                name="USER_EMAIL"
+                type='email'
+                placeholder='이메일을 입력해주세요'
+                name='USER_EMAIL'
                 value={formValues.USER_EMAIL}
                 onChange={handleInputChange}
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formName">
+            <Form.Group className='mb-3' controlId='formName'>
               <Form.Label>이름</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="이름을 입력해주세요"
-                name="USER_NAME"
+                type='text'
+                placeholder='이름을 입력해주세요'
+                name='USER_NAME'
                 value={formValues.USER_NAME}
                 onChange={handleInputChange}
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formEmail">
+            <Form.Group className='mb-3' controlId='formEmail'>
               <Form.Label>닉네임</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="닉네임을 입력해주세요"
-                name="USER_NICKNAME"
+                type='text'
+                placeholder='닉네임을 입력해주세요'
+                name='USER_NICKNAME'
                 value={formValues.USER_NICKNAME}
                 onChange={handleInputChange}
               />
             </Form.Group>
 
             {userData.USER_TYPE === "General" && (
-              <Form.Group className="mb-3" controlId="formAddress">
+              <Form.Group className='mb-3' controlId='formAddress'>
                 <Form.Label>주소</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="주소를 입력해주세요"
-                  name="USER_ADDRESS"
+                  type='text'
+                  placeholder='주소를 입력해주세요'
+                  name='USER_ADDRESS'
                   value={formValues.USER_ADDRESS}
                   onClick={onClickAddr}
                   onChange={handleInputChange}
@@ -200,35 +199,35 @@ function EditUser() {
 
             {userData.USER_TYPE === "Admin" && (
               <>
-                <Form.Group className="mb-3" controlId="formBusinessNumber">
+                <Form.Group className='mb-3' controlId='formBusinessNumber'>
                   <Form.Label>사업자 번호</Form.Label>
                   <Form.Control
-                    type="text"
-                    placeholder="사업자 번호를 입력해주세요"
-                    name="USER_BUSINESSNUMBER"
+                    type='text'
+                    placeholder='사업자 번호를 입력해주세요'
+                    name='USER_BUSINESSNUMBER'
                     value={formValues.USER_BUSINESSNUMBER}
                     onChange={handleInputChange}
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBusinessAddress">
+                <Form.Group className='mb-3' controlId='formBusinessAddress'>
                   <Form.Label>사업자 주소</Form.Label>
                   <Form.Control
-                    type="text"
-                    placeholder="사업자 주소를 입력해주세요"
-                    name="USER_BUSINESSADDRESS"
+                    type='text'
+                    placeholder='사업자 주소를 입력해주세요'
+                    name='USER_BUSINESSADDRESS'
                     value={formValues.USER_BUSINESSADDRESS}
                     onClick={onClickAddr}
                     onChange={handleInputChange}
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBusinessPhone">
+                <Form.Group className='mb-3' controlId='formBusinessPhone'>
                   <Form.Label>사업자 전화번호</Form.Label>
                   <Form.Control
-                    type="text"
-                    placeholder="사업자 전화번호를 입력해주세요"
-                    name="USER_BUSINESSPHONE"
+                    type='text'
+                    placeholder='사업자 전화번호를 입력해주세요'
+                    name='USER_BUSINESSPHONE'
                     value={formValues.USER_BUSINESSPHONE}
                     onChange={handleInputChange}
                   />
@@ -236,7 +235,7 @@ function EditUser() {
               </>
             )}
 
-            <Button variant="primary" type="submit">
+            <Button variant='primary' type='submit'>
               저장
             </Button>
           </Form>
