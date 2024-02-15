@@ -30,8 +30,6 @@ function NavBar() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
-  const [userType, setUserType] = useState("");
-
 
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
@@ -54,6 +52,7 @@ function NavBar() {
     }
   };
 
+  const [userType, setUserType] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");
@@ -322,7 +321,7 @@ function NavBar() {
                   <Nav.Item>
                     <Nav.Link
                       as={Link}
-                      to="/myCamping/info"
+                      to="/myCamping"
                       onClick={() => updateExpanded(false)}
                     >
                       <VscInfo style={{ marginBottom: "2px" }} />{" "}
@@ -335,7 +334,7 @@ function NavBar() {
                     <Nav.Item>
                       <Nav.Link
                         as={Link}
-                        to="/sellermypage/info"
+                        to="/sellermypage"
                         onClick={() => updateExpanded(false)}
                       >
                         <VscInfo style={{ marginBottom: "2px" }} />{" "}
@@ -353,7 +352,7 @@ function NavBar() {
                   <Nav.Item>
                     <Nav.Link
                       as={Link}
-                      to="/mypage"
+                      to="/mypageupdate"
                       onClick={() => updateExpanded(false)}
                     >
                       <LuUserCircle2 style={{ marginBottom: "2px" }} />{" "}
@@ -366,7 +365,7 @@ function NavBar() {
                     <Nav.Item>
                       <Nav.Link
                         as={Link}
-                        to="/mypage"
+                        to="/mypageupdate"
                         onClick={() => updateExpanded(false)}
                       >
                         <LuUserCircle2 style={{ marginBottom: "2px" }} />{" "}

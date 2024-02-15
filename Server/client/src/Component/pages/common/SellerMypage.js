@@ -75,20 +75,18 @@ function SellerMypage() {
 
       <div className="body-mypage">
         <h1 className="mb-4" id="mypageMainTitle">
-          마이페이지
+        캠핑정보
         </h1>
         <p>안녕하세요.</p>
         <p>{userData.USER_NAME}님 </p>
-        <a href="mypageupdate">내 정보 수정</a>
         <div id="MypageContainer">
           <div id="mypagebuttonbox">
             <div>
-              <p id="MypagecampinfoTitle">캠핑정보</p>
               <button
                 id="Mypagecampinfo"
                 variant="primary"
                 onClick={() => navigate("/mycamping")}
-              > <span style={{ color: "orange" }}>▶</span> 캠핑 등록 내역
+              > <span style={{ color: "orange" }}>▶ </span> 캠핑 등록 내역
               </button>
             </div>
           </div>

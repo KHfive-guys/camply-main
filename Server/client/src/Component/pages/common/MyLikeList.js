@@ -78,15 +78,13 @@ function MyPage() {
       </Container>
       <div className="body-mypage">
         <h1 className="mb-4" id="mypageMainTitle">
-          마이페이지
+        캠핑정보
         </h1>
         <p>안녕하세요.</p>
         <p>{userData.USER_NAME}님 </p>
-        <a href="mypageupdate">내 정보 수정</a>
         <div id="MypageContainer">
           <div id="mypagebuttonbox">
             <div>
-              <p id="MypagecampinfoTitle">캠핑정보</p>
               <button
                 id="Mypageinfo"
                 variant="primary"
@@ -99,7 +97,7 @@ function MyPage() {
                 variant="primary"
                 onClick={() => navigate("/MyLikeList")}
               >
-                <span style={{ color: "orange" }}>▶</span>캠핑 찜 목록
+                <span style={{ color: "orange" }}>▶ </span>캠핑 찜 목록
               </button>
             </div>
           </div>
