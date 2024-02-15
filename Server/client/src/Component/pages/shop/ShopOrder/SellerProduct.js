@@ -14,6 +14,7 @@ import {
   Link,
 } from 'react-router-dom';
 import ProductList from '../../../img/Seller/상품리스트.png';
+import DropdownIcon from '../../../img/Seller/더보기아이콘.png';
 
 const SellerProduct = () => {
   const [products, setProducts] = useState([]);
@@ -348,7 +349,16 @@ const SellerProduct = () => {
                   <td>{ShopProduct.productStock}</td>
                   <td>{ShopProduct.productCreateDate}</td>
                   <td>
-                    <NavDropdown title="···" id="basic-nav-dropdown">
+                    <NavDropdown
+                      title={
+                        <img
+                          src={DropdownIcon}
+                          alt="dropdown icon"
+                          style={{ width: '20px', height: '20px' }}
+                        />
+                      }
+                      id="basic-nav-dropdown"
+                    >
                       <NavDropdown.Item
                         onClick={() => handleEditClick(ShopProduct.productId)}
                       >

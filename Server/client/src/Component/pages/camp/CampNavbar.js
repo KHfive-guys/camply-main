@@ -30,6 +30,8 @@ function NavBar() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [userData, setUserData] = useState({});
+  const [userType, setUserType] = useState("");
+
 
   const [expand, updateExpanded] = useState(false);
   const [navColour, updateNavbar] = useState(false);
@@ -52,7 +54,6 @@ function NavBar() {
     }
   };
 
-  const [userType, setUserType] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("yourTokenKey");

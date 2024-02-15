@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, Component } from 'react';
 import ShopDetail from './Component/pages/shop/ShopDetail/ShopDetail';
 import {
@@ -13,6 +12,7 @@ import GeneralRegister from './Component/pages/common/GeneralRegister';
 import ManagerRegister from './Component/pages/common/ManagerRegister';
 import GeneralEmailRegister from './Component/pages/common/GeneralEmailRegister';
 import ManagerEmailRegister from './Component/pages/common/ManagerEmailRegister';
+import ManagerKakaoRegister from './Component/pages/common/ManagerKakaoRegister';
 import Login from './Component/pages/common/Login';
 import Preloader from './Pre';
 import Navbar from './Component/pages/camp/CampNavbar';
@@ -51,10 +51,11 @@ import InquiryUpdate from './Component/pages/shop/ShopDetail/ShopInquiry/Inquiry
 import InquiryWriter from './Component/pages/shop/ShopDetail/ShopInquiry/InquiryWriter';
 import ReviewWriter from './Component/pages/shop/ShopDetail/ShopReview/ReviewWriter';
 import ShopCart from './Component/pages/shop/ShopCart';
-import OrderCart from './Component/pages/shop/ShopOrder/Order/OrderCart';import MyPage from './Component/pages/common/MyPage';
+import OrderCart from './Component/pages/shop/ShopOrder/Order/OrderCart';
+import MyPage from './Component/pages/common/MyPage';
 import EditUser from './Component/pages/common/EditUser';
 import campMainImg from './Component/img/MainImg/ai-generated-8541462_1280.jpg';
-import ShopMainImg from './Component/img/MainImg/camping-7947056_1280.jpg'
+import ShopMainImg from './Component/img/MainImg/camping-7947056_1280.jpg';
 import CampBoard from './Component/pages/camp/CampBoard/CampBoard';
 import CampBoardAll from './Component/pages/camp/CampBoard/CampBoardAll';
 import CampBoardDetail from './Component/pages/camp/CampBoard/CampBoardDetail';
@@ -75,6 +76,7 @@ import OrderList from './Component/pages/shop/ShopOrder/Order/OrderMain';
 import './Component/pages/camp/CampStyle.css';
 import './CampApp.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './Component/pages/shop/css/ShopSell/SellerProduct.css';
 function App() {
   const [load, upadateLoad] = useState(true);
   useEffect(() => {
@@ -91,36 +93,34 @@ function App() {
         <Route
           path="/"
           element={
-            <div style={{marginTop:'100px',marginBottom:'200px'}}>
-            <div className="container text-center mt-5">
-            <h1 className='main-camply'>
-              Camply
-            </h1>
-              <h2 style={{marginBottom:'70px'}} className="display-4">
-                안녕하세요. 캠플리에 오신걸 환영합니다.
-              </h2>
-              <div className="d-flex justify-content-center">
-                <Link to="/camp" className="btn btn-primary m-2">
-                  <img
-                    src={campMainImg}
-                    alt="Camping Image"
-                    className="img-thumbnail"
-                    style={{ width: '200px', height: '200px' }}
-                  />
-                  <p>캠핑 예약</p>
-                </Link>
-                <Link to="/shop/main" className="btn btn-success m-2">
-                  <img
-                    src={ShopMainImg}
-                    alt="Shopping Image"
-                    className="img-thumbnail"
-                    style={{ width: '200px', height: '200px' }}
-                  />
-                  <p>쇼핑몰</p>
-                </Link>
+            <div style={{ marginTop: '100px', marginBottom: '200px' }}>
+              <div className="container text-center mt-5">
+                <h1 className="main-camply">Camply</h1>
+                <h2 style={{ marginBottom: '70px' }} className="display-4">
+                  안녕하세요. 캠플리에 오신걸 환영합니다.
+                </h2>
+                <div className="d-flex justify-content-center">
+                  <Link to="/camp" className="btn btn-primary m-2">
+                    <img
+                      src={campMainImg}
+                      alt="Camping Image"
+                      className="img-thumbnail"
+                      style={{ width: '200px', height: '200px' }}
+                    />
+                    <p>캠핑 예약</p>
+                  </Link>
+                  <Link to="/shop/main" className="btn btn-success m-2">
+                    <img
+                      src={ShopMainImg}
+                      alt="Shopping Image"
+                      className="img-thumbnail"
+                      style={{ width: '200px', height: '200px' }}
+                    />
+                    <p>쇼핑몰</p>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
           }
         />
         <Route
@@ -132,18 +132,12 @@ function App() {
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="sellermanagement" role="presentation">
                   <button
-                    class={`nav-link ${activeTab === 'home' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('home')}
+                    class={`nav-link ${
+                      activeTab === 'orderlist' ? 'active' : ''
+                    }`}
+                    onClick={() => setActiveTab('orderlist')}
                   >
-                    판매자 관리
-                  </button>
-                </li>
-                <li class="sellermanagement" role="presentation">
-                  <button
-                    class={`nav-link ${activeTab === 'sell' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('sell')}
-                  >
-                    상품등록
+                    주문관리
                   </button>
                 </li>
                 <li class="sellermanagement" role="presentation">
@@ -154,29 +148,26 @@ function App() {
                     상품리스트
                   </button>
                 </li>
+
                 <li class="sellermanagement" role="presentation">
                   <button
-                    class={`nav-link ${
-                      activeTab === 'orderlist' ? 'active' : ''
-                    }`}
-                    onClick={() => setActiveTab('orderlist')}
+                    class={`nav-link ${activeTab === 'sell' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('sell')}
                   >
-                    주문관리
+                    상품등록
                   </button>
                 </li>
               </ul>
               <div className="tab-content" id="nav-tabContent">
-                {activeTab === 'home' && <div></div>}
-                {activeTab === 'sell' && <CreateProduct />}
-                {activeTab === 'list' && <SellerProduct />}
                 {activeTab === 'orderlist' && <OrderProduct />}
+                {activeTab === 'list' && <SellerProduct />}
+                {activeTab === 'sell' && <CreateProduct />}
               </div>
               {/* <Link to="/shop/seller/sell">상품등록</Link>
               <Link to="/shop/seller/list">상품리스트</Link> */}
             </div>
           }
         />
-
         <Route
           path="/shop/seller/*"
           element={
@@ -193,7 +184,6 @@ function App() {
             </>
           }
         />
-
         <Route
           path="/camp/*"
           element={
@@ -223,29 +213,32 @@ function App() {
           path="/register/manager/email"
           element={<ManagerEmailRegister />}
         />
-
+        <Route
+          path="/register/manager/kakao"
+          element={<ManagerKakaoRegister />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/camp/board/add" element={<CampBoard />} />
         <Route path="/camp/board/all" element={<CampBoardAll />} />
         <Route path="/camp/board/get/:camp_id" element={<CampBoardDetail />} />
-        <Route path="/camp/board/edit/:camp_id" element={<CampBoardUpdate />} />        <Route path="/mypage" element={<MyPage />} />
+        <Route
+          path="/camp/board/edit/:camp_id"
+          element={<CampBoardUpdate />}
+        />{' '}
+        <Route path="/mypage" element={<MyPage />} />
         <Route path="/myshopping" element={<MyShopping />} />
         <Route path="/mypage" element={<MypageupdateAnddelete />} />
         <Route path="/mylikelist" element={<MyLikeList />} />
         <Route path="/sellermypage" element={<SellerMypage />} />
         <Route path="/mypageupdate" element={<MypageupdateAnddelete />} />
-
-        
         <Route path="/mypage/edit" element={<EditUser />} />
         <Route path="/camp/searchList" element={<CampSearch />} />
         <Route path="/camp/reserve" element={<CampReserve />} />
-
         <Route path="/camp/board/caravan" element={<CampBoardCaravan />} />
         <Route path="/camp/board/tent" element={<CampBoardTent />} />
         <Route path="/camp/board/glamping" element={<CampBoardGlamping />} />
         <Route path="/camp/board/site" element={<CampBoardSite />} />
         <Route path="/camp/board/pension" element={<CampBoardPension />} />
-
         <Route
           path="/shop/*"
           element={
@@ -266,7 +259,6 @@ function App() {
             </>
           }
         />
-
         <Route path="/shop/mycart/:userId" element={<CartList />} />
         <Route path="/shop/order/:productId" element={<OrderCart />} />
         <Route
@@ -275,7 +267,6 @@ function App() {
         />
         <Route path="/shop/detail/:productId/more" element={<ShopMore />} />
         <Route path="/shop/detail/:productId/review" element={<ShopReview />} />
-
         <Route path="/shop/review/view/:reviewNo" element={<ReviewDetail />} />
         <Route path="/review/update/:reviewNo" element={<ReviewUpdate />} />
         <Route

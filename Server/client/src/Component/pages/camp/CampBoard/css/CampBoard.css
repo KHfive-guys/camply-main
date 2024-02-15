@@ -75,3 +75,43 @@
 #campBoardTitleBox {
   margin-bottom: 20px;
 }
+
+.table{
+  width: 50%;
+  border: 1px solid #ffebeb;
+}
+
+.table th:first-child,
+.table td:first-child {
+  width: 30%;
+  text-align: center;
+  background-color: #ffd18c;
+}
+
+.table th:last-child,
+.table td:last-child {
+  width: 70%;
+}
+
+.table-content{
+  display: flex;
+  justify-content: center;
+}
+
+.form-control{
+  min-width: 200px;
+}
+
+.tit-page{
+  margin-top: 70px;
+  padding-bottom: 10px;
+  position: relative;
+  font-size: 18px;
+  color: #202020;
+  line-height: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  
+}

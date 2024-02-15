@@ -1,143 +1,106 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import logo from "../../img/Logo.png";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import CampNavbar from '../camp/CampNavbar';
+import axios from "axios";
 
-function GeneralEmailRegister() {
-  const [checkedEmail, setCheckedEmail] = useState("");
-  const [checkedPassword, setCheckedPassword] = useState("");
-  const [checkedPassword2, setCheckedPassword2] = useState("");
-  const [checkedName, setCheckedName] = useState("");
-  const [checkedNickname, setCheckedNickname] = useState("");
+function ManagerEmailRegister() {
+  const [companyNumber, setCompanyNumber] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyPhone, setCompanyPhone] = useState("");
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [name, setName] = useState("");
+  const [checkedCompanyNumber, setCheckedCompanyNumber] = useState("");
+  const [checkedCompanyAddress, setCheckedCompanyAddress] = useState("");
+  const [checkedCompanyPhone, setCheckedCompanyPhone] = useState("");
+
+  const [userData, setUserData] = useState({});
+  const [userType, setUserType] = useState("");
+
+  const [map, setMap] = useState({});
+  const [marker, setMarker] = useState(null);
+
   const navigate = useNavigate();
 
-  const emailCheck = async () => {
-    if (email === "") {
-      setCheckedEmail("필수 항목입니다.");
+  const companyNumberCheck = async () => {
+    if (companyNumber === "") {
+      setCheckedCompanyNumber("필수 항목입니다.");
     }
   };
 
-  const passwordCheck = async () => {
-    if (password === "") {
-      setCheckedPassword("비밀번호를 입력해주세요.");
-    } else {
-      var regex = /^[a-zA-Z0-9]+$/;
-
-      if (!regex.test(password)) {
-        setCheckedPassword("영문과 숫자만 사용 가능합니다.");
-      } else {
-        setCheckedPassword("");
-      }
+  const companyAddressCheck = async () => {
+    if (companyAddress === "") {
+      setCheckedCompanyAddress("필수 항목입니다.");
     }
   };
 
-  const passwordCheck2 = async () => {
-    if (password !== document.getElementById("passwordConfirm").value) {
-      setCheckedPassword2("비밀번호가 일치하지 않습니다.");
-    } else {
-      setCheckedPassword2("");
+  const companyPhoneCheck = async () => {
+    if (companyPhone === "") {
+      setCheckedCompanyPhone("필수 항목입니다.");
     }
   };
 
-  const nameCheck = async () => {
-    if (email === "") {
-      setCheckedName("필수 항목입니다.");
-    }
-  };
 
-  const nicknameCheck = async () => {
-    if (email === "") {
-      setCheckedNickname("필수 항목입니다.");
+  useEffect(() => {
+    const token = localStorage.getItem("yourTokenKey");
+    if (token) {
+      axios
+        .get("https://kapi.kakao.com/v2/user/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((userInfoResponse) => {
+          const email = userInfoResponse.data.kakao_account.email;
+          console.log("User Email:", email);
+          axios
+            .get(`http://localhost:8080/api/user/kakao/${email}`)
+            .then((response) => {
+              const userType = response.data.USER_TYPE;
+              console.log("User Type:", userType);
+              setUserType(userType);
+            })
+            .catch((error) => {
+              console.error("Error fetching user type:", error);
+            });
+        })
+        .catch((error) => {
+          console.error("Error fetching user information:", error);
+        });
     }
-  };
+  }, []);
 
+  useEffect(() => {
+    const initializeMap = () => {
+      window.kakao.maps.load(() => {
+        const container = document.getElementById("map");
+        const options = {
+          center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+          level: 3,
+        };
+        setMap(new window.kakao.maps.Map(container, options));
+        setMarker(new window.kakao.maps.Marker());
+      });
+    };
+
+    return () => {
+      window.onload = null;
+    };
+  }, []);
+
+  const onClickAddr = () => {
+    new window.daum.Postcode({
+      oncomplete: function (addrData) {
+        var geocoder = new window.kakao.maps.services.Geocoder();
+        geocoder.addressSearch(addrData.address, function (result, status) {
+            setCompanyAddress(addrData.address);
+        });
+      },
+    }).open();
+  };
   
-
-  const validateForm = () => {
-    let isValid = true;
-
-    if (email === "") {
-      setCheckedEmail("필수 항목입니다.");
-      isValid = false;
-    } else {
-      setCheckedEmail("");
-    }
-
-    if (password === "") {
-      setCheckedPassword("비밀번호를 입력해주세요.");
-      isValid = false;
-    } else {
-      const regex = /^[a-zA-Z0-9]+$/;
-      if (!regex.test(password)) {
-        setCheckedPassword("영문과 숫자만 사용 가능합니다.");
-        isValid = false;
-      } else {
-        setCheckedPassword("");
-      }
-    }
-
-    if (password !== document.getElementById("passwordConfirm").value) {
-      setCheckedPassword2("비밀번호가 일치하지 않습니다.");
-      isValid = false;
-    } else {
-      setCheckedPassword2("");
-    }
-
-    if (name === "") {
-      setCheckedName("필수 항목입니다.");
-      isValid = false;
-    } else {
-      setCheckedName("");
-    }
-
-    if (nickname === "") {
-      setCheckedNickname("필수 항목입니다.");
-      isValid = false;
-    } else {
-      setCheckedNickname("");
-    }
-
-    return isValid;
-  };
-
-  const onSubmit = async () => {
-    if (validateForm()) {
-      try {
-        const response = await fetch(
-          "http://localhost:8080/api/user/general/register",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              USER_EMAIL: email,
-              USER_PASSWORD: password,
-              USER_NAME: name,
-              USER_NICKNAME: nickname,
-              USER_TYPE: "General",
-            }),
-          }
-        );
-        if (response.ok) {
-          console.log("Registration successful");
-          alert("일반 회원가입 완료!");
-          navigate("/login");
-        } else {
-          console.error("Registration failed");
-        }
-      } catch (error) {
-        console.error("Error during registration:", error);
-      }
-    }
-  };
 
   return (
     <section>
@@ -150,117 +113,75 @@ function GeneralEmailRegister() {
         <HeadBannerGroup />
         <ReauthPhone>
           <LoginWrap>
-            <LoginLogo>
-              <img src={logo} width="300px" />
-            </LoginLogo>
 
             <LoginSection>
               <LoginTitle>정말 간단한 회원가입하기</LoginTitle>
               <SignupStep className="wrap">
-                <Title>일반회원 가입하기</Title>
+                <Title>판매자 가입하기</Title>
               </SignupStep>
+              
               <FormBlock>
                 <FormBlockHead>
-                  <AsteriskRed>*</AsteriskRed>이메일
-                </FormBlockHead>
-
-                <FormBlockBody>
-                  <InputTextSizeW>
-                    <EmailInput
-                      id="email"
-                      type="email"
-                      value={email}
-                      placeholder="이메일을 입력해주세요."
-                      required
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                      }}
-                      onBlur={() => emailCheck()}
-                    />
-                  </InputTextSizeW>
-                  <FormError>{checkedEmail}</FormError>
-                </FormBlockBody>
-              </FormBlock>
-
-              <FormBlock>
-                <FormBlockHead>
-                  <AsteriskRed>*</AsteriskRed> 비밀번호
-                </FormBlockHead>
-                <FormBlockBody>
-                  <InputTextSizeW>
-                    <PasswordInput
-                      id="password"
-                      type="password"
-                      value={password}
-                      placeholder="비밀번호 (영문+숫자+8자 이상)"
-                      required
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
-                      onBlur={() => passwordCheck()}
-                    />
-                  </InputTextSizeW>
-                  <FormError>{checkedPassword}</FormError>
-                </FormBlockBody>
-              </FormBlock>
-
-              <FormBlock>
-                <FormBlockBody>
-                  <InputTextSizeW>
-                    <PasswordInput
-                      id="passwordConfirm"
-                      type="password"
-                      placeholder="비밀번호 확인"
-                      required
-                      onBlur={() => passwordCheck2()}
-                    />
-                  </InputTextSizeW>
-                </FormBlockBody>
-                <FormError>{checkedPassword2}</FormError>
-              </FormBlock>
-
-              <FormBlock>
-                <FormBlockHead>
-                  <AsteriskRed>*</AsteriskRed> 이름
-                </FormBlockHead>
-                <FormBlockBody>
-                  <InputTextSizeWTypeL>
-                    <NameInput
-                      id="name"
-                      value={name}
-                      type="text"
-                      placeholder="이름을 입력해 주세요"
-                      required
-                      onChange={(e) => {
-                        setName(e.target.value);
-                      }}
-                      onBlur={() => nameCheck()}
-                    />
-                  </InputTextSizeWTypeL>
-                </FormBlockBody>
-                <FormError>{checkedName}</FormError>
-              </FormBlock>
-
-              <FormBlock>
-                <FormBlockHead>
-                  <AsteriskRed>*</AsteriskRed> 닉네임
+                  <AsteriskRed>*</AsteriskRed> 사업자 번호
                 </FormBlockHead>
                 <FormBlockBody>
                   <InputTextSizeWTypeL>
                     <NicknameInput
-                      id="nickname"
-                      value={nickname}
+                      id="companyNumber"
+                      value={companyNumber}
                       type="text"
-                      placeholder="닉네임을 입력해 주세요"
+                      placeholder="사업자 번호를 입력해 주세요"
                       required
                       onChange={(e) => {
-                        setNickname(e.target.value);
+                        setCompanyNumber(e.target.value);
                       }}
-                      onBlur={() => nicknameCheck()}
+                      onBlur={() => companyNumberCheck()}
                     />
                   </InputTextSizeWTypeL>
                 </FormBlockBody>
-                <FormError>{checkedNickname}</FormError>
+                <FormError>{checkedCompanyNumber}</FormError>
+              </FormBlock>
+
+              <FormBlock>
+                <FormBlockHead>
+                  <AsteriskRed>*</AsteriskRed> 사업자 주소
+                </FormBlockHead>
+                <FormBlockBody>
+                  <InputTextSizeWTypeL>
+                    <NicknameInput
+                      id="companyAddress"
+                      value={companyAddress}
+                      type="text"
+                      placeholder="사업자 주소를 입력해 주세요"
+                      required
+                      onClick={onClickAddr}
+                      onBlur={() => companyAddressCheck()}
+                    />
+                  </InputTextSizeWTypeL>
+                </FormBlockBody>
+                <FormError>{checkedCompanyAddress}</FormError>
+              </FormBlock>
+
+              <FormBlock>
+                <FormBlockHead>
+                  <AsteriskRed>*</AsteriskRed> 사업자 전화번호
+                </FormBlockHead>
+                <FormBlockBody>
+                  <InputTextSizeWTypeL>
+                    <NicknameInput
+                      id="companyPhone"
+                      value={companyPhone}
+                      type="text"
+                      placeholder="사업자 전화번호를 입력해 주세요"
+                      required
+                      onChange={(e) => {
+                        setCompanyPhone(e.target.value);
+                      }}
+                      onBlur={() => companyPhoneCheck()}
+                    />
+                  </InputTextSizeWTypeL>
+                </FormBlockBody>
+                <FormError>{checkedCompanyPhone}</FormError>
               </FormBlock>
 
               <FormBlockSubmit>
@@ -268,14 +189,12 @@ function GeneralEmailRegister() {
                   <BtnLogin
                     type="button"
                     onClick={() => {
-                      onSubmit();
                     }}
                   >
                     회원가입하기
                   </BtnLogin>
                 </FormBlockBody>
               </FormBlockSubmit>
-
             </LoginSection>
           </LoginWrap>
         </ReauthPhone>
@@ -551,4 +470,4 @@ const WrapLogin = styled.div`
   background: #fff;
 `;
 
-export default GeneralEmailRegister;
+export default ManagerEmailRegister;

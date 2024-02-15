@@ -18,7 +18,7 @@
 }
 
 .search-bar {
-  margin-bottom: -5px;
+  margin-bottom: 40px;
 }
 
 .searchTop h3 {
@@ -37,4 +37,15 @@
 
 .searchInput input {
   margin-bottom: 0px;
+}
+
+.custom-badge {
+  border: 1px solid #e0e0e0; /* 테두리 색상 및 두께 조절 */
+  font-size: 1rem; /* 글자 크기 조절 */
+  padding: 0.5em 1em; /* 패딩 조절로 높이와 너비 조절 */
+}
+
+.order-text {
+  /* 글자 굵기 */
+  font-size: 20px; /* 글자 크기 */
 }

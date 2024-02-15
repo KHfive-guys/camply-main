@@ -32,6 +32,7 @@ const SocialKakao = () => {
         }
       );
       console.log(response.data);
+      alert("카카오 회원가입 완료!");
       navigate('/login');
     } catch (error) {
       console.error(error);
