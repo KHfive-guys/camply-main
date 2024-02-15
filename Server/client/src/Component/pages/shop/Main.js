@@ -12,17 +12,18 @@ const Main = () => {
   const [products, setProducts] = useState([]);
   const [productIds] = useState([
     206,
-    207,
+    251,
     208,
     209,
     210,
     211,
     212,
     213,
-    214,
+    264,
     203,
     204,
     205,
+    
   ]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 1부터 시작
   const itemsPerPage = 4;
@@ -35,7 +36,7 @@ const Main = () => {
         const endIndex = startIndex + itemsPerPage;
         const productData = await Promise.all(
           productIds.slice(startIndex, endIndex).map(async (productId) => {
-            const response = await axios.get(`http://43.203.173.70:8080/shop/main/view/${productId}`);
+            const response = await axios.get(`http://43.203.141.178:8080/shop/main/view/${productId}`);
             return response.data;
           })
         );

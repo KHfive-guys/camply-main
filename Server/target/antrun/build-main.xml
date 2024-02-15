@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="maven-antrun-" default="main">
   <target name="main">
-    <copy todir="C:\Users\user1\Desktop\새 폴더\camply-main\Server\target/classes/public">
-      <fileset dir="C:\Users\user1\Desktop\새 폴더\camply-main\Server/client/build" />
+    <copy todir="C:\Users\user1\Desktop\final2\camply-main\Server\target/classes/public">
+      <fileset dir="C:\Users\user1\Desktop\final2\camply-main\Server/client/build" />
     </copy>
   </target>
 </project>
