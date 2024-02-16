@@ -65,5 +65,5 @@
 
 | [FrontEnd]     | [켐핑장 예약]    | [쇼핑몰]   | [쇼핑몰]     | [켐핑장 예약]  |
 |:-----------------------------------------:|:----------------------------------------------:|:-------------------------------------------:|:----------------------------------------:|:----------------------------------------------------:|
-| ![Shin](https://github.com/rjswh0503.png) | ![JongHwan](https://github.com/whdghks9241.png) | ![chanakoh](https://github.com/chanakoh.png) | ![BEOM](https://github.com/jibum1559.png) | ![KYUNGNAN KIM](https://github.com/khkyungnan.png) |
-| [Shin](https://github.com/rjswh0503)      | [JongHwan](https://github.com/whdghks9241)    | [chanakoh](https://github.com/chanakoh)    | [BEOM](https://github.com/jibum1559)     | [KYUNGNAN KIM](https://github.com/khkyungnan)       |
+| ![Shin](https://github.com/rjswh0503.png) | ![JongHwan](https://github.com/whdghks9241.png) | ![chanakoh](https://github.com/chanakoh.png) | ![BEOM](https://github.com/jibum1559.png) | ![ExiNni](https://github.com/ExiNni.png) |
+| [Shin](https://github.com/rjswh0503)      | [JongHwan](https://github.com/whdghks9241)    | [chanakoh](https://github.com/chanakoh)    | [BEOM](https://github.com/jibum1559)     | [ExiNni](https://github.com/ExiNni)       |
