@@ -21,7 +21,7 @@ function SellerMypage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://camply.store/api/user/get/${USER_ID}`, {
+        .get(`http://13.124.229.176/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -31,7 +31,7 @@ function SellerMypage() {
           setUserData(response.data || {});
           setLoading(false);
           axios
-            .post(`http://camply.store/camp/Mypage/campUploadList`, {
+            .post(`http://13.124.229.176/camp/Mypage/campUploadList`, {
               USER_ID: USER_ID,
             })
             .then((responseData) => {

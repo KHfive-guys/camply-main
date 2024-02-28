@@ -26,7 +26,7 @@ const Kakao = () => {
 
         axios
           .post(
-            "http://camply.store/getKakaoUserData",
+            "http://13.124.229.176/getKakaoUserData",
             {
               access_token: access_token,
               email: email,
@@ -39,9 +39,9 @@ const Kakao = () => {
           .then((serverResponse) => {
             localStorage.setItem("yourTokenKey", access_token);
             console.log(serverResponse.data);
-            console.log("http://camply.store/getKakaoUserData 성공");
+            console.log("http://13.124.229.176/getKakaoUserData 성공");
             alert("카카오 로그인 성공");
-            window.location.href = "http://camply.store/";
+            window.location.href = "http://13.124.229.176/";
           })
           .catch((error) => {
             console.error(error);

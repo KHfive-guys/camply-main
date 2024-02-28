@@ -35,7 +35,7 @@ function SearchPage() {
   const campSearch = async () => {
     try {
       const response = await axios.post(
-        "http://camply.store/camp/search/campList",
+        "http://13.124.229.176/camp/search/campList",
         searchCamp
       );
 

@@ -23,7 +23,7 @@ const CommentWriter = ({ questionNo, updateComments }) => {
   const saveComment = async () => {
     try {
       const response = await axios.post(
-        `http://camply.store/shop/question/comment/post`,
+        `http://13.124.229.176/shop/question/comment/post`,
         {
           ...comment,
           questionNo: questionNo, // 숫자형 questionNo 사용

@@ -14,7 +14,7 @@ const BBQ = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://camply.store/shop/category/main/fireplace"
+          "http://13.124.229.176/shop/category/main/fireplace"
         );
         setProducts(response.data);
       } catch (error) {

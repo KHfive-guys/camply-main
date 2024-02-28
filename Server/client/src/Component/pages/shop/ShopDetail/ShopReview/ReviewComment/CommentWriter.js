@@ -22,7 +22,7 @@ const CommentWriter = ({ reviewNo, updateComments }) => {
   const saveComment = async () => {
     try {
       const response = await axios.post(
-        `http://camply.store/shop/review/comment/post`,
+        `http://13.124.229.176/shop/review/comment/post`,
         {
           ...comment,
           reviewNo: reviewNo,

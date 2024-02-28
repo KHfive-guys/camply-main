@@ -101,7 +101,7 @@ const OrderCart = () => {
         const numericProductId = parseInt(productId, 10);
         if (!isNaN(numericProductId)) {
           const response = await axios.get(
-            `http://camply.store/shop/detail/${numericProductId}`
+            `http://13.124.229.176/shop/detail/${numericProductId}`
           );
           setProduct(response.data);
         } else {
@@ -252,7 +252,7 @@ const OrderCart = () => {
       console.log("orderData:", orderData);
 
       const response = await axios.post(
-        "http://camply.store/shop/order/post",
+        "http://13.124.229.176/shop/order/post",
         orderData
       );
 
@@ -262,7 +262,7 @@ const OrderCart = () => {
       alert("주문이 성공적으로 완료되었습니다.");
       if (location.state?.product) {
         const { cartId } = location.state.product;
-        await axios.delete(`http://camply.store/shop/cart/delete/${cartId}`);
+        await axios.delete(`http://13.124.229.176/shop/cart/delete/${cartId}`);
         alert("장바구니 항목이 삭제되었습니다.");
       }
 

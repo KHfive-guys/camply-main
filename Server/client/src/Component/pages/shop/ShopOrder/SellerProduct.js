@@ -32,7 +32,7 @@ const SellerProduct = () => {
     if (token) {
       // 토큰이 존재하는 경우에만 요청을 보냅니다.
       axios
-        .get("http://camply.store/shop/mypage/productList", {
+        .get("http://13.124.229.176/shop/mypage/productList", {
           headers: {
             Authorization: `Bearer ${token}`, // 토큰을 헤더에 추가
           },
@@ -79,7 +79,7 @@ const SellerProduct = () => {
       try {
         if (token) {
           await axios.delete(
-            `http://camply.store/shop/mypage/productDelete/${productId}`,
+            `http://13.124.229.176/shop/mypage/productDelete/${productId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ const SellerProduct = () => {
         await Promise.all(
           selectedProducts.map((productId) =>
             axios.delete(
-              `http://camply.store/shop/mypage/productDelete/${productId}`,
+              `http://13.124.229.176/shop/mypage/productDelete/${productId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -168,7 +168,7 @@ const SellerProduct = () => {
       // 변경된 모든 상품에 대해 PUT 요청을 전송
       const updatePromises = changedProducts.map((product) =>
         axios.put(
-          `http://camply.store/shop/mypage/product/statusEdit/${product.productId}`,
+          `http://13.124.229.176/shop/mypage/product/statusEdit/${product.productId}`,
           {
             productStatus: product.productStatus,
           },

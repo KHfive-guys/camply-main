@@ -22,7 +22,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .get(`http://camply.store/api/user/get/${USER_ID}`, {
+        .get(`http://13.124.229.176/api/user/get/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -63,7 +63,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       axios
-        .delete(`http://camply.store/api/user/delete/${USER_ID}`, {
+        .delete(`http://13.124.229.176/api/user/delete/${USER_ID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -96,7 +96,7 @@ function MyPage() {
       const USER_ID = parseUserIdFromToken(token);
 
       const response = await axios.get(
-        `http://camply.store/api/user/get/${USER_ID}`,
+        `http://13.124.229.176/api/user/get/${USER_ID}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

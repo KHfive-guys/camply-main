@@ -13,7 +13,7 @@ const ShopCart = () => {
       try {
         if (productId) {
           const response = await axios.get(
-            `http://camply.store/shop/cart/${productId}`
+            `http://13.124.229.176/shop/cart/${productId}`
           );
           setProducts(response.data);
         } else {
@@ -32,7 +32,7 @@ const ShopCart = () => {
       if (currentProductId) {
         const totalPrice = cartAmount * currentCartPrice;
 
-        await axios.post(`http://camply.store/shop/cart/post`, {
+        await axios.post(`http://13.124.229.176/shop/cart/post`, {
           productId: currentProductId,
           cartAmount: cartAmount,
           totalPrice: totalPrice,

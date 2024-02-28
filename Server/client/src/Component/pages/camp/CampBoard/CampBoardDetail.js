@@ -34,7 +34,7 @@ function CampBoardDetail() {
   const handleHeart = () => {
     setLike(!like);
     axios
-      .post(`http://camply.store/camp/board/changDips`, {
+      .post(`http://13.124.229.176/camp/board/changDips`, {
         CAMP_ID: camp_id,
         USER_ID: USER_ID,
         STATUS: like,
@@ -115,7 +115,7 @@ function CampBoardDetail() {
     }
 
     axios
-      .get(`http://camply.store/camp/board/get/${camp_id}`, {
+      .get(`http://13.124.229.176/camp/board/get/${camp_id}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -141,7 +141,7 @@ function CampBoardDetail() {
 
           setLoading(false);
           axios
-            .post(`http://camply.store/camp/board/checkDips`, {
+            .post(`http://13.124.229.176/camp/board/checkDips`, {
               CAMP_ID: camp_id,
               USER_ID: userTokenPayload?.user_id,
             })
@@ -183,7 +183,7 @@ function CampBoardDetail() {
 
     if (confirmDelete) {
       axios
-        .delete(`http://camply.store/camp/board/delete/${camp_id}`)
+        .delete(`http://13.124.229.176/camp/board/delete/${camp_id}`)
         .then(() => {
           alert("삭제되었습니다.");
           navigate("/camp");
